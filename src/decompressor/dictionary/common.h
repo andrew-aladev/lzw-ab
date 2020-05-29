@@ -10,13 +10,13 @@
 #include "../../common.h"
 
 typedef struct {
-  lzws_code_t*   previous_codes;
-  lzws_symbol_t* last_symbol_by_codes;
+  lzws_code_t* previous_codes;
+  lzws_byte_t* last_symbol_by_codes;
 
   lzws_code_fast_t codes_offset;
 
-  lzws_symbol_t* output_buffer;
-  size_t         output_length;
+  lzws_byte_t* output_buffer;
+  size_t       output_length;
 } lzws_decompressor_dictionary_t;
 
 #endif // LZWS_DECOMPRESSOR_DICTIONARY_COMMON_H

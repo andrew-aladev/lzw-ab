@@ -25,30 +25,30 @@ enum {
   LZWS_COMPRESSOR_WRITE_ALIGNMENT_BEFORE_CURRENT_CODE,
   LZWS_COMPRESSOR_FLUSH_ALIGNMENT_BEFORE_CURRENT_CODE
 };
-typedef lzws_symbol_fast_t lzws_compressor_status_t;
+typedef lzws_byte_fast_t lzws_compressor_status_t;
 
 typedef struct {
   lzws_compressor_status_t status;
 
-  bool               without_magic_header;
-  lzws_symbol_fast_t max_code_bit_length;
-  bool               block_mode;
-  bool               msb;
-  bool               unaligned_bit_groups;
-  bool               quiet;
+  bool             without_magic_header;
+  lzws_byte_fast_t max_code_bit_length;
+  bool             block_mode;
+  bool             msb;
+  bool             unaligned_bit_groups;
+  bool             quiet;
 
   lzws_code_fast_t first_free_code;
   lzws_code_fast_t max_code;
 
-  lzws_code_fast_t   last_used_code;
-  lzws_symbol_fast_t last_used_code_bit_length;
-  lzws_code_fast_t   max_last_used_code_for_bit_length;
+  lzws_code_fast_t last_used_code;
+  lzws_byte_fast_t last_used_code_bit_length;
+  lzws_code_fast_t max_last_used_code_for_bit_length;
 
-  lzws_code_fast_t   current_code;
-  lzws_symbol_fast_t next_symbol;
+  lzws_code_fast_t current_code;
+  lzws_byte_fast_t next_symbol;
 
-  lzws_symbol_fast_t remainder;
-  lzws_symbol_fast_t remainder_bit_length;
+  lzws_byte_fast_t remainder;
+  lzws_byte_fast_t remainder_bit_length;
 
   lzws_compressor_alignment_t  alignment;
   lzws_compressor_dictionary_t dictionary;
@@ -57,7 +57,7 @@ typedef struct {
 
 lzws_result_t lzws_compressor_get_initial_state(
   lzws_compressor_state_t** state_ptr,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
 
 void lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr);
 void lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr);

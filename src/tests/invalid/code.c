@@ -55,8 +55,8 @@ static inline lzws_result_t test_data(
   lzws_compressor_state_t* compressor_state_ptr, lzws_decompressor_state_t* decompressor_state_ptr,
   const data_t* data_ptr, size_t buffer_length)
 {
-  lzws_symbol_t* source;
-  size_t         source_length;
+  lzws_byte_t* source;
+  size_t       source_length;
 
   lzws_result_t result = lzws_test_compressor_write_codes(
     compressor_state_ptr,
@@ -70,8 +70,8 @@ static inline lzws_result_t test_data(
 
   lzws_compressor_reset_last_used_data(compressor_state_ptr);
 
-  lzws_symbol_t* destination;
-  size_t         destination_length;
+  lzws_byte_t* destination;
+  size_t       destination_length;
 
   result = lzws_tests_decompress_string_and_file(
     source, source_length,

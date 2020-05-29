@@ -27,7 +27,7 @@ inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_d
   return dictionary_ptr->output_length != 0;
 }
 
-inline lzws_symbol_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
+inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   return dictionary_ptr->output_buffer[--dictionary_ptr->output_length];
 }
@@ -39,12 +39,12 @@ inline void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* di
     free(previous_codes);
   }
 
-  lzws_symbol_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
+  lzws_byte_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
   if (last_symbol_by_codes != NULL) {
     free(last_symbol_by_codes);
   }
 
-  lzws_symbol_t* output_buffer = dictionary_ptr->output_buffer;
+  lzws_byte_t* output_buffer = dictionary_ptr->output_buffer;
   if (output_buffer != NULL) {
     free(output_buffer);
   }

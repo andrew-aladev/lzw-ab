@@ -19,7 +19,7 @@ enum {
   LZWS_DECOMPRESSOR_READ_ALIGNMENT_BEFORE_FIRST_CODE,
   LZWS_DECOMPRESSOR_READ_ALIGNMENT_BEFORE_NEXT_CODE
 };
-typedef lzws_symbol_fast_t lzws_decompressor_status_t;
+typedef lzws_byte_fast_t lzws_decompressor_status_t;
 
 typedef struct {
   lzws_decompressor_status_t status;
@@ -33,14 +33,14 @@ typedef struct {
   lzws_code_fast_t first_free_code;
   lzws_code_fast_t max_code;
 
-  lzws_code_fast_t   free_code;
-  lzws_symbol_fast_t free_code_bit_length;
-  lzws_code_fast_t   max_free_code_for_bit_length;
+  lzws_code_fast_t free_code;
+  lzws_byte_fast_t free_code_bit_length;
+  lzws_code_fast_t max_free_code_for_bit_length;
 
   lzws_code_fast_t prefix_code;
 
-  lzws_symbol_fast_t remainder;
-  lzws_symbol_fast_t remainder_bit_length;
+  lzws_byte_fast_t remainder;
+  lzws_byte_fast_t remainder_bit_length;
 
   lzws_decompressor_alignment_t  alignment;
   lzws_decompressor_dictionary_t dictionary;

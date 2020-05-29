@@ -82,7 +82,7 @@ lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* 
 
   size_t last_symbol_by_codes_size = next_sibling_codes_length;
 
-  lzws_symbol_t* last_symbol_by_codes = malloc(last_symbol_by_codes_size);
+  lzws_byte_t* last_symbol_by_codes = malloc(last_symbol_by_codes_size);
   if (last_symbol_by_codes == NULL) {
     if (!quiet) {
       LZWS_LOG_ERROR("malloc failed, last symbol by codes size: %zu", last_symbol_by_codes_size);
@@ -124,12 +124,12 @@ void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_p
 
 lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   const lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_symbol_fast_t next_symbol)
+  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol)
 {
   lzws_code_fast_t current_code_index = get_first_child_code_index(dictionary_ptr, first_free_code, current_code);
 
-  lzws_code_t*   next_sibling_codes   = dictionary_ptr->next_sibling_codes;
-  lzws_symbol_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
+  lzws_code_t* next_sibling_codes   = dictionary_ptr->next_sibling_codes;
+  lzws_byte_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
 
   lzws_code_fast_t next_sibling_code = dictionary_ptr->first_child_codes[current_code_index];
   lzws_code_fast_t next_sibling_code_index;
@@ -150,7 +150,7 @@ lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
 
 void lzws_compressor_save_next_code_to_dictionary(
   lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_symbol_fast_t next_symbol, lzws_code_fast_t next_code)
+  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol, lzws_code_fast_t next_code)
 {
   lzws_code_fast_t next_code_index = get_next_sibling_code_index(dictionary_ptr, next_code);
 

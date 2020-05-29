@@ -9,7 +9,7 @@
 #include "dictionary/wrapper.h"
 #include "ratio/wrapper.h"
 
-static inline lzws_result_t write_current_code(lzws_compressor_state_t* state_ptr, lzws_symbol_t** destination_ptr, size_t* destination_length_ptr)
+static inline lzws_result_t write_current_code(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
 {
   return lzws_compressor_write_code(state_ptr, state_ptr->current_code, destination_ptr, destination_length_ptr);
 }
@@ -17,22 +17,22 @@ static inline lzws_result_t write_current_code(lzws_compressor_state_t* state_pt
 static inline lzws_code_fast_t get_next_code(lzws_compressor_state_t* state_ptr)
 {
   if (state_ptr->last_used_code == state_ptr->max_last_used_code_for_bit_length) {
-    lzws_symbol_fast_t last_used_code_bit_length = ++state_ptr->last_used_code_bit_length;
+    lzws_byte_fast_t last_used_code_bit_length   = ++state_ptr->last_used_code_bit_length;
     state_ptr->max_last_used_code_for_bit_length = lzws_get_max_value_for_bits(last_used_code_bit_length);
   }
 
   return ++state_ptr->last_used_code;
 }
 
-lzws_result_t lzws_compressor_write_current_code(lzws_compressor_state_t* state_ptr, lzws_symbol_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_write_current_code(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
 {
   lzws_result_t result = write_current_code(state_ptr, destination_ptr, destination_length_ptr);
   if (result != 0) {
     return result;
   }
 
-  lzws_code_fast_t   current_code = state_ptr->current_code;
-  lzws_symbol_fast_t next_symbol  = state_ptr->next_symbol;
+  lzws_code_fast_t current_code = state_ptr->current_code;
+  lzws_byte_fast_t next_symbol  = state_ptr->next_symbol;
 
   // We need to set current code to next symbol in all possible cases.
   state_ptr->current_code = next_symbol;
@@ -71,7 +71,7 @@ lzws_result_t lzws_compressor_write_current_code(lzws_compressor_state_t* state_
   return 0;
 }
 
-lzws_result_t lzws_compressor_flush_current_code(lzws_compressor_state_t* state_ptr, lzws_symbol_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_flush_current_code(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
 {
   lzws_result_t result = write_current_code(state_ptr, destination_ptr, destination_length_ptr);
   if (result != 0) {

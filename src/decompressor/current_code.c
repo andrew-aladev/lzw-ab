@@ -11,7 +11,7 @@
 #include "dictionary/wrapper.h"
 #include "remainder.h"
 
-lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state_ptr, lzws_symbol_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   lzws_code_fast_t code;
 
@@ -45,7 +45,7 @@ static inline lzws_code_fast_t get_next_code(lzws_decompressor_state_t* state_pt
   }
   else {
     if (next_code == state_ptr->max_free_code_for_bit_length) {
-      lzws_symbol_fast_t free_code_bit_length = ++state_ptr->free_code_bit_length;
+      lzws_byte_fast_t free_code_bit_length   = ++state_ptr->free_code_bit_length;
       state_ptr->max_free_code_for_bit_length = lzws_get_max_value_for_bits(free_code_bit_length);
     }
 
@@ -55,7 +55,7 @@ static inline lzws_code_fast_t get_next_code(lzws_decompressor_state_t* state_pt
   return next_code;
 }
 
-lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_ptr, lzws_symbol_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   lzws_code_fast_t code;
 

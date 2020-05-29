@@ -8,9 +8,9 @@
 #include "../../../common.h"
 
 typedef struct {
-  lzws_code_t*   first_child_codes;
-  lzws_code_t*   next_sibling_codes;
-  lzws_symbol_t* last_symbol_by_codes;
+  lzws_code_t* first_child_codes;
+  lzws_code_t* next_sibling_codes;
+  lzws_byte_t* last_symbol_by_codes;
 
   lzws_code_fast_t first_child_codes_offset;
   lzws_code_fast_t next_sibling_codes_offset;

@@ -7,7 +7,7 @@
 #include "../utils.h"
 #include "common.h"
 
-lzws_result_t lzws_compressor_write_magic_header(lzws_compressor_state_t* state_ptr, lzws_symbol_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_write_magic_header(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
 {
   if (*destination_length_ptr < 2) {
     return LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION;
@@ -21,14 +21,14 @@ lzws_result_t lzws_compressor_write_magic_header(lzws_compressor_state_t* state_
   return 0;
 }
 
-lzws_result_t lzws_compressor_write_header(lzws_compressor_state_t* state_ptr, lzws_symbol_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_write_header(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
 {
   // Writing first byte for max code bit length and block mode.
   if (*destination_length_ptr < 1) {
     return LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION;
   }
 
-  lzws_symbol_fast_t byte = state_ptr->max_code_bit_length;
+  lzws_byte_fast_t byte = state_ptr->max_code_bit_length;
 
   if (state_ptr->block_mode) {
     byte = byte | LZWS_BLOCK_MODE;

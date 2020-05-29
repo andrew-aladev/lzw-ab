@@ -24,7 +24,7 @@ static inline size_t get_used_indexes_length(const lzws_compressor_dictionary_t*
 
 static inline lzws_compressor_dictionary_used_index_t get_next_code_index(
   const lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_symbol_fast_t next_symbol)
+  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol)
 {
   if (current_code >= first_free_code) {
     current_code -= dictionary_ptr->next_codes_offset;
@@ -112,7 +112,7 @@ void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_p
 
 lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   const lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_symbol_fast_t next_symbol)
+  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol)
 {
   lzws_compressor_dictionary_used_index_t code_index = get_next_code_index(dictionary_ptr, first_free_code, current_code, next_symbol);
 
@@ -121,7 +121,7 @@ lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
 
 void lzws_compressor_save_next_code_to_dictionary(
   lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code, bool block_mode,
-  lzws_code_fast_t current_code, lzws_symbol_fast_t next_symbol, lzws_code_fast_t next_code)
+  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol, lzws_code_fast_t next_code)
 {
   lzws_compressor_dictionary_used_index_t code_index = get_next_code_index(dictionary_ptr, first_free_code, current_code, next_symbol);
 

@@ -17,7 +17,7 @@
 
 // -- file --
 
-static inline lzws_result_t read_file(FILE* source_file, lzws_symbol_t* source_buffer, size_t* source_length_ptr, size_t source_buffer_length, bool quiet)
+static inline lzws_result_t read_file(FILE* source_file, lzws_byte_t* source_buffer, size_t* source_length_ptr, size_t source_buffer_length, bool quiet)
 {
   size_t read_length = fread(source_buffer, 1, source_buffer_length, source_file);
   if (read_length == 0 && feof(source_file)) {
@@ -37,7 +37,7 @@ static inline lzws_result_t read_file(FILE* source_file, lzws_symbol_t* source_b
   return 0;
 }
 
-static inline lzws_result_t write_file(FILE* destination_file, lzws_symbol_t* destination_buffer, size_t destination_length, bool quiet)
+static inline lzws_result_t write_file(FILE* destination_file, lzws_byte_t* destination_buffer, size_t destination_length, bool quiet)
 {
   size_t written_length = fwrite(destination_buffer, 1, destination_length, destination_file);
   if (written_length != destination_length) {
@@ -60,13 +60,13 @@ static inline lzws_result_t write_file(FILE* destination_file, lzws_symbol_t* de
 // Algorithm can use same buffer again.
 
 static inline lzws_result_t read_more_source(
-  FILE*           source_file,
-  lzws_symbol_t** source_ptr, size_t* source_length_ptr,
-  lzws_symbol_t* source_buffer, size_t source_buffer_length,
+  FILE*         source_file,
+  lzws_byte_t** source_ptr, size_t* source_length_ptr,
+  lzws_byte_t* source_buffer, size_t source_buffer_length,
   bool quiet)
 {
-  const lzws_symbol_t* source        = *source_ptr;
-  size_t               source_length = *source_length_ptr;
+  const lzws_byte_t* source        = *source_ptr;
+  size_t             source_length = *source_length_ptr;
 
   if (source != source_buffer) {
     if (source_length != 0) {
@@ -87,8 +87,8 @@ static inline lzws_result_t read_more_source(
     return LZWS_FILE_NOT_ENOUGH_SOURCE_BUFFER;
   }
 
-  lzws_symbol_t* remaining_source_buffer = source_buffer + source_length;
-  size_t         new_source_length;
+  lzws_byte_t* remaining_source_buffer = source_buffer + source_length;
+  size_t       new_source_length;
 
   lzws_result_t result = read_file(source_file, remaining_source_buffer, &new_source_length, remaining_source_buffer_length, quiet);
   if (result != 0) {
@@ -142,8 +142,8 @@ static inline lzws_result_t read_more_source(
 // Than algorithm can use same buffer again.
 
 static inline lzws_result_t flush_destination_buffer(
-  FILE*          destination_file,
-  lzws_symbol_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
+  FILE*        destination_file,
+  lzws_byte_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool quiet)
 {
   if (*destination_length_ptr == 0) {
@@ -165,7 +165,7 @@ static inline lzws_result_t flush_destination_buffer(
   return 0;
 }
 
-static inline lzws_result_t write_remaining_destination(FILE* destination_file, lzws_symbol_t* destination_buffer, size_t destination_length, bool quiet)
+static inline lzws_result_t write_remaining_destination(FILE* destination_file, lzws_byte_t* destination_buffer, size_t destination_length, bool quiet)
 {
   if (destination_length == 0) {
     return 0;
@@ -176,42 +176,42 @@ static inline lzws_result_t write_remaining_destination(FILE* destination_file, 
 
 // -- compress --
 
-#define BUFFERED_COMPRESS(function, ...)                                                                           \
-  while (true) {                                                                                                   \
-    lzws_symbol_t* remaining_destination_buffer             = destination_buffer + *destination_length_ptr;        \
-    size_t         remaining_destination_buffer_length      = destination_buffer_length - *destination_length_ptr; \
-    size_t         prev_remaining_destination_buffer_length = remaining_destination_buffer_length;                 \
-                                                                                                                   \
-    result = function(__VA_ARGS__, &remaining_destination_buffer, &remaining_destination_buffer_length);           \
-                                                                                                                   \
-    if (                                                                                                           \
-      result != 0 &&                                                                                               \
-      result != LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                                          \
-      return LZWS_FILE_COMPRESSOR_UNEXPECTED_ERROR;                                                                \
-    }                                                                                                              \
-                                                                                                                   \
-    *destination_length_ptr += prev_remaining_destination_buffer_length - remaining_destination_buffer_length;     \
-                                                                                                                   \
-    if (result == LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                                        \
-      result = flush_destination_buffer(                                                                           \
-        destination_file,                                                                                          \
-        destination_buffer, destination_length_ptr, destination_buffer_length,                                     \
-        quiet);                                                                                                    \
-                                                                                                                   \
-      if (result != 0) {                                                                                           \
-        return result;                                                                                             \
-      }                                                                                                            \
-                                                                                                                   \
-      continue;                                                                                                    \
-    }                                                                                                              \
-                                                                                                                   \
-    break;                                                                                                         \
+#define BUFFERED_COMPRESS(function, ...)                                                                         \
+  while (true) {                                                                                                 \
+    lzws_byte_t* remaining_destination_buffer             = destination_buffer + *destination_length_ptr;        \
+    size_t       remaining_destination_buffer_length      = destination_buffer_length - *destination_length_ptr; \
+    size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;                 \
+                                                                                                                 \
+    result = function(__VA_ARGS__, &remaining_destination_buffer, &remaining_destination_buffer_length);         \
+                                                                                                                 \
+    if (                                                                                                         \
+      result != 0 &&                                                                                             \
+      result != LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                                        \
+      return LZWS_FILE_COMPRESSOR_UNEXPECTED_ERROR;                                                              \
+    }                                                                                                            \
+                                                                                                                 \
+    *destination_length_ptr += prev_remaining_destination_buffer_length - remaining_destination_buffer_length;   \
+                                                                                                                 \
+    if (result == LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                                      \
+      result = flush_destination_buffer(                                                                         \
+        destination_file,                                                                                        \
+        destination_buffer, destination_length_ptr, destination_buffer_length,                                   \
+        quiet);                                                                                                  \
+                                                                                                                 \
+      if (result != 0) {                                                                                         \
+        return result;                                                                                           \
+      }                                                                                                          \
+                                                                                                                 \
+      continue;                                                                                                  \
+    }                                                                                                            \
+                                                                                                                 \
+    break;                                                                                                       \
   }
 
 static inline lzws_result_t buffered_compress(
   lzws_compressor_state_t* state_ptr,
-  lzws_symbol_t** source_ptr, size_t* source_length_ptr,
-  FILE* destination_file, lzws_symbol_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
+  lzws_byte_t** source_ptr, size_t* source_length_ptr,
+  FILE* destination_file, lzws_byte_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool quiet)
 {
   lzws_result_t result;
@@ -223,7 +223,7 @@ static inline lzws_result_t buffered_compress(
 
 static inline lzws_result_t buffered_compressor_finish(
   lzws_compressor_state_t* state_ptr,
-  FILE* destination_file, lzws_symbol_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
+  FILE* destination_file, lzws_byte_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool quiet)
 {
   lzws_result_t result;
@@ -235,15 +235,15 @@ static inline lzws_result_t buffered_compressor_finish(
 
 static inline lzws_result_t compress(
   lzws_compressor_state_t* state_ptr,
-  FILE* source_file, lzws_symbol_t* source_buffer, size_t source_buffer_length,
-  FILE* destination_file, lzws_symbol_t* destination_buffer, size_t destination_buffer_length,
+  FILE* source_file, lzws_byte_t* source_buffer, size_t source_buffer_length,
+  FILE* destination_file, lzws_byte_t* destination_buffer, size_t destination_buffer_length,
   bool quiet)
 {
   lzws_result_t result;
 
-  lzws_symbol_t* source             = source_buffer;
-  size_t         source_length      = 0;
-  size_t         destination_length = 0;
+  lzws_byte_t* source             = source_buffer;
+  size_t       source_length      = 0;
+  size_t       destination_length = 0;
 
   BUFFERED_READ_SOURCE(
     buffered_compress,
@@ -267,7 +267,7 @@ static inline lzws_result_t compress(
 lzws_result_t lzws_compress_file(
   FILE* source_file, size_t source_buffer_length,
   FILE* destination_file, size_t destination_buffer_length,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet)
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet)
 {
   lzws_compressor_state_t* state_ptr;
 
@@ -286,7 +286,7 @@ lzws_result_t lzws_compress_file(
     }
   }
 
-  lzws_symbol_t* source_buffer;
+  lzws_byte_t* source_buffer;
 
   result = lzws_create_source_buffer_for_compressor(&source_buffer, &source_buffer_length, quiet);
   if (result != 0) {
@@ -295,7 +295,7 @@ lzws_result_t lzws_compress_file(
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 
-  lzws_symbol_t* destination_buffer;
+  lzws_byte_t* destination_buffer;
 
   result = lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, quiet);
   if (result != 0) {
@@ -322,16 +322,16 @@ lzws_result_t lzws_compress_file(
 
 static inline lzws_result_t buffered_decompress(
   lzws_decompressor_state_t* state_ptr,
-  lzws_symbol_t** source_ptr, size_t* source_length_ptr,
-  FILE* destination_file, lzws_symbol_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
+  lzws_byte_t** source_ptr, size_t* source_length_ptr,
+  FILE* destination_file, lzws_byte_t* destination_buffer, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool quiet)
 {
   lzws_result_t result;
 
   while (true) {
-    lzws_symbol_t* remaining_destination_buffer             = destination_buffer + *destination_length_ptr;
-    size_t         remaining_destination_buffer_length      = destination_buffer_length - *destination_length_ptr;
-    size_t         prev_remaining_destination_buffer_length = remaining_destination_buffer_length;
+    lzws_byte_t* remaining_destination_buffer             = destination_buffer + *destination_length_ptr;
+    size_t       remaining_destination_buffer_length      = destination_buffer_length - *destination_length_ptr;
+    size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;
 
     result = lzws_decompress(
       state_ptr,
@@ -375,15 +375,15 @@ static inline lzws_result_t buffered_decompress(
 
 static inline lzws_result_t decompress(
   lzws_decompressor_state_t* state_ptr,
-  FILE* source_file, lzws_symbol_t* source_buffer, size_t source_buffer_length,
-  FILE* destination_file, lzws_symbol_t* destination_buffer, size_t destination_buffer_length,
+  FILE* source_file, lzws_byte_t* source_buffer, size_t source_buffer_length,
+  FILE* destination_file, lzws_byte_t* destination_buffer, size_t destination_buffer_length,
   bool quiet)
 {
   lzws_result_t result;
 
-  lzws_symbol_t* source             = source_buffer;
-  size_t         source_length      = 0;
-  size_t         destination_length = 0;
+  lzws_byte_t* source             = source_buffer;
+  size_t       source_length      = 0;
+  size_t       destination_length = 0;
 
   BUFFERED_READ_SOURCE(
     buffered_decompress,
@@ -415,7 +415,7 @@ lzws_result_t lzws_decompress_file(
     }
   }
 
-  lzws_symbol_t* source_buffer;
+  lzws_byte_t* source_buffer;
 
   result = lzws_create_source_buffer_for_decompressor(&source_buffer, &source_buffer_length, quiet);
   if (result != 0) {
@@ -424,7 +424,7 @@ lzws_result_t lzws_decompress_file(
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 
-  lzws_symbol_t* destination_buffer;
+  lzws_byte_t* destination_buffer;
 
   result = lzws_create_destination_buffer_for_decompressor(&destination_buffer, &destination_buffer_length, quiet);
   if (result != 0) {

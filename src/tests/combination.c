@@ -27,7 +27,7 @@ static const bool unaligned_bit_groups_values[] = {true, false};
 
 static inline lzws_result_t test_compressor(
   lzws_test_compressor_t function, va_list args, size_t buffer_length,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups)
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups)
 {
   lzws_compressor_state_t* state_ptr;
 
@@ -61,7 +61,7 @@ static inline lzws_result_t process_compressor_combinations(lzws_test_compressor
     for (size_t jndex = 0; jndex < WITHOUT_MAGIC_HEADERS_LENGTH; jndex++) {
       bool without_magic_header = without_magic_headers[jndex];
 
-      for (lzws_symbol_fast_t max_code_bit_length = LZWS_LOWEST_MAX_CODE_BIT_LENGTH; max_code_bit_length <= LZWS_BIGGEST_MAX_CODE_BIT_LENGTH; max_code_bit_length++) {
+      for (lzws_byte_fast_t max_code_bit_length = LZWS_LOWEST_MAX_CODE_BIT_LENGTH; max_code_bit_length <= LZWS_BIGGEST_MAX_CODE_BIT_LENGTH; max_code_bit_length++) {
         for (size_t kndex = 0; kndex < BLOCK_MODE_LENGTH; kndex++) {
           bool block_mode = block_modes[kndex];
 

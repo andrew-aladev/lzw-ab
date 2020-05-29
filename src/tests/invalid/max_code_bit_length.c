@@ -8,7 +8,7 @@
 #include "../../compressor/state.h"
 #include "../../log.h"
 
-static const lzws_symbol_t max_code_bit_lengths[] = {
+static const lzws_byte_t max_code_bit_lengths[] = {
   LZWS_LOWEST_MAX_CODE_BIT_LENGTH - 1,
   LZWS_BIGGEST_MAX_CODE_BIT_LENGTH + 1};
 #define MAX_CODE_BIT_LENGTH sizeof(max_code_bit_lengths)
@@ -18,7 +18,7 @@ lzws_result_t lzws_test_invalid_max_code_bit_length()
   lzws_result_t result;
 
   for (size_t index = 0; index < MAX_CODE_BIT_LENGTH; index++) {
-    lzws_symbol_t max_code_bit_length = max_code_bit_lengths[index];
+    lzws_byte_t max_code_bit_length = max_code_bit_lengths[index];
 
     lzws_compressor_state_t* state_ptr;
 

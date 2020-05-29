@@ -8,13 +8,13 @@
 #include "../utils.h"
 #include "common.h"
 
-lzws_result_t lzws_decompressor_read_magic_header(lzws_decompressor_state_t* state_ptr, lzws_symbol_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_magic_header(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   if (*source_length_ptr < 2) {
     return LZWS_DECOMPRESSOR_NEEDS_MORE_SOURCE;
   }
 
-  lzws_symbol_fast_t byte;
+  lzws_byte_fast_t byte;
   lzws_read_byte(&byte, source_ptr, source_length_ptr);
 
   bool quiet = state_ptr->quiet;
@@ -42,17 +42,17 @@ lzws_result_t lzws_decompressor_read_magic_header(lzws_decompressor_state_t* sta
   return 0;
 }
 
-lzws_result_t lzws_decompressor_read_header(lzws_decompressor_state_t* state_ptr, lzws_symbol_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_header(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   // Reading first byte for max code bit length and block mode.
   if (*source_length_ptr < 1) {
     return LZWS_DECOMPRESSOR_NEEDS_MORE_SOURCE;
   }
 
-  lzws_symbol_fast_t byte;
+  lzws_byte_fast_t byte;
   lzws_read_byte(&byte, source_ptr, source_length_ptr);
 
-  lzws_symbol_fast_t max_code_bit_length = byte & LZWS_MAX_CODE_BIT_MASK;
+  lzws_byte_fast_t max_code_bit_length = byte & LZWS_MAX_CODE_BIT_MASK;
   if (max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH || max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
     if (!state_ptr->quiet) {
       LZWS_LOG_ERROR("received invalid max code bit length: %u", max_code_bit_length);

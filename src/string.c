@@ -16,7 +16,7 @@
 // -- buffer --
 
 static inline lzws_result_t increase_destination_buffer(
-  lzws_symbol_t** destination_ptr, size_t destination_length,
+  lzws_byte_t** destination_ptr, size_t destination_length,
   size_t* remaining_destination_buffer_length_ptr, size_t destination_buffer_length,
   bool quiet)
 {
@@ -43,8 +43,8 @@ static inline lzws_result_t increase_destination_buffer(
 
 #define BUFFERED_COMPRESS(function, ...)                                                                       \
   while (true) {                                                                                               \
-    lzws_symbol_t* remaining_destination_buffer             = *destination_ptr + *destination_length_ptr;      \
-    size_t         prev_remaining_destination_buffer_length = remaining_destination_buffer_length;             \
+    lzws_byte_t* remaining_destination_buffer             = *destination_ptr + *destination_length_ptr;        \
+    size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;               \
                                                                                                                \
     result = function(__VA_ARGS__, &remaining_destination_buffer, &remaining_destination_buffer_length);       \
                                                                                                                \
@@ -74,8 +74,8 @@ static inline lzws_result_t increase_destination_buffer(
 
 static inline lzws_result_t compress(
   lzws_compressor_state_t* state_ptr,
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool quiet)
 {
   lzws_result_t result;
@@ -94,9 +94,9 @@ static inline lzws_result_t compress(
 }
 
 lzws_result_t lzws_compress_string(
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet)
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet)
 {
   lzws_compressor_state_t* state_ptr;
 
@@ -115,7 +115,7 @@ lzws_result_t lzws_compress_string(
     }
   }
 
-  lzws_symbol_t* destination_buffer;
+  lzws_byte_t* destination_buffer;
 
   result = lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, quiet);
   if (result != 0) {
@@ -148,8 +148,8 @@ lzws_result_t lzws_compress_string(
 
 static inline lzws_result_t decompress(
   lzws_decompressor_state_t* state_ptr,
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool quiet)
 {
   lzws_result_t result;
@@ -157,8 +157,8 @@ static inline lzws_result_t decompress(
   size_t remaining_destination_buffer_length = destination_buffer_length;
 
   while (true) {
-    lzws_symbol_t* remaining_destination_buffer             = *destination_ptr + *destination_length_ptr;
-    size_t         prev_remaining_destination_buffer_length = remaining_destination_buffer_length;
+    lzws_byte_t* remaining_destination_buffer             = *destination_ptr + *destination_length_ptr;
+    size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;
 
     result = lzws_decompress(
       state_ptr,
@@ -206,8 +206,8 @@ static inline lzws_result_t decompress(
 }
 
 lzws_result_t lzws_decompress_string(
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool without_magic_header, bool msb, bool unaligned_bit_groups, bool quiet)
 {
   lzws_decompressor_state_t* state_ptr;
@@ -225,7 +225,7 @@ lzws_result_t lzws_decompress_string(
     }
   }
 
-  lzws_symbol_t* destination_buffer;
+  lzws_byte_t* destination_buffer;
 
   result = lzws_create_destination_buffer_for_decompressor(&destination_buffer, &destination_buffer_length, quiet);
   if (result != 0) {

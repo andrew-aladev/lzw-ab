@@ -14,7 +14,7 @@ SYNOPSIS
 ----
 lzws_result_t lzws_compressor_get_initial_state(
   lzws_compressor_state_t** state_ptr,
-  lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
+  lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
 ----
 
 
@@ -25,7 +25,7 @@ OPTIONS
 
 Other options are related to algorithm customization.
 
-*`lzws_symbol_fast_t max_code_bit_length`*::
+*`lzws_byte_fast_t max_code_bit_length`*::
   Set max code bit length.
   Min value *LZWS_LOWEST_MAX_CODE_BIT_LENGTH*, max - *LZWS_BIGGEST_MAX_CODE_BIT_LENGTH*.
 

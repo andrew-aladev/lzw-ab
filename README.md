@@ -110,8 +110,8 @@ char*  compressed_text;
 size_t compressed_text_length;
 
 lzws_result_t result = lzws_compress_string(
-  (lzws_symbol_t*)text, text_length,
-  (lzws_symbol_t**)&compressed_text, &compressed_text_length, 0,
+  (lzws_byte_t*)text, text_length,
+  (lzws_byte_t**)&compressed_text, &compressed_text_length, 0,
   false, LZWS_BIGGEST_MAX_CODE_BIT_LENGTH, true, false, false, false);
 
 if (result != 0) {

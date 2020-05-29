@@ -9,14 +9,14 @@
 #include "common.h"
 #include "utils.h"
 
-static inline lzws_symbol_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_symbol_fast_t* code_bit_length_ptr, bool msb)
+static inline lzws_byte_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t* code_bit_length_ptr, bool msb)
 {
-  lzws_code_fast_t   code            = *code_ptr;
-  lzws_symbol_fast_t code_bit_length = *code_bit_length_ptr;
+  lzws_code_fast_t code            = *code_ptr;
+  lzws_byte_fast_t code_bit_length = *code_bit_length_ptr;
 
-  lzws_symbol_fast_t remaining_code_bit_length = code_bit_length - 8;
+  lzws_byte_fast_t remaining_code_bit_length = code_bit_length - 8;
 
-  lzws_symbol_fast_t byte;
+  lzws_byte_fast_t byte;
 
   if (msb) {
     // Taking first bits from code.
@@ -39,20 +39,20 @@ static inline lzws_symbol_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_symbo
   return byte;
 }
 
-static inline lzws_symbol_fast_t get_byte_with_remainder(
-  lzws_code_fast_t* code_ptr, lzws_symbol_fast_t* code_bit_length_ptr, lzws_symbol_fast_t remainder, lzws_symbol_fast_t remainder_bit_length, bool msb)
+static inline lzws_byte_fast_t get_byte_with_remainder(
+  lzws_code_fast_t* code_ptr, lzws_byte_fast_t* code_bit_length_ptr, lzws_byte_fast_t remainder, lzws_byte_fast_t remainder_bit_length, bool msb)
 {
   if (remainder_bit_length == 0) {
     return get_byte(code_ptr, code_bit_length_ptr, msb);
   }
 
-  lzws_code_fast_t   code            = *code_ptr;
-  lzws_symbol_fast_t code_bit_length = *code_bit_length_ptr;
+  lzws_code_fast_t code            = *code_ptr;
+  lzws_byte_fast_t code_bit_length = *code_bit_length_ptr;
 
-  lzws_symbol_fast_t current_code_bit_length   = 8 - remainder_bit_length;
-  lzws_symbol_fast_t remaining_code_bit_length = code_bit_length - current_code_bit_length;
+  lzws_byte_fast_t current_code_bit_length   = 8 - remainder_bit_length;
+  lzws_byte_fast_t remaining_code_bit_length = code_bit_length - current_code_bit_length;
 
-  lzws_symbol_fast_t byte;
+  lzws_byte_fast_t byte;
 
   if (msb) {
     // Taking first bits from code.
@@ -81,25 +81,25 @@ static inline lzws_symbol_fast_t get_byte_with_remainder(
   return byte;
 }
 
-lzws_result_t lzws_compressor_write_code(lzws_compressor_state_t* state_ptr, lzws_code_fast_t code, lzws_symbol_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_write_code(lzws_compressor_state_t* state_ptr, lzws_code_fast_t code, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
 {
-  lzws_symbol_fast_t code_bit_length      = state_ptr->last_used_code_bit_length;
-  lzws_symbol_fast_t remainder_bit_length = state_ptr->remainder_bit_length;
+  lzws_byte_fast_t code_bit_length      = state_ptr->last_used_code_bit_length;
+  lzws_byte_fast_t remainder_bit_length = state_ptr->remainder_bit_length;
 
   // Code bit length will always be >= 8.
   // Remainder bit length will always be <= 7.
   // So destination byte length will always be >= 1.
-  lzws_symbol_fast_t destination_byte_length = lzws_floor_bit_length_to_byte_length(code_bit_length + remainder_bit_length);
+  lzws_byte_fast_t destination_byte_length = lzws_floor_bit_length_to_byte_length(code_bit_length + remainder_bit_length);
   if (*destination_length_ptr < destination_byte_length) {
     return LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION;
   }
 
   lzws_compressor_add_destination_byte_length_to_alignment_wrapper(state_ptr, destination_byte_length);
 
-  lzws_symbol_fast_t remainder = state_ptr->remainder;
-  bool               msb       = state_ptr->msb;
+  lzws_byte_fast_t remainder = state_ptr->remainder;
+  bool             msb       = state_ptr->msb;
 
-  lzws_symbol_fast_t byte = get_byte_with_remainder(&code, &code_bit_length, remainder, remainder_bit_length, msb);
+  lzws_byte_fast_t byte = get_byte_with_remainder(&code, &code_bit_length, remainder, remainder_bit_length, msb);
   lzws_compressor_write_byte(state_ptr, byte, destination_ptr, destination_length_ptr);
 
   destination_byte_length--;

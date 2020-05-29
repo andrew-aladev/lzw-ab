@@ -12,7 +12,7 @@
 #include "code.h"
 
 static inline lzws_result_t increase_destination_buffer(
-  lzws_symbol_t** destination_ptr, size_t destination_length,
+  lzws_byte_t** destination_ptr, size_t destination_length,
   size_t* remaining_destination_buffer_length_ptr, size_t destination_buffer_length)
 {
   if (*remaining_destination_buffer_length_ptr == destination_buffer_length) {
@@ -34,8 +34,8 @@ static inline lzws_result_t increase_destination_buffer(
 
 #define BUFFERED_COMPRESS(function, ...)                                                                       \
   while (true) {                                                                                               \
-    lzws_symbol_t* remaining_destination_buffer             = *destination_ptr + *destination_length_ptr;      \
-    size_t         prev_remaining_destination_buffer_length = remaining_destination_buffer_length;             \
+    lzws_byte_t* remaining_destination_buffer             = *destination_ptr + *destination_length_ptr;        \
+    size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;               \
                                                                                                                \
     result = function(__VA_ARGS__, &remaining_destination_buffer, &remaining_destination_buffer_length);       \
                                                                                                                \
@@ -65,7 +65,7 @@ static inline lzws_result_t increase_destination_buffer(
 static inline lzws_result_t compress(
   lzws_compressor_state_t* compressor_state_ptr,
   const lzws_code_t* codes, size_t codes_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length)
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length)
 {
   lzws_result_t result;
 
@@ -96,9 +96,9 @@ static inline lzws_result_t compress(
 lzws_result_t lzws_test_compressor_write_codes(
   lzws_compressor_state_t* compressor_state_ptr,
   const lzws_code_t* codes, size_t codes_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length)
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length)
 {
-  lzws_symbol_t* destination_buffer;
+  lzws_byte_t* destination_buffer;
 
   lzws_result_t result = lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, false);
   if (result != 0) {

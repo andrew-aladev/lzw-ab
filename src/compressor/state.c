@@ -13,7 +13,7 @@
 
 lzws_result_t lzws_compressor_get_initial_state(
   lzws_compressor_state_t** result_state_ptr,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet)
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet)
 {
   if (max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH || max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
     if (!quiet) {

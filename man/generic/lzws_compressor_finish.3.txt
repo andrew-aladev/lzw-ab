@@ -16,7 +16,7 @@ SYNOPSIS
 ----
 lzws_result_t lzws_compressor_finish(
   lzws_compressor_state_t* state_ptr,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr);
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr);
 ----
 
 
@@ -25,7 +25,7 @@ OPTIONS
 *`lzws_compressor_state_t* state_ptr`*::
   Pointer to compressor state provided by *lzws_compressor_get_initial_state*.
 
-*`lzws_symbol_t** destination_ptr`*::
+*`lzws_byte_t** destination_ptr`*::
   Pointer to destination data.
 
 *`size_t* destination_length_ptr`*::

@@ -24,14 +24,14 @@ enum {
 // It is possible to run every test part using 2 apis.
 
 lzws_result_t lzws_tests_compress_string_and_file(
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr,
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr,
   size_t buffer_length,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups);
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups);
 
 lzws_result_t lzws_tests_decompress_string_and_file(
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr,
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr,
   size_t buffer_length,
   bool without_magic_header, bool msb, bool unaligned_bit_groups);
 

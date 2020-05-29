@@ -11,7 +11,7 @@
 
 // clang-format off
 
-const lzws_symbol_t LZWS_BYTES_WITH_REVERSED_BITS[256] = {
+const lzws_byte_t LZWS_BYTES_WITH_REVERSED_BITS[256] = {
 @CMAKE_BYTES_WITH_REVERSED_BITS_TABLE@};
 
 const lzws_code_t LZWS_MASKS_FOR_LAST_BITS[17] = {

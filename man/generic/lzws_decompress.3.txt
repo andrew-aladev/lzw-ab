@@ -14,8 +14,8 @@ SYNOPSIS
 ----
 lzws_result_t lzws_decompress(
   lzws_decompressor_state_t* state_ptr,
-  lzws_symbol_t** source_ptr, size_t* source_length_ptr,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr);
+  lzws_byte_t** source_ptr, size_t* source_length_ptr,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr);
 ----
 
 
@@ -24,13 +24,13 @@ OPTIONS
 *`lzws_decompressor_state_t* state_ptr`*::
   Pointer to decompressor state provided by *lzws_decompressor_get_initial_state*.
 
-*`lzws_symbol_t** source_ptr`*::
+*`lzws_byte_t** source_ptr`*::
   Pointer to source data.
 
 *`size_t* source_length_ptr`*::
   Pointer to source data length.
 
-*`lzws_symbol_t** destination_ptr`*::
+*`lzws_byte_t** destination_ptr`*::
   Pointer to destination data.
 
 *`size_t* destination_length_ptr`*::

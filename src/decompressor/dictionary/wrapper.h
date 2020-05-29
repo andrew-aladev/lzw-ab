@@ -42,7 +42,7 @@ inline bool lzws_decompressor_has_symbol_in_dictionary_wrapper(const lzws_decomp
   return lzws_decompressor_has_symbol_in_dictionary(&state_ptr->dictionary);
 }
 
-inline lzws_symbol_t lzws_decompressor_get_symbol_from_dictionary_wrapper(lzws_decompressor_state_t* state_ptr)
+inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary_wrapper(lzws_decompressor_state_t* state_ptr)
 {
   return lzws_decompressor_get_symbol_from_dictionary(&state_ptr->dictionary);
 }

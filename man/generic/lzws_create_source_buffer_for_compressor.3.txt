@@ -12,13 +12,13 @@ SYNOPSIS
 *#include <lzws/buffer.h>*
 
 ----
-lzws_result_t lzws_create_source_buffer_for_compressor(lzws_symbol_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
+lzws_result_t lzws_create_source_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
 ----
 
 
 OPTIONS
 -------
-*`lzws_symbol_t** buffer_ptr`*::
+*`lzws_byte_t** buffer_ptr`*::
   Pointer to buffer.
 
 *`size_t* buffer_length_ptr`*::

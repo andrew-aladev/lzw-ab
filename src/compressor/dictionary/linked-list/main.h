@@ -27,11 +27,11 @@ void          lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dic
 
 lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   const lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_symbol_fast_t next_symbol);
+  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol);
 
 void lzws_compressor_save_next_code_to_dictionary(
   lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_symbol_fast_t next_symbol, lzws_code_fast_t next_code);
+  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol, lzws_code_fast_t next_code);
 
 inline void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictionary_ptr)
 {
@@ -45,7 +45,7 @@ inline void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictio
     free(next_sibling_codes);
   }
 
-  lzws_symbol_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
+  lzws_byte_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
   if (last_symbol_by_codes != NULL) {
     free(last_symbol_by_codes);
   }

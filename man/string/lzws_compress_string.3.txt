@@ -13,21 +13,21 @@ SYNOPSIS
 
 ----
 lzws_result_t lzws_compress_string(
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
 ----
 
 
 OPTIONS
 -------
-*`lzws_symbol_t* source`*::
+*`lzws_byte_t* source`*::
   Pointer to source data like text.
 
 *`size_t source_length`*::
   Source data length like text length.
 
-*`lzws_symbol_t** destination_ptr`*::
+*`lzws_byte_t** destination_ptr`*::
   Pointer to destination.
 
 *`size_t* destination_length_ptr`*::
@@ -43,7 +43,7 @@ Other options are related to algorithm customization.
 *`bool without_magic_header`*::
   Disable writing of magic header.
 
-*`lzws_symbol_fast_t max_code_bit_length`*::
+*`lzws_byte_fast_t max_code_bit_length`*::
   Set max code bit length.
   Min value *LZWS_LOWEST_MAX_CODE_BIT_LENGTH*, max - *LZWS_BIGGEST_MAX_CODE_BIT_LENGTH*.
   This value will be written into destination header.
@@ -92,8 +92,8 @@ char*  compressed_text;
 size_t compressed_text_length;
 
 lzws_result_t result = lzws_compress_string(
-  (lzws_symbol_t*)text, text_length,
-  (lzws_symbol_t**)&compressed_text, &compressed_text_length, 0,
+  (lzws_byte_t*)text, text_length,
+  (lzws_byte_t**)&compressed_text, &compressed_text_length, 0,
   LZWS_BIGGEST_MAX_CODE_BIT_LENGTH, true, false, false, false);
 
 if (result != 0) {

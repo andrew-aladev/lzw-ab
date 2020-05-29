@@ -16,20 +16,20 @@ typedef struct {
   const lzws_code_t* codes;
   const size_t       codes_length;
 
-  const lzws_symbol_t* symbols;
-  const size_t         symbols_length;
+  const lzws_byte_t* symbols;
+  const size_t       symbols_length;
 } data_t;
 
 // -- any mode --
 
-static const lzws_code_t   data0_1[]    = {254};
-static const lzws_symbol_t symbols0_1[] = {254};
+static const lzws_code_t data0_1[]    = {254};
+static const lzws_byte_t symbols0_1[] = {254};
 
-static const lzws_code_t   data1_2[]    = {250, 4};
-static const lzws_symbol_t symbols1_2[] = {250, 4};
+static const lzws_code_t data1_2[]    = {250, 4};
+static const lzws_byte_t symbols1_2[] = {250, 4};
 
-static const lzws_code_t   data2_3[]    = {255, 3, 150};
-static const lzws_symbol_t symbols2_3[] = {255, 3, 150};
+static const lzws_code_t data2_3[]    = {255, 3, 150};
+static const lzws_byte_t symbols2_3[] = {255, 3, 150};
 
 static const data_t datas[] = {
   {data0_1, 1, symbols0_1, 1},
@@ -39,23 +39,23 @@ static const size_t datas_length = sizeof(datas) / sizeof(data_t);
 
 // -- block mode --
 
-static const lzws_code_t   data3_2[]    = {5, LZWS_CLEAR_CODE};
-static const lzws_symbol_t symbols3_1[] = {5};
+static const lzws_code_t data3_2[]    = {5, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols3_1[] = {5};
 
-static const lzws_code_t   data4_3[]    = {132, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE};
-static const lzws_symbol_t symbols4_3[] = {132, 132, 132};
+static const lzws_code_t data4_3[]    = {132, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols4_3[] = {132, 132, 132};
 
-static const lzws_code_t   data5_3[]    = {100, LZWS_CLEAR_CODE, 200};
-static const lzws_symbol_t symbols5_2[] = {100, 200};
+static const lzws_code_t data5_3[]    = {100, LZWS_CLEAR_CODE, 200};
+static const lzws_byte_t symbols5_2[] = {100, 200};
 
-static const lzws_code_t   data6_4[]    = {100, LZWS_CLEAR_CODE, 200, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
-static const lzws_symbol_t symbols6_4[] = {100, 200, 200, 200};
+static const lzws_code_t data6_4[]    = {100, LZWS_CLEAR_CODE, 200, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
+static const lzws_byte_t symbols6_4[] = {100, 200, 200, 200};
 
-static const lzws_code_t   data7_4[]    = {70, LZWS_CLEAR_CODE, 30, LZWS_CLEAR_CODE};
-static const lzws_symbol_t symbols7_2[] = {70, 30};
+static const lzws_code_t data7_4[]    = {70, LZWS_CLEAR_CODE, 30, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols7_2[] = {70, 30};
 
-static const lzws_code_t   data8_8[]    = {70, 80, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1, LZWS_CLEAR_CODE, 30, 40, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE};
-static const lzws_symbol_t symbols8_8[] = {70, 80, 80, 80, 30, 40, 30, 40};
+static const lzws_code_t data8_8[]    = {70, 80, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1, LZWS_CLEAR_CODE, 30, 40, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols8_8[] = {70, 80, 80, 80, 30, 40, 30, 40};
 
 static const data_t datas_for_enabled_block_mode[] = {
   {data3_2, 2, symbols3_1, 1},
@@ -68,14 +68,14 @@ static const size_t datas_for_enabled_block_mode_length = sizeof(datas_for_enabl
 
 // -- block mode disabled --
 
-static const lzws_code_t   data9_2[]    = {8, LZWS_FIRST_FREE_CODE};
-static const lzws_symbol_t symbols9_3[] = {8, 8, 8};
+static const lzws_code_t data9_2[]    = {8, LZWS_FIRST_FREE_CODE};
+static const lzws_byte_t symbols9_3[] = {8, 8, 8};
 
-static const lzws_code_t   data10_3[]    = {15, 20, LZWS_FIRST_FREE_CODE + 1};
-static const lzws_symbol_t symbols10_4[] = {15, 20, 20, 20};
+static const lzws_code_t data10_3[]    = {15, 20, LZWS_FIRST_FREE_CODE + 1};
+static const lzws_byte_t symbols10_4[] = {15, 20, 20, 20};
 
-static const lzws_code_t   data11_3[]    = {2, 9, LZWS_FIRST_FREE_CODE};
-static const lzws_symbol_t symbols11_4[] = {2, 9, 2, 9};
+static const lzws_code_t data11_3[]    = {2, 9, LZWS_FIRST_FREE_CODE};
+static const lzws_byte_t symbols11_4[] = {2, 9, 2, 9};
 
 static const data_t datas_for_disabled_block_mode[] = {
   {data9_2, 2, symbols9_3, 3},
@@ -89,8 +89,8 @@ static inline lzws_result_t test_data(
   lzws_compressor_state_t* compressor_state_ptr, lzws_decompressor_state_t* decompressor_state_ptr,
   const data_t* data_ptr, size_t buffer_length)
 {
-  lzws_symbol_t* source;
-  size_t         source_length;
+  lzws_byte_t* source;
+  size_t       source_length;
 
   lzws_result_t result = lzws_test_compressor_write_codes(
     compressor_state_ptr,
@@ -104,8 +104,8 @@ static inline lzws_result_t test_data(
 
   lzws_compressor_reset_last_used_data(compressor_state_ptr);
 
-  lzws_symbol_t* destination;
-  size_t         destination_length;
+  lzws_byte_t* destination;
+  size_t       destination_length;
 
   result = lzws_tests_decompress_string_and_file(
     source, source_length,

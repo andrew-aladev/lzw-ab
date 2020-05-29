@@ -20,8 +20,8 @@
 
 typedef uint_fast8_t lzws_result_t;
 
-typedef uint8_t      lzws_symbol_t;
-typedef uint_fast8_t lzws_symbol_fast_t;
+typedef uint8_t      lzws_byte_t;
+typedef uint_fast8_t lzws_byte_fast_t;
 
 typedef uint16_t      lzws_code_t;
 typedef uint_fast16_t lzws_code_fast_t;

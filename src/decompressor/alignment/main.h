@@ -7,19 +7,19 @@
 
 #include "common.h"
 
-inline void lzws_decompressor_initialize_alignment(lzws_decompressor_alignment_t* alignment_ptr, lzws_symbol_fast_t free_code_bit_length)
+inline void lzws_decompressor_initialize_alignment(lzws_decompressor_alignment_t* alignment_ptr, lzws_byte_fast_t free_code_bit_length)
 {
   alignment_ptr->free_code_bit_length = free_code_bit_length;
   alignment_ptr->source_byte_length   = 0;
 }
 
-inline void lzws_decompressor_add_source_byte_length_to_alignment(lzws_decompressor_alignment_t* alignment_ptr, lzws_symbol_fast_t source_byte_length)
+inline void lzws_decompressor_add_source_byte_length_to_alignment(lzws_decompressor_alignment_t* alignment_ptr, lzws_byte_fast_t source_byte_length)
 {
   // Source byte length can be aligned by free code bit length * 8.
   alignment_ptr->source_byte_length = (alignment_ptr->source_byte_length + source_byte_length) % alignment_ptr->free_code_bit_length;
 }
 
-inline bool lzws_decompressor_need_to_read_alignment(const lzws_decompressor_alignment_t* alignment_ptr, lzws_symbol_fast_t free_code_bit_length)
+inline bool lzws_decompressor_need_to_read_alignment(const lzws_decompressor_alignment_t* alignment_ptr, lzws_byte_fast_t free_code_bit_length)
 {
   return alignment_ptr->free_code_bit_length != free_code_bit_length;
 }
@@ -29,7 +29,7 @@ inline bool lzws_decompressor_need_to_read_alignment_byte(const lzws_decompresso
   return alignment_ptr->source_byte_length != 0;
 }
 
-inline void lzws_decompressor_reset_alignment_after_reading(lzws_decompressor_alignment_t* alignment_ptr, lzws_symbol_fast_t free_code_bit_length)
+inline void lzws_decompressor_reset_alignment_after_reading(lzws_decompressor_alignment_t* alignment_ptr, lzws_byte_fast_t free_code_bit_length)
 {
   alignment_ptr->free_code_bit_length = free_code_bit_length;
 }

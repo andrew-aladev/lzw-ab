@@ -8,8 +8,8 @@
 #include "../../common.h"
 
 typedef struct {
-  lzws_symbol_fast_t free_code_bit_length;
-  lzws_symbol_fast_t source_byte_length;
+  lzws_byte_fast_t free_code_bit_length;
+  lzws_byte_fast_t source_byte_length;
 } lzws_decompressor_alignment_t;
 
 #endif // LZWS_DECOMPRESSOR_ALIGNMENT_COMMON_H

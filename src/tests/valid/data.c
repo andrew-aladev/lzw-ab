@@ -28,11 +28,11 @@ static inline lzws_result_t test_data(
 {
   size_t data_length = strlen(data);
 
-  lzws_symbol_t* compressed_data;
-  size_t         compressed_data_length;
+  lzws_byte_t* compressed_data;
+  size_t       compressed_data_length;
 
   lzws_result_t result = lzws_tests_compress_string_and_file(
-    (lzws_symbol_t*)data, data_length,
+    (lzws_byte_t*)data, data_length,
     &compressed_data, &compressed_data_length,
     buffer_length,
     compressor_state_ptr->without_magic_header,
@@ -50,7 +50,7 @@ static inline lzws_result_t test_data(
 
   result = lzws_tests_decompress_string_and_file(
     compressed_data, compressed_data_length,
-    (lzws_symbol_t**)&result_data, &result_data_length,
+    (lzws_byte_t**)&result_data, &result_data_length,
     buffer_length,
     decompressor_state_ptr->without_magic_header,
     decompressor_state_ptr->msb,

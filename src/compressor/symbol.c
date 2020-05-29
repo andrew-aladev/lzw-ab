@@ -10,13 +10,13 @@
 #include "ratio/wrapper.h"
 #include "utils.h"
 
-lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_ptr, lzws_symbol_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   if (*source_length_ptr < 1) {
     return LZWS_COMPRESSOR_NEEDS_MORE_SOURCE;
   }
 
-  lzws_symbol_fast_t symbol;
+  lzws_byte_fast_t symbol;
   lzws_compressor_read_byte(state_ptr, &symbol, source_ptr, source_length_ptr);
 
   state_ptr->current_code = symbol;
@@ -25,7 +25,7 @@ lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_p
   return 0;
 }
 
-lzws_result_t lzws_compressor_read_next_symbol(lzws_compressor_state_t* state_ptr, lzws_symbol_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_compressor_read_next_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   if (*source_length_ptr < 1) {
     return LZWS_COMPRESSOR_NEEDS_MORE_SOURCE;
@@ -49,7 +49,7 @@ lzws_result_t lzws_compressor_read_next_symbol(lzws_compressor_state_t* state_pt
     return 0;
   }
 
-  lzws_symbol_fast_t symbol;
+  lzws_byte_fast_t symbol;
   lzws_compressor_read_byte(state_ptr, &symbol, source_ptr, source_length_ptr);
 
   lzws_code_fast_t next_code = lzws_compressor_get_next_code_from_dictionary_wrapper(state_ptr, current_code, symbol);

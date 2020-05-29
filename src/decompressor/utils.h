@@ -7,6 +7,6 @@
 
 #include "state.h"
 
-void lzws_decompressor_read_byte(const lzws_decompressor_state_t* state, lzws_symbol_fast_t* byte_ptr, lzws_symbol_t** source_ptr, size_t* source_length_ptr);
+void lzws_decompressor_read_byte(const lzws_decompressor_state_t* state, lzws_byte_fast_t* byte_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr);
 
 #endif // LZWS_DECOMPRESSOR_UTILS_H

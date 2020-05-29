@@ -13,21 +13,21 @@ SYNOPSIS
 
 ----
 lzws_result_t lzws_decompress_string(
-  lzws_symbol_t* source, size_t source_length,
-  lzws_symbol_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
+  lzws_byte_t* source, size_t source_length,
+  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
   bool without_magic_header, bool msb, bool unaligned_bit_groups, bool quiet);
 ----
 
 
 OPTIONS
 -------
-*`lzws_symbol_t* source`*::
+*`lzws_byte_t* source`*::
   Pointer to source data like text.
 
 *`size_t source_length`*::
   Source data length like text length.
 
-*`lzws_symbol_t** destination_ptr`*::
+*`lzws_byte_t** destination_ptr`*::
   Pointer to destination.
 
 *`size_t* destination_length_ptr`*::
@@ -81,8 +81,8 @@ char*  decompressed_text;
 size_t decompressed_text_length;
 
 lzws_result_t result = lzws_decompress_string(
-  (lzws_symbol_t*)compressed_text, compressed_text_length,
-  (lzws_symbol_t**)&decompressed_text, &decompressed_text_length, 0,
+  (lzws_byte_t*)compressed_text, compressed_text_length,
+  (lzws_byte_t**)&decompressed_text, &decompressed_text_length, 0,
   false, false, false);
 
 if (result != 0) {

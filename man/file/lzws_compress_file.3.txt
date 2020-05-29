@@ -15,7 +15,7 @@ SYNOPSIS
 lzws_result_t lzws_compress_file(
   FILE* source_file, size_t source_buffer_length,
   FILE* destination_file, size_t destination_buffer_length,
-  bool without_magic_header, lzws_symbol_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
+  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
 ----
 
 
@@ -42,7 +42,7 @@ Other options are related to algorithm customization.
 *`bool without_magic_header`*::
   Disable writing of magic header.
 
-*`lzws_symbol_fast_t max_code_bit_length`*::
+*`lzws_byte_fast_t max_code_bit_length`*::
   Set max code bit length.
   Min value *LZWS_LOWEST_MAX_CODE_BIT_LENGTH*, max - *LZWS_BIGGEST_MAX_CODE_BIT_LENGTH*.
   This value will be written into destination header.
