@@ -8,7 +8,6 @@
 
 #include "print.h"
 
-#define PREFIX "  "
 #define TERMINATOR ",\n"
 
 #define INITIALIZE_SPACERS() \
@@ -16,12 +15,10 @@
 
 #define PRINT_SPACER()       \
   if (is_first_spacer) {     \
-    PRINT(PREFIX);           \
     is_first_spacer = false; \
   }                          \
   else {                     \
     PRINT(TERMINATOR);       \
-    PRINT(PREFIX);           \
   }
 
 #endif // PRINT_DATA_H
