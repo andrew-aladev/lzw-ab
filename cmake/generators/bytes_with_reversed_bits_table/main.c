@@ -3,10 +3,8 @@
 // Distributed under the BSD Software License (see LICENSE).
 
 #include <stdint.h>
-#include <stdlib.h>
 
 #include "print.h"
-#include "print_data.h"
 
 #define BYTE_TEMPLATE "0x%02x"
 #define BYTE_LENGTH_PER_LINE 16
@@ -21,12 +19,12 @@ static inline void print_bytes_with_reversed_bits(uint8_t byte)
     byte_with_reversed_bits |= bit_value << (7 - bit_index);
   }
 
-  printf(BYTE_TEMPLATE, byte_with_reversed_bits);
+  PRINTF(BYTE_TEMPLATE, byte_with_reversed_bits);
 }
 
 int main()
 {
-  INITIALIZE_SPACERS();
+  INITIALIZE_SPACERS(true);
 
   uint8_t index = 0;
 

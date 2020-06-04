@@ -3,10 +3,8 @@
 // Distributed under the BSD Software License (see LICENSE).
 
 #include <stdint.h>
-#include <stdlib.h>
 
 #include "print.h"
-#include "print_data.h"
 
 #define XSTR(x) STR(x)
 #define STR(x) #x
@@ -20,7 +18,7 @@
 
 int main()
 {
-  INITIALIZE_SPACERS();
+  INITIALIZE_SPACERS(true);
 
   for (uint8_t index = 0; index <= MAX_INDEX; index++) {
     if (index % BYTE_LENGTH_PER_LINE == 0) {
@@ -30,7 +28,7 @@ int main()
       PRINT(BYTE_LENGTH_GLUE);
     }
 
-    printf(BYTE_TEMPLATE, (1 << index) - 1);
+    PRINTF(BYTE_TEMPLATE, (1 << index) - 1);
   }
 
   return 0;
