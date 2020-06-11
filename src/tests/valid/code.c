@@ -22,12 +22,15 @@ typedef struct {
 
 // -- any mode --
 
+// Each code equals symbol.
 static const lzws_code_t data0_1[]    = {254};
 static const lzws_byte_t symbols0_1[] = {254};
 
+// Each code equals symbol.
 static const lzws_code_t data1_2[]    = {250, 4};
 static const lzws_byte_t symbols1_2[] = {250, 4};
 
+// Each code equals symbol.
 static const lzws_code_t data2_3[]    = {255, 3, 150};
 static const lzws_byte_t symbols2_3[] = {255, 3, 150};
 
@@ -39,48 +42,128 @@ static const size_t datas_length = sizeof(datas) / sizeof(data_t);
 
 // -- block mode --
 
+// Each code equals symbol.
+// Clear code shouldn't change symbols.
 static const lzws_code_t data3_2[]    = {5, LZWS_CLEAR_CODE};
 static const lzws_byte_t symbols3_1[] = {5};
 
-static const lzws_code_t data4_3[]    = {132, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE};
-static const lzws_byte_t symbols4_3[] = {132, 132, 132};
+// Same data with clear code duplicate (UNIX compress compatibility).
+static const lzws_code_t data4_3[]    = {5, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols4_1[] = {5};
 
-static const lzws_code_t data5_3[]    = {100, LZWS_CLEAR_CODE, 200};
-static const lzws_byte_t symbols5_2[] = {100, 200};
+// First free code used to store 132 + 132 codes.
+// Clear code shouldn't change symbols.
+static const lzws_code_t data5_3[]    = {132, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols5_3[] = {132, 132, 132};
 
-static const lzws_code_t data6_4[]    = {100, LZWS_CLEAR_CODE, 200, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
-static const lzws_byte_t symbols6_4[] = {100, 200, 200, 200};
+// Same data with clear code duplicate (UNIX compress compatibility).
+static const lzws_code_t data6_4[]    = {132, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols6_3[] = {132, 132, 132};
 
-static const lzws_code_t data7_4[]    = {70, LZWS_CLEAR_CODE, 30, LZWS_CLEAR_CODE};
-static const lzws_byte_t symbols7_2[] = {70, 30};
+// Each code equals symbol.
+// Clear code shouldn't change symbols.
+static const lzws_code_t data7_3[]    = {100, LZWS_CLEAR_CODE, 200};
+static const lzws_byte_t symbols7_2[] = {100, 200};
 
-static const lzws_code_t data8_8[]    = {70, 80, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1, LZWS_CLEAR_CODE, 30, 40, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE, LZWS_CLEAR_CODE};
-static const lzws_byte_t symbols8_8[] = {70, 80, 80, 80, 30, 40, 30, 40};
+// Same data with clear code duplicate (UNIX compress compatibility).
+static const lzws_code_t data8_4[]    = {100, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE, 200};
+static const lzws_byte_t symbols8_2[] = {100, 200};
+
+// First free code used to store 200 + 200 codes.
+// Clear code shouldn't change symbols.
+static const lzws_code_t data9_4[]    = {100, LZWS_CLEAR_CODE, 200, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
+static const lzws_byte_t symbols9_4[] = {100, 200, 200, 200};
+
+// Same data with clear code duplicate (UNIX compress compatibility).
+static const lzws_code_t data10_5[]    = {100, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE, 200, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
+static const lzws_byte_t symbols10_4[] = {100, 200, 200, 200};
+
+// Each code equals symbol.
+// Clear code shouldn't change symbols.
+static const lzws_code_t data11_4[]    = {70, LZWS_CLEAR_CODE, 30, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols11_2[] = {70, 30};
+
+// Same data with clear code duplicate (UNIX compress compatibility).
+static const lzws_code_t data12_6[]    = {70, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE, 30, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols12_2[] = {70, 30};
+
+// Second free code from first group used to store 80 + 80 codes.
+// First free code from second group used to store 30 + 40 codes.
+// Clear code shouldn't change symbols.
+static const lzws_code_t data13_8[] = {
+  70,
+  80,
+  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1,
+  LZWS_CLEAR_CODE,
+  30,
+  40,
+  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE,
+  LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols13_8[] = {
+  70,
+  80,
+  80,
+  80,
+  30,
+  40,
+  30,
+  40};
+
+// Same data with clear code duplicate (UNIX compress compatibility).
+static const lzws_code_t data14_10[] = {
+  70,
+  80,
+  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1,
+  LZWS_CLEAR_CODE,
+  LZWS_CLEAR_CODE,
+  30,
+  40,
+  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE,
+  LZWS_CLEAR_CODE,
+  LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols14_8[] = {
+  70,
+  80,
+  80,
+  80,
+  30,
+  40,
+  30,
+  40};
 
 static const data_t datas_for_enabled_block_mode[] = {
   {data3_2, 2, symbols3_1, 1},
-  {data4_3, 3, symbols4_3, 3},
-  {data5_3, 3, symbols5_2, 2},
-  {data6_4, 4, symbols6_4, 4},
-  {data7_4, 4, symbols7_2, 2},
-  {data8_8, 8, symbols8_8, 8}};
+  {data4_3, 3, symbols4_1, 1},
+  {data5_3, 3, symbols5_3, 3},
+  {data6_4, 4, symbols6_3, 3},
+  {data7_3, 3, symbols7_2, 2},
+  {data8_4, 4, symbols8_2, 2},
+  {data9_4, 4, symbols9_4, 4},
+  {data10_5, 5, symbols10_4, 4},
+  {data11_4, 4, symbols11_2, 2},
+  {data12_6, 6, symbols12_2, 2},
+  {data13_8, 8, symbols13_8, 8},
+  {data14_10, 10, symbols14_8, 8}};
 static const size_t datas_for_enabled_block_mode_length = sizeof(datas_for_enabled_block_mode) / sizeof(data_t);
 
 // -- block mode disabled --
 
-static const lzws_code_t data9_2[]    = {8, LZWS_FIRST_FREE_CODE};
-static const lzws_byte_t symbols9_3[] = {8, 8, 8};
+// First free code used to store 8 + 8 codes.
+static const lzws_code_t data15_2[]    = {8, LZWS_FIRST_FREE_CODE};
+static const lzws_byte_t symbols15_3[] = {8, 8, 8};
 
-static const lzws_code_t data10_3[]    = {15, 20, LZWS_FIRST_FREE_CODE + 1};
-static const lzws_byte_t symbols10_4[] = {15, 20, 20, 20};
+// Second free code used to store 20 + 20 codes.
+static const lzws_code_t data16_3[]    = {15, 20, LZWS_FIRST_FREE_CODE + 1};
+static const lzws_byte_t symbols16_4[] = {15, 20, 20, 20};
 
-static const lzws_code_t data11_3[]    = {2, 9, LZWS_FIRST_FREE_CODE};
-static const lzws_byte_t symbols11_4[] = {2, 9, 2, 9};
+// First free code used to store 2 + 9 codes.
+static const lzws_code_t data17_3[]    = {2, 9, LZWS_FIRST_FREE_CODE};
+static const lzws_byte_t symbols17_4[] = {2, 9, 2, 9};
 
 static const data_t datas_for_disabled_block_mode[] = {
-  {data9_2, 2, symbols9_3, 3},
-  {data10_3, 3, symbols10_4, 4},
-  {data11_3, 3, symbols11_4, 4}};
+  {data15_2, 2, symbols15_3, 3},
+  {data16_3, 3, symbols16_4, 4},
+  {data17_3, 3, symbols17_4, 4}};
 static const size_t datas_for_disabled_block_mode_length = sizeof(datas_for_disabled_block_mode) / sizeof(data_t);
 
 // -- test --
