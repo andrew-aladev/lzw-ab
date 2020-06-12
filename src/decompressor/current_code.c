@@ -22,16 +22,20 @@ lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state
 
   if (state_ptr->block_mode && code == LZWS_CLEAR_CODE) {
     // Some UNIX compress implementations can provide clear code as first code.
-    // So in terms of compatibility decompressor have to just ignore it.
 
-    // We are reading first code, so we don't need to clear state and remainder, it has been already done.
+    // We need to clear state after reading clear code.
+    lzws_decompressor_clear_state(state_ptr);
+
+    // It is possible to keep prefix code in state as is.
+    // Algorithm won't touch it without reinitialization.
 
     if (!state_ptr->unaligned_bit_groups) {
+      // Remainder is a part of alignment, we need to clear it.
+      lzws_decompressor_clear_remainder(state_ptr);
+
       // We need to read alignment after reading clear code.
       state_ptr->status = LZWS_DECOMPRESSOR_READ_ALIGNMENT_BEFORE_FIRST_CODE;
     }
-
-    // It is possible to keep prefix code in state as is.
 
     return 0;
   }

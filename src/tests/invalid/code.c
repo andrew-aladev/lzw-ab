@@ -122,15 +122,12 @@ static inline lzws_result_t test_all_datas(
   lzws_result_t result;
 
   if (compressor_state_ptr->block_mode) {
-    // Codes test won't provide alignment bits.
-    if (compressor_state_ptr->unaligned_bit_groups) {
-      result = test_datas(
-        compressor_state_ptr, decompressor_state_ptr,
-        datas_for_enabled_block_mode, datas_for_enabled_block_mode_length, buffer_length);
+    result = test_datas(
+      compressor_state_ptr, decompressor_state_ptr,
+      datas_for_enabled_block_mode, datas_for_enabled_block_mode_length, buffer_length);
 
-      if (result != 0) {
-        return 1;
-      }
+    if (result != 0) {
+      return 1;
     }
   }
   else {
