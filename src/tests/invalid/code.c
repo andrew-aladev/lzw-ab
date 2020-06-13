@@ -17,13 +17,13 @@ typedef struct {
 
 // -- block mode --
 
-// First free code should be a char code.
+// First free code should be a char code or clear code.
 static const lzws_code_t data0_1[] = {LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
 
 // Last code is greater than next code (equals to first free code).
 static const lzws_code_t data1_2[] = {1, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1};
 
-// Code after clear code should be a char code.
+// Code after clear code should be a char code or clear code.
 static const lzws_code_t data2_3[] = {1, LZWS_CLEAR_CODE, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
 
 // Last code is greater than next code (equals to first free code).
