@@ -183,7 +183,6 @@ Generic API:
 - [compressor_with_sparse_array.txt](doc/compressor_with_sparse_array.txt)
 - [decompressor.txt](doc/decompressor.txt)
 - [output_compatibility.txt](doc/output_compatibility.txt)
-- [real_world_testing.txt](doc/real_world_testing.txt)
 
 ## License
 
