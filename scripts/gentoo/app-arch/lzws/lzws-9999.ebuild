@@ -8,6 +8,7 @@ inherit cmake-multilib cmake-utils git-r3
 DESCRIPTION="LZW streaming compressor/decompressor compatible with UNIX compress."
 HOMEPAGE="https://github.com/andrew-aladev/lzws"
 EGIT_REPO_URI="https://github.com/andrew-aladev/lzws.git"
+EGIT_SUBMODULES=()
 
 LICENSE="BSD-3-Clause"
 SLOT="0"
