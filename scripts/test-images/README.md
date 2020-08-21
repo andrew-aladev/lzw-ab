@@ -16,12 +16,6 @@ Max required RAM ~ `2 GB` per core.
 
 Please start `docker` and `qemu-binfmt` services.
 
-Than allow other users in `/etc/fuse.conf`:
-
-```
-user_allow_other
-```
-
 Than add your local user to `/etc/subuid` and `/etc/subgid`:
 
 ```
