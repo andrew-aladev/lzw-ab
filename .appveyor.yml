@@ -1,4 +1,4 @@
-image: Ubuntu
+image: Ubuntu2004
 
 init:
   - sh: sudo apt-get install -y libgmp-dev

@@ -1,7 +1,7 @@
 language: c
 
-dist: bionic
-osx_image: xcode11.5
+dist: focal
+osx_image: xcode11.6
 
 jobs:
   include:
