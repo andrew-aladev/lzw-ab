@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=test_x86_64-pc-linux-gnu
+ARG FROM_IMAGE=test_i686-unknown-linux-gnu
 FROM $FROM_IMAGE
 
 COPY root/ /
