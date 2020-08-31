@@ -1,8 +1,8 @@
 # LZW streaming compressor/decompressor
 
-| Travis | AppVeyor | Cirrus | Circle | Codecov |
-| :---:  | :---:    | :---:  | :---:  | :---:   |
-| [![Travis test status](https://travis-ci.com/andrew-aladev/lzws.svg?branch=master)](https://travis-ci.com/andrew-aladev/lzws) | [![AppVeyor test status](https://ci.appveyor.com/api/projects/status/github/andrew-aladev/lzws?branch=master&svg=true)](https://ci.appveyor.com/project/andrew-aladev/lzws/branch/master) | [![Cirrus test status](https://api.cirrus-ci.com/github/andrew-aladev/lzws.svg?branch=master)](https://cirrus-ci.com/github/andrew-aladev/lzws) | [![Circle test status](https://circleci.com/gh/andrew-aladev/lzws/tree/master.svg?style=shield)](https://circleci.com/gh/andrew-aladev/lzws/tree/master) | [![Codecov](https://codecov.io/gh/andrew-aladev/lzws/branch/master/graph/badge.svg)](https://codecov.io/gh/andrew-aladev/lzws) |
+| Travis | AppVeyor | Circle | Codecov |
+| :---:  | :---:    | :---:  | :---:   |
+| [![Travis test status](https://travis-ci.com/andrew-aladev/lzws.svg?branch=master)](https://travis-ci.com/andrew-aladev/lzws) | [![AppVeyor test status](https://ci.appveyor.com/api/projects/status/github/andrew-aladev/lzws?branch=master&svg=true)](https://ci.appveyor.com/project/andrew-aladev/lzws/branch/master) | [![Circle test status](https://circleci.com/gh/andrew-aladev/lzws/tree/master.svg?style=shield)](https://circleci.com/gh/andrew-aladev/lzws/tree/master) | [![Codecov](https://codecov.io/gh/andrew-aladev/lzws/branch/master/graph/badge.svg)](https://codecov.io/gh/andrew-aladev/lzws) |
 
 LZW streaming compressor/decompressor based on LZW AB compatible with UNIX compress.
 It has no legacy code from [ncompress](https://github.com/vapier/ncompress/blob/ncompress-4.2.4/compress42.c).
@@ -137,13 +137,9 @@ See universal test script [scripts/toolchains.sh](scripts/toolchains.sh) for CI.
 Please visit [scripts/test-images](scripts/test-images).
 You can run this test script using many native and cross images.
 
-Cirrus CI uses `x86_64-unknown-linux-gnu` image, Circle CI - `x86_64-gentoo-linux-musl` image.
-
-
 ## Real world testing
 
 See [lzws archive collector](https://github.com/andrew-aladev/lzws-archive-collector).
-
 
 ## Man
 
