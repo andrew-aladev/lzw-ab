@@ -9,10 +9,7 @@ if (LZWS_SHARED)
 
   add_executable (${EXAMPLE_TARGET} ${SOURCES})
   target_link_libraries (${EXAMPLE_TARGET} ${LIB_TARGET})
-
-  if (CMAKE_CAN_RUN_EXE)
-    add_test (${EXAMPLE_NAME} ${EXAMPLE_TARGET})
-  endif ()
+  add_test (${EXAMPLE_NAME} ${EXAMPLE_TARGET})
 endif ()
 
 if (LZWS_STATIC)
@@ -21,8 +18,5 @@ if (LZWS_STATIC)
 
   add_executable (${STATIC_EXAMPLE_TARGET} ${SOURCES})
   target_link_libraries (${STATIC_EXAMPLE_TARGET} ${STATIC_LIB_TARGET})
-
-  if (CMAKE_CAN_RUN_EXE)
-    add_test (${STATIC_EXAMPLE_NAME} ${STATIC_EXAMPLE_TARGET})
-  endif ()
+  add_test (${STATIC_EXAMPLE_NAME} ${STATIC_EXAMPLE_TARGET})
 endif ()
