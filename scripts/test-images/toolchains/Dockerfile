@@ -1,0 +1,5 @@
+ARG FROM_IMAGE=stage3-amd64-nomultilib
+FROM $FROM_IMAGE
+
+ARG TARGETS=x86_64-unknown-linux-gnu
+ENV TARGETS=$TARGETS

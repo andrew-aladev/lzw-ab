@@ -6,3 +6,4 @@ cd "$DIR"
 
 ./native/build.sh
 ./cross/build.sh
+./toolchains/build.sh

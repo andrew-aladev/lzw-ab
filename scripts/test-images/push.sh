@@ -6,3 +6,4 @@ cd "$DIR"
 
 ./native/push.sh
 ./cross/push.sh
+./toolchains/push.sh
