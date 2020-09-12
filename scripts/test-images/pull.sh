@@ -6,4 +6,3 @@ cd "$DIR"
 
 ./native/pull.sh
 ./cross/pull.sh
-./toolchains/pull.sh

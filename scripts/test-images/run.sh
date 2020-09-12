@@ -6,4 +6,3 @@ cd "$DIR"
 
 ./native/run.sh
 ./cross/run.sh
-./toolchains/run.sh
