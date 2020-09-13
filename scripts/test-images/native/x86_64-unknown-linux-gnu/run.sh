@@ -4,7 +4,5 @@ set -e
 DIR=$(dirname "${BASH_SOURCE[0]}")
 cd "$DIR"
 
-source "../../utils.sh"
-source "./env.sh"
-
-run_image
+./0-toolchain/run.sh
+./1-main/run.sh
