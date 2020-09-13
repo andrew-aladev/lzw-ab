@@ -7,4 +7,4 @@ cd "$DIR"
 source "../../../utils.sh"
 source "./env.sh"
 
-build "FROM_IMAGE"
+build "FROM_IMAGE TARGET"
