@@ -7,4 +7,11 @@ cd "$DIR"
 source "../../../utils.sh"
 source "./env.sh"
 
-build "FROM_IMAGE TARGET"
+fusermount -zu attached-toolchain-root || true
+bindfs -r -o nonempty "../../../data/toolchain-root" attached-toolchain-root
+build "FROM_IMAGE TARGET" || error=$?
+fusermount -zu attached-toolchain-root || true
+
+if [ ! -z "$error" ]; then
+  exit "$error"
+fi

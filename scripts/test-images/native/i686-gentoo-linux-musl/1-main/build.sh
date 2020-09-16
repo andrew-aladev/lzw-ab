@@ -7,4 +7,11 @@ cd "$DIR"
 source "../../../utils.sh"
 source "./env.sh"
 
-build "FROM_IMAGE"
+fusermount -zu attached-main-root || true
+bindfs -r -o nonempty "../../../data/main-root" attached-main-root
+build "FROM_IMAGE" || error=$?
+fusermount -zu attached-main-root || true
+
+if [ ! -z "$error" ]; then
+  exit "$error"
+fi
