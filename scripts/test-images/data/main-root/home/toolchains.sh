@@ -12,8 +12,10 @@ if [ -d "$DIR" ]; then
 
   for dictionary in "linked-list" "sparse-array"; do
     echo "dictionary: ${dictionary}"
+
     cd "$dictionary"
     make test
+
     cd ".."
   done
 

@@ -11,6 +11,9 @@ DIR="/mnt/data"
 mkdir -p "$DIR"
 cd "$DIR"
 
+# Cleanup.
+find "." -mindepth 1 -delete
+
 git clone "https://github.com/andrew-aladev/lzws.git" \
   --single-branch \
   --branch "master" \
@@ -21,6 +24,7 @@ cd "build"
 
 for dictionary in "linked-list" "sparse-array"; do
   echo "dictionary: ${dictionary}"
+
   mkdir -p "$dictionary"
   cd "$dictionary"
 
@@ -32,6 +36,7 @@ for dictionary in "linked-list" "sparse-array"; do
     -DLZWS_TESTS=ON \
     -DLZWS_EXAMPLES=ON \
     -DLZWS_MAN=OFF
+
   make clean
   make -j${CPU_COUNT}
 
