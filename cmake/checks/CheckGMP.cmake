@@ -16,8 +16,8 @@ function (cmake_check_gmp)
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
 
-  include (CheckC11)
-  cmake_check_c11 ()
+  include (CheckC18)
+  cmake_check_c18 ()
 
   include (CheckRunnable)
   cmake_check_runnable ()
@@ -25,7 +25,7 @@ function (cmake_check_gmp)
   try_compile (
     COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
     CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C11_C_FLAGS} ${CMAKE_WERROR_C_FLAGS}"
+      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C18_C_FLAGS} ${CMAKE_WERROR_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_GMP_INCLUDE_PATH=${CMAKE_GMP_INCLUDE_PATH}"
       "-DCMAKE_GMP_SHARED_LIBRARY_PATH=${CMAKE_GMP_SHARED_LIBRARY_PATH}"
