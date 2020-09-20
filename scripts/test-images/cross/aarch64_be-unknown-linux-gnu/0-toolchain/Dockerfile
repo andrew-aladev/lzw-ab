@@ -8,3 +8,5 @@ COPY prefix-root "/usr/${TARGET}"
 COPY attached-toolchain-root /
 RUN build.sh -v dev-vcs/git dev-util/cmake && \
   target-build.sh -v dev-libs/gmp
+
+RUN target-cleanup.sh

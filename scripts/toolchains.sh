@@ -67,10 +67,10 @@ while read -r toolchain; do
       -DLZWS_MAN=OFF \
       -DCMAKE_BUILD_TYPE=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "DEBUG"; else echo "RELEASE"; fi) \
       || continue
-    make clean || continue
-    make -j${CPU_COUNT} || continue
 
-    CTEST_OUTPUT_ON_FAILURE=1 make test || continue
+    make clean
+    make -j${CPU_COUNT}
+    CTEST_OUTPUT_ON_FAILURE=1 make test
 
     if ([ "$COVERAGE_TOOLCHAIN" = true ] && [ -n "$CI" ] && [ -n "$TRAVIS" ]); then
       if (echo "$toolchain" | grep -q "clang/coverage.cmake$"); then

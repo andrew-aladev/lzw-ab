@@ -8,24 +8,26 @@ source "/usr/local/bin/target-env.sh"
 CPU_COUNT=$(grep -c "^processor" "/proc/cpuinfo" || sysctl -n "hw.ncpu")
 
 DIR="/mnt/data"
-mkdir -p "$DIR"
-cd "$DIR"
 
-# Cleanup.
-find "." -mindepth 1 -delete
+if [ ! -d "$DIR" ]; then
+  mkdir -p "$DIR"
 
-git clone "https://github.com/andrew-aladev/lzws.git" \
-  --single-branch \
-  --branch "master" \
-  --depth 1 \
-  "."
+  git clone "https://github.com/andrew-aladev/lzws.git" \
+    --single-branch \
+    --branch "master" \
+    --depth 1 \
+    "$DIR"
+fi
 
-cd "build"
+cd "$DIR/build"
 
 for dictionary in "linked-list" "sparse-array"; do
   echo "dictionary: ${dictionary}"
 
-  mkdir -p "$dictionary"
+  # Cleanup.
+  rm -rf "$dictionary"
+
+  mkdir "$dictionary"
   cd "$dictionary"
 
   TARGET="$TARGET" cmake "../.." \
@@ -35,7 +37,8 @@ for dictionary in "linked-list" "sparse-array"; do
     -DLZWS_STATIC=ON \
     -DLZWS_TESTS=ON \
     -DLZWS_EXAMPLES=ON \
-    -DLZWS_MAN=OFF
+    -DLZWS_MAN=OFF \
+    -DCMAKE_BUILD_TYPE="RELEASE"
 
   make clean
   make -j${CPU_COUNT}

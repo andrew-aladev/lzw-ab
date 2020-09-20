@@ -4,11 +4,8 @@ set -e
 DIR=$(dirname "${BASH_SOURCE[0]}")
 cd "$DIR"
 
-TMP_PATH="$(pwd)/../../../../tmp"
-TMP_SIZE="64"
+SOURCE_PATH=$(realpath "../../../..")
+VOLUME_OPTIONS="--volume ${SOURCE_PATH}:/mnt/data"
 
-../../../temp/mount.sh "$TMP_PATH" "$TMP_SIZE"
-DATA_OPTIONS="--volume ${TMP_PATH}:/mnt/data"
-
-CONTAINER_OPTIONS="$DATA_OPTIONS" ./0-toolchain/run.sh
-CONTAINER_OPTIONS="$DATA_OPTIONS" ./1-main/run.sh
+CONTAINER_OPTIONS="$VOLUME_OPTIONS" ./0-toolchain/run.sh
+CONTAINER_OPTIONS="$VOLUME_OPTIONS" ./1-main/run.sh
