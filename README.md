@@ -45,8 +45,6 @@ sudo dpkg -i lzws-sparse-array-*.x86_64.deb
 sudo rpm -i lzws-sparse-array-*.x86_64.rpm
 ```
 
-You can find ebuilds for Gentoo in [scripts folder](scripts/gentoo).
-
 On other systems you can unpack `lzws-sparse-array-*.x86_64.tar.gz` to `/usr/local` or build from source.
 
 ## Quick start
