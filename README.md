@@ -45,7 +45,8 @@ sudo dpkg -i lzws-sparse-array-*.x86_64.deb
 sudo rpm -i lzws-sparse-array-*.x86_64.rpm
 ```
 
-On other systems you can unpack `lzws-sparse-array-*.x86_64.tar.gz` to `/usr/local` or build from source.
+You can also use [overlay](https://github.com/andrew-aladev/overlay) for gentoo.
+On other systems please unpack `lzws-sparse-array-*.x86_64.tar.gz` to `/usr/local` or build from source.
 
 ## Quick start
 
