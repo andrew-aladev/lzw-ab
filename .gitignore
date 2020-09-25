@@ -1,5 +1,5 @@
-build/*
-src/config.h
-tmp
 attached-main-root/*
 attached-toolchain-root/*
+build/*
+src/config.h
+tmp/*
