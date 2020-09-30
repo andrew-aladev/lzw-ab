@@ -18,7 +18,6 @@ addons:
   homebrew:
     packages:
       - gmp
-    update: true
 
 script:
   - scripts/toolchains.sh
