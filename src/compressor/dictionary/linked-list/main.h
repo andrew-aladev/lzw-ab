@@ -9,7 +9,8 @@
 
 #include "common.h"
 
-inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code)
+inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* dictionary_ptr,
+                                                  lzws_code_fast_t              first_free_code)
 {
   dictionary_ptr->first_child_codes    = NULL;
   dictionary_ptr->next_sibling_codes   = NULL;
@@ -22,16 +23,18 @@ inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* 
   dictionary_ptr->next_sibling_codes_offset = first_free_code;
 }
 
-lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t total_codes_length, const lzws_compressor_options_t* options);
+lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* dictionary_ptr,
+                                                  size_t total_codes_length, const lzws_compressor_options_t* options);
 void          lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t total_codes_length);
 
-lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
-  const lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol);
+lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(const lzws_compressor_dictionary_t* dictionary_ptr,
+                                                               lzws_code_fast_t                    first_free_code,
+                                                               lzws_code_fast_t                    current_code,
+                                                               lzws_byte_fast_t                    next_symbol);
 
-void lzws_compressor_save_next_code_to_dictionary(
-  lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code,
-  lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol, lzws_code_fast_t next_code);
+void lzws_compressor_save_next_code_to_dictionary(lzws_compressor_dictionary_t* dictionary_ptr,
+                                                  lzws_code_fast_t first_free_code, lzws_code_fast_t current_code,
+                                                  lzws_byte_fast_t next_symbol, lzws_code_fast_t next_code);
 
 inline void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictionary_ptr)
 {

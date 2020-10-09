@@ -26,15 +26,9 @@ inline lzws_code_fast_t lzws_get_max_value_for_bits(lzws_byte_fast_t bit_length)
   return lzws_get_mask_for_last_bits(bit_length);
 }
 
-inline size_t lzws_floor_bit_length_to_byte_length(size_t bit_length)
-{
-  return bit_length >> 3;
-}
+inline size_t lzws_floor_bit_length_to_byte_length(size_t bit_length) { return bit_length >> 3; }
 
-inline size_t lzws_ceil_bit_length_to_byte_length(size_t bit_length)
-{
-  return (bit_length + 7) >> 3;
-}
+inline size_t lzws_ceil_bit_length_to_byte_length(size_t bit_length) { return (bit_length + 7) >> 3; }
 
 inline void lzws_read_byte(lzws_byte_fast_t* byte_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
@@ -52,7 +46,8 @@ inline void lzws_write_byte(lzws_byte_fast_t byte, lzws_byte_t** destination_ptr
 
 // Keeping universal fill and allocate functions despite the losses of coverage percent.
 
-inline void lzws_fill_array(void* array, size_t size_of_item, size_t length, const void* item_ptr, bool item_bytes_are_identical)
+inline void lzws_fill_array(void* array, size_t size_of_item, size_t length, const void* item_ptr,
+                            bool item_bytes_are_identical)
 {
   const lzws_byte_t* bytes      = item_ptr;
   lzws_byte_t        first_byte = bytes[0];
@@ -67,7 +62,8 @@ inline void lzws_fill_array(void* array, size_t size_of_item, size_t length, con
   }
 }
 
-inline void* lzws_allocate_array(lzws_byte_fast_t size_of_item, size_t length, const void* item_ptr, bool item_is_zero, bool item_bytes_are_identical)
+inline void* lzws_allocate_array(lzws_byte_fast_t size_of_item, size_t length, const void* item_ptr, bool item_is_zero,
+                                 bool item_bytes_are_identical)
 {
   size_t size = size_of_item * length;
 

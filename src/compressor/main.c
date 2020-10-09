@@ -30,7 +30,8 @@
     return result;                                     \
   }
 
-lzws_result_t lzws_compress(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compress(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr,
+                            lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
 {
   lzws_result_t result;
 
@@ -71,22 +72,26 @@ lzws_result_t lzws_compress(lzws_compressor_state_t* state_ptr, lzws_byte_t** so
         break;
 
       case LZWS_COMPRESSOR_WRITE_REMAINDER_BEFORE_READ_NEXT_SYMBOL:
-        result = lzws_compressor_write_remainder_before_read_next_symbol(state_ptr, destination_ptr, destination_length_ptr);
+        result =
+          lzws_compressor_write_remainder_before_read_next_symbol(state_ptr, destination_ptr, destination_length_ptr);
         RETURN_FAILED_RESULT();
         break;
 
       case LZWS_COMPRESSOR_WRITE_REMAINDER_BEFORE_CURRENT_CODE:
-        result = lzws_compressor_write_remainder_before_current_code(state_ptr, destination_ptr, destination_length_ptr);
+        result =
+          lzws_compressor_write_remainder_before_current_code(state_ptr, destination_ptr, destination_length_ptr);
         RETURN_FAILED_RESULT();
         break;
 
       case LZWS_COMPRESSOR_WRITE_ALIGNMENT_BEFORE_READ_NEXT_SYMBOL:
-        result = lzws_compressor_write_alignment_before_read_next_symbol(state_ptr, destination_ptr, destination_length_ptr);
+        result =
+          lzws_compressor_write_alignment_before_read_next_symbol(state_ptr, destination_ptr, destination_length_ptr);
         RETURN_FAILED_RESULT();
         break;
 
       case LZWS_COMPRESSOR_WRITE_ALIGNMENT_BEFORE_CURRENT_CODE:
-        result = lzws_compressor_write_alignment_before_current_code(state_ptr, destination_ptr, destination_length_ptr);
+        result =
+          lzws_compressor_write_alignment_before_current_code(state_ptr, destination_ptr, destination_length_ptr);
         RETURN_FAILED_RESULT();
         break;
 
@@ -102,7 +107,8 @@ lzws_result_t lzws_compress(lzws_compressor_state_t* state_ptr, lzws_byte_t** so
   return 0;
 }
 
-lzws_result_t lzws_compressor_finish(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_finish(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr,
+                                     size_t* destination_length_ptr)
 {
   switch (state_ptr->status) {
     case LZWS_COMPRESSOR_WRITE_MAGIC_HEADER:

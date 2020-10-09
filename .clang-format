@@ -4,7 +4,7 @@ BasedOnStyle: Google
 AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
 BreakBeforeBraces: Stroustrup
-ColumnLimit: 0
+ColumnLimit: 120
 ConstructorInitializerIndentWidth: 2
 ContinuationIndentWidth: 2
 SpacesBeforeTrailingComments: 1

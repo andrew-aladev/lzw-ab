@@ -34,10 +34,7 @@ static const lzws_byte_t symbols1_2[] = {250, 4};
 static const lzws_code_t data2_3[]    = {255, 3, 150};
 static const lzws_byte_t symbols2_3[] = {255, 3, 150};
 
-static const data_t datas[] = {
-  {data0_1, 1, symbols0_1, 1},
-  {data1_2, 2, symbols1_2, 2},
-  {data2_3, 3, symbols2_3, 3}};
+static const data_t datas[] = {{data0_1, 1, symbols0_1, 1}, {data1_2, 2, symbols1_2, 2}, {data2_3, 3, symbols2_3, 3}};
 static const size_t datas_length = sizeof(datas) / sizeof(data_t);
 
 // -- block mode --
@@ -84,7 +81,7 @@ static const lzws_code_t data11_4[]    = {100, LZWS_CLEAR_CODE, 200, LZWS_FIRST_
 static const lzws_byte_t symbols11_4[] = {100, 200, 200, 200};
 
 // Same data with clear code duplicate (UNIX compress compatibility).
-static const lzws_code_t data12_5[]    = {100, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE, 200, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
+static const lzws_code_t data12_5[] = {100, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE, 200, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE};
 static const lzws_byte_t symbols12_4[] = {100, 200, 200, 200};
 
 // Each code equals symbol.
@@ -99,62 +96,22 @@ static const lzws_byte_t symbols14_2[] = {70, 30};
 // Second free code from first group used to store 80 + 80 codes.
 // First free code from second group used to store 30 + 40 codes.
 // Clear code shouldn't change symbols.
-static const lzws_code_t data15_8[] = {
-  70,
-  80,
-  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1,
-  LZWS_CLEAR_CODE,
-  30,
-  40,
-  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE,
-  LZWS_CLEAR_CODE};
-static const lzws_byte_t symbols15_8[] = {
-  70,
-  80,
-  80,
-  80,
-  30,
-  40,
-  30,
-  40};
+static const lzws_code_t data15_8[]    = {70, 80, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1, LZWS_CLEAR_CODE,
+                                       30, 40, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE,     LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols15_8[] = {70, 80, 80, 80, 30, 40, 30, 40};
 
 // Same data with clear code duplicate (UNIX compress compatibility).
 static const lzws_code_t data16_10[] = {
-  70,
-  80,
-  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1,
-  LZWS_CLEAR_CODE,
-  LZWS_CLEAR_CODE,
-  30,
-  40,
-  LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE,
-  LZWS_CLEAR_CODE,
-  LZWS_CLEAR_CODE};
-static const lzws_byte_t symbols16_8[] = {
-  70,
-  80,
-  80,
-  80,
-  30,
-  40,
-  30,
-  40};
+  70, 80, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE + 1, LZWS_CLEAR_CODE, LZWS_CLEAR_CODE,
+  30, 40, LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE,     LZWS_CLEAR_CODE, LZWS_CLEAR_CODE};
+static const lzws_byte_t symbols16_8[] = {70, 80, 80, 80, 30, 40, 30, 40};
 
 static const data_t datas_for_enabled_block_mode[] = {
-  {data3_2, 2, symbols3_1, 1},
-  {data4_3, 3, symbols4_1, 1},
-  {data5_2, 2, symbols5_1, 1},
-  {data6_3, 3, symbols6_1, 1},
-  {data7_3, 3, symbols7_3, 3},
-  {data8_4, 4, symbols8_3, 3},
-  {data9_3, 3, symbols9_2, 2},
-  {data10_4, 4, symbols10_2, 2},
-  {data11_4, 4, symbols11_4, 4},
-  {data12_5, 5, symbols12_4, 4},
-  {data13_4, 4, symbols13_2, 2},
-  {data14_6, 6, symbols14_2, 2},
-  {data15_8, 8, symbols15_8, 8},
-  {data16_10, 10, symbols16_8, 8}};
+  {data3_2, 2, symbols3_1, 1},   {data4_3, 3, symbols4_1, 1},    {data5_2, 2, symbols5_1, 1},
+  {data6_3, 3, symbols6_1, 1},   {data7_3, 3, symbols7_3, 3},    {data8_4, 4, symbols8_3, 3},
+  {data9_3, 3, symbols9_2, 2},   {data10_4, 4, symbols10_2, 2},  {data11_4, 4, symbols11_4, 4},
+  {data12_5, 5, symbols12_4, 4}, {data13_4, 4, symbols13_2, 2},  {data14_6, 6, symbols14_2, 2},
+  {data15_8, 8, symbols15_8, 8}, {data16_10, 10, symbols16_8, 8}};
 static const size_t datas_for_enabled_block_mode_length = sizeof(datas_for_enabled_block_mode) / sizeof(data_t);
 
 // -- block mode disabled --
@@ -172,24 +129,20 @@ static const lzws_code_t data17_3[]    = {2, 9, LZWS_FIRST_FREE_CODE};
 static const lzws_byte_t symbols17_4[] = {2, 9, 2, 9};
 
 static const data_t datas_for_disabled_block_mode[] = {
-  {data15_2, 2, symbols15_3, 3},
-  {data16_3, 3, symbols16_4, 4},
-  {data17_3, 3, symbols17_4, 4}};
+  {data15_2, 2, symbols15_3, 3}, {data16_3, 3, symbols16_4, 4}, {data17_3, 3, symbols17_4, 4}};
 static const size_t datas_for_disabled_block_mode_length = sizeof(datas_for_disabled_block_mode) / sizeof(data_t);
 
 // -- test --
 
-static inline lzws_result_t test_data(
-  lzws_compressor_state_t* compressor_state_ptr, lzws_decompressor_state_t* decompressor_state_ptr,
-  const data_t* data_ptr, size_t buffer_length)
+static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_state_ptr,
+                                      lzws_decompressor_state_t* decompressor_state_ptr, const data_t* data_ptr,
+                                      size_t buffer_length)
 {
   lzws_byte_t* source;
   size_t       source_length;
 
-  lzws_result_t result = lzws_test_compressor_write_codes(
-    compressor_state_ptr,
-    data_ptr->codes, data_ptr->codes_length,
-    &source, &source_length, buffer_length);
+  lzws_result_t result = lzws_test_compressor_write_codes(compressor_state_ptr, data_ptr->codes, data_ptr->codes_length,
+                                                          &source, &source_length, buffer_length);
 
   if (result != 0) {
     LZWS_LOG_ERROR("compressor failed to write codes");
@@ -201,13 +154,10 @@ static inline lzws_result_t test_data(
   lzws_byte_t* destination;
   size_t       destination_length;
 
-  result = lzws_tests_decompress_string_and_file(
-    source, source_length,
-    &destination, &destination_length,
-    buffer_length,
-    decompressor_state_ptr->without_magic_header,
-    decompressor_state_ptr->msb,
-    decompressor_state_ptr->unaligned_bit_groups);
+  result =
+    lzws_tests_decompress_string_and_file(source, source_length, &destination, &destination_length, buffer_length,
+                                          decompressor_state_ptr->without_magic_header, decompressor_state_ptr->msb,
+                                          decompressor_state_ptr->unaligned_bit_groups);
 
   free(source);
 
@@ -217,7 +167,8 @@ static inline lzws_result_t test_data(
   }
 
   if (destination_length != data_ptr->symbols_length) {
-    LZWS_LOG_ERROR("decompressed invalid symbols length %zu, original length %zu", destination_length, data_ptr->symbols_length);
+    LZWS_LOG_ERROR("decompressed invalid symbols length %zu, original length %zu", destination_length,
+                   data_ptr->symbols_length);
     result = 3;
   }
   else if (strncmp((const char*)destination, (const char*)data_ptr->symbols, destination_length) != 0) {
@@ -233,16 +184,14 @@ static inline lzws_result_t test_data(
   return result;
 }
 
-static inline lzws_result_t test_datas(
-  lzws_compressor_state_t* compressor_state_ptr, lzws_decompressor_state_t* decompressor_state_ptr,
-  const data_t* datas, size_t datas_length, size_t buffer_length)
+static inline lzws_result_t test_datas(lzws_compressor_state_t*   compressor_state_ptr,
+                                       lzws_decompressor_state_t* decompressor_state_ptr, const data_t* datas,
+                                       size_t datas_length, size_t buffer_length)
 {
   lzws_result_t result;
 
   for (size_t index = 0; index < datas_length; index++) {
-    result = test_data(
-      compressor_state_ptr, decompressor_state_ptr,
-      &datas[index], buffer_length);
+    result = test_data(compressor_state_ptr, decompressor_state_ptr, &datas[index], buffer_length);
 
     if (result != 0) {
       return result;
@@ -252,31 +201,27 @@ static inline lzws_result_t test_datas(
   return 0;
 }
 
-static inline lzws_result_t test_all_datas(
-  lzws_compressor_state_t* compressor_state_ptr, lzws_decompressor_state_t* decompressor_state_ptr,
-  size_t buffer_length, va_list LZWS_UNUSED(args))
+static inline lzws_result_t test_all_datas(lzws_compressor_state_t*   compressor_state_ptr,
+                                           lzws_decompressor_state_t* decompressor_state_ptr, size_t buffer_length,
+                                           va_list LZWS_UNUSED(args))
 {
-  lzws_result_t result = test_datas(
-    compressor_state_ptr, decompressor_state_ptr,
-    datas, datas_length, buffer_length);
+  lzws_result_t result = test_datas(compressor_state_ptr, decompressor_state_ptr, datas, datas_length, buffer_length);
 
   if (result != 0) {
     return 1;
   }
 
   if (compressor_state_ptr->block_mode) {
-    result = test_datas(
-      compressor_state_ptr, decompressor_state_ptr,
-      datas_for_enabled_block_mode, datas_for_enabled_block_mode_length, buffer_length);
+    result = test_datas(compressor_state_ptr, decompressor_state_ptr, datas_for_enabled_block_mode,
+                        datas_for_enabled_block_mode_length, buffer_length);
 
     if (result != 0) {
       return 2;
     }
   }
   else {
-    result = test_datas(
-      compressor_state_ptr, decompressor_state_ptr,
-      datas_for_disabled_block_mode, datas_for_disabled_block_mode_length, buffer_length);
+    result = test_datas(compressor_state_ptr, decompressor_state_ptr, datas_for_disabled_block_mode,
+                        datas_for_disabled_block_mode_length, buffer_length);
 
     if (result != 0) {
       return 3;

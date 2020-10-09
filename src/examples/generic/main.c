@@ -31,8 +31,7 @@ int main()
   lzws_compressor_state_t* compressor_state_ptr;
 
   lzws_result_t result = lzws_compressor_get_initial_state(
-    &compressor_state_ptr,
-    WITHOUT_MAGIC_HEADER, MAX_CODE_BIT_LENGTH, BLOCK_MODE, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+    &compressor_state_ptr, WITHOUT_MAGIC_HEADER, MAX_CODE_BIT_LENGTH, BLOCK_MODE, MSB, UNALIGNED_BIT_GROUPS, QUIET);
 
   if (result != 0) {
     LZWS_LOG_ERROR("compressor get initial state failed");
@@ -56,10 +55,8 @@ int main()
   lzws_byte_t* remaining_compressor_buffer        = compressor_buffer;
   size_t       remaining_compressor_buffer_length = compressor_buffer_length;
 
-  result = lzws_compress(
-    compressor_state_ptr,
-    (lzws_byte_t**)&remaining_text, &remaining_text_length,
-    &remaining_compressor_buffer, &remaining_compressor_buffer_length);
+  result = lzws_compress(compressor_state_ptr, (lzws_byte_t**)&remaining_text, &remaining_text_length,
+                         &remaining_compressor_buffer, &remaining_compressor_buffer_length);
 
   if (result != 0) {
     LZWS_LOG_ERROR("compressor failed");
@@ -70,9 +67,8 @@ int main()
     return 3;
   }
 
-  result = lzws_compressor_finish(
-    compressor_state_ptr,
-    &remaining_compressor_buffer, &remaining_compressor_buffer_length);
+  result =
+    lzws_compressor_finish(compressor_state_ptr, &remaining_compressor_buffer, &remaining_compressor_buffer_length);
 
   if (result != 0) {
     LZWS_LOG_ERROR("finish compressor failed");
@@ -89,9 +85,8 @@ int main()
 
   lzws_decompressor_state_t* decompressor_state_ptr;
 
-  result = lzws_decompressor_get_initial_state(
-    &decompressor_state_ptr,
-    WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+  result = lzws_decompressor_get_initial_state(&decompressor_state_ptr, WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS,
+                                               QUIET);
 
   if (result != 0) {
     LZWS_LOG_ERROR("decompressor get initial state failed");
@@ -119,10 +114,9 @@ int main()
   lzws_byte_t* remaining_decompressor_buffer        = decompressor_buffer;
   size_t       remaining_decompressor_buffer_length = decompressor_buffer_length;
 
-  result = lzws_decompress(
-    decompressor_state_ptr,
-    (lzws_byte_t**)&remaining_compressed_text, &remaining_compressed_text_length,
-    &remaining_decompressor_buffer, &remaining_decompressor_buffer_length);
+  result = lzws_decompress(decompressor_state_ptr, (lzws_byte_t**)&remaining_compressed_text,
+                           &remaining_compressed_text_length, &remaining_decompressor_buffer,
+                           &remaining_decompressor_buffer_length);
 
   if (result != 0) {
     LZWS_LOG_ERROR("decompressor failed");

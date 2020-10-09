@@ -10,13 +10,15 @@
 #include "dictionary/wrapper.h"
 #include "ratio/wrapper.h"
 
-lzws_result_t lzws_compressor_get_initial_state(lzws_compressor_state_t** result_state_ptr, const lzws_compressor_options_t* options)
+lzws_result_t lzws_compressor_get_initial_state(lzws_compressor_state_t**        result_state_ptr,
+                                                const lzws_compressor_options_t* options)
 {
   if (options == NULL) {
     options = &LZWS_COMPRESSOR_DEFAULT_OPTIONS;
   }
   else {
-    if (options->max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH || options->max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
+    if (options->max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH ||
+        options->max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
       if (!options->quiet) {
         LZWS_LOG_ERROR("invalid max code bit length: %u", options->max_code_bit_length);
       }
@@ -37,7 +39,7 @@ lzws_result_t lzws_compressor_get_initial_state(lzws_compressor_state_t** result
   }
 
   state_ptr->options = *options;
-  state_ptr->status  = options->without_magic_header ? LZWS_COMPRESSOR_WRITE_HEADER : LZWS_COMPRESSOR_WRITE_MAGIC_HEADER;
+  state_ptr->status = options->without_magic_header ? LZWS_COMPRESSOR_WRITE_HEADER : LZWS_COMPRESSOR_WRITE_MAGIC_HEADER;
 
   state_ptr->first_free_code = lzws_get_first_free_code(options->block_mode);
   state_ptr->max_code        = lzws_get_max_value_for_bits(options->max_code_bit_length);

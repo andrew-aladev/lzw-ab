@@ -8,10 +8,12 @@
 #include "../utils.h"
 
 extern inline void lzws_compressor_initialize_alignment_wrapper(lzws_compressor_state_t* state_ptr);
-extern inline void lzws_compressor_add_destination_byte_length_to_alignment_wrapper(lzws_compressor_state_t* state_ptr, lzws_byte_fast_t destination_byte_length);
+extern inline void lzws_compressor_add_destination_byte_length_to_alignment_wrapper(
+  lzws_compressor_state_t* state_ptr, lzws_byte_fast_t destination_byte_length);
 extern inline bool lzws_compressor_need_to_write_alignment_wrapper(const lzws_compressor_state_t* state_ptr);
 
-static inline lzws_result_t write_alignment(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
+static inline lzws_result_t write_alignment(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr,
+                                            size_t* destination_length_ptr)
 {
   lzws_compressor_alignment_t* alignment_ptr = &state_ptr->alignment;
 
@@ -32,7 +34,9 @@ static inline lzws_result_t write_alignment(lzws_compressor_state_t* state_ptr, 
   return 0;
 }
 
-lzws_result_t lzws_compressor_write_alignment_before_read_next_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_write_alignment_before_read_next_symbol(lzws_compressor_state_t* state_ptr,
+                                                                      lzws_byte_t**            destination_ptr,
+                                                                      size_t*                  destination_length_ptr)
 {
   lzws_result_t result = write_alignment(state_ptr, destination_ptr, destination_length_ptr);
   if (result != 0) {
@@ -44,7 +48,9 @@ lzws_result_t lzws_compressor_write_alignment_before_read_next_symbol(lzws_compr
   return 0;
 }
 
-lzws_result_t lzws_compressor_write_alignment_before_current_code(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_write_alignment_before_current_code(lzws_compressor_state_t* state_ptr,
+                                                                  lzws_byte_t**            destination_ptr,
+                                                                  size_t*                  destination_length_ptr)
 {
   lzws_result_t result = write_alignment(state_ptr, destination_ptr, destination_length_ptr);
   if (result != 0) {
@@ -56,7 +62,9 @@ lzws_result_t lzws_compressor_write_alignment_before_current_code(lzws_compresso
   return 0;
 }
 
-lzws_result_t lzws_compressor_flush_alignment_before_current_code(lzws_compressor_state_t* state_ptr, lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_flush_alignment_before_current_code(lzws_compressor_state_t* state_ptr,
+                                                                  lzws_byte_t**            destination_ptr,
+                                                                  size_t*                  destination_length_ptr)
 {
   lzws_result_t result = write_alignment(state_ptr, destination_ptr, destination_length_ptr);
   if (result != 0) {

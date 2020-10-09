@@ -40,10 +40,9 @@ int main()
     return 2;
   }
 
-  lzws_result_t result = lzws_compress_file(
-    text_file, BUFFER_LENGTH,
-    compressed_text_file, BUFFER_LENGTH,
-    WITHOUT_MAGIC_HEADER, MAX_CODE_BIT_LENGTH, BLOCK_MODE, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+  lzws_result_t result =
+    lzws_compress_file(text_file, BUFFER_LENGTH, compressed_text_file, BUFFER_LENGTH, WITHOUT_MAGIC_HEADER,
+                       MAX_CODE_BIT_LENGTH, BLOCK_MODE, MSB, UNALIGNED_BIT_GROUPS, QUIET);
 
   fclose(text_file);
 
@@ -83,10 +82,8 @@ int main()
     return 6;
   }
 
-  result = lzws_decompress_file(
-    compressed_text_file, BUFFER_LENGTH,
-    decompressed_text_file, BUFFER_LENGTH,
-    WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+  result = lzws_decompress_file(compressed_text_file, BUFFER_LENGTH, decompressed_text_file, BUFFER_LENGTH,
+                                WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS, QUIET);
 
   fclose(compressed_text_file);
   fclose(decompressed_text_file);

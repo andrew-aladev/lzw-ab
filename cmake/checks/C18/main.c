@@ -41,7 +41,4 @@ noreturn void func()
   exit(0);
 }
 
-int main()
-{
-  func();
-}
+int main() { func(); }

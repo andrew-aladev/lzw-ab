@@ -11,7 +11,8 @@
 #include "dictionary/wrapper.h"
 #include "remainder.h"
 
-lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr,
+                                                size_t* source_length_ptr)
 {
   lzws_code_fast_t code;
 
@@ -42,7 +43,8 @@ lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state
 
   if (code >= LZWS_ALPHABET_LENGTH) {
     if (!state_ptr->options.quiet) {
-      LZWS_LOG_ERROR("received first code: " LZWS_FAST_CODE_FORMAT " greater than max first code: %u", code, LZWS_ALPHABET_LENGTH - 1);
+      LZWS_LOG_ERROR("received first code: " LZWS_FAST_CODE_FORMAT " greater than max first code: %u", code,
+                     LZWS_ALPHABET_LENGTH - 1);
     }
 
     return LZWS_DECOMPRESSOR_CORRUPTED_SOURCE;
@@ -73,7 +75,8 @@ static inline lzws_code_fast_t get_next_code(lzws_decompressor_state_t* state_pt
   return next_code;
 }
 
-lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr,
+                                               size_t* source_length_ptr)
 {
   lzws_code_fast_t code;
 
@@ -113,7 +116,8 @@ lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_
     lzws_code_fast_t next_code = get_next_code(state_ptr);
     if (code > next_code) {
       if (!state_ptr->options.quiet) {
-        LZWS_LOG_ERROR("received code: " LZWS_FAST_CODE_FORMAT " greater than next code: " LZWS_FAST_CODE_FORMAT, code, next_code);
+        LZWS_LOG_ERROR("received code: " LZWS_FAST_CODE_FORMAT " greater than next code: " LZWS_FAST_CODE_FORMAT, code,
+                       next_code);
       }
 
       return LZWS_DECOMPRESSOR_CORRUPTED_SOURCE;

@@ -8,10 +8,12 @@
 #include "../utils.h"
 
 extern inline void lzws_decompressor_initialize_alignment_wrapper(lzws_decompressor_state_t* state_ptr);
-extern inline void lzws_decompressor_add_source_byte_length_to_alignment_wrapper(lzws_decompressor_state_t* state_ptr, lzws_byte_fast_t source_byte_length);
+extern inline void lzws_decompressor_add_source_byte_length_to_alignment_wrapper(lzws_decompressor_state_t* state_ptr,
+                                                                                 lzws_byte_fast_t source_byte_length);
 extern inline bool lzws_decompressor_need_to_read_alignment_wrapper(const lzws_decompressor_state_t* state_ptr);
 
-static inline lzws_result_t read_alignment(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+static inline lzws_result_t read_alignment(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr,
+                                           size_t* source_length_ptr)
 {
   lzws_decompressor_alignment_t* alignment_ptr = &state_ptr->alignment;
 
@@ -36,7 +38,8 @@ static inline lzws_result_t read_alignment(lzws_decompressor_state_t* state_ptr,
   return 0;
 }
 
-lzws_result_t lzws_decompressor_read_alignment_before_first_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_alignment_before_first_code(lzws_decompressor_state_t* state_ptr,
+                                                                 lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   lzws_result_t result = read_alignment(state_ptr, source_ptr, source_length_ptr);
   if (result != 0) {
@@ -48,7 +51,8 @@ lzws_result_t lzws_decompressor_read_alignment_before_first_code(lzws_decompress
   return 0;
 }
 
-lzws_result_t lzws_decompressor_read_alignment_before_next_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_alignment_before_next_code(lzws_decompressor_state_t* state_ptr,
+                                                                lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   lzws_result_t result = read_alignment(state_ptr, source_ptr, source_length_ptr);
   if (result != 0) {

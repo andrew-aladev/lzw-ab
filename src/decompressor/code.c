@@ -9,7 +9,8 @@
 #include "common.h"
 #include "utils.h"
 
-static inline void add_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bit_length, lzws_byte_fast_t byte, bool msb)
+static inline void add_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bit_length, lzws_byte_fast_t byte,
+                            bool msb)
 {
   lzws_code_fast_t code = *code_ptr;
 
@@ -25,10 +26,10 @@ static inline void add_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bi
   *code_ptr = code;
 }
 
-static inline void add_byte_with_remainder(
-  lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bit_length, lzws_byte_fast_t target_code_bit_length,
-  lzws_byte_fast_t byte, lzws_byte_fast_t* remainder_ptr, lzws_byte_fast_t* remainder_bit_length_ptr,
-  bool msb)
+static inline void add_byte_with_remainder(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bit_length,
+                                           lzws_byte_fast_t target_code_bit_length, lzws_byte_fast_t byte,
+                                           lzws_byte_fast_t* remainder_ptr, lzws_byte_fast_t* remainder_bit_length_ptr,
+                                           bool msb)
 {
   lzws_byte_fast_t code_part_bit_length = target_code_bit_length - code_bit_length;
   if (code_part_bit_length == 8) {
@@ -72,7 +73,8 @@ static inline void add_byte_with_remainder(
   *remainder_bit_length_ptr = remainder_bit_length;
 }
 
-lzws_result_t lzws_decompressor_read_code(lzws_decompressor_state_t* state_ptr, lzws_code_fast_t* code_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_code(lzws_decompressor_state_t* state_ptr, lzws_code_fast_t* code_ptr,
+                                          lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   lzws_byte_fast_t target_code_bit_length = state_ptr->free_code_bit_length;
   lzws_byte_fast_t remainder_bit_length   = state_ptr->remainder_bit_length;
@@ -80,7 +82,8 @@ lzws_result_t lzws_decompressor_read_code(lzws_decompressor_state_t* state_ptr, 
   // Target code bit length will always be >= 8.
   // Remainder bit length will always be <= 7.
   // So source byte length will always be >= 1.
-  lzws_byte_fast_t source_byte_length = lzws_ceil_bit_length_to_byte_length(target_code_bit_length - remainder_bit_length);
+  lzws_byte_fast_t source_byte_length =
+    lzws_ceil_bit_length_to_byte_length(target_code_bit_length - remainder_bit_length);
   if (*source_length_ptr < source_byte_length) {
     return LZWS_DECOMPRESSOR_NEEDS_MORE_SOURCE;
   }
@@ -102,10 +105,8 @@ lzws_result_t lzws_decompressor_read_code(lzws_decompressor_state_t* state_ptr, 
   }
 
   lzws_decompressor_read_byte(state_ptr, &byte, source_ptr, source_length_ptr);
-  add_byte_with_remainder(
-    &code, code_bit_length, target_code_bit_length,
-    byte, &state_ptr->remainder, &state_ptr->remainder_bit_length,
-    msb);
+  add_byte_with_remainder(&code, code_bit_length, target_code_bit_length, byte, &state_ptr->remainder,
+                          &state_ptr->remainder_bit_length, msb);
 
   *code_ptr = code;
 

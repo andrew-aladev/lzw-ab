@@ -17,10 +17,14 @@ inline void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary
   // Other data will be initialized during allocating of dictionary.
 }
 
-lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, size_t total_codes_length, lzws_code_fast_t first_free_code, const lzws_decompressor_options_t* options);
+lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr,
+                                                    size_t total_codes_length, lzws_code_fast_t first_free_code,
+                                                    const lzws_decompressor_options_t* options);
 
 void lzws_decompressor_write_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code);
-void lzws_decompressor_add_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t prefix_code, lzws_code_fast_t current_code, lzws_code_fast_t next_code);
+void lzws_decompressor_add_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr,
+                                              lzws_code_fast_t prefix_code, lzws_code_fast_t current_code,
+                                              lzws_code_fast_t next_code);
 
 inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr)
 {

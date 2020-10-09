@@ -10,7 +10,8 @@
 #include "ratio/wrapper.h"
 #include "utils.h"
 
-lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr,
+                                                size_t* source_length_ptr)
 {
   if (*source_length_ptr < 1) {
     return LZWS_COMPRESSOR_NEEDS_MORE_SOURCE;
@@ -25,7 +26,8 @@ lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_p
   return 0;
 }
 
-lzws_result_t lzws_compressor_read_next_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_compressor_read_next_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr,
+                                               size_t* source_length_ptr)
 {
   if (*source_length_ptr < 1) {
     return LZWS_COMPRESSOR_NEEDS_MORE_SOURCE;

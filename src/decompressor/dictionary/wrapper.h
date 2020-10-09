@@ -17,7 +17,8 @@ inline lzws_result_t lzws_decompressor_allocate_dictionary_wrapper(lzws_decompre
 {
   size_t total_codes_length = lzws_decompressor_get_total_codes_length(state_ptr);
 
-  lzws_result_t result = lzws_decompressor_allocate_dictionary(&state_ptr->dictionary, total_codes_length, state_ptr->first_free_code, &state_ptr->options);
+  lzws_result_t result = lzws_decompressor_allocate_dictionary(&state_ptr->dictionary, total_codes_length,
+                                                               state_ptr->first_free_code, &state_ptr->options);
   if (result != 0) {
     return result;
   }
@@ -27,12 +28,15 @@ inline lzws_result_t lzws_decompressor_allocate_dictionary_wrapper(lzws_decompre
   return 0;
 }
 
-inline void lzws_decompressor_write_code_to_dictionary_wrapper(lzws_decompressor_state_t* state_ptr, lzws_code_fast_t code)
+inline void lzws_decompressor_write_code_to_dictionary_wrapper(lzws_decompressor_state_t* state_ptr,
+                                                               lzws_code_fast_t           code)
 {
   lzws_decompressor_write_code_to_dictionary(&state_ptr->dictionary, code);
 }
 
-inline void lzws_decompressor_add_code_to_dictionary_wrapper(lzws_decompressor_state_t* state_ptr, lzws_code_fast_t prefix_code, lzws_code_fast_t current_code, lzws_code_fast_t next_code)
+inline void lzws_decompressor_add_code_to_dictionary_wrapper(lzws_decompressor_state_t* state_ptr,
+                                                             lzws_code_fast_t           prefix_code,
+                                                             lzws_code_fast_t current_code, lzws_code_fast_t next_code)
 {
   lzws_decompressor_add_code_to_dictionary(&state_ptr->dictionary, prefix_code, current_code, next_code);
 }

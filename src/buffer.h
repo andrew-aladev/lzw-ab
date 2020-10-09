@@ -10,10 +10,7 @@
 #include "common.h"
 
 // Possible results:
-enum {
-  LZWS_BUFFER_ALLOCATE_FAILED = 1,
-  LZWS_BUFFER_REALLOCATE_FAILED
-};
+enum { LZWS_BUFFER_ALLOCATE_FAILED = 1, LZWS_BUFFER_REALLOCATE_FAILED };
 
 // Compressor dictionary implementations has different performance.
 // Buffers shouldn't be a bottleneck.
@@ -31,9 +28,12 @@ enum {
 #define LZWS_DEFAULT_DESTINATION_BUFFER_LENGTH_FOR_DECOMPRESSOR (1 << 18) // 256 KB
 
 lzws_result_t lzws_create_source_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
-lzws_result_t lzws_create_destination_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
-lzws_result_t lzws_create_source_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
-lzws_result_t lzws_create_destination_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
+lzws_result_t lzws_create_destination_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr,
+                                                            bool quiet);
+lzws_result_t lzws_create_source_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr,
+                                                         bool quiet);
+lzws_result_t lzws_create_destination_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr,
+                                                              bool quiet);
 
 lzws_result_t lzws_resize_buffer(lzws_byte_t** buffer_ptr, size_t buffer_length, bool quiet);
 

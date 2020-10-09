@@ -15,9 +15,8 @@ enum {
   LZWS_TEST_CODES_COMPRESSOR_UNEXPECTED_ERROR
 };
 
-lzws_result_t lzws_test_compressor_write_codes(
-  lzws_compressor_state_t* compressor_state_ptr,
-  const lzws_code_t* codes, size_t codes_length,
-  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length);
+lzws_result_t lzws_test_compressor_write_codes(lzws_compressor_state_t* compressor_state_ptr, const lzws_code_t* codes,
+                                               size_t codes_length, lzws_byte_t** destination_ptr,
+                                               size_t* destination_length_ptr, size_t destination_buffer_length);
 
 #endif // LZWS_TESTS_CODES_H

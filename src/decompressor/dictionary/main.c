@@ -16,7 +16,8 @@ static inline size_t get_codes_length(const lzws_decompressor_dictionary_t* dict
 
 // -- code index --
 
-static inline lzws_code_fast_t get_code_index(const lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code)
+static inline lzws_code_fast_t get_code_index(const lzws_decompressor_dictionary_t* dictionary_ptr,
+                                              lzws_code_fast_t                      code)
 {
   return code - dictionary_ptr->codes_offset;
 }
@@ -25,7 +26,9 @@ static inline lzws_code_fast_t get_code_index(const lzws_decompressor_dictionary
 
 extern inline void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
-lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, size_t total_codes_length, lzws_code_fast_t first_free_code, const lzws_decompressor_options_t* options)
+lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr,
+                                                    size_t total_codes_length, lzws_code_fast_t first_free_code,
+                                                    const lzws_decompressor_options_t* options)
 {
   // We won't store char codes and clear code.
   dictionary_ptr->codes_offset = first_free_code;
@@ -89,7 +92,8 @@ lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary
   return 0;
 }
 
-static inline lzws_byte_t prepare_output(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code, bool is_prefix)
+static inline lzws_byte_t prepare_output(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code,
+                                         bool is_prefix)
 {
   // First symbol equals last symbol when code is a prefix.
   // Output buffer is reversed.
@@ -148,7 +152,9 @@ void lzws_decompressor_write_code_to_dictionary(lzws_decompressor_dictionary_t* 
 // Prefix code - ab, current code - cde, next code - abc.
 // We can see that last symbol of next code equals to first symbol of current code.
 
-void lzws_decompressor_add_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t prefix_code, lzws_code_fast_t current_code, lzws_code_fast_t next_code)
+void lzws_decompressor_add_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr,
+                                              lzws_code_fast_t prefix_code, lzws_code_fast_t current_code,
+                                              lzws_code_fast_t next_code)
 {
   lzws_code_fast_t code;
 
@@ -167,6 +173,6 @@ void lzws_decompressor_add_code_to_dictionary(lzws_decompressor_dictionary_t* di
   dictionary_ptr->last_symbol_by_codes[next_code_index] = first_symbol;
 }
 
-extern inline bool        lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr);
+extern inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr);
 extern inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 extern inline void        lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);

@@ -17,7 +17,6 @@
   fprintf(target, __VA_ARGS__);                                               \
   fputs("\n", target);
 
-#define LZWS_LOG_ERROR(...) \
-  _LZWS_LOG(stderr, __VA_ARGS__)
+#define LZWS_LOG_ERROR(...) _LZWS_LOG(stderr, __VA_ARGS__)
 
 #endif // LZWS_LOG_H

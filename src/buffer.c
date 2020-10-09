@@ -6,7 +6,8 @@
 
 #include "log.h"
 
-static inline lzws_result_t create_buffer(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, size_t default_buffer_length, bool quiet)
+static inline lzws_result_t create_buffer(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr,
+                                          size_t default_buffer_length, bool quiet)
 {
   size_t buffer_length = *buffer_length_ptr;
   if (buffer_length == 0) {
@@ -33,17 +34,20 @@ lzws_result_t lzws_create_source_buffer_for_compressor(lzws_byte_t** buffer_ptr,
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_SOURCE_BUFFER_LENGTH_FOR_COMPRESSOR, quiet);
 }
 
-lzws_result_t lzws_create_destination_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
+lzws_result_t lzws_create_destination_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr,
+                                                            bool quiet)
 {
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_DESTINATION_BUFFER_LENGTH_FOR_COMPRESSOR, quiet);
 }
 
-lzws_result_t lzws_create_source_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
+lzws_result_t lzws_create_source_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr,
+                                                         bool quiet)
 {
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_SOURCE_BUFFER_LENGTH_FOR_DECOMPRESSOR, quiet);
 }
 
-lzws_result_t lzws_create_destination_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
+lzws_result_t lzws_create_destination_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr,
+                                                              bool quiet)
 {
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_DESTINATION_BUFFER_LENGTH_FOR_DECOMPRESSOR, quiet);
 }

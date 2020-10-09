@@ -22,14 +22,13 @@ enum {
 // Destination buffer length can be equal to 0.
 // In this case it will be replaced with default value.
 
-lzws_result_t lzws_compress_string(
-  lzws_byte_t* source, size_t source_length,
-  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
-  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
+lzws_result_t lzws_compress_string(lzws_byte_t* source, size_t source_length, lzws_byte_t** destination_ptr,
+                                   size_t* destination_length_ptr, size_t destination_buffer_length,
+                                   bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode,
+                                   bool msb, bool unaligned_bit_groups, bool quiet);
 
-lzws_result_t lzws_decompress_string(
-  lzws_byte_t* source, size_t source_length,
-  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
-  bool without_magic_header, bool msb, bool unaligned_bit_groups, bool quiet);
+lzws_result_t lzws_decompress_string(lzws_byte_t* source, size_t source_length, lzws_byte_t** destination_ptr,
+                                     size_t* destination_length_ptr, size_t destination_buffer_length,
+                                     bool without_magic_header, bool msb, bool unaligned_bit_groups, bool quiet);
 
 #endif // LZWS_STRING_H

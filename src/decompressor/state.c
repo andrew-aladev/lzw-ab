@@ -9,7 +9,8 @@
 #include "alignment/wrapper.h"
 #include "dictionary/wrapper.h"
 
-lzws_result_t lzws_decompressor_get_initial_state(lzws_decompressor_state_t** result_state_ptr, const lzws_decompressor_options_t* options)
+lzws_result_t lzws_decompressor_get_initial_state(lzws_decompressor_state_t**        result_state_ptr,
+                                                  const lzws_decompressor_options_t* options)
 {
   if (options == NULL) {
     options = &LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;
@@ -27,7 +28,8 @@ lzws_result_t lzws_decompressor_get_initial_state(lzws_decompressor_state_t** re
   }
 
   state_ptr->options = *options;
-  state_ptr->status  = options->without_magic_header ? LZWS_DECOMPRESSOR_READ_HEADER : LZWS_DECOMPRESSOR_READ_MAGIC_HEADER;
+  state_ptr->status =
+    options->without_magic_header ? LZWS_DECOMPRESSOR_READ_HEADER : LZWS_DECOMPRESSOR_READ_MAGIC_HEADER;
 
   state_ptr->free_code_bit_length         = LZWS_LOWEST_MAX_CODE_BIT_LENGTH;
   state_ptr->max_free_code_for_bit_length = lzws_get_max_value_for_bits(LZWS_LOWEST_MAX_CODE_BIT_LENGTH);
