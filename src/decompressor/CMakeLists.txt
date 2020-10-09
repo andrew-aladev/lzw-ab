@@ -16,6 +16,7 @@ set (HEADERS ${HEADERS}
 
 set (SOURCES ${SOURCES}
   "${CMAKE_CURRENT_SOURCE_DIR}/code.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/common.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/current_code.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/header.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/main.c"

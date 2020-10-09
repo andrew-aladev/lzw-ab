@@ -97,7 +97,7 @@ lzws_result_t lzws_compressor_write_code(lzws_compressor_state_t* state_ptr, lzw
   lzws_compressor_add_destination_byte_length_to_alignment_wrapper(state_ptr, destination_byte_length);
 
   lzws_byte_fast_t remainder = state_ptr->remainder;
-  bool             msb       = state_ptr->msb;
+  bool             msb       = state_ptr->options.msb;
 
   lzws_byte_fast_t byte = get_byte_with_remainder(&code, &code_bit_length, remainder, remainder_bit_length, msb);
   lzws_compressor_write_byte(state_ptr, byte, destination_ptr, destination_length_ptr);

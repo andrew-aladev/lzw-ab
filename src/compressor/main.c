@@ -91,7 +91,7 @@ lzws_result_t lzws_compress(lzws_compressor_state_t* state_ptr, lzws_byte_t** so
         break;
 
       default:
-        if (!state_ptr->quiet) {
+        if (!state_ptr->options.quiet) {
           LZWS_LOG_ERROR("unknown status: %u", status);
         }
 
@@ -141,7 +141,7 @@ lzws_result_t lzws_compressor_finish(lzws_compressor_state_t* state_ptr, lzws_by
       return lzws_compressor_flush_remainder(state_ptr, destination_ptr, destination_length_ptr);
 
     default:
-      if (!state_ptr->quiet) {
+      if (!state_ptr->options.quiet) {
         LZWS_LOG_ERROR("unknown status: %u", status);
       }
 

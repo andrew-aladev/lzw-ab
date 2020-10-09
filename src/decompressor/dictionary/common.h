@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-#include "../../common.h"
+#include "../common.h"
 
 typedef struct {
   lzws_code_t* previous_codes;

@@ -89,7 +89,7 @@ lzws_result_t lzws_decompressor_read_code(lzws_decompressor_state_t* state_ptr, 
 
   lzws_code_fast_t code            = state_ptr->remainder;
   lzws_byte_fast_t code_bit_length = remainder_bit_length;
-  bool             msb             = state_ptr->msb;
+  bool             msb             = state_ptr->options.msb;
 
   lzws_byte_fast_t byte;
 

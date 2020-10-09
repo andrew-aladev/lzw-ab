@@ -40,11 +40,11 @@ lzws_result_t lzws_compressor_write_current_code(lzws_compressor_state_t* state_
   // It is possible to keep next symbol in state as is.
   // Algorithm won't touch it without reinitialization.
 
-  if (state_ptr->block_mode && current_code == LZWS_CLEAR_CODE) {
+  if (state_ptr->options.block_mode && current_code == LZWS_CLEAR_CODE) {
     // We need to clear state after writing clear code.
     lzws_compressor_clear_state(state_ptr);
 
-    if (state_ptr->unaligned_bit_groups) {
+    if (state_ptr->options.unaligned_bit_groups) {
       state_ptr->status = LZWS_COMPRESSOR_READ_NEXT_SYMBOL;
     }
     else {

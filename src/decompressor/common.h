@@ -5,6 +5,18 @@
 #if !defined(LZWS_DECOMPRESSOR_COMMON_H)
 #define LZWS_DECOMPRESSOR_COMMON_H
 
+#include "../common.h"
+
+typedef struct {
+  bool without_magic_header;
+  bool block_mode;
+  bool msb;
+  bool unaligned_bit_groups;
+  bool quiet;
+} lzws_decompressor_options_t;
+
+extern const lzws_decompressor_options_t LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;
+
 // Possible results:
 enum {
   LZWS_DECOMPRESSOR_ALLOCATE_FAILED = 1,

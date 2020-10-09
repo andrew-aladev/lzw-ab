@@ -25,7 +25,7 @@ static inline lzws_code_fast_t get_code_index(const lzws_decompressor_dictionary
 
 extern inline void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
-lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, size_t total_codes_length, lzws_code_fast_t first_free_code, bool quiet)
+lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, size_t total_codes_length, lzws_code_fast_t first_free_code, const lzws_decompressor_options_t* options)
 {
   // We won't store char codes and clear code.
   dictionary_ptr->codes_offset = first_free_code;
@@ -39,7 +39,7 @@ lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary
 
   lzws_code_t* previous_codes = malloc(previous_codes_size);
   if (previous_codes == NULL) {
-    if (!quiet) {
+    if (!options->quiet) {
       LZWS_LOG_ERROR("malloc failed, previous codes size: %zu", previous_codes_size);
     }
 
@@ -53,7 +53,7 @@ lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary
 
   lzws_byte_t* last_symbol_by_codes = malloc(last_symbol_by_codes_size);
   if (last_symbol_by_codes == NULL) {
-    if (!quiet) {
+    if (!options->quiet) {
       LZWS_LOG_ERROR("malloc failed, last symbol by codes size: %zu", last_symbol_by_codes_size);
     }
 
@@ -71,7 +71,7 @@ lzws_result_t lzws_decompressor_allocate_dictionary(lzws_decompressor_dictionary
 
   lzws_byte_t* output_buffer = malloc(output_size);
   if (output_buffer == NULL) {
-    if (!quiet) {
+    if (!options->quiet) {
       LZWS_LOG_ERROR("malloc failed, output size: %zu", output_size);
     }
 

@@ -20,7 +20,7 @@ lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state
     return result;
   }
 
-  if (state_ptr->block_mode && code == LZWS_CLEAR_CODE) {
+  if (state_ptr->options.block_mode && code == LZWS_CLEAR_CODE) {
     // Some UNIX compress implementations can provide clear code as first code.
 
     // We need to clear state after reading clear code.
@@ -29,7 +29,7 @@ lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state
     // It is possible to keep prefix code in state as is.
     // Algorithm won't touch it without reinitialization.
 
-    if (!state_ptr->unaligned_bit_groups) {
+    if (!state_ptr->options.unaligned_bit_groups) {
       // Remainder is a part of alignment, we need to clear it.
       lzws_decompressor_clear_remainder(state_ptr);
 
@@ -41,7 +41,7 @@ lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state
   }
 
   if (code >= LZWS_ALPHABET_LENGTH) {
-    if (!state_ptr->quiet) {
+    if (!state_ptr->options.quiet) {
       LZWS_LOG_ERROR("received first code: " LZWS_FAST_CODE_FORMAT " greater than max first code: %u", code, LZWS_ALPHABET_LENGTH - 1);
     }
 
@@ -82,7 +82,7 @@ lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_
     return result;
   }
 
-  if (state_ptr->block_mode && code == LZWS_CLEAR_CODE) {
+  if (state_ptr->options.block_mode && code == LZWS_CLEAR_CODE) {
     // Some UNIX compress implementations provide clear code even when dictionary is not full.
     // So in terms of compatibility decompressor have to just ignore situation when dictionary is not full here.
 
@@ -92,7 +92,7 @@ lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_
     // It is possible to keep prefix code in state as is.
     // Algorithm won't touch it without reinitialization.
 
-    if (state_ptr->unaligned_bit_groups) {
+    if (state_ptr->options.unaligned_bit_groups) {
       state_ptr->status = LZWS_DECOMPRESSOR_READ_FIRST_CODE;
     }
     else {
@@ -112,7 +112,7 @@ lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_
   else {
     lzws_code_fast_t next_code = get_next_code(state_ptr);
     if (code > next_code) {
-      if (!state_ptr->quiet) {
+      if (!state_ptr->options.quiet) {
         LZWS_LOG_ERROR("received code: " LZWS_FAST_CODE_FORMAT " greater than next code: " LZWS_FAST_CODE_FORMAT, code, next_code);
       }
 

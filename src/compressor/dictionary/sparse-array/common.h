@@ -5,7 +5,7 @@
 #if !defined(LZWS_COMPRESSOR_DICTIONARY_SPARSE_ARRAY_COMMON_H)
 #define LZWS_COMPRESSOR_DICTIONARY_SPARSE_ARRAY_COMMON_H
 
-#include "../../../common.h"
+#include "../../common.h"
 
 typedef uint32_t lzws_compressor_dictionary_used_index_t;
 

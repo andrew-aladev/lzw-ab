@@ -40,7 +40,7 @@ static inline lzws_code_fast_t get_next_sibling_code_index(const lzws_compressor
 
 extern inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code);
 
-lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t total_codes_length, bool quiet)
+lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t total_codes_length, const lzws_compressor_options_t* options)
 {
   lzws_code_t undefined_next_code = LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
 
@@ -52,7 +52,7 @@ lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* 
     undefined_next_code == 0, LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
 
   if (first_child_codes == NULL) {
-    if (!quiet) {
+    if (!options->quiet) {
       LZWS_LOG_ERROR("allocate array failed, first child codes size: %zu", first_child_codes_size);
     }
 
@@ -67,7 +67,7 @@ lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* 
     undefined_next_code == 0, LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
 
   if (next_sibling_codes == NULL) {
-    if (!quiet) {
+    if (!options->quiet) {
       LZWS_LOG_ERROR("allocate array failed, next sibling codes size: %zu", next_sibling_codes_size);
     }
 
@@ -84,7 +84,7 @@ lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* 
 
   lzws_byte_t* last_symbol_by_codes = malloc(last_symbol_by_codes_size);
   if (last_symbol_by_codes == NULL) {
-    if (!quiet) {
+    if (!options->quiet) {
       LZWS_LOG_ERROR("malloc failed, last symbol by codes size: %zu", last_symbol_by_codes_size);
     }
 

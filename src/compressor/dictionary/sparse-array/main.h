@@ -9,14 +9,14 @@
 
 #include "common.h"
 
-inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code, bool block_mode)
+inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code, const lzws_compressor_options_t* options)
 {
   dictionary_ptr->next_codes = NULL;
 
   // We won't store clear code.
   dictionary_ptr->next_codes_offset = first_free_code - LZWS_ALPHABET_LENGTH;
 
-  if (block_mode) {
+  if (options->block_mode) {
     dictionary_ptr->used_indexes = NULL;
 
     // We won't store char codes and clear code.
@@ -24,7 +24,7 @@ inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* 
   }
 }
 
-lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t total_codes_length, bool block_mode, bool quiet);
+lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t total_codes_length, const lzws_compressor_options_t* options);
 void          lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t used_codes_length);
 
 lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
@@ -32,17 +32,17 @@ lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol);
 
 void lzws_compressor_save_next_code_to_dictionary(
-  lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code, bool block_mode,
+  lzws_compressor_dictionary_t* dictionary_ptr, lzws_code_fast_t first_free_code, const lzws_compressor_options_t* options,
   lzws_code_fast_t current_code, lzws_byte_fast_t next_symbol, lzws_code_fast_t next_code);
 
-inline void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, bool block_mode)
+inline void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, const lzws_compressor_options_t* options)
 {
   lzws_code_t* next_codes = dictionary_ptr->next_codes;
   if (next_codes != NULL) {
     free(next_codes);
   }
 
-  if (block_mode) {
+  if (options->block_mode) {
     lzws_compressor_dictionary_used_index_t* used_indexes = dictionary_ptr->used_indexes;
     if (used_indexes != NULL) {
       free(used_indexes);

@@ -17,7 +17,7 @@ lzws_result_t lzws_decompressor_read_magic_header(lzws_decompressor_state_t* sta
   lzws_byte_fast_t byte;
   lzws_read_byte(&byte, source_ptr, source_length_ptr);
 
-  bool quiet = state_ptr->quiet;
+  bool quiet = state_ptr->options.quiet;
 
   if (byte != LZWS_FIRST_MAGIC_HEADER_BYTE) {
     if (!quiet) {
@@ -54,7 +54,7 @@ lzws_result_t lzws_decompressor_read_header(lzws_decompressor_state_t* state_ptr
 
   lzws_byte_fast_t max_code_bit_length = byte & LZWS_MAX_CODE_BIT_MASK;
   if (max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH || max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
-    if (!state_ptr->quiet) {
+    if (!state_ptr->options.quiet) {
       LZWS_LOG_ERROR("received invalid max code bit length: %u", max_code_bit_length);
     }
 
@@ -63,7 +63,7 @@ lzws_result_t lzws_decompressor_read_header(lzws_decompressor_state_t* state_ptr
 
   bool block_mode = (byte & LZWS_BLOCK_MODE) != 0;
 
-  state_ptr->block_mode = block_mode;
+  state_ptr->options.block_mode = block_mode;
 
   state_ptr->max_code  = lzws_get_max_value_for_bits(max_code_bit_length);
   state_ptr->free_code = state_ptr->first_free_code = lzws_get_first_free_code(block_mode);

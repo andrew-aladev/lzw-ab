@@ -6,6 +6,7 @@
 #define LZWS_COMPRESSOR_STATE_H
 
 #include "alignment/common.h"
+#include "common.h"
 #include "dictionary/common.h"
 #include "ratio/common.h"
 
@@ -28,14 +29,8 @@ enum {
 typedef lzws_byte_fast_t lzws_compressor_status_t;
 
 typedef struct {
-  lzws_compressor_status_t status;
-
-  bool             without_magic_header;
-  lzws_byte_fast_t max_code_bit_length;
-  bool             block_mode;
-  bool             msb;
-  bool             unaligned_bit_groups;
-  bool             quiet;
+  lzws_compressor_options_t options;
+  lzws_compressor_status_t  status;
 
   lzws_code_fast_t first_free_code;
   lzws_code_fast_t max_code;
@@ -55,13 +50,10 @@ typedef struct {
   lzws_compressor_ratio_t      ratio;
 } lzws_compressor_state_t;
 
-lzws_result_t lzws_compressor_get_initial_state(
-  lzws_compressor_state_t** state_ptr,
-  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
-
-void lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr);
-void lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr);
-void lzws_compressor_free_state(lzws_compressor_state_t* state_ptr);
+lzws_result_t lzws_compressor_get_initial_state(lzws_compressor_state_t** state_ptr, const lzws_compressor_options_t* options);
+void          lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr);
+void          lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr);
+void          lzws_compressor_free_state(lzws_compressor_state_t* state_ptr);
 
 inline bool lzws_compressor_is_dictionary_full(const lzws_compressor_state_t* state_ptr)
 {

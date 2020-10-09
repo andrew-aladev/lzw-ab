@@ -5,7 +5,7 @@
 #if !defined(LZWS_COMPRESSOR_DICTIONARY_LINKED_LIST_COMMON_H)
 #define LZWS_COMPRESSOR_DICTIONARY_LINKED_LIST_COMMON_H
 
-#include "../../../common.h"
+#include "../../common.h"
 
 typedef struct {
   lzws_code_t* first_child_codes;

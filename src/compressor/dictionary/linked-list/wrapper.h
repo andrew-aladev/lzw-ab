@@ -17,7 +17,7 @@ inline lzws_result_t lzws_compressor_allocate_dictionary_wrapper(lzws_compressor
 {
   size_t total_codes_length = lzws_compressor_get_total_codes_length(state_ptr);
 
-  lzws_result_t result = lzws_compressor_allocate_dictionary(&state_ptr->dictionary, total_codes_length, state_ptr->quiet);
+  lzws_result_t result = lzws_compressor_allocate_dictionary(&state_ptr->dictionary, total_codes_length, &state_ptr->options);
   if (result != 0) {
     return result;
   }
@@ -29,7 +29,7 @@ inline lzws_result_t lzws_compressor_allocate_dictionary_wrapper(lzws_compressor
 
 inline void lzws_compressor_clear_dictionary_wrapper(lzws_compressor_state_t* state_ptr)
 {
-  if (state_ptr->block_mode) {
+  if (state_ptr->options.block_mode) {
     size_t total_codes_length = lzws_compressor_get_total_codes_length(state_ptr);
 
     lzws_compressor_clear_dictionary(&state_ptr->dictionary, total_codes_length);

@@ -7,44 +7,40 @@
 #include "../log.h"
 #include "../utils.h"
 #include "alignment/wrapper.h"
-#include "common.h"
 #include "dictionary/wrapper.h"
 #include "ratio/wrapper.h"
 
-lzws_result_t lzws_compressor_get_initial_state(
-  lzws_compressor_state_t** result_state_ptr,
-  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet)
+lzws_result_t lzws_compressor_get_initial_state(lzws_compressor_state_t** result_state_ptr, const lzws_compressor_options_t* options)
 {
-  if (max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH || max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
-    if (!quiet) {
-      LZWS_LOG_ERROR("invalid max code bit length: %u", max_code_bit_length);
-    }
+  if (options == NULL) {
+    options = &LZWS_COMPRESSOR_DEFAULT_OPTIONS;
+  }
+  else {
+    if (options->max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH || options->max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
+      if (!options->quiet) {
+        LZWS_LOG_ERROR("invalid max code bit length: %u", options->max_code_bit_length);
+      }
 
-    return LZWS_COMPRESSOR_INVALID_MAX_CODE_BIT_LENGTH;
+      return LZWS_COMPRESSOR_INVALID_MAX_CODE_BIT_LENGTH;
+    }
   }
 
   size_t state_size = sizeof(lzws_compressor_state_t);
 
   lzws_compressor_state_t* state_ptr = malloc(state_size);
   if (state_ptr == NULL) {
-    if (!quiet) {
+    if (!options->quiet) {
       LZWS_LOG_ERROR("malloc failed, state size: %zu", state_size);
     }
 
     return LZWS_COMPRESSOR_ALLOCATE_FAILED;
   }
 
-  state_ptr->status = without_magic_header ? LZWS_COMPRESSOR_WRITE_HEADER : LZWS_COMPRESSOR_WRITE_MAGIC_HEADER;
+  state_ptr->options = *options;
+  state_ptr->status  = options->without_magic_header ? LZWS_COMPRESSOR_WRITE_HEADER : LZWS_COMPRESSOR_WRITE_MAGIC_HEADER;
 
-  state_ptr->without_magic_header = without_magic_header;
-  state_ptr->max_code_bit_length  = max_code_bit_length;
-  state_ptr->block_mode           = block_mode;
-  state_ptr->msb                  = msb;
-  state_ptr->unaligned_bit_groups = unaligned_bit_groups;
-  state_ptr->quiet                = quiet;
-
-  state_ptr->first_free_code = lzws_get_first_free_code(block_mode);
-  state_ptr->max_code        = lzws_get_max_value_for_bits(max_code_bit_length);
+  state_ptr->first_free_code = lzws_get_first_free_code(options->block_mode);
+  state_ptr->max_code        = lzws_get_max_value_for_bits(options->max_code_bit_length);
 
   lzws_compressor_reset_last_used_data(state_ptr);
 

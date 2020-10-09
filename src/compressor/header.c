@@ -28,9 +28,9 @@ lzws_result_t lzws_compressor_write_header(lzws_compressor_state_t* state_ptr, l
     return LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION;
   }
 
-  lzws_byte_fast_t byte = state_ptr->max_code_bit_length;
+  lzws_byte_fast_t byte = state_ptr->options.max_code_bit_length;
 
-  if (state_ptr->block_mode) {
+  if (state_ptr->options.block_mode) {
     byte = byte | LZWS_BLOCK_MODE;
   }
 

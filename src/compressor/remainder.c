@@ -24,7 +24,7 @@ static inline lzws_result_t write_remainder(lzws_compressor_state_t* state_ptr, 
   // Remainder is left padded with zeroes by default.
   lzws_byte_fast_t remainder = state_ptr->remainder;
 
-  if (state_ptr->msb) {
+  if (state_ptr->options.msb) {
     // Adding right padding.
     remainder <<= 8 - remainder_bit_length;
   }

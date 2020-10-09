@@ -85,7 +85,7 @@ lzws_result_t lzws_decompress(lzws_decompressor_state_t* state_ptr, lzws_byte_t*
         break;
 
       default:
-        if (!state_ptr->quiet) {
+        if (!state_ptr->options.quiet) {
           LZWS_LOG_ERROR("unknown status: %u", status);
         }
 

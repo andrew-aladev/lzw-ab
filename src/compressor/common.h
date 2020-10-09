@@ -5,6 +5,19 @@
 #if !defined(LZWS_COMPRESSOR_COMMON_H)
 #define LZWS_COMPRESSOR_COMMON_H
 
+#include "../common.h"
+
+typedef struct {
+  bool             without_magic_header;
+  lzws_byte_fast_t max_code_bit_length;
+  bool             block_mode;
+  bool             msb;
+  bool             unaligned_bit_groups;
+  bool             quiet;
+} lzws_compressor_options_t;
+
+extern const lzws_compressor_options_t LZWS_COMPRESSOR_DEFAULT_OPTIONS;
+
 // Possible results:
 enum {
   LZWS_COMPRESSOR_ALLOCATE_FAILED = 1,
