@@ -11,7 +11,9 @@
 
 // clang-format off
 #define log_format(x) _Generic((x), \
+  bool: "%d", \
   char *: "%s", \
+  float: "%f", \
   size_t: "%zu", \
   void *: "%p" \
 )
@@ -22,19 +24,20 @@
 typedef struct {
   bool is_float;
   union {
-    float f;
-    char *s;
+    float number;
+    char *string;
   };
 } data_t;
+
+const data_t data = {.is_float = true, .number = 1.5};
 
 noreturn void func()
 {
   log(alignof(double));
   log(u8"fit");
-
-  data_t data;
-  data.f = 1.5;
-  log((void *)data.s);
+  log((void *)&data);
+  log(data.is_float);
+  log(data.number);
 
   static_assert(1 < 2, "1 < 2");
 
