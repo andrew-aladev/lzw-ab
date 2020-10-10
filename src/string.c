@@ -49,7 +49,6 @@ static inline lzws_result_t increase_destination_buffer(
     size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;               \
                                                                                                                \
     result = function(__VA_ARGS__, &remaining_destination_buffer, &remaining_destination_buffer_length);       \
-                                                                                                               \
     if (result != 0 && result != LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                     \
       return LZWS_STRING_COMPRESSOR_UNEXPECTED_ERROR;                                                          \
     }                                                                                                          \

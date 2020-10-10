@@ -100,6 +100,7 @@ static inline lzws_result_t read_more_source(
 
   lzws_result_t result =
     read_file(source_file, remaining_source_buffer, &new_source_length, remaining_source_buffer_length, quiet);
+
   if (result != 0) {
     return result;
   }
@@ -115,7 +116,6 @@ static inline lzws_result_t read_more_source(
                                                                                                                    \
     while (true) {                                                                                                 \
       result = read_more_source(source_file, &source, &source_length, source_buffer, source_buffer_length, quiet); \
-                                                                                                                   \
       if (result == LZWS_FILE_READ_FINISHED) {                                                                     \
         /* Some UNIX compress implementations write alignment at the end of the file. */                           \
         /* So source length here can not be zero here, we have to ignore it. */                                    \
@@ -193,7 +193,6 @@ static inline lzws_result_t write_remaining_destination(
     size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;                 \
                                                                                                                  \
     result = function(__VA_ARGS__, &remaining_destination_buffer, &remaining_destination_buffer_length);         \
-                                                                                                                 \
     if (result != 0 && result != LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                       \
       return LZWS_FILE_COMPRESSOR_UNEXPECTED_ERROR;                                                              \
     }                                                                                                            \
