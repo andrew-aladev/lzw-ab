@@ -11,11 +11,11 @@
 #define BUFFER_LENGTH 0
 
 #define WITHOUT_MAGIC_HEADER false
-#define MAX_CODE_BIT_LENGTH LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
-#define BLOCK_MODE true
-#define MSB false
+#define MAX_CODE_BIT_LENGTH  LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
+#define BLOCK_MODE           true
+#define MSB                  false
 #define UNALIGNED_BIT_GROUPS false
-#define QUIET false
+#define QUIET                false
 
 int main()
 {
@@ -25,9 +25,18 @@ int main()
   char*  compressed_text;
   size_t compressed_text_length;
 
-  lzws_result_t result = lzws_compress_string((lzws_byte_t*)text, text_length, (lzws_byte_t**)&compressed_text,
-                                              &compressed_text_length, BUFFER_LENGTH, WITHOUT_MAGIC_HEADER,
-                                              MAX_CODE_BIT_LENGTH, BLOCK_MODE, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+  lzws_result_t result = lzws_compress_string(
+    (lzws_byte_t*) text,
+    text_length,
+    (lzws_byte_t**) &compressed_text,
+    &compressed_text_length,
+    BUFFER_LENGTH,
+    WITHOUT_MAGIC_HEADER,
+    MAX_CODE_BIT_LENGTH,
+    BLOCK_MODE,
+    MSB,
+    UNALIGNED_BIT_GROUPS,
+    QUIET);
 
   if (result != 0) {
     LZWS_LOG_ERROR("string compressor failed");
@@ -39,9 +48,16 @@ int main()
   char*  decompressed_text;
   size_t decompressed_text_length;
 
-  result = lzws_decompress_string((lzws_byte_t*)compressed_text, compressed_text_length,
-                                  (lzws_byte_t**)&decompressed_text, &decompressed_text_length, BUFFER_LENGTH,
-                                  WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+  result = lzws_decompress_string(
+    (lzws_byte_t*) compressed_text,
+    compressed_text_length,
+    (lzws_byte_t**) &decompressed_text,
+    &decompressed_text_length,
+    BUFFER_LENGTH,
+    WITHOUT_MAGIC_HEADER,
+    MSB,
+    UNALIGNED_BIT_GROUPS,
+    QUIET);
 
   free(compressed_text);
 
@@ -53,12 +69,10 @@ int main()
   if (decompressed_text_length != text_length) {
     LZWS_LOG_ERROR("decompressed text length %zu, original length %zu", decompressed_text_length, text_length);
     result = 3;
-  }
-  else if (strncmp(decompressed_text, text, text_length) != 0) {
+  } else if (strncmp(decompressed_text, text, text_length) != 0) {
     LZWS_LOG_ERROR("decompressed text is not the same as original");
     result = 4;
-  }
-  else {
+  } else {
     result = 0;
   }
 

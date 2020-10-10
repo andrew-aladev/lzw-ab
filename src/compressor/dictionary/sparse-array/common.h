@@ -9,7 +9,8 @@
 
 typedef uint32_t lzws_compressor_dictionary_used_index_t;
 
-typedef struct {
+typedef struct
+{
   lzws_code_t*                             next_codes;
   lzws_compressor_dictionary_used_index_t* used_indexes;
 

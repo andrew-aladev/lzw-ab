@@ -10,8 +10,10 @@
 #include "ratio/wrapper.h"
 #include "utils.h"
 
-lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr,
-                                                size_t* source_length_ptr)
+lzws_result_t lzws_compressor_read_first_symbol(
+  lzws_compressor_state_t* state_ptr,
+  lzws_byte_t**            source_ptr,
+  size_t*                  source_length_ptr)
 {
   if (*source_length_ptr < 1) {
     return LZWS_COMPRESSOR_NEEDS_MORE_SOURCE;
@@ -26,8 +28,10 @@ lzws_result_t lzws_compressor_read_first_symbol(lzws_compressor_state_t* state_p
   return 0;
 }
 
-lzws_result_t lzws_compressor_read_next_symbol(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr,
-                                               size_t* source_length_ptr)
+lzws_result_t lzws_compressor_read_next_symbol(
+  lzws_compressor_state_t* state_ptr,
+  lzws_byte_t**            source_ptr,
+  size_t*                  source_length_ptr)
 {
   if (*source_length_ptr < 1) {
     return LZWS_COMPRESSOR_NEEDS_MORE_SOURCE;
@@ -75,8 +79,7 @@ lzws_result_t lzws_compressor_read_next_symbol(lzws_compressor_state_t* state_pt
   // We need to check whether we need to write alignment (there will be at least one code after it).
   if (lzws_compressor_need_to_write_alignment_wrapper(state_ptr)) {
     state_ptr->status = LZWS_COMPRESSOR_WRITE_REMAINDER_BEFORE_CURRENT_CODE;
-  }
-  else {
+  } else {
     state_ptr->status = LZWS_COMPRESSOR_WRITE_CURRENT_CODE;
   }
 
@@ -88,8 +91,7 @@ void lzws_compressor_process_eof_before_next_symbol(lzws_compressor_state_t* sta
   // We need to check whether we need to write alignment (there will be one code after it).
   if (lzws_compressor_need_to_write_alignment_wrapper(state_ptr)) {
     state_ptr->status = LZWS_COMPRESSOR_FLUSH_REMAINDER_BEFORE_CURRENT_CODE;
-  }
-  else {
+  } else {
     state_ptr->status = LZWS_COMPRESSOR_FLUSH_CURRENT_CODE;
   }
 }

@@ -9,8 +9,9 @@
 #include "alignment/wrapper.h"
 #include "dictionary/wrapper.h"
 
-lzws_result_t lzws_decompressor_get_initial_state(lzws_decompressor_state_t**        result_state_ptr,
-                                                  const lzws_decompressor_options_t* options)
+lzws_result_t lzws_decompressor_get_initial_state(
+  lzws_decompressor_state_t**        result_state_ptr,
+  const lzws_decompressor_options_t* options)
 {
   if (options == NULL) {
     options = &LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;

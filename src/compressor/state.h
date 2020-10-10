@@ -10,7 +10,8 @@
 #include "dictionary/common.h"
 #include "ratio/common.h"
 
-enum {
+enum
+{
   LZWS_COMPRESSOR_WRITE_MAGIC_HEADER = 1,
   LZWS_COMPRESSOR_WRITE_HEADER,
   LZWS_COMPRESSOR_ALLOCATE_DICTIONARY,
@@ -28,7 +29,8 @@ enum {
 };
 typedef lzws_byte_fast_t lzws_compressor_status_t;
 
-typedef struct {
+typedef struct
+{
   lzws_compressor_options_t options;
   lzws_compressor_status_t  status;
 
@@ -50,11 +52,12 @@ typedef struct {
   lzws_compressor_ratio_t      ratio;
 } lzws_compressor_state_t;
 
-lzws_result_t lzws_compressor_get_initial_state(lzws_compressor_state_t**        state_ptr,
-                                                const lzws_compressor_options_t* options);
-void          lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr);
-void          lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr);
-void          lzws_compressor_free_state(lzws_compressor_state_t* state_ptr);
+lzws_result_t lzws_compressor_get_initial_state(
+  lzws_compressor_state_t**        state_ptr,
+  const lzws_compressor_options_t* options);
+void lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr);
+void lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr);
+void lzws_compressor_free_state(lzws_compressor_state_t* state_ptr);
 
 inline bool lzws_compressor_is_dictionary_full(const lzws_compressor_state_t* state_ptr)
 {

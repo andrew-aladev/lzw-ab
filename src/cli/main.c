@@ -29,23 +29,32 @@ static const char* help =
   "  Compressor only options (-b and -r) can be changed without loosing compatibility.\n";
 
 static const char*         short_options  = "dwb:rmuqhv";
-static const struct option long_options[] = {{"decompress", optional_argument, NULL, 'd'},
-                                             {"without-magic-header", optional_argument, NULL, 'w'},
-                                             {"max-code-bit-length", optional_argument, NULL, 'b'},
-                                             {"raw", optional_argument, NULL, 'r'},
-                                             {"msb", optional_argument, NULL, 'm'},
-                                             {"unaligned-bit-groups", optional_argument, NULL, 'u'},
-                                             {"quiet", optional_argument, NULL, 'q'},
-                                             {"help", optional_argument, NULL, 'h'},
-                                             {"version", optional_argument, NULL, 'v'},
-                                             {NULL, 0, NULL, 0}};
+static const struct option long_options[] = {
+  {"decompress", optional_argument, NULL, 'd'},
+  {"without-magic-header", optional_argument, NULL, 'w'},
+  {"max-code-bit-length", optional_argument, NULL, 'b'},
+  {"raw", optional_argument, NULL, 'r'},
+  {"msb", optional_argument, NULL, 'm'},
+  {"unaligned-bit-groups", optional_argument, NULL, 'u'},
+  {"quiet", optional_argument, NULL, 'q'},
+  {"help", optional_argument, NULL, 'h'},
+  {"version", optional_argument, NULL, 'v'},
+  {NULL, 0, NULL, 0}};
 
-static inline void print_version() { fprintf(stderr, "%s\n", LZWS_VERSION); }
+static inline void print_version()
+{
+  fprintf(stderr, "%s\n", LZWS_VERSION);
+}
 
 static inline void print_help()
 {
-  fprintf(stderr, help, short_options, LZWS_LOWEST_MAX_CODE_BIT_LENGTH, LZWS_BIGGEST_MAX_CODE_BIT_LENGTH,
-          LZWS_BIGGEST_MAX_CODE_BIT_LENGTH);
+  fprintf(
+    stderr,
+    help,
+    short_options,
+    LZWS_LOWEST_MAX_CODE_BIT_LENGTH,
+    LZWS_BIGGEST_MAX_CODE_BIT_LENGTH,
+    LZWS_BIGGEST_MAX_CODE_BIT_LENGTH);
 }
 
 int main(int argc, char** argv)
@@ -96,14 +105,13 @@ int main(int argc, char** argv)
   lzws_result_t result;
 
   if (is_compressor) {
-    result = lzws_compress_file(stdin, 0, stdout, 0, without_magic_header, max_code_bit_length, block_mode, msb,
-                                unaligned_bit_groups, quiet);
+    result = lzws_compress_file(
+      stdin, 0, stdout, 0, without_magic_header, max_code_bit_length, block_mode, msb, unaligned_bit_groups, quiet);
 
     if (result != 0) {
       return 1;
     }
-  }
-  else {
+  } else {
     result = lzws_decompress_file(stdin, 0, stdout, 0, without_magic_header, msb, unaligned_bit_groups, quiet);
 
     if (result != 0) {

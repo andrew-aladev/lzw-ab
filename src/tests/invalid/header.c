@@ -23,9 +23,11 @@ static const lzws_byte_t magic_headers[][MAGIC_HEADER_SIZE] = {
 static const lzws_byte_t headers[][HEADER_SIZE] = {{(LZWS_LOWEST_MAX_CODE_BIT_LENGTH - 1) | LZWS_BLOCK_MODE}};
 #define HEADER_LENGTH sizeof(headers) / HEADER_SIZE
 
-static inline lzws_result_t test_invalid_header(lzws_compressor_state_t*   compressor_state_ptr,
-                                                lzws_decompressor_state_t* decompressor_state_ptr,
-                                                size_t LZWS_UNUSED(buffer_length), va_list LZWS_UNUSED(args))
+static inline lzws_result_t test_invalid_header(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  size_t                     LZWS_UNUSED(buffer_length),
+  va_list                    LZWS_UNUSED(args))
 {
   lzws_result_t result;
   size_t        index;
@@ -52,7 +54,7 @@ static inline lzws_result_t test_invalid_header(lzws_compressor_state_t*   compr
     }
 
     for (index = 0; index < MAGIC_HEADER_LENGTH; index++) {
-      header      = (lzws_byte_t*)magic_headers[index];
+      header      = (lzws_byte_t*) magic_headers[index];
       header_size = MAGIC_HEADER_SIZE;
 
       result = lzws_decompressor_read_magic_header(decompressor_state_ptr, &header, &header_size);
@@ -80,7 +82,7 @@ static inline lzws_result_t test_invalid_header(lzws_compressor_state_t*   compr
   }
 
   for (index = 0; index < HEADER_LENGTH; index++) {
-    header      = (lzws_byte_t*)headers[index];
+    header      = (lzws_byte_t*) headers[index];
     header_size = HEADER_SIZE;
 
     result = lzws_decompressor_read_header(decompressor_state_ptr, &header, &header_size);

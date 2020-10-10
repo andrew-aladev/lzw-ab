@@ -19,9 +19,11 @@ static const char* datas[] = {"", "hello world", "tobeornottobeortobeornot"};
 
 #define RANDOM_STRING_LENGTH (1 << 14) // 16 KB
 
-static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_state_ptr,
-                                      lzws_decompressor_state_t* decompressor_state_ptr, const char* data,
-                                      size_t buffer_length)
+static inline lzws_result_t test_data(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  const char*                data,
+  size_t                     buffer_length)
 {
   size_t data_length = strlen(data);
 
@@ -29,9 +31,16 @@ static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_stat
   size_t       compressed_data_length;
 
   lzws_result_t result = lzws_tests_compress_string_and_file(
-    (lzws_byte_t*)data, data_length, &compressed_data, &compressed_data_length, buffer_length,
-    compressor_state_ptr->without_magic_header, compressor_state_ptr->max_code_bit_length,
-    compressor_state_ptr->block_mode, compressor_state_ptr->msb, compressor_state_ptr->unaligned_bit_groups);
+    (lzws_byte_t*) data,
+    data_length,
+    &compressed_data,
+    &compressed_data_length,
+    buffer_length,
+    compressor_state_ptr->without_magic_header,
+    compressor_state_ptr->max_code_bit_length,
+    compressor_state_ptr->block_mode,
+    compressor_state_ptr->msb,
+    compressor_state_ptr->unaligned_bit_groups);
 
   if (result != 0) {
     return 1;
@@ -41,8 +50,13 @@ static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_stat
   size_t result_data_length;
 
   result = lzws_tests_decompress_string_and_file(
-    compressed_data, compressed_data_length, (lzws_byte_t**)&result_data, &result_data_length, buffer_length,
-    decompressor_state_ptr->without_magic_header, decompressor_state_ptr->msb,
+    compressed_data,
+    compressed_data_length,
+    (lzws_byte_t**) &result_data,
+    &result_data_length,
+    buffer_length,
+    decompressor_state_ptr->without_magic_header,
+    decompressor_state_ptr->msb,
     decompressor_state_ptr->unaligned_bit_groups);
 
   free(compressed_data);
@@ -54,12 +68,10 @@ static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_stat
   if (result_data_length != data_length) {
     LZWS_LOG_ERROR("decompressed invalid data length %zu, original length %zu", result_data_length, data_length);
     result = 3;
-  }
-  else if (strncmp(result_data, data, data_length) != 0) {
+  } else if (strncmp(result_data, data, data_length) != 0) {
     LZWS_LOG_ERROR("decompressed data is not the same as original");
     result = 4;
-  }
-  else {
+  } else {
     result = 0;
   }
 
@@ -68,8 +80,10 @@ static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_stat
   return result;
 }
 
-static inline lzws_result_t test_random_string(lzws_compressor_state_t*   compressor_state_ptr,
-                                               lzws_decompressor_state_t* decompressor_state_ptr, size_t buffer_length)
+static inline lzws_result_t test_random_string(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  size_t                     buffer_length)
 {
   char* random_string = malloc(RANDOM_STRING_LENGTH);
   if (random_string == NULL) {
@@ -99,16 +113,17 @@ static inline lzws_result_t test_random_string(lzws_compressor_state_t*   compre
 // Length of "n" codes string: (2 - 1) + (3 - 1) + ... + (n - 1) + n + 1 = n * (n + 1) / 2 + 1.
 // "n" should be equal to first free code with another bit length.
 
-static inline lzws_result_t test_eof_after_completed_bits_group(lzws_compressor_state_t*   compressor_state_ptr,
-                                                                lzws_decompressor_state_t* decompressor_state_ptr,
-                                                                size_t                     buffer_length)
+static inline lzws_result_t test_eof_after_completed_bits_group(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  size_t                     buffer_length)
 {
   lzws_code_fast_t first_code    = lzws_get_first_free_code(compressor_state_ptr->block_mode);
   lzws_code_fast_t target_number = (1 << LZWS_LOWEST_MAX_CODE_BIT_LENGTH) - first_code + 1;
   size_t           string_length = target_number * (target_number + 1) / 2 + 2; // + 1 byte for \0.
 
   char  symbol = 'a';
-  char* string = lzws_allocate_array(1, string_length, (void*)&symbol, false, true);
+  char* string = lzws_allocate_array(1, string_length, (void*) &symbol, false, true);
   if (string == NULL) {
     LZWS_LOG_ERROR("allocate array failed, string size: %zu", string_length);
     return 1;
@@ -127,9 +142,11 @@ static inline lzws_result_t test_eof_after_completed_bits_group(lzws_compressor_
   return 0;
 }
 
-static inline lzws_result_t test_datas(lzws_compressor_state_t*   compressor_state_ptr,
-                                       lzws_decompressor_state_t* decompressor_state_ptr, size_t buffer_length,
-                                       va_list LZWS_UNUSED(args))
+static inline lzws_result_t test_datas(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  size_t                     buffer_length,
+  va_list                    LZWS_UNUSED(args))
 {
   lzws_result_t result;
 

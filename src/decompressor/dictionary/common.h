@@ -9,7 +9,8 @@
 
 #include "../common.h"
 
-typedef struct {
+typedef struct
+{
   lzws_code_t* previous_codes;
   lzws_byte_t* last_symbol_by_codes;
 

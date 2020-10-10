@@ -9,16 +9,15 @@
 #include "common.h"
 #include "utils.h"
 
-static inline void add_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bit_length, lzws_byte_fast_t byte,
-                            bool msb)
+static inline void
+  add_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bit_length, lzws_byte_fast_t byte, bool msb)
 {
   lzws_code_fast_t code = *code_ptr;
 
   if (msb) {
     // Code is sitting on the top.
     code = (code << 8) | byte;
-  }
-  else {
+  } else {
     // Code is sitting on the bottom.
     code = (byte << code_bit_length) | code;
   }
@@ -26,10 +25,14 @@ static inline void add_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bi
   *code_ptr = code;
 }
 
-static inline void add_byte_with_remainder(lzws_code_fast_t* code_ptr, lzws_byte_fast_t code_bit_length,
-                                           lzws_byte_fast_t target_code_bit_length, lzws_byte_fast_t byte,
-                                           lzws_byte_fast_t* remainder_ptr, lzws_byte_fast_t* remainder_bit_length_ptr,
-                                           bool msb)
+static inline void add_byte_with_remainder(
+  lzws_code_fast_t* code_ptr,
+  lzws_byte_fast_t  code_bit_length,
+  lzws_byte_fast_t  target_code_bit_length,
+  lzws_byte_fast_t  byte,
+  lzws_byte_fast_t* remainder_ptr,
+  lzws_byte_fast_t* remainder_bit_length_ptr,
+  bool              msb)
 {
   lzws_byte_fast_t code_part_bit_length = target_code_bit_length - code_bit_length;
   if (code_part_bit_length == 8) {
@@ -56,8 +59,7 @@ static inline void add_byte_with_remainder(lzws_code_fast_t* code_ptr, lzws_byte
 
     // Code is sitting on the top.
     code = (code << code_part_bit_length) | code_part;
-  }
-  else {
+  } else {
     // Taking last bits from byte.
     code_part = byte & lzws_get_mask_for_last_bits(code_part_bit_length);
 
@@ -73,8 +75,11 @@ static inline void add_byte_with_remainder(lzws_code_fast_t* code_ptr, lzws_byte
   *remainder_bit_length_ptr = remainder_bit_length;
 }
 
-lzws_result_t lzws_decompressor_read_code(lzws_decompressor_state_t* state_ptr, lzws_code_fast_t* code_ptr,
-                                          lzws_byte_t** source_ptr, size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_code(
+  lzws_decompressor_state_t* state_ptr,
+  lzws_code_fast_t*          code_ptr,
+  lzws_byte_t**              source_ptr,
+  size_t*                    source_length_ptr)
 {
   lzws_byte_fast_t target_code_bit_length = state_ptr->free_code_bit_length;
   lzws_byte_fast_t remainder_bit_length   = state_ptr->remainder_bit_length;
@@ -105,8 +110,8 @@ lzws_result_t lzws_decompressor_read_code(lzws_decompressor_state_t* state_ptr, 
   }
 
   lzws_decompressor_read_byte(state_ptr, &byte, source_ptr, source_length_ptr);
-  add_byte_with_remainder(&code, code_bit_length, target_code_bit_length, byte, &state_ptr->remainder,
-                          &state_ptr->remainder_bit_length, msb);
+  add_byte_with_remainder(
+    &code, code_bit_length, target_code_bit_length, byte, &state_ptr->remainder, &state_ptr->remainder_bit_length, msb);
 
   *code_ptr = code;
 

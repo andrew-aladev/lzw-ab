@@ -11,8 +11,10 @@
 #include "dictionary/wrapper.h"
 #include "remainder.h"
 
-lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr,
-                                                size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_first_code(
+  lzws_decompressor_state_t* state_ptr,
+  lzws_byte_t**              source_ptr,
+  size_t*                    source_length_ptr)
 {
   lzws_code_fast_t code;
 
@@ -43,8 +45,10 @@ lzws_result_t lzws_decompressor_read_first_code(lzws_decompressor_state_t* state
 
   if (code >= LZWS_ALPHABET_LENGTH) {
     if (!state_ptr->options.quiet) {
-      LZWS_LOG_ERROR("received first code: " LZWS_FAST_CODE_FORMAT " greater than max first code: %u", code,
-                     LZWS_ALPHABET_LENGTH - 1);
+      LZWS_LOG_ERROR(
+        "received first code: " LZWS_FAST_CODE_FORMAT " greater than max first code: %u",
+        code,
+        LZWS_ALPHABET_LENGTH - 1);
     }
 
     return LZWS_DECOMPRESSOR_CORRUPTED_SOURCE;
@@ -62,8 +66,7 @@ static inline lzws_code_fast_t get_next_code(lzws_decompressor_state_t* state_pt
 
   if (next_code == state_ptr->max_code) {
     state_ptr->free_code = LZWS_UNDEFINED_FREE_CODE;
-  }
-  else {
+  } else {
     if (next_code == state_ptr->max_free_code_for_bit_length) {
       lzws_byte_fast_t free_code_bit_length   = ++state_ptr->free_code_bit_length;
       state_ptr->max_free_code_for_bit_length = lzws_get_max_value_for_bits(free_code_bit_length);
@@ -75,8 +78,10 @@ static inline lzws_code_fast_t get_next_code(lzws_decompressor_state_t* state_pt
   return next_code;
 }
 
-lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr,
-                                               size_t* source_length_ptr)
+lzws_result_t lzws_decompressor_read_next_code(
+  lzws_decompressor_state_t* state_ptr,
+  lzws_byte_t**              source_ptr,
+  size_t*                    source_length_ptr)
 {
   lzws_code_fast_t code;
 
@@ -97,8 +102,7 @@ lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_
 
     if (state_ptr->options.unaligned_bit_groups) {
       state_ptr->status = LZWS_DECOMPRESSOR_READ_FIRST_CODE;
-    }
-    else {
+    } else {
       // Remainder is a part of alignment, we need to clear it.
       lzws_decompressor_clear_remainder(state_ptr);
 
@@ -111,13 +115,12 @@ lzws_result_t lzws_decompressor_read_next_code(lzws_decompressor_state_t* state_
 
   if (lzws_decompressor_is_dictionary_full(state_ptr)) {
     lzws_decompressor_write_code_to_dictionary_wrapper(state_ptr, code);
-  }
-  else {
+  } else {
     lzws_code_fast_t next_code = get_next_code(state_ptr);
     if (code > next_code) {
       if (!state_ptr->options.quiet) {
-        LZWS_LOG_ERROR("received code: " LZWS_FAST_CODE_FORMAT " greater than next code: " LZWS_FAST_CODE_FORMAT, code,
-                       next_code);
+        LZWS_LOG_ERROR(
+          "received code: " LZWS_FAST_CODE_FORMAT " greater than next code: " LZWS_FAST_CODE_FORMAT, code, next_code);
       }
 
       return LZWS_DECOMPRESSOR_CORRUPTED_SOURCE;

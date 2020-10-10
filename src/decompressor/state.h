@@ -9,7 +9,8 @@
 #include "common.h"
 #include "dictionary/common.h"
 
-enum {
+enum
+{
   LZWS_DECOMPRESSOR_READ_MAGIC_HEADER = 1,
   LZWS_DECOMPRESSOR_READ_HEADER,
   LZWS_DECOMPRESSOR_ALLOCATE_DICTIONARY,
@@ -22,7 +23,8 @@ enum {
 };
 typedef lzws_byte_fast_t lzws_decompressor_status_t;
 
-typedef struct {
+typedef struct
+{
   lzws_decompressor_options_t options;
   lzws_decompressor_status_t  status;
 
@@ -42,11 +44,12 @@ typedef struct {
   lzws_decompressor_dictionary_t dictionary;
 } lzws_decompressor_state_t;
 
-lzws_result_t lzws_decompressor_get_initial_state(lzws_decompressor_state_t**        state_ptr,
-                                                  const lzws_decompressor_options_t* options);
-void          lzws_decompressor_reset_last_used_data(lzws_decompressor_state_t* state_ptr);
-void          lzws_decompressor_clear_state(lzws_decompressor_state_t* state_ptr);
-void          lzws_decompressor_free_state(lzws_decompressor_state_t* state_ptr);
+lzws_result_t lzws_decompressor_get_initial_state(
+  lzws_decompressor_state_t**        state_ptr,
+  const lzws_decompressor_options_t* options);
+void lzws_decompressor_reset_last_used_data(lzws_decompressor_state_t* state_ptr);
+void lzws_decompressor_clear_state(lzws_decompressor_state_t* state_ptr);
+void lzws_decompressor_free_state(lzws_decompressor_state_t* state_ptr);
 
 inline bool lzws_decompressor_is_dictionary_full(const lzws_decompressor_state_t* state_ptr)
 {

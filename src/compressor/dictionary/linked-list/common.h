@@ -7,7 +7,8 @@
 
 #include "../../common.h"
 
-typedef struct {
+typedef struct
+{
   lzws_code_t* first_child_codes;
   lzws_code_t* next_sibling_codes;
   lzws_byte_t* last_symbol_by_codes;

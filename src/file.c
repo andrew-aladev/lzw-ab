@@ -17,8 +17,12 @@
 
 // -- file --
 
-static inline lzws_result_t read_file(FILE* source_file, lzws_byte_t* source_buffer, size_t* source_length_ptr,
-                                      size_t source_buffer_length, bool quiet)
+static inline lzws_result_t read_file(
+  FILE*        source_file,
+  lzws_byte_t* source_buffer,
+  size_t*      source_length_ptr,
+  size_t       source_buffer_length,
+  bool         quiet)
 {
   size_t read_length = fread(source_buffer, 1, source_buffer_length, source_file);
   if (read_length == 0 && feof(source_file)) {
@@ -38,8 +42,8 @@ static inline lzws_result_t read_file(FILE* source_file, lzws_byte_t* source_buf
   return 0;
 }
 
-static inline lzws_result_t write_file(FILE* destination_file, lzws_byte_t* destination_buffer,
-                                       size_t destination_length, bool quiet)
+static inline lzws_result_t
+  write_file(FILE* destination_file, lzws_byte_t* destination_buffer, size_t destination_length, bool quiet)
 {
   size_t written_length = fwrite(destination_buffer, 1, destination_length, destination_file);
   if (written_length != destination_length) {
@@ -61,8 +65,13 @@ static inline lzws_result_t write_file(FILE* destination_file, lzws_byte_t* dest
 // Than we can read more source from file.
 // Algorithm can use same buffer again.
 
-static inline lzws_result_t read_more_source(FILE* source_file, lzws_byte_t** source_ptr, size_t* source_length_ptr,
-                                             lzws_byte_t* source_buffer, size_t source_buffer_length, bool quiet)
+static inline lzws_result_t read_more_source(
+  FILE*         source_file,
+  lzws_byte_t** source_ptr,
+  size_t*       source_length_ptr,
+  lzws_byte_t*  source_buffer,
+  size_t        source_buffer_length,
+  bool          quiet)
 {
   const lzws_byte_t* source        = *source_ptr;
   size_t             source_length = *source_length_ptr;
@@ -111,8 +120,7 @@ static inline lzws_result_t read_more_source(FILE* source_file, lzws_byte_t** so
         /* Some UNIX compress implementations write alignment at the end of the file. */                           \
         /* So source length here can not be zero here, we have to ignore it. */                                    \
         break;                                                                                                     \
-      }                                                                                                            \
-      else if (result != 0) {                                                                                      \
+      } else if (result != 0) {                                                                                    \
         return result;                                                                                             \
       }                                                                                                            \
                                                                                                                    \
@@ -137,9 +145,12 @@ static inline lzws_result_t read_more_source(FILE* source_file, lzws_byte_t** so
 // We need to write this data into file.
 // Than algorithm can use same buffer again.
 
-static inline lzws_result_t flush_destination_buffer(FILE* destination_file, lzws_byte_t* destination_buffer,
-                                                     size_t* destination_length_ptr, size_t destination_buffer_length,
-                                                     bool quiet)
+static inline lzws_result_t flush_destination_buffer(
+  FILE*        destination_file,
+  lzws_byte_t* destination_buffer,
+  size_t*      destination_length_ptr,
+  size_t       destination_buffer_length,
+  bool         quiet)
 {
   if (*destination_length_ptr == 0) {
     // We want to write more data at once, than buffer has.
@@ -160,8 +171,11 @@ static inline lzws_result_t flush_destination_buffer(FILE* destination_file, lzw
   return 0;
 }
 
-static inline lzws_result_t write_remaining_destination(FILE* destination_file, lzws_byte_t* destination_buffer,
-                                                        size_t destination_length, bool quiet)
+static inline lzws_result_t write_remaining_destination(
+  FILE*        destination_file,
+  lzws_byte_t* destination_buffer,
+  size_t       destination_length,
+  bool         quiet)
 {
   if (destination_length == 0) {
     return 0;
@@ -187,8 +201,8 @@ static inline lzws_result_t write_remaining_destination(FILE* destination_file, 
     *destination_length_ptr += prev_remaining_destination_buffer_length - remaining_destination_buffer_length;   \
                                                                                                                  \
     if (result == LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                                      \
-      result = flush_destination_buffer(destination_file, destination_buffer, destination_length_ptr,            \
-                                        destination_buffer_length, quiet);                                       \
+      result = flush_destination_buffer(                                                                         \
+        destination_file, destination_buffer, destination_length_ptr, destination_buffer_length, quiet);         \
                                                                                                                  \
       if (result != 0) {                                                                                         \
         return result;                                                                                           \
@@ -200,10 +214,15 @@ static inline lzws_result_t write_remaining_destination(FILE* destination_file, 
     break;                                                                                                       \
   }
 
-static inline lzws_result_t buffered_compress(lzws_compressor_state_t* state_ptr, lzws_byte_t** source_ptr,
-                                              size_t* source_length_ptr, FILE* destination_file,
-                                              lzws_byte_t* destination_buffer, size_t* destination_length_ptr,
-                                              size_t destination_buffer_length, bool quiet)
+static inline lzws_result_t buffered_compress(
+  lzws_compressor_state_t* state_ptr,
+  lzws_byte_t**            source_ptr,
+  size_t*                  source_length_ptr,
+  FILE*                    destination_file,
+  lzws_byte_t*             destination_buffer,
+  size_t*                  destination_length_ptr,
+  size_t                   destination_buffer_length,
+  bool                     quiet)
 {
   lzws_result_t result;
 
@@ -212,9 +231,13 @@ static inline lzws_result_t buffered_compress(lzws_compressor_state_t* state_ptr
   return 0;
 }
 
-static inline lzws_result_t buffered_compressor_finish(lzws_compressor_state_t* state_ptr, FILE* destination_file,
-                                                       lzws_byte_t* destination_buffer, size_t* destination_length_ptr,
-                                                       size_t destination_buffer_length, bool quiet)
+static inline lzws_result_t buffered_compressor_finish(
+  lzws_compressor_state_t* state_ptr,
+  FILE*                    destination_file,
+  lzws_byte_t*             destination_buffer,
+  size_t*                  destination_length_ptr,
+  size_t                   destination_buffer_length,
+  bool                     quiet)
 {
   lzws_result_t result;
 
@@ -223,9 +246,15 @@ static inline lzws_result_t buffered_compressor_finish(lzws_compressor_state_t* 
   return 0;
 }
 
-static inline lzws_result_t compress(lzws_compressor_state_t* state_ptr, FILE* source_file, lzws_byte_t* source_buffer,
-                                     size_t source_buffer_length, FILE* destination_file,
-                                     lzws_byte_t* destination_buffer, size_t destination_buffer_length, bool quiet)
+static inline lzws_result_t compress(
+  lzws_compressor_state_t* state_ptr,
+  FILE*                    source_file,
+  lzws_byte_t*             source_buffer,
+  size_t                   source_buffer_length,
+  FILE*                    destination_file,
+  lzws_byte_t*             destination_buffer,
+  size_t                   destination_buffer_length,
+  bool                     quiet)
 {
   lzws_result_t result;
 
@@ -233,11 +262,19 @@ static inline lzws_result_t compress(lzws_compressor_state_t* state_ptr, FILE* s
   size_t       source_length      = 0;
   size_t       destination_length = 0;
 
-  BUFFERED_READ_SOURCE(buffered_compress, state_ptr, &source, &source_length, destination_file, destination_buffer,
-                       &destination_length, destination_buffer_length, quiet);
+  BUFFERED_READ_SOURCE(
+    buffered_compress,
+    state_ptr,
+    &source,
+    &source_length,
+    destination_file,
+    destination_buffer,
+    &destination_length,
+    destination_buffer_length,
+    quiet);
 
-  result = buffered_compressor_finish(state_ptr, destination_file, destination_buffer, &destination_length,
-                                      destination_buffer_length, quiet);
+  result = buffered_compressor_finish(
+    state_ptr, destination_file, destination_buffer, &destination_length, destination_buffer_length, quiet);
 
   if (result != 0) {
     return result;
@@ -246,15 +283,22 @@ static inline lzws_result_t compress(lzws_compressor_state_t* state_ptr, FILE* s
   return write_remaining_destination(destination_file, destination_buffer, destination_length, quiet);
 }
 
-lzws_result_t lzws_compress_file(FILE* source_file, size_t source_buffer_length, FILE* destination_file,
-                                 size_t destination_buffer_length, bool without_magic_header,
-                                 lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb,
-                                 bool unaligned_bit_groups, bool quiet)
+lzws_result_t lzws_compress_file(
+  FILE*            source_file,
+  size_t           source_buffer_length,
+  FILE*            destination_file,
+  size_t           destination_buffer_length,
+  bool             without_magic_header,
+  lzws_byte_fast_t max_code_bit_length,
+  bool             block_mode,
+  bool             msb,
+  bool             unaligned_bit_groups,
+  bool             quiet)
 {
   lzws_compressor_state_t* state_ptr;
 
-  lzws_result_t result = lzws_compressor_get_initial_state(&state_ptr, without_magic_header, max_code_bit_length,
-                                                           block_mode, msb, unaligned_bit_groups, quiet);
+  lzws_result_t result = lzws_compressor_get_initial_state(
+    &state_ptr, without_magic_header, max_code_bit_length, block_mode, msb, unaligned_bit_groups, quiet);
 
   if (result != 0) {
     switch (result) {
@@ -286,8 +330,15 @@ lzws_result_t lzws_compress_file(FILE* source_file, size_t source_buffer_length,
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 
-  result = compress(state_ptr, source_file, source_buffer, source_buffer_length, destination_file, destination_buffer,
-                    destination_buffer_length, quiet);
+  result = compress(
+    state_ptr,
+    source_file,
+    source_buffer,
+    source_buffer_length,
+    destination_file,
+    destination_buffer,
+    destination_buffer_length,
+    quiet);
 
   free(source_buffer);
   free(destination_buffer);
@@ -298,10 +349,15 @@ lzws_result_t lzws_compress_file(FILE* source_file, size_t source_buffer_length,
 
 // -- decompress --
 
-static inline lzws_result_t buffered_decompress(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr,
-                                                size_t* source_length_ptr, FILE* destination_file,
-                                                lzws_byte_t* destination_buffer, size_t* destination_length_ptr,
-                                                size_t destination_buffer_length, bool quiet)
+static inline lzws_result_t buffered_decompress(
+  lzws_decompressor_state_t* state_ptr,
+  lzws_byte_t**              source_ptr,
+  size_t*                    source_length_ptr,
+  FILE*                      destination_file,
+  lzws_byte_t*               destination_buffer,
+  size_t*                    destination_length_ptr,
+  size_t                     destination_buffer_length,
+  bool                       quiet)
 {
   lzws_result_t result;
 
@@ -310,8 +366,8 @@ static inline lzws_result_t buffered_decompress(lzws_decompressor_state_t* state
     size_t       remaining_destination_buffer_length      = destination_buffer_length - *destination_length_ptr;
     size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;
 
-    result = lzws_decompress(state_ptr, source_ptr, source_length_ptr, &remaining_destination_buffer,
-                             &remaining_destination_buffer_length);
+    result = lzws_decompress(
+      state_ptr, source_ptr, source_length_ptr, &remaining_destination_buffer, &remaining_destination_buffer_length);
 
     if (result != 0 && result != LZWS_DECOMPRESSOR_NEEDS_MORE_DESTINATION) {
       switch (result) {
@@ -328,8 +384,8 @@ static inline lzws_result_t buffered_decompress(lzws_decompressor_state_t* state
     *destination_length_ptr += prev_remaining_destination_buffer_length - remaining_destination_buffer_length;
 
     if (result == LZWS_DECOMPRESSOR_NEEDS_MORE_DESTINATION) {
-      result = flush_destination_buffer(destination_file, destination_buffer, destination_length_ptr,
-                                        destination_buffer_length, quiet);
+      result = flush_destination_buffer(
+        destination_file, destination_buffer, destination_length_ptr, destination_buffer_length, quiet);
 
       if (result != 0) {
         return result;
@@ -344,9 +400,15 @@ static inline lzws_result_t buffered_decompress(lzws_decompressor_state_t* state
   return 0;
 }
 
-static inline lzws_result_t decompress(lzws_decompressor_state_t* state_ptr, FILE* source_file,
-                                       lzws_byte_t* source_buffer, size_t source_buffer_length, FILE* destination_file,
-                                       lzws_byte_t* destination_buffer, size_t destination_buffer_length, bool quiet)
+static inline lzws_result_t decompress(
+  lzws_decompressor_state_t* state_ptr,
+  FILE*                      source_file,
+  lzws_byte_t*               source_buffer,
+  size_t                     source_buffer_length,
+  FILE*                      destination_file,
+  lzws_byte_t*               destination_buffer,
+  size_t                     destination_buffer_length,
+  bool                       quiet)
 {
   lzws_result_t result;
 
@@ -354,15 +416,29 @@ static inline lzws_result_t decompress(lzws_decompressor_state_t* state_ptr, FIL
   size_t       source_length      = 0;
   size_t       destination_length = 0;
 
-  BUFFERED_READ_SOURCE(buffered_decompress, state_ptr, &source, &source_length, destination_file, destination_buffer,
-                       &destination_length, destination_buffer_length, quiet);
+  BUFFERED_READ_SOURCE(
+    buffered_decompress,
+    state_ptr,
+    &source,
+    &source_length,
+    destination_file,
+    destination_buffer,
+    &destination_length,
+    destination_buffer_length,
+    quiet);
 
   return write_remaining_destination(destination_file, destination_buffer, destination_length, quiet);
 }
 
-lzws_result_t lzws_decompress_file(FILE* source_file, size_t source_buffer_length, FILE* destination_file,
-                                   size_t destination_buffer_length, bool without_magic_header, bool msb,
-                                   bool unaligned_bit_groups, bool quiet)
+lzws_result_t lzws_decompress_file(
+  FILE*  source_file,
+  size_t source_buffer_length,
+  FILE*  destination_file,
+  size_t destination_buffer_length,
+  bool   without_magic_header,
+  bool   msb,
+  bool   unaligned_bit_groups,
+  bool   quiet)
 {
   lzws_decompressor_state_t* state_ptr;
 
@@ -397,8 +473,15 @@ lzws_result_t lzws_decompress_file(FILE* source_file, size_t source_buffer_lengt
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 
-  result = decompress(state_ptr, source_file, source_buffer, source_buffer_length, destination_file, destination_buffer,
-                      destination_buffer_length, quiet);
+  result = decompress(
+    state_ptr,
+    source_file,
+    source_buffer,
+    source_buffer_length,
+    destination_file,
+    destination_buffer,
+    destination_buffer_length,
+    quiet);
 
   free(source_buffer);
   free(destination_buffer);

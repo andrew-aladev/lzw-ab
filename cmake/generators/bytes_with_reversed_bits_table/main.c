@@ -6,9 +6,9 @@
 
 #include "print.h"
 
-#define BYTE_TEMPLATE "0x%02x"
+#define BYTE_TEMPLATE        "0x%02x"
 #define BYTE_LENGTH_PER_LINE 16
-#define BYTE_LENGTH_GLUE ", "
+#define BYTE_LENGTH_GLUE     ", "
 
 static inline void print_bytes_with_reversed_bits(uint8_t byte)
 {
@@ -31,8 +31,7 @@ int main()
   while (true) {
     if (index % BYTE_LENGTH_PER_LINE == 0) {
       PRINT_SPACER();
-    }
-    else {
+    } else {
       PRINT(BYTE_LENGTH_GLUE);
     }
 

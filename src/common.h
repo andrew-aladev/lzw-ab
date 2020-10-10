@@ -26,27 +26,27 @@ typedef uint_fast8_t lzws_byte_fast_t;
 typedef uint16_t      lzws_code_t;
 typedef uint_fast16_t lzws_code_fast_t;
 
-#define LZWS_CODE_FORMAT "%" PRIu16
+#define LZWS_CODE_FORMAT      "%" PRIu16
 #define LZWS_FAST_CODE_FORMAT "%" PRIuFAST16
 
 // External programs requires 2 byte magic header.
 // For example:
 // https://github.com/apache/httpd/blob/b4ee699ea355271bb560248e5f89cca72623a0cf/modules/metadata/mod_mime_magic.c#L2060
-#define LZWS_FIRST_MAGIC_HEADER_BYTE 0x1f  // "\037" in base-8 number system.
+#define LZWS_FIRST_MAGIC_HEADER_BYTE  0x1f // "\037" in base-8 number system.
 #define LZWS_SECOND_MAGIC_HEADER_BYTE 0x9d // "\235" in base-8 number system.
 
-#define LZWS_LOWEST_MAX_CODE_BIT_LENGTH 9
+#define LZWS_LOWEST_MAX_CODE_BIT_LENGTH  9
 #define LZWS_BIGGEST_MAX_CODE_BIT_LENGTH 16
-#define LZWS_MAX_CODE_BIT_MASK 0x1f // Max code bits are the last bits, biggest value (16) requires 5 bits.
-#define LZWS_BLOCK_MODE 0x80
+#define LZWS_MAX_CODE_BIT_MASK           0x1f // Max code bits are the last bits, biggest value (16) requires 5 bits.
+#define LZWS_BLOCK_MODE                  0x80
 
-#define LZWS_ALPHABET_LENGTH 256
-#define LZWS_ALPHABET_BIT_LENGTH 8
-#define LZWS_CLEAR_CODE 256
+#define LZWS_ALPHABET_LENGTH             256
+#define LZWS_ALPHABET_BIT_LENGTH         8
+#define LZWS_CLEAR_CODE                  256
 #define LZWS_RATIO_SOURCE_CHECKPOINT_GAP 10000
 
 // Clear code can be used only in block mode.
-#define LZWS_FIRST_FREE_CODE 256
+#define LZWS_FIRST_FREE_CODE               256
 #define LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE 257
 
 // We can use any value between 0 and alphabet length - 1 as undefined free code.

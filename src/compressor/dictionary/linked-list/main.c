@@ -10,22 +10,26 @@
 
 // -- codes length --
 
-static inline size_t get_first_child_codes_length(const lzws_compressor_dictionary_t* dictionary_ptr,
-                                                  size_t                              total_codes_length)
+static inline size_t get_first_child_codes_length(
+  const lzws_compressor_dictionary_t* dictionary_ptr,
+  size_t                              total_codes_length)
 {
   return total_codes_length - dictionary_ptr->first_child_codes_offset;
 }
 
-static inline size_t get_next_sibling_codes_length(const lzws_compressor_dictionary_t* dictionary_ptr,
-                                                   size_t                              total_codes_length)
+static inline size_t get_next_sibling_codes_length(
+  const lzws_compressor_dictionary_t* dictionary_ptr,
+  size_t                              total_codes_length)
 {
   return total_codes_length - dictionary_ptr->next_sibling_codes_offset;
 }
 
 // -- code index --
 
-static inline lzws_code_fast_t get_first_child_code_index(const lzws_compressor_dictionary_t* dictionary_ptr,
-                                                          lzws_code_fast_t first_free_code, lzws_code_fast_t code)
+static inline lzws_code_fast_t get_first_child_code_index(
+  const lzws_compressor_dictionary_t* dictionary_ptr,
+  lzws_code_fast_t                    first_free_code,
+  lzws_code_fast_t                    code)
 {
   if (code >= first_free_code) {
     code -= dictionary_ptr->first_child_codes_offset;
@@ -34,28 +38,35 @@ static inline lzws_code_fast_t get_first_child_code_index(const lzws_compressor_
   return code;
 }
 
-static inline lzws_code_fast_t get_next_sibling_code_index(const lzws_compressor_dictionary_t* dictionary_ptr,
-                                                           lzws_code_fast_t                    code)
+static inline lzws_code_fast_t get_next_sibling_code_index(
+  const lzws_compressor_dictionary_t* dictionary_ptr,
+  lzws_code_fast_t                    code)
 {
   return code - dictionary_ptr->next_sibling_codes_offset;
 }
 
 // -- implementation --
 
-extern inline void lzws_compressor_initialize_dictionary(lzws_compressor_dictionary_t* dictionary_ptr,
-                                                         lzws_code_fast_t              first_free_code);
+extern inline void lzws_compressor_initialize_dictionary(
+  lzws_compressor_dictionary_t* dictionary_ptr,
+  lzws_code_fast_t              first_free_code);
 
-lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* dictionary_ptr,
-                                                  size_t total_codes_length, const lzws_compressor_options_t* options)
+lzws_result_t lzws_compressor_allocate_dictionary(
+  lzws_compressor_dictionary_t*    dictionary_ptr,
+  size_t                           total_codes_length,
+  const lzws_compressor_options_t* options)
 {
   lzws_code_t undefined_next_code = LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
 
   size_t first_child_codes_length = get_first_child_codes_length(dictionary_ptr, total_codes_length);
   size_t first_child_codes_size   = sizeof(lzws_code_t) * first_child_codes_length;
 
-  lzws_code_t* first_child_codes =
-    lzws_allocate_array(sizeof(lzws_code_t), first_child_codes_length, &undefined_next_code, undefined_next_code == 0,
-                        LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
+  lzws_code_t* first_child_codes = lzws_allocate_array(
+    sizeof(lzws_code_t),
+    first_child_codes_length,
+    &undefined_next_code,
+    undefined_next_code == 0,
+    LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
 
   if (first_child_codes == NULL) {
     if (!options->quiet) {
@@ -68,9 +79,12 @@ lzws_result_t lzws_compressor_allocate_dictionary(lzws_compressor_dictionary_t* 
   size_t next_sibling_codes_length = get_next_sibling_codes_length(dictionary_ptr, total_codes_length);
   size_t next_sibling_codes_size   = sizeof(lzws_code_t) * next_sibling_codes_length;
 
-  lzws_code_t* next_sibling_codes =
-    lzws_allocate_array(sizeof(lzws_code_t), next_sibling_codes_length, &undefined_next_code, undefined_next_code == 0,
-                        LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
+  lzws_code_t* next_sibling_codes = lzws_allocate_array(
+    sizeof(lzws_code_t),
+    next_sibling_codes_length,
+    &undefined_next_code,
+    undefined_next_code == 0,
+    LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
 
   if (next_sibling_codes == NULL) {
     if (!options->quiet) {
@@ -113,21 +127,30 @@ void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_p
   lzws_code_t undefined_next_code = LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
 
   size_t first_child_codes_length = get_first_child_codes_length(dictionary_ptr, total_codes_length);
-  lzws_fill_array(dictionary_ptr->first_child_codes, sizeof(lzws_code_t), first_child_codes_length,
-                  &undefined_next_code, LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
+  lzws_fill_array(
+    dictionary_ptr->first_child_codes,
+    sizeof(lzws_code_t),
+    first_child_codes_length,
+    &undefined_next_code,
+    LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
 
   size_t next_sibling_codes_length = get_next_sibling_codes_length(dictionary_ptr, total_codes_length);
-  lzws_fill_array(dictionary_ptr->next_sibling_codes, sizeof(lzws_code_t), next_sibling_codes_length,
-                  &undefined_next_code, LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
+  lzws_fill_array(
+    dictionary_ptr->next_sibling_codes,
+    sizeof(lzws_code_t),
+    next_sibling_codes_length,
+    &undefined_next_code,
+    LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES);
 
   // We can keep last symbol by codes in dictionary as is.
   // Algorithm will access only initialized symbols.
 }
 
-lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(const lzws_compressor_dictionary_t* dictionary_ptr,
-                                                               lzws_code_fast_t                    first_free_code,
-                                                               lzws_code_fast_t                    current_code,
-                                                               lzws_byte_fast_t                    next_symbol)
+lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
+  const lzws_compressor_dictionary_t* dictionary_ptr,
+  lzws_code_fast_t                    first_free_code,
+  lzws_code_fast_t                    current_code,
+  lzws_byte_fast_t                    next_symbol)
 {
   lzws_code_fast_t current_code_index = get_first_child_code_index(dictionary_ptr, first_free_code, current_code);
 
@@ -151,9 +174,12 @@ lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(const lzws_compre
   return LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
 }
 
-void lzws_compressor_save_next_code_to_dictionary(lzws_compressor_dictionary_t* dictionary_ptr,
-                                                  lzws_code_fast_t first_free_code, lzws_code_fast_t current_code,
-                                                  lzws_byte_fast_t next_symbol, lzws_code_fast_t next_code)
+void lzws_compressor_save_next_code_to_dictionary(
+  lzws_compressor_dictionary_t* dictionary_ptr,
+  lzws_code_fast_t              first_free_code,
+  lzws_code_fast_t              current_code,
+  lzws_byte_fast_t              next_symbol,
+  lzws_code_fast_t              next_code)
 {
   lzws_code_fast_t next_code_index = get_next_sibling_code_index(dictionary_ptr, next_code);
 

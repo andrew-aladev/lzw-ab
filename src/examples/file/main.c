@@ -13,25 +13,25 @@
 #define BUFFER_LENGTH 0
 
 #define WITHOUT_MAGIC_HEADER false
-#define MAX_CODE_BIT_LENGTH LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
-#define BLOCK_MODE true
-#define MSB false
+#define MAX_CODE_BIT_LENGTH  LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
+#define BLOCK_MODE           true
+#define MSB                  false
 #define UNALIGNED_BIT_GROUPS false
-#define QUIET false
+#define QUIET                false
 
 int main()
 {
   const char text[]      = "example text";
   size_t     text_length = strlen(text);
 
-  FILE* text_file = fmemopen((void*)text, text_length, "r");
+  FILE* text_file = fmemopen((void*) text, text_length, "r");
   if (text_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for text failed");
     return 1;
   }
 
   char  compressed_text[FILE_BUFFER_LENGTH];
-  FILE* compressed_text_file = fmemopen((void*)compressed_text, FILE_BUFFER_LENGTH, "w");
+  FILE* compressed_text_file = fmemopen((void*) compressed_text, FILE_BUFFER_LENGTH, "w");
   if (compressed_text_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for compressed text failed");
 
@@ -40,9 +40,17 @@ int main()
     return 2;
   }
 
-  lzws_result_t result =
-    lzws_compress_file(text_file, BUFFER_LENGTH, compressed_text_file, BUFFER_LENGTH, WITHOUT_MAGIC_HEADER,
-                       MAX_CODE_BIT_LENGTH, BLOCK_MODE, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+  lzws_result_t result = lzws_compress_file(
+    text_file,
+    BUFFER_LENGTH,
+    compressed_text_file,
+    BUFFER_LENGTH,
+    WITHOUT_MAGIC_HEADER,
+    MAX_CODE_BIT_LENGTH,
+    BLOCK_MODE,
+    MSB,
+    UNALIGNED_BIT_GROUPS,
+    QUIET);
 
   fclose(text_file);
 
@@ -66,14 +74,14 @@ int main()
 
   // Decompress.
 
-  compressed_text_file = fmemopen((void*)compressed_text, strlen(compressed_text), "r");
+  compressed_text_file = fmemopen((void*) compressed_text, strlen(compressed_text), "r");
   if (compressed_text_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for compressed text failed");
     return 5;
   }
 
   char  decompressed_text[FILE_BUFFER_LENGTH];
-  FILE* decompressed_text_file = fmemopen((void*)decompressed_text, FILE_BUFFER_LENGTH, "w");
+  FILE* decompressed_text_file = fmemopen((void*) decompressed_text, FILE_BUFFER_LENGTH, "w");
   if (decompressed_text_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for decompressed text failed");
 
@@ -82,8 +90,15 @@ int main()
     return 6;
   }
 
-  result = lzws_decompress_file(compressed_text_file, BUFFER_LENGTH, decompressed_text_file, BUFFER_LENGTH,
-                                WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS, QUIET);
+  result = lzws_decompress_file(
+    compressed_text_file,
+    BUFFER_LENGTH,
+    decompressed_text_file,
+    BUFFER_LENGTH,
+    WITHOUT_MAGIC_HEADER,
+    MSB,
+    UNALIGNED_BIT_GROUPS,
+    QUIET);
 
   fclose(compressed_text_file);
   fclose(decompressed_text_file);

@@ -10,7 +10,8 @@
 #include "../common.h"
 
 // Possible results:
-enum {
+enum
+{
   LZWS_TEST_STRING_AND_FILE_ALLOCATE_FAILED = 1,
   LZWS_TEST_STRING_AND_FILE_NATIVE_STREAM_FAILED,
   LZWS_TEST_STRING_AND_FILE_API_FAILED,
@@ -23,15 +24,26 @@ enum {
 // We can test both string and file api.
 // It is possible to run every test part using 2 apis.
 
-lzws_result_t lzws_tests_compress_string_and_file(lzws_byte_t* source, size_t source_length,
-                                                  lzws_byte_t** destination_ptr, size_t* destination_length_ptr,
-                                                  size_t buffer_length, bool without_magic_header,
-                                                  lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb,
-                                                  bool unaligned_bit_groups);
+lzws_result_t lzws_tests_compress_string_and_file(
+  lzws_byte_t*     source,
+  size_t           source_length,
+  lzws_byte_t**    destination_ptr,
+  size_t*          destination_length_ptr,
+  size_t           buffer_length,
+  bool             without_magic_header,
+  lzws_byte_fast_t max_code_bit_length,
+  bool             block_mode,
+  bool             msb,
+  bool             unaligned_bit_groups);
 
-lzws_result_t lzws_tests_decompress_string_and_file(lzws_byte_t* source, size_t source_length,
-                                                    lzws_byte_t** destination_ptr, size_t* destination_length_ptr,
-                                                    size_t buffer_length, bool without_magic_header, bool msb,
-                                                    bool unaligned_bit_groups);
+lzws_result_t lzws_tests_decompress_string_and_file(
+  lzws_byte_t*  source,
+  size_t        source_length,
+  lzws_byte_t** destination_ptr,
+  size_t*       destination_length_ptr,
+  size_t        buffer_length,
+  bool          without_magic_header,
+  bool          msb,
+  bool          unaligned_bit_groups);
 
 #endif // LZWS_TESTS_STRING_AND_FILE_H

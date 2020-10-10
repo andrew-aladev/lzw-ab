@@ -20,8 +20,7 @@
 #define PRINT_SPACER()       \
   if (is_first_spacer) {     \
     is_first_spacer = false; \
-  }                          \
-  else {                     \
+  } else {                   \
     PRINT(TERMINATOR);       \
   }
 

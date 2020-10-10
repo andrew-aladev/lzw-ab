@@ -7,7 +7,8 @@
 
 #include "../common.h"
 
-typedef struct {
+typedef struct
+{
   bool without_magic_header;
   bool block_mode;
   bool msb;
@@ -18,7 +19,8 @@ typedef struct {
 extern const lzws_decompressor_options_t LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;
 
 // Possible results:
-enum {
+enum
+{
   LZWS_DECOMPRESSOR_ALLOCATE_FAILED = 1,
   LZWS_DECOMPRESSOR_INVALID_MAGIC_HEADER,
   LZWS_DECOMPRESSOR_INVALID_MAX_CODE_BIT_LENGTH,

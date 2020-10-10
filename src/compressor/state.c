@@ -10,15 +10,16 @@
 #include "dictionary/wrapper.h"
 #include "ratio/wrapper.h"
 
-lzws_result_t lzws_compressor_get_initial_state(lzws_compressor_state_t**        result_state_ptr,
-                                                const lzws_compressor_options_t* options)
+lzws_result_t lzws_compressor_get_initial_state(
+  lzws_compressor_state_t**        result_state_ptr,
+  const lzws_compressor_options_t* options)
 {
   if (options == NULL) {
     options = &LZWS_COMPRESSOR_DEFAULT_OPTIONS;
-  }
-  else {
-    if (options->max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH ||
-        options->max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
+  } else {
+    if (
+      options->max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH ||
+      options->max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
       if (!options->quiet) {
         LZWS_LOG_ERROR("invalid max code bit length: %u", options->max_code_bit_length);
       }

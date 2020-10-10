@@ -24,8 +24,7 @@ static inline lzws_byte_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_byte_fa
 
     // Removing first bits from code.
     code &= lzws_get_mask_for_last_bits(remaining_code_bit_length);
-  }
-  else {
+  } else {
     // Taking last bits from code.
     byte = code & 0xff;
 
@@ -39,10 +38,12 @@ static inline lzws_byte_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_byte_fa
   return byte;
 }
 
-static inline lzws_byte_fast_t get_byte_with_remainder(lzws_code_fast_t* code_ptr,
-                                                       lzws_byte_fast_t* code_bit_length_ptr,
-                                                       lzws_byte_fast_t  remainder,
-                                                       lzws_byte_fast_t remainder_bit_length, bool msb)
+static inline lzws_byte_fast_t get_byte_with_remainder(
+  lzws_code_fast_t* code_ptr,
+  lzws_byte_fast_t* code_bit_length_ptr,
+  lzws_byte_fast_t  remainder,
+  lzws_byte_fast_t  remainder_bit_length,
+  bool              msb)
 {
   if (remainder_bit_length == 0) {
     return get_byte(code_ptr, code_bit_length_ptr, msb);
@@ -65,8 +66,7 @@ static inline lzws_byte_fast_t get_byte_with_remainder(lzws_code_fast_t* code_pt
 
     // Removing first bits from code.
     code &= lzws_get_mask_for_last_bits(remaining_code_bit_length);
-  }
-  else {
+  } else {
     // Taking last bits from code.
     byte = code & lzws_get_mask_for_last_bits(current_code_bit_length);
 
@@ -83,8 +83,11 @@ static inline lzws_byte_fast_t get_byte_with_remainder(lzws_code_fast_t* code_pt
   return byte;
 }
 
-lzws_result_t lzws_compressor_write_code(lzws_compressor_state_t* state_ptr, lzws_code_fast_t code,
-                                         lzws_byte_t** destination_ptr, size_t* destination_length_ptr)
+lzws_result_t lzws_compressor_write_code(
+  lzws_compressor_state_t* state_ptr,
+  lzws_code_fast_t         code,
+  lzws_byte_t**            destination_ptr,
+  size_t*                  destination_length_ptr)
 {
   lzws_byte_fast_t code_bit_length      = state_ptr->last_used_code_bit_length;
   lzws_byte_fast_t remainder_bit_length = state_ptr->remainder_bit_length;

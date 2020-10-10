@@ -7,7 +7,8 @@
 
 #include "../../common.h"
 
-typedef struct {
+typedef struct
+{
   lzws_byte_fast_t last_used_code_bit_length;
   lzws_byte_fast_t destination_byte_length;
 } lzws_compressor_alignment_t;

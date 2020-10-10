@@ -12,8 +12,9 @@ bool lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr)
 {
   // We don't need to clear when destination length equals to zero.
   // Source length won't be zero when destination length is not zero.
-  if (ratio_ptr->new_source_length < LZWS_RATIO_SOURCE_CHECKPOINT_GAP ||
-      mpz_cmp_ui(ratio_ptr->destination_length, 0) == 0) {
+  if (
+    ratio_ptr->new_source_length < LZWS_RATIO_SOURCE_CHECKPOINT_GAP ||
+    mpz_cmp_ui(ratio_ptr->destination_length, 0) == 0) {
     return false;
   }
 

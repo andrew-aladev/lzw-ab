@@ -6,8 +6,11 @@
 
 #include "utils.h"
 
-void lzws_decompressor_read_byte(const lzws_decompressor_state_t* state, lzws_byte_fast_t* byte_ptr,
-                                 lzws_byte_t** source_ptr, size_t* source_length_ptr)
+void lzws_decompressor_read_byte(
+  const lzws_decompressor_state_t* state,
+  lzws_byte_fast_t*                byte_ptr,
+  lzws_byte_t**                    source_ptr,
+  size_t*                          source_length_ptr)
 {
   lzws_byte_fast_t byte;
   lzws_read_byte(&byte, source_ptr, source_length_ptr);

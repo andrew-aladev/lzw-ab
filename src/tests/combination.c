@@ -25,14 +25,20 @@ static const bool unaligned_bit_groups_values[] = {true, false};
 
 // -- compressor --
 
-static inline lzws_result_t test_compressor(lzws_test_compressor_t function, va_list args, size_t buffer_length,
-                                            bool without_magic_header, lzws_byte_fast_t max_code_bit_length,
-                                            bool block_mode, bool msb, bool unaligned_bit_groups)
+static inline lzws_result_t test_compressor(
+  lzws_test_compressor_t function,
+  va_list                args,
+  size_t                 buffer_length,
+  bool                   without_magic_header,
+  lzws_byte_fast_t       max_code_bit_length,
+  bool                   block_mode,
+  bool                   msb,
+  bool                   unaligned_bit_groups)
 {
   lzws_compressor_state_t* state_ptr;
 
-  lzws_result_t result = lzws_compressor_get_initial_state(&state_ptr, without_magic_header, max_code_bit_length,
-                                                           block_mode, msb, unaligned_bit_groups, false);
+  lzws_result_t result = lzws_compressor_get_initial_state(
+    &state_ptr, without_magic_header, max_code_bit_length, block_mode, msb, unaligned_bit_groups, false);
 
   if (result != 0) {
     LZWS_LOG_ERROR("failed to get initial state for compressor");
@@ -59,7 +65,8 @@ static inline lzws_result_t process_compressor_combinations(lzws_test_compressor
       bool without_magic_header = without_magic_headers[jndex];
 
       for (lzws_byte_fast_t max_code_bit_length = LZWS_LOWEST_MAX_CODE_BIT_LENGTH;
-           max_code_bit_length <= LZWS_BIGGEST_MAX_CODE_BIT_LENGTH; max_code_bit_length++) {
+           max_code_bit_length <= LZWS_BIGGEST_MAX_CODE_BIT_LENGTH;
+           max_code_bit_length++) {
         for (size_t kndex = 0; kndex < BLOCK_MODE_LENGTH; kndex++) {
           bool block_mode = block_modes[kndex];
 
@@ -69,8 +76,15 @@ static inline lzws_result_t process_compressor_combinations(lzws_test_compressor
             for (size_t mndex = 0; mndex < UNALIGNED_BIT_GROUPS_LENGTH; mndex++) {
               bool unaligned_bit_groups = unaligned_bit_groups_values[mndex];
 
-              lzws_result_t result = test_compressor(function, args, buffer_length, without_magic_header,
-                                                     max_code_bit_length, block_mode, msb, unaligned_bit_groups);
+              lzws_result_t result = test_compressor(
+                function,
+                args,
+                buffer_length,
+                without_magic_header,
+                max_code_bit_length,
+                block_mode,
+                msb,
+                unaligned_bit_groups);
 
               if (result != 0) {
                 return result;
@@ -99,8 +113,13 @@ lzws_result_t lzws_test_compressor_combinations(lzws_test_compressor_t function,
 
 // -- decompressor --
 
-static inline lzws_result_t test_decompressor(lzws_test_decompressor_t function, va_list args, size_t buffer_length,
-                                              bool without_magic_header, bool msb, bool unaligned_bit_groups)
+static inline lzws_result_t test_decompressor(
+  lzws_test_decompressor_t function,
+  va_list                  args,
+  size_t                   buffer_length,
+  bool                     without_magic_header,
+  bool                     msb,
+  bool                     unaligned_bit_groups)
 {
   lzws_decompressor_state_t* state_ptr;
 
@@ -166,7 +185,9 @@ lzws_result_t lzws_test_decompressor_combinations(lzws_test_decompressor_t funct
 // -- compressor and decompressor --
 
 static inline lzws_result_t test_combination_with_compressor_and_decompressor(
-  lzws_compressor_state_t* compressor_state_ptr, size_t compressor_buffer_length, va_list args)
+  lzws_compressor_state_t* compressor_state_ptr,
+  size_t                   compressor_buffer_length,
+  va_list                  args)
 {
   lzws_decompressor_state_t*              decompressor_state_ptr     = va_arg(args, lzws_decompressor_state_t*);
   size_t                                  decompressor_buffer_length = va_arg(args, size_t);
@@ -186,13 +207,19 @@ static inline lzws_result_t test_combination_with_compressor_and_decompressor(
 }
 
 static inline lzws_result_t test_compressor_combinations_with_decompressor(
-  lzws_decompressor_state_t* decompressor_state_ptr, size_t decompressor_buffer_length, va_list args)
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  size_t                     decompressor_buffer_length,
+  va_list                    args)
 {
   lzws_test_compressor_and_decompressor_t function      = va_arg(args, lzws_test_compressor_and_decompressor_t);
   va_list*                                function_args = va_arg(args, va_list*);
 
-  return lzws_test_compressor_combinations(test_combination_with_compressor_and_decompressor, decompressor_state_ptr,
-                                           decompressor_buffer_length, function, function_args);
+  return lzws_test_compressor_combinations(
+    test_combination_with_compressor_and_decompressor,
+    decompressor_state_ptr,
+    decompressor_buffer_length,
+    function,
+    function_args);
 }
 
 lzws_result_t lzws_test_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...)
@@ -211,12 +238,15 @@ lzws_result_t lzws_test_compressor_and_decompressor_combinations(lzws_test_compr
 // -- compatible compressor and decompressor --
 
 static inline lzws_result_t test_compatible_compressor_and_decompressor_combination(
-  lzws_compressor_state_t* compressor_state_ptr, lzws_decompressor_state_t* decompressor_state_ptr,
-  size_t buffer_length, va_list args)
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  size_t                     buffer_length,
+  va_list                    args)
 {
-  if (compressor_state_ptr->without_magic_header != decompressor_state_ptr->without_magic_header ||
-      compressor_state_ptr->msb != decompressor_state_ptr->msb ||
-      compressor_state_ptr->unaligned_bit_groups != decompressor_state_ptr->unaligned_bit_groups) {
+  if (
+    compressor_state_ptr->without_magic_header != decompressor_state_ptr->without_magic_header ||
+    compressor_state_ptr->msb != decompressor_state_ptr->msb ||
+    compressor_state_ptr->unaligned_bit_groups != decompressor_state_ptr->unaligned_bit_groups) {
     return 0;
   }
 
@@ -231,7 +261,8 @@ static inline lzws_result_t test_compatible_compressor_and_decompressor_combinat
 }
 
 lzws_result_t lzws_test_compatible_compressor_and_decompressor_combinations(
-  lzws_test_compressor_and_decompressor_t function, ...)
+  lzws_test_compressor_and_decompressor_t function,
+  ...)
 {
   va_list function_args;
   va_start(function_args, function);

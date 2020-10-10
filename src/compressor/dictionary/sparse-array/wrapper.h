@@ -37,21 +37,23 @@ inline void lzws_compressor_clear_dictionary_wrapper(lzws_compressor_state_t* st
   }
 }
 
-inline lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary_wrapper(const lzws_compressor_state_t* state_ptr,
-                                                                              lzws_code_fast_t current_code,
-                                                                              lzws_byte_fast_t next_symbol)
+inline lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary_wrapper(
+  const lzws_compressor_state_t* state_ptr,
+  lzws_code_fast_t               current_code,
+  lzws_byte_fast_t               next_symbol)
 {
-  return lzws_compressor_get_next_code_from_dictionary(&state_ptr->dictionary, state_ptr->first_free_code, current_code,
-                                                       next_symbol);
+  return lzws_compressor_get_next_code_from_dictionary(
+    &state_ptr->dictionary, state_ptr->first_free_code, current_code, next_symbol);
 }
 
-inline void lzws_compressor_save_next_code_to_dictionary_wrapper(lzws_compressor_state_t* state_ptr,
-                                                                 lzws_code_fast_t         current_code,
-                                                                 lzws_byte_fast_t         next_symbol,
-                                                                 lzws_code_fast_t         next_code)
+inline void lzws_compressor_save_next_code_to_dictionary_wrapper(
+  lzws_compressor_state_t* state_ptr,
+  lzws_code_fast_t         current_code,
+  lzws_byte_fast_t         next_symbol,
+  lzws_code_fast_t         next_code)
 {
-  lzws_compressor_save_next_code_to_dictionary(&state_ptr->dictionary, state_ptr->first_free_code, &state_ptr->options,
-                                               current_code, next_symbol, next_code);
+  lzws_compressor_save_next_code_to_dictionary(
+    &state_ptr->dictionary, state_ptr->first_free_code, &state_ptr->options, current_code, next_symbol, next_code);
 }
 
 inline void lzws_compressor_free_dictionary_wrapper(lzws_compressor_state_t* state_ptr)

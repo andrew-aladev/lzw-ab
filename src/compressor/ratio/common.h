@@ -8,7 +8,8 @@
 #include <gmp.h>
 #include <stdint.h>
 
-typedef struct {
+typedef struct
+{
   uint_fast32_t new_source_length, new_destination_length;
   mpz_t         source_length, destination_length;
 } lzws_compressor_ratio_t;

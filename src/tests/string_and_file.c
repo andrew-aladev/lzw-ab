@@ -40,9 +40,13 @@ static inline lzws_result_t open_source_file(FILE** source_file_ptr, lzws_byte_t
   return 0;
 }
 
-static inline lzws_result_t prepare_files_with_destination(FILE** source_file_ptr, lzws_byte_t* source,
-                                                           size_t source_length, FILE** destination_file_ptr,
-                                                           lzws_byte_t** destination_ptr, size_t destination_length)
+static inline lzws_result_t prepare_files_with_destination(
+  FILE**        source_file_ptr,
+  lzws_byte_t*  source,
+  size_t        source_length,
+  FILE**        destination_file_ptr,
+  lzws_byte_t** destination_ptr,
+  size_t        destination_length)
 {
   FILE* source_file;
 
@@ -81,8 +85,11 @@ static inline lzws_result_t prepare_files_with_destination(FILE** source_file_pt
   return 0;
 }
 
-static inline lzws_result_t prepare_files_without_destination(FILE** source_file_ptr, lzws_byte_t* source,
-                                                              size_t source_length, FILE** destination_file_ptr)
+static inline lzws_result_t prepare_files_without_destination(
+  FILE**       source_file_ptr,
+  lzws_byte_t* source,
+  size_t       source_length,
+  FILE**       destination_file_ptr)
 {
   FILE* source_file;
 
@@ -108,18 +115,34 @@ static inline lzws_result_t prepare_files_without_destination(FILE** source_file
 
 // -- compress --
 
-static inline lzws_result_t test_compress_string(lzws_result_t* test_result_ptr, lzws_byte_t* source,
-                                                 size_t source_length, lzws_byte_t** destination_ptr,
-                                                 size_t* destination_length_ptr, size_t buffer_length,
-                                                 bool without_magic_header, lzws_byte_fast_t max_code_bit_length,
-                                                 bool block_mode, bool msb, bool unaligned_bit_groups)
+static inline lzws_result_t test_compress_string(
+  lzws_result_t*   test_result_ptr,
+  lzws_byte_t*     source,
+  size_t           source_length,
+  lzws_byte_t**    destination_ptr,
+  size_t*          destination_length_ptr,
+  size_t           buffer_length,
+  bool             without_magic_header,
+  lzws_byte_fast_t max_code_bit_length,
+  bool             block_mode,
+  bool             msb,
+  bool             unaligned_bit_groups)
 {
   lzws_byte_t* destination        = NULL;
   size_t       destination_length = 0;
 
-  lzws_result_t test_result =
-    lzws_compress_string(source, source_length, &destination, &destination_length, buffer_length, without_magic_header,
-                         max_code_bit_length, block_mode, msb, unaligned_bit_groups, false);
+  lzws_result_t test_result = lzws_compress_string(
+    source,
+    source_length,
+    &destination,
+    &destination_length,
+    buffer_length,
+    without_magic_header,
+    max_code_bit_length,
+    block_mode,
+    msb,
+    unaligned_bit_groups,
+    false);
 
   if (test_result != 0 && test_result != LZWS_STRING_VALIDATE_FAILED) {
     LZWS_LOG_ERROR("string api failed");
@@ -133,28 +156,42 @@ static inline lzws_result_t test_compress_string(lzws_result_t* test_result_ptr,
   return 0;
 }
 
-static inline lzws_result_t test_compress_file_with_destination(lzws_result_t* test_result_ptr, lzws_byte_t* source,
-                                                                size_t source_length, lzws_byte_t** destination_ptr,
-                                                                size_t destination_length, size_t buffer_length,
-                                                                bool             without_magic_header,
-                                                                lzws_byte_fast_t max_code_bit_length, bool block_mode,
-                                                                bool msb, bool unaligned_bit_groups)
+static inline lzws_result_t test_compress_file_with_destination(
+  lzws_result_t*   test_result_ptr,
+  lzws_byte_t*     source,
+  size_t           source_length,
+  lzws_byte_t**    destination_ptr,
+  size_t           destination_length,
+  size_t           buffer_length,
+  bool             without_magic_header,
+  lzws_byte_fast_t max_code_bit_length,
+  bool             block_mode,
+  bool             msb,
+  bool             unaligned_bit_groups)
 {
   FILE* source_file;
   FILE* destination_file;
 
   lzws_byte_t* destination;
 
-  lzws_result_t result = prepare_files_with_destination(&source_file, source, source_length, &destination_file,
-                                                        &destination, destination_length);
+  lzws_result_t result = prepare_files_with_destination(
+    &source_file, source, source_length, &destination_file, &destination, destination_length);
 
   if (result != 0) {
     return result;
   }
 
-  lzws_result_t test_result =
-    lzws_compress_file(source_file, buffer_length, destination_file, buffer_length, without_magic_header,
-                       max_code_bit_length, block_mode, msb, unaligned_bit_groups, false);
+  lzws_result_t test_result = lzws_compress_file(
+    source_file,
+    buffer_length,
+    destination_file,
+    buffer_length,
+    without_magic_header,
+    max_code_bit_length,
+    block_mode,
+    msb,
+    unaligned_bit_groups,
+    false);
 
   fclose(source_file);
   fclose(destination_file);
@@ -170,11 +207,16 @@ static inline lzws_result_t test_compress_file_with_destination(lzws_result_t* t
   return 0;
 }
 
-static inline lzws_result_t test_compress_file_without_destination(lzws_result_t* test_result_ptr, lzws_byte_t* source,
-                                                                   size_t source_length, size_t buffer_length,
-                                                                   bool             without_magic_header,
-                                                                   lzws_byte_fast_t max_code_bit_length,
-                                                                   bool block_mode, bool msb, bool unaligned_bit_groups)
+static inline lzws_result_t test_compress_file_without_destination(
+  lzws_result_t*   test_result_ptr,
+  lzws_byte_t*     source,
+  size_t           source_length,
+  size_t           buffer_length,
+  bool             without_magic_header,
+  lzws_byte_fast_t max_code_bit_length,
+  bool             block_mode,
+  bool             msb,
+  bool             unaligned_bit_groups)
 {
   FILE* source_file;
   FILE* destination_file;
@@ -184,9 +226,17 @@ static inline lzws_result_t test_compress_file_without_destination(lzws_result_t
     return result;
   }
 
-  lzws_result_t test_result =
-    lzws_compress_file(source_file, buffer_length, destination_file, buffer_length, without_magic_header,
-                       max_code_bit_length, block_mode, msb, unaligned_bit_groups, false);
+  lzws_result_t test_result = lzws_compress_file(
+    source_file,
+    buffer_length,
+    destination_file,
+    buffer_length,
+    without_magic_header,
+    max_code_bit_length,
+    block_mode,
+    msb,
+    unaligned_bit_groups,
+    false);
 
   fclose(source_file);
   fclose(destination_file);
@@ -201,20 +251,35 @@ static inline lzws_result_t test_compress_file_without_destination(lzws_result_t
   return 0;
 }
 
-lzws_result_t lzws_tests_compress_string_and_file(lzws_byte_t* source, size_t source_length,
-                                                  lzws_byte_t** destination_ptr, size_t* destination_length_ptr,
-                                                  size_t buffer_length, bool without_magic_header,
-                                                  lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb,
-                                                  bool unaligned_bit_groups)
+lzws_result_t lzws_tests_compress_string_and_file(
+  lzws_byte_t*     source,
+  size_t           source_length,
+  lzws_byte_t**    destination_ptr,
+  size_t*          destination_length_ptr,
+  size_t           buffer_length,
+  bool             without_magic_header,
+  lzws_byte_fast_t max_code_bit_length,
+  bool             block_mode,
+  bool             msb,
+  bool             unaligned_bit_groups)
 {
   lzws_result_t result, test_result;
 
   lzws_byte_t* destination_for_string;
   size_t       destination_length;
 
-  result = test_compress_string(&test_result, source, source_length, &destination_for_string, &destination_length,
-                                buffer_length, without_magic_header, max_code_bit_length, block_mode, msb,
-                                unaligned_bit_groups);
+  result = test_compress_string(
+    &test_result,
+    source,
+    source_length,
+    &destination_for_string,
+    &destination_length,
+    buffer_length,
+    without_magic_header,
+    max_code_bit_length,
+    block_mode,
+    msb,
+    unaligned_bit_groups);
 
   if (result != 0) {
     return result;
@@ -223,9 +288,16 @@ lzws_result_t lzws_tests_compress_string_and_file(lzws_byte_t* source, size_t so
   if (test_result != 0) {
     LZWS_LOG_ERROR("string compressor failed");
 
-    result =
-      test_compress_file_without_destination(&test_result, source, source_length, buffer_length, without_magic_header,
-                                             max_code_bit_length, block_mode, msb, unaligned_bit_groups);
+    result = test_compress_file_without_destination(
+      &test_result,
+      source,
+      source_length,
+      buffer_length,
+      without_magic_header,
+      max_code_bit_length,
+      block_mode,
+      msb,
+      unaligned_bit_groups);
 
     if (result != 0) {
       return result;
@@ -241,9 +313,18 @@ lzws_result_t lzws_tests_compress_string_and_file(lzws_byte_t* source, size_t so
 
   lzws_byte_t* destination_for_file;
 
-  result = test_compress_file_with_destination(&test_result, source, source_length, &destination_for_file,
-                                               destination_length, buffer_length, without_magic_header,
-                                               max_code_bit_length, block_mode, msb, unaligned_bit_groups);
+  result = test_compress_file_with_destination(
+    &test_result,
+    source,
+    source_length,
+    &destination_for_file,
+    destination_length,
+    buffer_length,
+    without_magic_header,
+    max_code_bit_length,
+    block_mode,
+    msb,
+    unaligned_bit_groups);
 
   if (result != 0) {
     free(destination_for_string);
@@ -259,7 +340,7 @@ lzws_result_t lzws_tests_compress_string_and_file(lzws_byte_t* source, size_t so
     return LZWS_TEST_STRING_AND_FILE_COMPRESSOR_IS_VOLATILE;
   }
 
-  if (strncmp((const char*)destination_for_string, (const char*)destination_for_file, destination_length) != 0) {
+  if (strncmp((const char*) destination_for_string, (const char*) destination_for_file, destination_length) != 0) {
     LZWS_LOG_ERROR("string and file compressors returned different results");
 
     free(destination_for_string);
@@ -278,20 +359,34 @@ lzws_result_t lzws_tests_compress_string_and_file(lzws_byte_t* source, size_t so
 
 // -- decompress --
 
-static inline lzws_result_t test_decompress_string(lzws_result_t* test_result_ptr, lzws_byte_t* source,
-                                                   size_t source_length, lzws_byte_t** destination_ptr,
-                                                   size_t* destination_length_ptr, size_t buffer_length,
-                                                   bool without_magic_header, bool msb, bool unaligned_bit_groups)
+static inline lzws_result_t test_decompress_string(
+  lzws_result_t* test_result_ptr,
+  lzws_byte_t*   source,
+  size_t         source_length,
+  lzws_byte_t**  destination_ptr,
+  size_t*        destination_length_ptr,
+  size_t         buffer_length,
+  bool           without_magic_header,
+  bool           msb,
+  bool           unaligned_bit_groups)
 {
   lzws_byte_t* destination        = NULL;
   size_t       destination_length = 0;
 
-  lzws_result_t test_result =
-    lzws_decompress_string(source, source_length, &destination, &destination_length, buffer_length,
-                           without_magic_header, msb, unaligned_bit_groups, false);
+  lzws_result_t test_result = lzws_decompress_string(
+    source,
+    source_length,
+    &destination,
+    &destination_length,
+    buffer_length,
+    without_magic_header,
+    msb,
+    unaligned_bit_groups,
+    false);
 
-  if (test_result != 0 && test_result != LZWS_STRING_VALIDATE_FAILED &&
-      test_result != LZWS_STRING_DECOMPRESSOR_CORRUPTED_SOURCE) {
+  if (
+    test_result != 0 && test_result != LZWS_STRING_VALIDATE_FAILED &&
+    test_result != LZWS_STRING_DECOMPRESSOR_CORRUPTED_SOURCE) {
     LZWS_LOG_ERROR("string api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
@@ -303,32 +398,45 @@ static inline lzws_result_t test_decompress_string(lzws_result_t* test_result_pt
   return 0;
 }
 
-static inline lzws_result_t test_decompress_file_with_destination(lzws_result_t* test_result_ptr, lzws_byte_t* source,
-                                                                  size_t source_length, lzws_byte_t** destination_ptr,
-                                                                  size_t destination_length, size_t buffer_length,
-                                                                  bool without_magic_header, bool msb,
-                                                                  bool unaligned_bit_groups)
+static inline lzws_result_t test_decompress_file_with_destination(
+  lzws_result_t* test_result_ptr,
+  lzws_byte_t*   source,
+  size_t         source_length,
+  lzws_byte_t**  destination_ptr,
+  size_t         destination_length,
+  size_t         buffer_length,
+  bool           without_magic_header,
+  bool           msb,
+  bool           unaligned_bit_groups)
 {
   FILE* source_file;
   FILE* destination_file;
 
   lzws_byte_t* destination;
 
-  lzws_result_t result = prepare_files_with_destination(&source_file, source, source_length, &destination_file,
-                                                        &destination, destination_length);
+  lzws_result_t result = prepare_files_with_destination(
+    &source_file, source, source_length, &destination_file, &destination, destination_length);
 
   if (result != 0) {
     return result;
   }
 
-  lzws_result_t test_result = lzws_decompress_file(source_file, buffer_length, destination_file, buffer_length,
-                                                   without_magic_header, msb, unaligned_bit_groups, false);
+  lzws_result_t test_result = lzws_decompress_file(
+    source_file,
+    buffer_length,
+    destination_file,
+    buffer_length,
+    without_magic_header,
+    msb,
+    unaligned_bit_groups,
+    false);
 
   fclose(source_file);
   fclose(destination_file);
 
-  if (test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED &&
-      test_result != LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
+  if (
+    test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED &&
+    test_result != LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
     LZWS_LOG_ERROR("file api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
@@ -339,10 +447,14 @@ static inline lzws_result_t test_decompress_file_with_destination(lzws_result_t*
   return 0;
 }
 
-static inline lzws_result_t test_decompress_file_without_destination(lzws_result_t* test_result_ptr,
-                                                                     lzws_byte_t* source, size_t source_length,
-                                                                     size_t buffer_length, bool without_magic_header,
-                                                                     bool msb, bool unaligned_bit_groups)
+static inline lzws_result_t test_decompress_file_without_destination(
+  lzws_result_t* test_result_ptr,
+  lzws_byte_t*   source,
+  size_t         source_length,
+  size_t         buffer_length,
+  bool           without_magic_header,
+  bool           msb,
+  bool           unaligned_bit_groups)
 {
   FILE* source_file;
   FILE* destination_file;
@@ -352,14 +464,22 @@ static inline lzws_result_t test_decompress_file_without_destination(lzws_result
     return result;
   }
 
-  lzws_result_t test_result = lzws_decompress_file(source_file, buffer_length, destination_file, buffer_length,
-                                                   without_magic_header, msb, unaligned_bit_groups, false);
+  lzws_result_t test_result = lzws_decompress_file(
+    source_file,
+    buffer_length,
+    destination_file,
+    buffer_length,
+    without_magic_header,
+    msb,
+    unaligned_bit_groups,
+    false);
 
   fclose(source_file);
   fclose(destination_file);
 
-  if (test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED &&
-      test_result != LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
+  if (
+    test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED &&
+    test_result != LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
     LZWS_LOG_ERROR("file api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
@@ -369,18 +489,31 @@ static inline lzws_result_t test_decompress_file_without_destination(lzws_result
   return 0;
 }
 
-lzws_result_t lzws_tests_decompress_string_and_file(lzws_byte_t* source, size_t source_length,
-                                                    lzws_byte_t** destination_ptr, size_t* destination_length_ptr,
-                                                    size_t buffer_length, bool without_magic_header, bool msb,
-                                                    bool unaligned_bit_groups)
+lzws_result_t lzws_tests_decompress_string_and_file(
+  lzws_byte_t*  source,
+  size_t        source_length,
+  lzws_byte_t** destination_ptr,
+  size_t*       destination_length_ptr,
+  size_t        buffer_length,
+  bool          without_magic_header,
+  bool          msb,
+  bool          unaligned_bit_groups)
 {
   lzws_result_t result, test_result;
 
   lzws_byte_t* destination_for_string;
   size_t       destination_length;
 
-  result = test_decompress_string(&test_result, source, source_length, &destination_for_string, &destination_length,
-                                  buffer_length, without_magic_header, msb, unaligned_bit_groups);
+  result = test_decompress_string(
+    &test_result,
+    source,
+    source_length,
+    &destination_for_string,
+    &destination_length,
+    buffer_length,
+    without_magic_header,
+    msb,
+    unaligned_bit_groups);
 
   if (result != 0) {
     return result;
@@ -389,8 +522,8 @@ lzws_result_t lzws_tests_decompress_string_and_file(lzws_byte_t* source, size_t 
   if (test_result != 0) {
     LZWS_LOG_ERROR("string decompressor failed");
 
-    result = test_decompress_file_without_destination(&test_result, source, source_length, buffer_length,
-                                                      without_magic_header, msb, unaligned_bit_groups);
+    result = test_decompress_file_without_destination(
+      &test_result, source, source_length, buffer_length, without_magic_header, msb, unaligned_bit_groups);
 
     if (result != 0) {
       return result;
@@ -406,9 +539,16 @@ lzws_result_t lzws_tests_decompress_string_and_file(lzws_byte_t* source, size_t 
 
   lzws_byte_t* destination_for_file;
 
-  result = test_decompress_file_with_destination(&test_result, source, source_length, &destination_for_file,
-                                                 destination_length, buffer_length, without_magic_header, msb,
-                                                 unaligned_bit_groups);
+  result = test_decompress_file_with_destination(
+    &test_result,
+    source,
+    source_length,
+    &destination_for_file,
+    destination_length,
+    buffer_length,
+    without_magic_header,
+    msb,
+    unaligned_bit_groups);
 
   if (result != 0) {
     free(destination_for_string);
@@ -424,7 +564,7 @@ lzws_result_t lzws_tests_decompress_string_and_file(lzws_byte_t* source, size_t 
     return LZWS_TEST_STRING_AND_FILE_DECOMPRESSOR_IS_VOLATILE;
   }
 
-  if (strncmp((const char*)destination_for_string, (const char*)destination_for_file, destination_length) != 0) {
+  if (strncmp((const char*) destination_for_string, (const char*) destination_for_file, destination_length) != 0) {
     LZWS_LOG_ERROR("string and file decompressors returned different results");
 
     free(destination_for_string);

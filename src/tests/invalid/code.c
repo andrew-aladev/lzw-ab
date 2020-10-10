@@ -10,7 +10,8 @@
 #include "../string_and_file.h"
 #include "code.h"
 
-typedef struct {
+typedef struct
+{
   const lzws_code_t* codes;
   const size_t       codes_length;
 } data_t;
@@ -45,15 +46,17 @@ static const size_t datas_for_disabled_block_mode_length = sizeof(datas_for_disa
 
 // -- test --
 
-static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_state_ptr,
-                                      lzws_decompressor_state_t* decompressor_state_ptr, const data_t* data_ptr,
-                                      size_t buffer_length)
+static inline lzws_result_t test_data(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  const data_t*              data_ptr,
+  size_t                     buffer_length)
 {
   lzws_byte_t* source;
   size_t       source_length;
 
-  lzws_result_t result = lzws_test_compressor_write_codes(compressor_state_ptr, data_ptr->codes, data_ptr->codes_length,
-                                                          &source, &source_length, buffer_length);
+  lzws_result_t result = lzws_test_compressor_write_codes(
+    compressor_state_ptr, data_ptr->codes, data_ptr->codes_length, &source, &source_length, buffer_length);
 
   if (result != 0) {
     LZWS_LOG_ERROR("compressor failed to write codes");
@@ -65,10 +68,15 @@ static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_stat
   lzws_byte_t* destination;
   size_t       destination_length;
 
-  result =
-    lzws_tests_decompress_string_and_file(source, source_length, &destination, &destination_length, buffer_length,
-                                          decompressor_state_ptr->without_magic_header, decompressor_state_ptr->msb,
-                                          decompressor_state_ptr->unaligned_bit_groups);
+  result = lzws_tests_decompress_string_and_file(
+    source,
+    source_length,
+    &destination,
+    &destination_length,
+    buffer_length,
+    decompressor_state_ptr->without_magic_header,
+    decompressor_state_ptr->msb,
+    decompressor_state_ptr->unaligned_bit_groups);
 
   free(source);
 
@@ -85,9 +93,12 @@ static inline lzws_result_t test_data(lzws_compressor_state_t*   compressor_stat
   return 0;
 }
 
-static inline lzws_result_t test_datas(lzws_compressor_state_t*   compressor_state_ptr,
-                                       lzws_decompressor_state_t* decompressor_state_ptr, const data_t* datas,
-                                       size_t datas_length, size_t buffer_length)
+static inline lzws_result_t test_datas(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  const data_t*              datas,
+  size_t                     datas_length,
+  size_t                     buffer_length)
 {
   lzws_result_t result;
 
@@ -102,23 +113,32 @@ static inline lzws_result_t test_datas(lzws_compressor_state_t*   compressor_sta
   return 0;
 }
 
-static inline lzws_result_t test_all_datas(lzws_compressor_state_t*   compressor_state_ptr,
-                                           lzws_decompressor_state_t* decompressor_state_ptr, size_t buffer_length,
-                                           va_list LZWS_UNUSED(args))
+static inline lzws_result_t test_all_datas(
+  lzws_compressor_state_t*   compressor_state_ptr,
+  lzws_decompressor_state_t* decompressor_state_ptr,
+  size_t                     buffer_length,
+  va_list                    LZWS_UNUSED(args))
 {
   lzws_result_t result;
 
   if (compressor_state_ptr->block_mode) {
-    result = test_datas(compressor_state_ptr, decompressor_state_ptr, datas_for_enabled_block_mode,
-                        datas_for_enabled_block_mode_length, buffer_length);
+    result = test_datas(
+      compressor_state_ptr,
+      decompressor_state_ptr,
+      datas_for_enabled_block_mode,
+      datas_for_enabled_block_mode_length,
+      buffer_length);
 
     if (result != 0) {
       return 1;
     }
-  }
-  else {
-    result = test_datas(compressor_state_ptr, decompressor_state_ptr, datas_for_disabled_block_mode,
-                        datas_for_disabled_block_mode_length, buffer_length);
+  } else {
+    result = test_datas(
+      compressor_state_ptr,
+      decompressor_state_ptr,
+      datas_for_disabled_block_mode,
+      datas_for_disabled_block_mode_length,
+      buffer_length);
 
     if (result != 0) {
       return 2;

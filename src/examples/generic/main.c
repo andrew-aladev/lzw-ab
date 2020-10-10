@@ -15,11 +15,11 @@
 #include "../../log.h"
 
 #define WITHOUT_MAGIC_HEADER false
-#define MAX_CODE_BIT_LENGTH LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
-#define BLOCK_MODE true
-#define MSB false
+#define MAX_CODE_BIT_LENGTH  LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
+#define BLOCK_MODE           true
+#define MSB                  false
 #define UNALIGNED_BIT_GROUPS false
-#define QUIET false
+#define QUIET                false
 
 #define BUFFER_LENGTH 512
 
@@ -50,13 +50,17 @@ int main()
     return 2;
   }
 
-  char*        remaining_text                     = (char*)text;
+  char*        remaining_text                     = (char*) text;
   size_t       remaining_text_length              = text_length;
   lzws_byte_t* remaining_compressor_buffer        = compressor_buffer;
   size_t       remaining_compressor_buffer_length = compressor_buffer_length;
 
-  result = lzws_compress(compressor_state_ptr, (lzws_byte_t**)&remaining_text, &remaining_text_length,
-                         &remaining_compressor_buffer, &remaining_compressor_buffer_length);
+  result = lzws_compress(
+    compressor_state_ptr,
+    (lzws_byte_t**) &remaining_text,
+    &remaining_text_length,
+    &remaining_compressor_buffer,
+    &remaining_compressor_buffer_length);
 
   if (result != 0) {
     LZWS_LOG_ERROR("compressor failed");
@@ -85,8 +89,8 @@ int main()
 
   lzws_decompressor_state_t* decompressor_state_ptr;
 
-  result = lzws_decompressor_get_initial_state(&decompressor_state_ptr, WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS,
-                                               QUIET);
+  result = lzws_decompressor_get_initial_state(
+    &decompressor_state_ptr, WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS, QUIET);
 
   if (result != 0) {
     LZWS_LOG_ERROR("decompressor get initial state failed");
@@ -109,14 +113,17 @@ int main()
     return 6;
   }
 
-  char*        remaining_compressed_text            = (char*)compressor_buffer;
+  char*        remaining_compressed_text            = (char*) compressor_buffer;
   size_t       remaining_compressed_text_length     = compressor_buffer_length - remaining_compressor_buffer_length;
   lzws_byte_t* remaining_decompressor_buffer        = decompressor_buffer;
   size_t       remaining_decompressor_buffer_length = decompressor_buffer_length;
 
-  result = lzws_decompress(decompressor_state_ptr, (lzws_byte_t**)&remaining_compressed_text,
-                           &remaining_compressed_text_length, &remaining_decompressor_buffer,
-                           &remaining_decompressor_buffer_length);
+  result = lzws_decompress(
+    decompressor_state_ptr,
+    (lzws_byte_t**) &remaining_compressed_text,
+    &remaining_compressed_text_length,
+    &remaining_decompressor_buffer,
+    &remaining_decompressor_buffer_length);
 
   if (result != 0) {
     LZWS_LOG_ERROR("decompressor failed");
@@ -130,7 +137,7 @@ int main()
 
   lzws_decompressor_free_state(decompressor_state_ptr);
 
-  char*  decompressed_text        = (char*)decompressor_buffer;
+  char*  decompressed_text        = (char*) decompressor_buffer;
   size_t decompressed_text_length = decompressor_buffer_length - remaining_decompressor_buffer_length;
 
   if (decompressed_text_length != text_length || strncmp(decompressed_text, text, text_length) != 0) {
