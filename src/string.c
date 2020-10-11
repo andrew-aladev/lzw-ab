@@ -5,12 +5,8 @@
 #include "string.h"
 
 #include "buffer.h"
-#include "compressor/common.h"
 #include "compressor/main.h"
-#include "compressor/state.h"
-#include "decompressor/common.h"
 #include "decompressor/main.h"
-#include "decompressor/state.h"
 #include "log.h"
 
 // -- buffer --
@@ -83,8 +79,7 @@ static inline lzws_result_t compress(
   bool                     quiet)
 {
   lzws_result_t result;
-
-  size_t remaining_destination_buffer_length = destination_buffer_length;
+  size_t        remaining_destination_buffer_length = destination_buffer_length;
 
   BUFFERED_COMPRESS(lzws_compress, state_ptr, &source, &source_length);
   BUFFERED_COMPRESS(lzws_compressor_finish, state_ptr);
@@ -131,7 +126,6 @@ lzws_result_t lzws_compress_string(
   result = lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, quiet);
   if (result != 0) {
     lzws_compressor_free_state(state_ptr);
-
     return LZWS_STRING_ALLOCATE_FAILED;
   }
 
@@ -145,7 +139,6 @@ lzws_result_t lzws_compress_string(
 
   if (result != 0) {
     free(*destination_ptr);
-
     return result;
   }
 
@@ -164,8 +157,7 @@ static inline lzws_result_t decompress(
   bool                       quiet)
 {
   lzws_result_t result;
-
-  size_t remaining_destination_buffer_length = destination_buffer_length;
+  size_t        remaining_destination_buffer_length = destination_buffer_length;
 
   while (true) {
     lzws_byte_t* remaining_destination_buffer             = *destination_ptr + *destination_length_ptr;
@@ -244,7 +236,6 @@ lzws_result_t lzws_decompress_string(
   result = lzws_create_destination_buffer_for_decompressor(&destination_buffer, &destination_buffer_length, quiet);
   if (result != 0) {
     lzws_decompressor_free_state(state_ptr);
-
     return LZWS_STRING_ALLOCATE_FAILED;
   }
 
@@ -258,7 +249,6 @@ lzws_result_t lzws_decompress_string(
 
   if (result != 0) {
     free(*destination_ptr);
-
     return result;
   }
 

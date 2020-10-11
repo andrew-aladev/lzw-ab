@@ -2,15 +2,14 @@
 // Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see AUTHORS).
 // Distributed under the BSD Software License (see LICENSE).
 
-#include "../compressor/code.h"
+#include "code.h"
 
 #include "../buffer.h"
 #include "../compressor/alignment/wrapper.h"
-#include "../compressor/common.h"
+#include "../compressor/code.h"
 #include "../compressor/header.h"
 #include "../compressor/remainder.h"
 #include "../log.h"
-#include "code.h"
 
 static inline lzws_result_t increase_destination_buffer(
   lzws_byte_t** destination_ptr,
@@ -21,7 +20,6 @@ static inline lzws_result_t increase_destination_buffer(
   if (*remaining_destination_buffer_length_ptr == destination_buffer_length) {
     // We want to write more data at once, than buffer has.
     LZWS_LOG_ERROR("not enough destination buffer, length: %zu", destination_buffer_length);
-
     return LZWS_TEST_CODES_NOT_ENOUGH_DESTINATION_BUFFER;
   }
 
@@ -41,7 +39,6 @@ static inline lzws_result_t increase_destination_buffer(
     size_t       prev_remaining_destination_buffer_length = remaining_destination_buffer_length;                    \
                                                                                                                     \
     result = function(__VA_ARGS__, &remaining_destination_buffer, &remaining_destination_buffer_length);            \
-                                                                                                                    \
     if (result != 0 && result != LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {                                          \
       lzws_compressor_free_state(compressor_state_copy_ptr);                                                        \
       return LZWS_TEST_CODES_COMPRESSOR_UNEXPECTED_ERROR;                                                           \
@@ -72,8 +69,7 @@ static inline lzws_result_t compress(
   size_t*                  destination_length_ptr,
   size_t                   destination_buffer_length)
 {
-  lzws_result_t result;
-
+  lzws_result_t            result;
   lzws_compressor_state_t* compressor_state_copy_ptr;
 
   result = lzws_compressor_get_initial_state(
@@ -115,7 +111,6 @@ static inline lzws_result_t compress(
   }
 
   BUFFERED_COMPRESS(lzws_compressor_flush_remainder, compressor_state_copy_ptr);
-
   lzws_compressor_free_state(compressor_state_copy_ptr);
 
   result = lzws_resize_buffer(destination_ptr, *destination_length_ptr, false);
@@ -138,6 +133,7 @@ lzws_result_t lzws_test_compressor_write_codes(
 
   lzws_result_t result =
     lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, false);
+
   if (result != 0) {
     return LZWS_TEST_CODES_ALLOCATE_FAILED;
   }
@@ -150,7 +146,6 @@ lzws_result_t lzws_test_compressor_write_codes(
 
   if (result != 0) {
     free(*destination_ptr);
-
     return result;
   }
 

@@ -6,7 +6,6 @@
 
 #include "../../../log.h"
 #include "../../../utils.h"
-#include "../../common.h"
 
 // -- codes length --
 
@@ -59,9 +58,8 @@ lzws_result_t lzws_compressor_allocate_dictionary(
   const lzws_compressor_options_t* options)
 {
   lzws_code_t undefined_next_code = LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
-
-  size_t next_codes_length = get_next_codes_length(dictionary_ptr, total_codes_length);
-  size_t next_codes_size   = sizeof(lzws_code_t) * next_codes_length;
+  size_t      next_codes_length   = get_next_codes_length(dictionary_ptr, total_codes_length);
+  size_t      next_codes_size     = sizeof(lzws_code_t) * next_codes_length;
 
   lzws_code_t* next_codes = lzws_allocate_array(
     sizeof(lzws_code_t),
@@ -96,7 +94,6 @@ lzws_result_t lzws_compressor_allocate_dictionary(
 
       // Next codes was allocated, need to free it.
       free(next_codes);
-
       return LZWS_COMPRESSOR_ALLOCATE_FAILED;
     }
   }
@@ -114,8 +111,7 @@ void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_p
 {
   lzws_code_t*                             next_codes   = dictionary_ptr->next_codes;
   lzws_compressor_dictionary_used_index_t* used_indexes = dictionary_ptr->used_indexes;
-
-  size_t used_indexes_length = get_used_indexes_length(dictionary_ptr, used_codes_length);
+  size_t used_indexes_length                            = get_used_indexes_length(dictionary_ptr, used_codes_length);
 
   lzws_compressor_dictionary_used_index_t used_index;
   for (lzws_code_fast_t index_of_used_index = 0; index_of_used_index < used_indexes_length; index_of_used_index++) {

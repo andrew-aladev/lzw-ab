@@ -34,9 +34,7 @@ int main()
   FILE* compressed_text_file = fmemopen((void*) compressed_text, FILE_BUFFER_LENGTH, "w");
   if (compressed_text_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for compressed text failed");
-
     fclose(text_file);
-
     return 2;
   }
 
@@ -56,9 +54,7 @@ int main()
 
   if (result != 0) {
     LZWS_LOG_ERROR("file compressor failed");
-
     fclose(compressed_text_file);
-
     return 3;
   }
 
@@ -84,9 +80,7 @@ int main()
   FILE* decompressed_text_file = fmemopen((void*) decompressed_text, FILE_BUFFER_LENGTH, "w");
   if (decompressed_text_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for decompressed text failed");
-
     fclose(compressed_text_file);
-
     return 6;
   }
 

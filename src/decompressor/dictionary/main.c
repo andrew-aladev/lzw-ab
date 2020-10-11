@@ -5,7 +5,6 @@
 #include "main.h"
 
 #include "../../log.h"
-#include "../common.h"
 
 // -- codes length --
 
@@ -65,7 +64,6 @@ lzws_result_t lzws_decompressor_allocate_dictionary(
 
     // Previous codes was allocated, need to free it.
     free(previous_codes);
-
     return LZWS_DECOMPRESSOR_ALLOCATE_FAILED;
   }
 
@@ -84,7 +82,6 @@ lzws_result_t lzws_decompressor_allocate_dictionary(
     // Previous codes and last symbol by codes were allocated, need to free it.
     free(previous_codes);
     free(last_symbol_by_codes);
-
     return LZWS_DECOMPRESSOR_ALLOCATE_FAILED;
   }
 
@@ -109,14 +106,11 @@ static inline lzws_byte_t
     output_length = 0;
   }
 
-  lzws_code_fast_t codes_offset = dictionary_ptr->codes_offset;
-
+  lzws_code_fast_t   codes_offset         = dictionary_ptr->codes_offset;
   const lzws_code_t* previous_codes       = dictionary_ptr->previous_codes;
   const lzws_byte_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
-
-  lzws_byte_t* output_buffer = dictionary_ptr->output_buffer;
-
-  lzws_code_fast_t code_index;
+  lzws_byte_t*       output_buffer        = dictionary_ptr->output_buffer;
+  lzws_code_fast_t   code_index;
 
   // It is not possible to receive clear code during code sequence.
   // So we need to compare code with codes offset.

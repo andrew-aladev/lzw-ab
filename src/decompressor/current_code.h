@@ -11,6 +11,7 @@ lzws_result_t lzws_decompressor_read_first_code(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              source_ptr,
   size_t*                    source_length_ptr);
+
 lzws_result_t lzws_decompressor_read_next_code(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              source_ptr,

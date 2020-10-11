@@ -2,15 +2,15 @@
 // Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see AUTHORS).
 // Distributed under the BSD Software License (see LICENSE).
 
-#include "../code.h"
+#include "code.h"
 
 #include <string.h>
 
 #include "../../log.h"
 #include "../../macro.h"
+#include "../code.h"
 #include "../combination.h"
 #include "../string_and_file.h"
-#include "code.h"
 
 typedef struct
 {
@@ -227,7 +227,6 @@ static inline lzws_result_t test_datas(
 
   for (size_t index = 0; index < datas_length; index++) {
     result = test_data(compressor_state_ptr, decompressor_state_ptr, &datas[index], buffer_length);
-
     if (result != 0) {
       return result;
     }
@@ -243,7 +242,6 @@ static inline lzws_result_t test_all_datas(
   va_list                    LZWS_UNUSED(args))
 {
   lzws_result_t result = test_datas(compressor_state_ptr, decompressor_state_ptr, datas, datas_length, buffer_length);
-
   if (result != 0) {
     return 1;
   }

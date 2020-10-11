@@ -29,7 +29,6 @@ bool lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr)
   bool result = mpz_cmp(destination_and_new_source, source_and_new_destination) < 0;
 
   mpz_clears(destination_and_new_source, source_and_new_destination, NULL);
-
   lzws_compressor_clear_ratio(ratio_ptr);
 
   return result;

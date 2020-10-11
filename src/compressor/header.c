@@ -5,7 +5,6 @@
 #include "header.h"
 
 #include "../utils.h"
-#include "common.h"
 
 lzws_result_t lzws_compressor_write_magic_header(
   lzws_compressor_state_t* state_ptr,
@@ -35,7 +34,6 @@ lzws_result_t lzws_compressor_write_header(
   }
 
   lzws_byte_fast_t byte = state_ptr->options.max_code_bit_length;
-
   if (state_ptr->options.block_mode) {
     byte = byte | LZWS_BLOCK_MODE;
   }

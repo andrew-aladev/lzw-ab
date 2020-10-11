@@ -59,16 +59,14 @@ static inline void print_help()
 
 int main(int argc, char** argv)
 {
-  bool is_compressor = true;
-
+  bool             is_compressor        = true;
   bool             without_magic_header = false;
   lzws_byte_fast_t max_code_bit_length  = LZWS_BIGGEST_MAX_CODE_BIT_LENGTH;
   bool             block_mode           = true;
   bool             msb                  = false;
   bool             unaligned_bit_groups = false;
   bool             quiet                = false;
-
-  int option;
+  int              option;
 
   while ((option = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
     switch (option) {
@@ -113,7 +111,6 @@ int main(int argc, char** argv)
     }
   } else {
     result = lzws_decompress_file(stdin, 0, stdout, 0, without_magic_header, msb, unaligned_bit_groups, quiet);
-
     if (result != 0) {
       return 2;
     }

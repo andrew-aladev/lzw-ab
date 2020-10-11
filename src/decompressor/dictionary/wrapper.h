@@ -19,6 +19,7 @@ inline lzws_result_t lzws_decompressor_allocate_dictionary_wrapper(lzws_decompre
 
   lzws_result_t result = lzws_decompressor_allocate_dictionary(
     &state_ptr->dictionary, total_codes_length, state_ptr->first_free_code, &state_ptr->options);
+
   if (result != 0) {
     return result;
   }

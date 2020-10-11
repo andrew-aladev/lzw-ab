@@ -58,14 +58,12 @@ void lzws_decompressor_reset_last_used_data(lzws_decompressor_state_t* state_ptr
 void lzws_decompressor_clear_state(lzws_decompressor_state_t* state_ptr)
 {
   // We don't need to clear dictionary.
-
   lzws_decompressor_reset_last_used_data(state_ptr);
 }
 
 void lzws_decompressor_free_state(lzws_decompressor_state_t* state_ptr)
 {
   lzws_decompressor_free_dictionary_wrapper(state_ptr);
-
   free(state_ptr);
 }
 

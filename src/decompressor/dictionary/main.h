@@ -24,6 +24,7 @@ lzws_result_t lzws_decompressor_allocate_dictionary(
   const lzws_decompressor_options_t* options);
 
 void lzws_decompressor_write_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code);
+
 void lzws_decompressor_add_code_to_dictionary(
   lzws_decompressor_dictionary_t* dictionary_ptr,
   lzws_code_fast_t                prefix_code,

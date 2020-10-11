@@ -2,13 +2,13 @@
 // Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see AUTHORS).
 // Distributed under the BSD Software License (see LICENSE).
 
-#include "../code.h"
+#include "code.h"
 
 #include "../../log.h"
 #include "../../macro.h"
+#include "../code.h"
 #include "../combination.h"
 #include "../string_and_file.h"
-#include "code.h"
 
 typedef struct
 {
@@ -81,10 +81,11 @@ static inline lzws_result_t test_data(
   free(source);
 
   if (result == 0) {
-    free(destination);
     LZWS_LOG_ERROR("decompressor succeeded instead of fail");
+    free(destination);
     return 2;
   }
+
   if (result != LZWS_TEST_STRING_AND_FILE_DECOMPRESSOR_FAILED) {
     LZWS_LOG_ERROR("decompressor failed with wrong result");
     return 3;
@@ -104,7 +105,6 @@ static inline lzws_result_t test_datas(
 
   for (size_t index = 0; index < datas_length; index++) {
     result = test_data(compressor_state_ptr, decompressor_state_ptr, &datas[index], buffer_length);
-
     if (result != 0) {
       return result;
     }

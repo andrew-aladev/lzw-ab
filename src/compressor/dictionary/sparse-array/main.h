@@ -31,6 +31,7 @@ lzws_result_t lzws_compressor_allocate_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   size_t                           total_codes_length,
   const lzws_compressor_options_t* options);
+
 void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t used_codes_length);
 
 lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(

@@ -6,7 +6,6 @@
 
 #include <string.h>
 
-#include "../../common.h"
 #include "../../log.h"
 #include "../../macro.h"
 #include "../../utils.h"
@@ -25,8 +24,7 @@ static inline lzws_result_t test_data(
   const char*                data,
   size_t                     buffer_length)
 {
-  size_t data_length = strlen(data);
-
+  size_t       data_length = strlen(data);
   lzws_byte_t* compressed_data;
   size_t       compressed_data_length;
 
@@ -130,8 +128,7 @@ static inline lzws_result_t test_eof_after_completed_bits_group(
   }
 
   string[string_length - 1] = '\0';
-
-  lzws_result_t result = test_data(compressor_state_ptr, decompressor_state_ptr, string, buffer_length);
+  lzws_result_t result      = test_data(compressor_state_ptr, decompressor_state_ptr, string, buffer_length);
 
   free(string);
 
@@ -152,20 +149,17 @@ static inline lzws_result_t test_datas(
 
   for (size_t index = 0; index < DATA_LENGTH; index++) {
     result = test_data(compressor_state_ptr, decompressor_state_ptr, datas[index], buffer_length);
-
     if (result != 0) {
       return 1;
     }
   }
 
   result = test_random_string(compressor_state_ptr, decompressor_state_ptr, buffer_length);
-
   if (result != 0) {
     return 2;
   }
 
   result = test_eof_after_completed_bits_group(compressor_state_ptr, decompressor_state_ptr, buffer_length);
-
   if (result != 0) {
     return 3;
   }

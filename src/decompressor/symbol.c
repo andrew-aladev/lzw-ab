@@ -6,7 +6,6 @@
 
 #include "../utils.h"
 #include "alignment/wrapper.h"
-#include "common.h"
 #include "dictionary/wrapper.h"
 #include "remainder.h"
 

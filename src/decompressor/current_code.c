@@ -7,7 +7,6 @@
 #include "../log.h"
 #include "../utils.h"
 #include "code.h"
-#include "common.h"
 #include "dictionary/wrapper.h"
 #include "remainder.h"
 

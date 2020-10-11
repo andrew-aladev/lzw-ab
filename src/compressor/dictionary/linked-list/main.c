@@ -6,7 +6,6 @@
 
 #include "../../../log.h"
 #include "../../../utils.h"
-#include "../../common.h"
 
 // -- codes length --
 
@@ -56,10 +55,9 @@ lzws_result_t lzws_compressor_allocate_dictionary(
   size_t                           total_codes_length,
   const lzws_compressor_options_t* options)
 {
-  lzws_code_t undefined_next_code = LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
-
-  size_t first_child_codes_length = get_first_child_codes_length(dictionary_ptr, total_codes_length);
-  size_t first_child_codes_size   = sizeof(lzws_code_t) * first_child_codes_length;
+  lzws_code_t undefined_next_code      = LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
+  size_t      first_child_codes_length = get_first_child_codes_length(dictionary_ptr, total_codes_length);
+  size_t      first_child_codes_size   = sizeof(lzws_code_t) * first_child_codes_length;
 
   lzws_code_t* first_child_codes = lzws_allocate_array(
     sizeof(lzws_code_t),
@@ -93,7 +91,6 @@ lzws_result_t lzws_compressor_allocate_dictionary(
 
     // First child codes was allocated, need to free it.
     free(first_child_codes);
-
     return LZWS_COMPRESSOR_ALLOCATE_FAILED;
   }
 
@@ -111,7 +108,6 @@ lzws_result_t lzws_compressor_allocate_dictionary(
     // First child codes and next sibling codes were allocated, need to free it.
     free(first_child_codes);
     free(next_sibling_codes);
-
     return LZWS_COMPRESSOR_ALLOCATE_FAILED;
   }
 
@@ -152,12 +148,10 @@ lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   lzws_code_fast_t                    current_code,
   lzws_byte_fast_t                    next_symbol)
 {
-  lzws_code_fast_t current_code_index = get_first_child_code_index(dictionary_ptr, first_free_code, current_code);
-
-  lzws_code_t* next_sibling_codes   = dictionary_ptr->next_sibling_codes;
-  lzws_byte_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
-
-  lzws_code_fast_t next_sibling_code = dictionary_ptr->first_child_codes[current_code_index];
+  lzws_code_fast_t current_code_index   = get_first_child_code_index(dictionary_ptr, first_free_code, current_code);
+  lzws_code_t*     next_sibling_codes   = dictionary_ptr->next_sibling_codes;
+  lzws_byte_t*     last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
+  lzws_code_fast_t next_sibling_code    = dictionary_ptr->first_child_codes[current_code_index];
   lzws_code_fast_t next_sibling_code_index;
 
   while (next_sibling_code != LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE) {
@@ -187,9 +181,8 @@ void lzws_compressor_save_next_code_to_dictionary(
   dictionary_ptr->last_symbol_by_codes[next_code_index] = next_symbol;
 
   lzws_code_fast_t current_code_index = get_first_child_code_index(dictionary_ptr, first_free_code, current_code);
-
-  lzws_code_t*     first_child_codes = dictionary_ptr->first_child_codes;
-  lzws_code_fast_t first_child_code  = first_child_codes[current_code_index];
+  lzws_code_t*     first_child_codes  = dictionary_ptr->first_child_codes;
+  lzws_code_fast_t first_child_code   = first_child_codes[current_code_index];
 
   // Saving first child.
   first_child_codes[current_code_index] = next_code;

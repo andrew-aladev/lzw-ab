@@ -5,7 +5,6 @@
 #include "remainder.h"
 
 #include "alignment/wrapper.h"
-#include "common.h"
 #include "utils.h"
 
 static inline lzws_result_t

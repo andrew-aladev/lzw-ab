@@ -21,9 +21,8 @@ int main()
 {
   const char text[]      = "example text";
   size_t     text_length = strlen(text);
-
-  char*  compressed_text;
-  size_t compressed_text_length;
+  char*      compressed_text;
+  size_t     compressed_text_length;
 
   lzws_result_t result = lzws_compress_string(
     (lzws_byte_t*) text,

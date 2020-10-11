@@ -19,6 +19,7 @@ inline lzws_result_t lzws_compressor_allocate_dictionary_wrapper(lzws_compressor
 
   lzws_result_t result =
     lzws_compressor_allocate_dictionary(&state_ptr->dictionary, total_codes_length, &state_ptr->options);
+
   if (result != 0) {
     return result;
   }
@@ -32,7 +33,6 @@ inline void lzws_compressor_clear_dictionary_wrapper(lzws_compressor_state_t* st
 {
   if (state_ptr->options.block_mode) {
     size_t used_codes_length = lzws_compressor_get_last_used_codes_length(state_ptr);
-
     lzws_compressor_clear_dictionary(&state_ptr->dictionary, used_codes_length);
   }
 }

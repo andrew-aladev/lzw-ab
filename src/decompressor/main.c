@@ -6,7 +6,6 @@
 
 #include "../log.h"
 #include "alignment/wrapper.h"
-#include "common.h"
 #include "current_code.h"
 #include "dictionary/wrapper.h"
 #include "header.h"

@@ -4,21 +4,21 @@
 
 #include "wrapper.h"
 
-#include "../common.h"
 #include "../utils.h"
 
 extern inline void lzws_decompressor_initialize_alignment_wrapper(lzws_decompressor_state_t* state_ptr);
+
 extern inline void lzws_decompressor_add_source_byte_length_to_alignment_wrapper(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_fast_t           source_byte_length);
+
 extern inline bool lzws_decompressor_need_to_read_alignment_wrapper(const lzws_decompressor_state_t* state_ptr);
 
 static inline lzws_result_t
   read_alignment(lzws_decompressor_state_t* state_ptr, lzws_byte_t** source_ptr, size_t* source_length_ptr)
 {
   lzws_decompressor_alignment_t* alignment_ptr = &state_ptr->alignment;
-
-  lzws_byte_fast_t byte;
+  lzws_byte_fast_t               byte;
 
   while (lzws_decompressor_need_to_read_alignment_byte(alignment_ptr)) {
     if (*source_length_ptr < 1) {
@@ -26,7 +26,6 @@ static inline lzws_result_t
     }
 
     lzws_decompressor_add_source_byte_length_to_alignment(alignment_ptr, 1);
-
     lzws_decompressor_read_byte(state_ptr, &byte, source_ptr, source_length_ptr);
 
     // Some UNIX compress implementations write random bits from uninitialized buffer as alignment bits.

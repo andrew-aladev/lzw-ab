@@ -72,7 +72,6 @@ void lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr)
 {
   lzws_compressor_clear_dictionary_wrapper(state_ptr);
   lzws_compressor_clear_ratio_wrapper(state_ptr);
-
   lzws_compressor_reset_last_used_data(state_ptr);
 }
 
@@ -80,7 +79,6 @@ void lzws_compressor_free_state(lzws_compressor_state_t* state_ptr)
 {
   lzws_compressor_free_dictionary_wrapper(state_ptr);
   lzws_compressor_free_ratio_wrapper(state_ptr);
-
   free(state_ptr);
 }
 

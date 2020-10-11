@@ -6,7 +6,6 @@
 
 #include "../log.h"
 #include "../utils.h"
-#include "common.h"
 
 lzws_result_t lzws_decompressor_read_magic_header(
   lzws_decompressor_state_t* state_ptr,
@@ -67,8 +66,7 @@ lzws_result_t lzws_decompressor_read_header(
     return LZWS_DECOMPRESSOR_INVALID_MAX_CODE_BIT_LENGTH;
   }
 
-  bool block_mode = (byte & LZWS_BLOCK_MODE) != 0;
-
+  bool block_mode               = (byte & LZWS_BLOCK_MODE) != 0;
   state_ptr->options.block_mode = block_mode;
 
   state_ptr->max_code  = lzws_get_max_value_for_bits(max_code_bit_length);

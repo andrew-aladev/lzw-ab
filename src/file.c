@@ -7,12 +7,8 @@
 #include <string.h>
 
 #include "buffer.h"
-#include "compressor/common.h"
 #include "compressor/main.h"
-#include "compressor/state.h"
-#include "decompressor/common.h"
 #include "decompressor/main.h"
-#include "decompressor/state.h"
 #include "log.h"
 
 // -- file --
@@ -256,10 +252,9 @@ static inline lzws_result_t compress(
   bool                     quiet)
 {
   lzws_result_t result;
-
-  lzws_byte_t* source             = source_buffer;
-  size_t       source_length      = 0;
-  size_t       destination_length = 0;
+  lzws_byte_t*  source             = source_buffer;
+  size_t        source_length      = 0;
+  size_t        destination_length = 0;
 
   BUFFERED_READ_SOURCE(
     buffered_compress,
@@ -315,7 +310,6 @@ lzws_result_t lzws_compress_file(
   result = lzws_create_source_buffer_for_compressor(&source_buffer, &source_buffer_length, quiet);
   if (result != 0) {
     lzws_compressor_free_state(state_ptr);
-
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 
@@ -325,7 +319,6 @@ lzws_result_t lzws_compress_file(
   if (result != 0) {
     free(source_buffer);
     lzws_compressor_free_state(state_ptr);
-
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 
@@ -410,10 +403,9 @@ static inline lzws_result_t decompress(
   bool                       quiet)
 {
   lzws_result_t result;
-
-  lzws_byte_t* source             = source_buffer;
-  size_t       source_length      = 0;
-  size_t       destination_length = 0;
+  lzws_byte_t*  source             = source_buffer;
+  size_t        source_length      = 0;
+  size_t        destination_length = 0;
 
   BUFFERED_READ_SOURCE(
     buffered_decompress,
@@ -458,7 +450,6 @@ lzws_result_t lzws_decompress_file(
   result = lzws_create_source_buffer_for_decompressor(&source_buffer, &source_buffer_length, quiet);
   if (result != 0) {
     lzws_decompressor_free_state(state_ptr);
-
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 
@@ -468,7 +459,6 @@ lzws_result_t lzws_decompress_file(
   if (result != 0) {
     free(source_buffer);
     lzws_decompressor_free_state(state_ptr);
-
     return LZWS_FILE_ALLOCATE_FAILED;
   }
 

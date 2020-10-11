@@ -2,16 +2,11 @@
 // Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see AUTHORS).
 // Distributed under the BSD Software License (see LICENSE).
 
-#include "../../compressor/main.h"
-
 #include <string.h>
 
 #include "../../buffer.h"
-#include "../../compressor/common.h"
-#include "../../compressor/state.h"
-#include "../../decompressor/common.h"
+#include "../../compressor/main.h"
 #include "../../decompressor/main.h"
-#include "../../decompressor/state.h"
 #include "../../log.h"
 
 #define WITHOUT_MAGIC_HEADER false
@@ -25,9 +20,8 @@
 
 int main()
 {
-  const char text[]      = "example text";
-  size_t     text_length = strlen(text);
-
+  const char               text[]      = "example text";
+  size_t                   text_length = strlen(text);
   lzws_compressor_state_t* compressor_state_ptr;
 
   lzws_result_t result = lzws_compressor_get_initial_state(
@@ -44,9 +38,7 @@ int main()
   result = lzws_create_destination_buffer_for_compressor(&compressor_buffer, &compressor_buffer_length, QUIET);
   if (result != 0) {
     LZWS_LOG_ERROR("create destination buffer for compressor failed");
-
     lzws_compressor_free_state(compressor_state_ptr);
-
     return 2;
   }
 
@@ -64,10 +56,8 @@ int main()
 
   if (result != 0) {
     LZWS_LOG_ERROR("compressor failed");
-
     free(compressor_buffer);
     lzws_compressor_free_state(compressor_state_ptr);
-
     return 3;
   }
 
@@ -76,10 +66,8 @@ int main()
 
   if (result != 0) {
     LZWS_LOG_ERROR("finish compressor failed");
-
     free(compressor_buffer);
     lzws_compressor_free_state(compressor_state_ptr);
-
     return 4;
   }
 
@@ -94,9 +82,7 @@ int main()
 
   if (result != 0) {
     LZWS_LOG_ERROR("decompressor get initial state failed");
-
     free(compressor_buffer);
-
     return 5;
   }
 
@@ -106,10 +92,8 @@ int main()
   result = lzws_create_destination_buffer_for_decompressor(&decompressor_buffer, &decompressor_buffer_length, QUIET);
   if (result != 0) {
     LZWS_LOG_ERROR("create buffer for decompressor failed");
-
     free(compressor_buffer);
     lzws_decompressor_free_state(decompressor_state_ptr);
-
     return 6;
   }
 
@@ -127,11 +111,9 @@ int main()
 
   if (result != 0) {
     LZWS_LOG_ERROR("decompressor failed");
-
     free(compressor_buffer);
     free(decompressor_buffer);
     lzws_decompressor_free_state(decompressor_state_ptr);
-
     return 7;
   }
 
@@ -142,10 +124,8 @@ int main()
 
   if (decompressed_text_length != text_length || strncmp(decompressed_text, text, text_length) != 0) {
     LZWS_LOG_ERROR("decompressed text is not the same as original");
-
     free(compressor_buffer);
     free(decompressor_buffer);
-
     return 8;
   }
 

@@ -62,19 +62,15 @@ static inline lzws_result_t prepare_files_with_destination(
   lzws_byte_t* destination = malloc(destination_file_length);
   if (destination == NULL) {
     LZWS_LOG_ERROR("malloc failed, buffer length: %zu", destination_file_length);
-
     fclose(source_file);
-
     return LZWS_TEST_STRING_AND_FILE_ALLOCATE_FAILED;
   }
 
   FILE* destination_file = fmemopen(destination, destination_file_length, "w");
   if (destination_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for destination failed");
-
     fclose(source_file);
     free(destination);
-
     return LZWS_TEST_STRING_AND_FILE_NATIVE_STREAM_FAILED;
   }
 
@@ -101,9 +97,7 @@ static inline lzws_result_t prepare_files_without_destination(
   FILE* destination_file = fopen(NULL_PATH_NAME, "w");
   if (destination_file == NULL) {
     LZWS_LOG_ERROR("fopen for null destination failed");
-
     fclose(source_file);
-
     return LZWS_TEST_STRING_AND_FILE_NATIVE_STREAM_FAILED;
   }
 
@@ -169,9 +163,8 @@ static inline lzws_result_t test_compress_file_with_destination(
   bool             msb,
   bool             unaligned_bit_groups)
 {
-  FILE* source_file;
-  FILE* destination_file;
-
+  FILE*        source_file;
+  FILE*        destination_file;
   lzws_byte_t* destination;
 
   lzws_result_t result = prepare_files_with_destination(
@@ -264,9 +257,8 @@ lzws_result_t lzws_tests_compress_string_and_file(
   bool             unaligned_bit_groups)
 {
   lzws_result_t result, test_result;
-
-  lzws_byte_t* destination_for_string;
-  size_t       destination_length;
+  lzws_byte_t*  destination_for_string;
+  size_t        destination_length;
 
   result = test_compress_string(
     &test_result,
@@ -333,19 +325,15 @@ lzws_result_t lzws_tests_compress_string_and_file(
 
   if (test_result != 0) {
     LZWS_LOG_ERROR("string compressor succeed, but file compressor failed");
-
     free(destination_for_string);
     free(destination_for_file);
-
     return LZWS_TEST_STRING_AND_FILE_COMPRESSOR_IS_VOLATILE;
   }
 
   if (strncmp((const char*) destination_for_string, (const char*) destination_for_file, destination_length) != 0) {
     LZWS_LOG_ERROR("string and file compressors returned different results");
-
     free(destination_for_string);
     free(destination_for_file);
-
     return LZWS_TEST_STRING_AND_FILE_COMPRESSOR_IS_VOLATILE;
   }
 
@@ -409,9 +397,8 @@ static inline lzws_result_t test_decompress_file_with_destination(
   bool           msb,
   bool           unaligned_bit_groups)
 {
-  FILE* source_file;
-  FILE* destination_file;
-
+  FILE*        source_file;
+  FILE*        destination_file;
   lzws_byte_t* destination;
 
   lzws_result_t result = prepare_files_with_destination(
@@ -500,9 +487,8 @@ lzws_result_t lzws_tests_decompress_string_and_file(
   bool          unaligned_bit_groups)
 {
   lzws_result_t result, test_result;
-
-  lzws_byte_t* destination_for_string;
-  size_t       destination_length;
+  lzws_byte_t*  destination_for_string;
+  size_t        destination_length;
 
   result = test_decompress_string(
     &test_result,
@@ -557,19 +543,15 @@ lzws_result_t lzws_tests_decompress_string_and_file(
 
   if (test_result != 0) {
     LZWS_LOG_ERROR("string decompressor succeed, but file decompressor failed");
-
     free(destination_for_string);
     free(destination_for_file);
-
     return LZWS_TEST_STRING_AND_FILE_DECOMPRESSOR_IS_VOLATILE;
   }
 
   if (strncmp((const char*) destination_for_string, (const char*) destination_for_file, destination_length) != 0) {
     LZWS_LOG_ERROR("string and file decompressors returned different results");
-
     free(destination_for_string);
     free(destination_for_file);
-
     return LZWS_TEST_STRING_AND_FILE_DECOMPRESSOR_IS_VOLATILE;
   }
 

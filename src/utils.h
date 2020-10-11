@@ -76,7 +76,6 @@ inline void* lzws_allocate_array(
   bool             item_bytes_are_identical)
 {
   size_t size = size_of_item * length;
-
   if (item_is_zero) {
     return calloc(1, size);
   }

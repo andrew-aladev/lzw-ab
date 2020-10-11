@@ -6,16 +6,13 @@
 
 #include "../utils.h"
 #include "alignment/wrapper.h"
-#include "common.h"
 #include "utils.h"
 
 static inline lzws_byte_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_byte_fast_t* code_bit_length_ptr, bool msb)
 {
-  lzws_code_fast_t code            = *code_ptr;
-  lzws_byte_fast_t code_bit_length = *code_bit_length_ptr;
-
+  lzws_code_fast_t code                      = *code_ptr;
+  lzws_byte_fast_t code_bit_length           = *code_bit_length_ptr;
   lzws_byte_fast_t remaining_code_bit_length = code_bit_length - 8;
-
   lzws_byte_fast_t byte;
 
   if (msb) {
@@ -49,12 +46,10 @@ static inline lzws_byte_fast_t get_byte_with_remainder(
     return get_byte(code_ptr, code_bit_length_ptr, msb);
   }
 
-  lzws_code_fast_t code            = *code_ptr;
-  lzws_byte_fast_t code_bit_length = *code_bit_length_ptr;
-
+  lzws_code_fast_t code                      = *code_ptr;
+  lzws_byte_fast_t code_bit_length           = *code_bit_length_ptr;
   lzws_byte_fast_t current_code_bit_length   = 8 - remainder_bit_length;
   lzws_byte_fast_t remaining_code_bit_length = code_bit_length - current_code_bit_length;
-
   lzws_byte_fast_t byte;
 
   if (msb) {
@@ -97,6 +92,7 @@ lzws_result_t lzws_compressor_write_code(
   // So destination byte length will always be >= 1.
   lzws_byte_fast_t destination_byte_length =
     lzws_floor_bit_length_to_byte_length(code_bit_length + remainder_bit_length);
+
   if (*destination_length_ptr < destination_byte_length) {
     return LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION;
   }
