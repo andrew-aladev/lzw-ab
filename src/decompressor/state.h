@@ -46,7 +46,7 @@ typedef struct
 
 lzws_result_t lzws_decompressor_get_initial_state(
   lzws_decompressor_state_t**        state_ptr,
-  const lzws_decompressor_options_t* options);
+  const lzws_decompressor_options_t* options_ptr);
 
 void lzws_decompressor_reset_last_used_data(lzws_decompressor_state_t* state_ptr);
 void lzws_decompressor_clear_state(lzws_decompressor_state_t* state_ptr);

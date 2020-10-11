@@ -96,12 +96,11 @@ lzws_result_t lzws_decompressor_read_code(
 
   lzws_code_fast_t code            = state_ptr->remainder;
   lzws_byte_fast_t code_bit_length = remainder_bit_length;
-  bool             msb             = state_ptr->options.msb;
   lzws_byte_fast_t byte;
 
   while (source_byte_length != 1) {
     lzws_decompressor_read_byte(state_ptr, &byte, source_ptr, source_length_ptr);
-    add_byte(&code, code_bit_length, byte, msb);
+    add_byte(&code, code_bit_length, byte, state_ptr->options.msb);
 
     code_bit_length += 8;
     source_byte_length--;
@@ -110,7 +109,13 @@ lzws_result_t lzws_decompressor_read_code(
   lzws_decompressor_read_byte(state_ptr, &byte, source_ptr, source_length_ptr);
 
   add_byte_with_remainder(
-    &code, code_bit_length, target_code_bit_length, byte, &state_ptr->remainder, &state_ptr->remainder_bit_length, msb);
+    &code,
+    code_bit_length,
+    target_code_bit_length,
+    byte,
+    &state_ptr->remainder,
+    &state_ptr->remainder_bit_length,
+    state_ptr->options.msb);
 
   *code_ptr = code;
 

@@ -12,16 +12,16 @@
 
 lzws_result_t lzws_compressor_get_initial_state(
   lzws_compressor_state_t**        result_state_ptr,
-  const lzws_compressor_options_t* options)
+  const lzws_compressor_options_t* options_ptr)
 {
-  if (options == NULL) {
-    options = &LZWS_COMPRESSOR_DEFAULT_OPTIONS;
+  if (options_ptr == NULL) {
+    options_ptr = &LZWS_COMPRESSOR_DEFAULT_OPTIONS;
   } else {
     if (
-      options->max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH ||
-      options->max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
-      if (!options->quiet) {
-        LZWS_LOG_ERROR("invalid max code bit length: %u", options->max_code_bit_length);
+      options_ptr->max_code_bit_length < LZWS_LOWEST_MAX_CODE_BIT_LENGTH ||
+      options_ptr->max_code_bit_length > LZWS_BIGGEST_MAX_CODE_BIT_LENGTH) {
+      if (!options_ptr->quiet) {
+        LZWS_LOG_ERROR("invalid max code bit length: %u", options_ptr->max_code_bit_length);
       }
 
       return LZWS_COMPRESSOR_INVALID_MAX_CODE_BIT_LENGTH;
@@ -32,18 +32,19 @@ lzws_result_t lzws_compressor_get_initial_state(
 
   lzws_compressor_state_t* state_ptr = malloc(state_size);
   if (state_ptr == NULL) {
-    if (!options->quiet) {
+    if (!options_ptr->quiet) {
       LZWS_LOG_ERROR("malloc failed, state size: %zu", state_size);
     }
 
     return LZWS_COMPRESSOR_ALLOCATE_FAILED;
   }
 
-  state_ptr->options = *options;
-  state_ptr->status = options->without_magic_header ? LZWS_COMPRESSOR_WRITE_HEADER : LZWS_COMPRESSOR_WRITE_MAGIC_HEADER;
+  state_ptr->options = *options_ptr;
+  state_ptr->status =
+    options_ptr->without_magic_header ? LZWS_COMPRESSOR_WRITE_HEADER : LZWS_COMPRESSOR_WRITE_MAGIC_HEADER;
 
-  state_ptr->first_free_code = lzws_get_first_free_code(options->block_mode);
-  state_ptr->max_code        = lzws_get_max_value_for_bits(options->max_code_bit_length);
+  state_ptr->first_free_code = lzws_get_first_free_code(options_ptr->block_mode);
+  state_ptr->max_code        = lzws_get_max_value_for_bits(options_ptr->max_code_bit_length);
 
   lzws_compressor_reset_last_used_data(state_ptr);
 

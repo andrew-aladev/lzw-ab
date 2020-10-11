@@ -7,7 +7,8 @@
 
 #include <stdio.h>
 
-#include "common.h"
+#include "compressor/common.h"
+#include "decompressor/common.h"
 
 // Possible results:
 enum
@@ -28,25 +29,17 @@ enum
 // In this case it will be replaced with default values.
 
 lzws_result_t lzws_compress_file(
-  FILE*            source_file,
-  size_t           source_buffer_length,
-  FILE*            destination_file,
-  size_t           destination_buffer_length,
-  bool             without_magic_header,
-  lzws_byte_fast_t max_code_bit_length,
-  bool             block_mode,
-  bool             msb,
-  bool             unaligned_bit_groups,
-  bool             quiet);
+  FILE*                            source_file,
+  size_t                           source_buffer_length,
+  FILE*                            destination_file,
+  size_t                           destination_buffer_length,
+  const lzws_compressor_options_t* options_ptr);
 
 lzws_result_t lzws_decompress_file(
-  FILE*  source_file,
-  size_t source_buffer_length,
-  FILE*  destination_file,
-  size_t destination_buffer_length,
-  bool   without_magic_header,
-  bool   msb,
-  bool   unaligned_bit_groups,
-  bool   quiet);
+  FILE*                              source_file,
+  size_t                             source_buffer_length,
+  FILE*                              destination_file,
+  size_t                             destination_buffer_length,
+  const lzws_decompressor_options_t* options_ptr);
 
 #endif // LZWS_FILE_H

@@ -7,21 +7,13 @@
 
 #include "common.h"
 
-inline void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
-{
-  dictionary_ptr->previous_codes       = NULL;
-  dictionary_ptr->last_symbol_by_codes = NULL;
-  dictionary_ptr->output_buffer        = NULL;
-
-  // It is possible to keep output length uninitialized.
-  // Other data will be initialized during allocating of dictionary.
-}
+void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
 lzws_result_t lzws_decompressor_allocate_dictionary(
   lzws_decompressor_dictionary_t*    dictionary_ptr,
   size_t                             total_codes_length,
   lzws_code_fast_t                   first_free_code,
-  const lzws_decompressor_options_t* options);
+  const lzws_decompressor_options_t* options_ptr);
 
 void lzws_decompressor_write_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code);
 
@@ -41,22 +33,6 @@ inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompresso
   return dictionary_ptr->output_buffer[--dictionary_ptr->output_length];
 }
 
-inline void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
-{
-  lzws_code_t* previous_codes = dictionary_ptr->previous_codes;
-  if (previous_codes != NULL) {
-    free(previous_codes);
-  }
-
-  lzws_byte_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
-  if (last_symbol_by_codes != NULL) {
-    free(last_symbol_by_codes);
-  }
-
-  lzws_byte_t* output_buffer = dictionary_ptr->output_buffer;
-  if (output_buffer != NULL) {
-    free(output_buffer);
-  }
-}
+void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
 #endif // LZWS_DECOMPRESSOR_DICTIONARY_MAIN_H

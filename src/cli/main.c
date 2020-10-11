@@ -5,7 +5,6 @@
 #include <getopt.h>
 #include <stdlib.h>
 
-#include "../common.h"
 #include "../file.h"
 
 static const char* help =
@@ -59,9 +58,12 @@ static inline void print_help()
 
 int main(int argc, char** argv)
 {
+  // All option values (except max code bit length) have to be set using raw values (instead of defaults).
+  // It is required to keep options switch behaviour transparent.
+
   bool             is_compressor        = true;
   bool             without_magic_header = false;
-  lzws_byte_fast_t max_code_bit_length  = LZWS_BIGGEST_MAX_CODE_BIT_LENGTH;
+  lzws_byte_fast_t max_code_bit_length  = LZWS_COMPRESSOR_DEFAULT_OPTIONS.max_code_bit_length;
   bool             block_mode           = true;
   bool             msb                  = false;
   bool             unaligned_bit_groups = false;
@@ -103,14 +105,27 @@ int main(int argc, char** argv)
   lzws_result_t result;
 
   if (is_compressor) {
-    result = lzws_compress_file(
-      stdin, 0, stdout, 0, without_magic_header, max_code_bit_length, block_mode, msb, unaligned_bit_groups, quiet);
+    lzws_compressor_options_t options = {
+      .without_magic_header = without_magic_header,
+      .max_code_bit_length  = max_code_bit_length,
+      .block_mode           = block_mode,
+      .msb                  = msb,
+      .unaligned_bit_groups = unaligned_bit_groups,
+      .quiet                = quiet};
 
+    result = lzws_compress_file(stdin, 0, stdout, 0, &options);
     if (result != 0) {
       return 1;
     }
   } else {
-    result = lzws_decompress_file(stdin, 0, stdout, 0, without_magic_header, msb, unaligned_bit_groups, quiet);
+    lzws_decompressor_options_t options = {
+      .without_magic_header = without_magic_header,
+      .block_mode           = block_mode,
+      .msb                  = msb,
+      .unaligned_bit_groups = unaligned_bit_groups,
+      .quiet                = quiet};
+
+    result = lzws_decompress_file(stdin, 0, stdout, 0, &options);
     if (result != 0) {
       return 2;
     }

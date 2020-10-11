@@ -34,5 +34,13 @@ bool lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr)
   return result;
 }
 
-extern inline void lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr);
+void lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr)
+{
+  mpz_add_ui(ratio_ptr->source_length, ratio_ptr->source_length, ratio_ptr->new_source_length);
+  ratio_ptr->new_source_length = 0;
+
+  mpz_add_ui(ratio_ptr->destination_length, ratio_ptr->destination_length, ratio_ptr->new_destination_length);
+  ratio_ptr->new_destination_length = 0;
+}
+
 extern inline void lzws_compressor_free_ratio(lzws_compressor_ratio_t* ratio_ptr);

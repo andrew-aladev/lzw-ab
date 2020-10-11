@@ -24,13 +24,21 @@ static inline lzws_code_fast_t get_code_index(
 
 // -- implementation --
 
-extern inline void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
+void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
+{
+  dictionary_ptr->previous_codes       = NULL;
+  dictionary_ptr->last_symbol_by_codes = NULL;
+  dictionary_ptr->output_buffer        = NULL;
+
+  // It is possible to keep output length uninitialized.
+  // Other data will be initialized during allocating of dictionary.
+}
 
 lzws_result_t lzws_decompressor_allocate_dictionary(
   lzws_decompressor_dictionary_t*    dictionary_ptr,
   size_t                             total_codes_length,
   lzws_code_fast_t                   first_free_code,
-  const lzws_decompressor_options_t* options)
+  const lzws_decompressor_options_t* options_ptr)
 {
   // We won't store char codes and clear code.
   dictionary_ptr->codes_offset = first_free_code;
@@ -44,7 +52,7 @@ lzws_result_t lzws_decompressor_allocate_dictionary(
 
   lzws_code_t* previous_codes = malloc(previous_codes_size);
   if (previous_codes == NULL) {
-    if (!options->quiet) {
+    if (!options_ptr->quiet) {
       LZWS_LOG_ERROR("malloc failed, previous codes size: %zu", previous_codes_size);
     }
 
@@ -58,7 +66,7 @@ lzws_result_t lzws_decompressor_allocate_dictionary(
 
   lzws_byte_t* last_symbol_by_codes = malloc(last_symbol_by_codes_size);
   if (last_symbol_by_codes == NULL) {
-    if (!options->quiet) {
+    if (!options_ptr->quiet) {
       LZWS_LOG_ERROR("malloc failed, last symbol by codes size: %zu", last_symbol_by_codes_size);
     }
 
@@ -75,7 +83,7 @@ lzws_result_t lzws_decompressor_allocate_dictionary(
 
   lzws_byte_t* output_buffer = malloc(output_size);
   if (output_buffer == NULL) {
-    if (!options->quiet) {
+    if (!options_ptr->quiet) {
       LZWS_LOG_ERROR("malloc failed, output size: %zu", output_size);
     }
 
@@ -172,4 +180,21 @@ void lzws_decompressor_add_code_to_dictionary(
 
 extern inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr);
 extern inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
-extern inline void        lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
+
+void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
+{
+  lzws_code_t* previous_codes = dictionary_ptr->previous_codes;
+  if (previous_codes != NULL) {
+    free(previous_codes);
+  }
+
+  lzws_byte_t* last_symbol_by_codes = dictionary_ptr->last_symbol_by_codes;
+  if (last_symbol_by_codes != NULL) {
+    free(last_symbol_by_codes);
+  }
+
+  lzws_byte_t* output_buffer = dictionary_ptr->output_buffer;
+  if (output_buffer != NULL) {
+    free(output_buffer);
+  }
+}

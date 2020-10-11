@@ -19,10 +19,8 @@ lzws_result_t lzws_decompressor_read_magic_header(
   lzws_byte_fast_t byte;
   lzws_read_byte(&byte, source_ptr, source_length_ptr);
 
-  bool quiet = state_ptr->options.quiet;
-
   if (byte != LZWS_FIRST_MAGIC_HEADER_BYTE) {
-    if (!quiet) {
+    if (!state_ptr->options.quiet) {
       LZWS_LOG_ERROR("received invalid first magic header byte: %u", byte);
     }
 
@@ -32,7 +30,7 @@ lzws_result_t lzws_decompressor_read_magic_header(
   lzws_read_byte(&byte, source_ptr, source_length_ptr);
 
   if (byte != LZWS_SECOND_MAGIC_HEADER_BYTE) {
-    if (!quiet) {
+    if (!state_ptr->options.quiet) {
       LZWS_LOG_ERROR("received invalid second magic header byte: %u", byte);
     }
 

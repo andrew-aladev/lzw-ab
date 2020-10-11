@@ -11,26 +11,26 @@
 
 lzws_result_t lzws_decompressor_get_initial_state(
   lzws_decompressor_state_t**        result_state_ptr,
-  const lzws_decompressor_options_t* options)
+  const lzws_decompressor_options_t* options_ptr)
 {
-  if (options == NULL) {
-    options = &LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;
+  if (options_ptr == NULL) {
+    options_ptr = &LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;
   }
 
   size_t state_size = sizeof(lzws_decompressor_state_t);
 
   lzws_decompressor_state_t* state_ptr = malloc(state_size);
   if (state_ptr == NULL) {
-    if (!options->quiet) {
+    if (!options_ptr->quiet) {
       LZWS_LOG_ERROR("malloc failed, state size: %zu", state_size);
     }
 
     return LZWS_DECOMPRESSOR_ALLOCATE_FAILED;
   }
 
-  state_ptr->options = *options;
+  state_ptr->options = *options_ptr;
   state_ptr->status =
-    options->without_magic_header ? LZWS_DECOMPRESSOR_READ_HEADER : LZWS_DECOMPRESSOR_READ_MAGIC_HEADER;
+    options_ptr->without_magic_header ? LZWS_DECOMPRESSOR_READ_HEADER : LZWS_DECOMPRESSOR_READ_MAGIC_HEADER;
 
   state_ptr->free_code_bit_length         = LZWS_LOWEST_MAX_CODE_BIT_LENGTH;
   state_ptr->max_free_code_for_bit_length = lzws_get_max_value_for_bits(LZWS_LOWEST_MAX_CODE_BIT_LENGTH);

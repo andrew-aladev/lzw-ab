@@ -278,22 +278,15 @@ static inline lzws_result_t compress(
 }
 
 lzws_result_t lzws_compress_file(
-  FILE*            source_file,
-  size_t           source_buffer_length,
-  FILE*            destination_file,
-  size_t           destination_buffer_length,
-  bool             without_magic_header,
-  lzws_byte_fast_t max_code_bit_length,
-  bool             block_mode,
-  bool             msb,
-  bool             unaligned_bit_groups,
-  bool             quiet)
+  FILE*                            source_file,
+  size_t                           source_buffer_length,
+  FILE*                            destination_file,
+  size_t                           destination_buffer_length,
+  const lzws_compressor_options_t* options_ptr)
 {
   lzws_compressor_state_t* state_ptr;
 
-  lzws_result_t result = lzws_compressor_get_initial_state(
-    &state_ptr, without_magic_header, max_code_bit_length, block_mode, msb, unaligned_bit_groups, quiet);
-
+  lzws_result_t result = lzws_compressor_get_initial_state(&state_ptr, options_ptr);
   if (result != 0) {
     switch (result) {
       case LZWS_COMPRESSOR_ALLOCATE_FAILED:
@@ -307,7 +300,7 @@ lzws_result_t lzws_compress_file(
 
   lzws_byte_t* source_buffer;
 
-  result = lzws_create_source_buffer_for_compressor(&source_buffer, &source_buffer_length, quiet);
+  result = lzws_create_source_buffer_for_compressor(&source_buffer, &source_buffer_length, options_ptr->quiet);
   if (result != 0) {
     lzws_compressor_free_state(state_ptr);
     return LZWS_FILE_ALLOCATE_FAILED;
@@ -315,7 +308,9 @@ lzws_result_t lzws_compress_file(
 
   lzws_byte_t* destination_buffer;
 
-  result = lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, quiet);
+  result =
+    lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, options_ptr->quiet);
+
   if (result != 0) {
     free(source_buffer);
     lzws_compressor_free_state(state_ptr);
@@ -330,7 +325,7 @@ lzws_result_t lzws_compress_file(
     destination_file,
     destination_buffer,
     destination_buffer_length,
-    quiet);
+    options_ptr->quiet);
 
   free(source_buffer);
   free(destination_buffer);
@@ -422,20 +417,15 @@ static inline lzws_result_t decompress(
 }
 
 lzws_result_t lzws_decompress_file(
-  FILE*  source_file,
-  size_t source_buffer_length,
-  FILE*  destination_file,
-  size_t destination_buffer_length,
-  bool   without_magic_header,
-  bool   msb,
-  bool   unaligned_bit_groups,
-  bool   quiet)
+  FILE*                              source_file,
+  size_t                             source_buffer_length,
+  FILE*                              destination_file,
+  size_t                             destination_buffer_length,
+  const lzws_decompressor_options_t* options_ptr)
 {
   lzws_decompressor_state_t* state_ptr;
 
-  lzws_result_t result =
-    lzws_decompressor_get_initial_state(&state_ptr, without_magic_header, msb, unaligned_bit_groups, quiet);
-
+  lzws_result_t result = lzws_decompressor_get_initial_state(&state_ptr, options_ptr);
   if (result != 0) {
     switch (result) {
       case LZWS_DECOMPRESSOR_ALLOCATE_FAILED:
@@ -447,7 +437,7 @@ lzws_result_t lzws_decompress_file(
 
   lzws_byte_t* source_buffer;
 
-  result = lzws_create_source_buffer_for_decompressor(&source_buffer, &source_buffer_length, quiet);
+  result = lzws_create_source_buffer_for_decompressor(&source_buffer, &source_buffer_length, options_ptr->quiet);
   if (result != 0) {
     lzws_decompressor_free_state(state_ptr);
     return LZWS_FILE_ALLOCATE_FAILED;
@@ -455,7 +445,9 @@ lzws_result_t lzws_decompress_file(
 
   lzws_byte_t* destination_buffer;
 
-  result = lzws_create_destination_buffer_for_decompressor(&destination_buffer, &destination_buffer_length, quiet);
+  result = lzws_create_destination_buffer_for_decompressor(
+    &destination_buffer, &destination_buffer_length, options_ptr->quiet);
+
   if (result != 0) {
     free(source_buffer);
     lzws_decompressor_free_state(state_ptr);
@@ -470,7 +462,7 @@ lzws_result_t lzws_decompress_file(
     destination_file,
     destination_buffer,
     destination_buffer_length,
-    quiet);
+    options_ptr->quiet);
 
   free(source_buffer);
   free(destination_buffer);
