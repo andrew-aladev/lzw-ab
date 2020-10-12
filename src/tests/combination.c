@@ -157,7 +157,6 @@ lzws_result_t process_decompressor_combinations(lzws_test_decompressor_t functio
 
           lzws_decompressor_options_t options = {
             .without_magic_header = without_magic_header,
-            .block_mode           = true,
             .msb                  = msb,
             .unaligned_bit_groups = unaligned_bit_groups,
             .quiet                = false};

@@ -120,7 +120,6 @@ int main(int argc, char** argv)
   } else {
     lzws_decompressor_options_t options = {
       .without_magic_header = without_magic_header,
-      .block_mode           = block_mode,
       .msb                  = msb,
       .unaligned_bit_groups = unaligned_bit_groups,
       .quiet                = quiet};

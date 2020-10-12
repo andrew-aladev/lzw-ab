@@ -64,8 +64,8 @@ lzws_result_t lzws_decompressor_read_header(
     return LZWS_DECOMPRESSOR_INVALID_MAX_CODE_BIT_LENGTH;
   }
 
-  bool block_mode               = (byte & LZWS_BLOCK_MODE) != 0;
-  state_ptr->options.block_mode = block_mode;
+  bool block_mode       = (byte & LZWS_BLOCK_MODE) != 0;
+  state_ptr->block_mode = block_mode;
 
   state_ptr->max_code  = lzws_get_max_value_for_bits(max_code_bit_length);
   state_ptr->free_code = state_ptr->first_free_code = lzws_get_first_free_code(block_mode);

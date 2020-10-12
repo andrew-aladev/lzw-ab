@@ -10,7 +10,6 @@
 typedef struct
 {
   bool without_magic_header;
-  bool block_mode;
   bool msb;
   bool unaligned_bit_groups;
   bool quiet;

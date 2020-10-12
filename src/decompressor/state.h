@@ -28,6 +28,8 @@ typedef struct
   lzws_decompressor_options_t options;
   lzws_decompressor_status_t  status;
 
+  bool block_mode;
+
   lzws_code_fast_t first_free_code;
   lzws_code_fast_t max_code;
 

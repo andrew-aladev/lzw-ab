@@ -22,7 +22,7 @@ lzws_result_t lzws_decompressor_read_first_code(
     return result;
   }
 
-  if (state_ptr->options.block_mode && code == LZWS_CLEAR_CODE) {
+  if (state_ptr->block_mode && code == LZWS_CLEAR_CODE) {
     // Some UNIX compress implementations can provide clear code as first code.
 
     // We need to clear state after reading clear code.
@@ -89,7 +89,7 @@ lzws_result_t lzws_decompressor_read_next_code(
     return result;
   }
 
-  if (state_ptr->options.block_mode && code == LZWS_CLEAR_CODE) {
+  if (state_ptr->block_mode && code == LZWS_CLEAR_CODE) {
     // Some UNIX compress implementations provide clear code even when dictionary is not full.
     // So in terms of compatibility decompressor have to just ignore situation when dictionary is not full here.
 
