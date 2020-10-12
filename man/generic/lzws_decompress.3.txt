@@ -14,8 +14,10 @@ SYNOPSIS
 ----
 lzws_result_t lzws_decompress(
   lzws_decompressor_state_t* state_ptr,
-  lzws_byte_t** source_ptr, size_t* source_length_ptr,
-  lzws_byte_t** destination_ptr, size_t* destination_length_ptr);
+  lzws_byte_t** source_ptr,
+  size_t* source_length_ptr,
+  lzws_byte_t** destination_ptr,
+  size_t* destination_length_ptr);
 ----
 
 
@@ -62,8 +64,10 @@ You have a portion of source data, you want to decompress it.
 while (true) {
   lzws_result_t result = lzws_decompress(
     state_ptr,
-    &source, &source_length,
-    &destination, &destination_length);
+    &source,
+    &source_length,
+    &destination,
+    &destination_length);
 
   if (result != 0) {
     switch (result) {

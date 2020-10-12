@@ -13,9 +13,11 @@ SYNOPSIS
 
 ----
 lzws_result_t lzws_compress_file(
-  FILE* source_file, size_t source_buffer_length,
-  FILE* destination_file, size_t destination_buffer_length,
-  bool without_magic_header, lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
+  FILE* source_file,
+  size_t source_buffer_length,
+  FILE* destination_file,
+  size_t destination_buffer_length,
+  const lzws_compressor_options_t* options_ptr);
 ----
 
 
@@ -29,15 +31,29 @@ OPTIONS
   If buffer length is *0* optimal buffer length will be auto selected.
   Minimal buffer length is *2*.
 
-*`FILE* source_file`*::
+*`FILE* destination_file`*::
   Pointer to destination file like stdout.
 
-*`size_t source_buffer_length`*::
+*`size_t destination_buffer_length`*::
   Buffer length for destination.
   If buffer length is *0* optimal buffer length will be auto selected.
   Minimal buffer length is *2*.
 
-Other options are related to algorithm customization.
+*`const lzws_compressor_options_t* options_ptr`*::
+  Options related to algorithm customization.
+  It may be *NULL* (*LZWS_COMPRESSOR_DEFAULT_OPTIONS* will be used).
+
+----
+typedef struct
+{
+  bool             without_magic_header;
+  lzws_byte_fast_t max_code_bit_length;
+  bool             block_mode;
+  bool             msb;
+  bool             unaligned_bit_groups;
+  bool             quiet;
+} lzws_compressor_options_t;
+----
 
 *`bool without_magic_header`*::
   Disable writing of magic header.
@@ -83,10 +99,22 @@ EXAMPLE
 You need to simulate UNIX compress utility.
 
 ----
+// Default options may be NULL or LZWS_COMPRESSOR_DEFAULT_OPTIONS.
+lzws_compressor_options_t options = {
+  .without_magic_header = false,
+  .max_code_bit_length  = LZWS_BIGGEST_MAX_CODE_BIT_LENGTH,
+  .block_mode           = true,
+  .msb                  = false,
+  .unaligned_bit_groups = false,
+  .quiet                = false
+};
+
 lzws_result_t result = lzws_compress_file(
-  stdin, 0,
-  stdout, 0,
-  LZWS_BIGGEST_MAX_CODE_BIT_LENGTH, true, false, false, false);
+  stdin,
+  0,
+  stdout,
+  0,
+  &options);
 
 if (result != 0) {
   return 1;

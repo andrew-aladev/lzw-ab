@@ -14,7 +14,7 @@ SYNOPSIS
 ----
 lzws_result_t lzws_decompressor_get_initial_state(
   lzws_decompressor_state_t** state_ptr,
-  bool msb, bool unaligned_bit_groups, bool quiet);
+  const lzws_decompressor_options_t* options_ptr);
 ----
 
 
@@ -23,7 +23,22 @@ OPTIONS
 *`lzws_decompressor_state_t** state_ptr`*::
   Pointer to new decompressor state.
 
-Other options are related to algorithm customization.
+*`const lzws_decompressor_options_t* options_ptr`*::
+  Options related to algorithm customization.
+  It may be *NULL* (*LZWS_DECOMPRESSOR_DEFAULT_OPTIONS* will be used).
+
+----
+typedef struct
+{
+  bool without_magic_header;
+  bool msb;
+  bool unaligned_bit_groups;
+  bool quiet;
+} lzws_decompressor_options_t;
+----
+
+*`bool without_magic_header`*::
+  Disable reading of magic header.
 
 *`bool msb`*::
   Enable most significant bit mode.
@@ -54,10 +69,15 @@ You need to create decompressor state compatible with UNIX compress utility.
 ----
 lzws_decompressor_state_t* state_ptr;
 
-lzws_result_t result = lzws_decompressor_get_initial_state(
-  &state_ptr,
-  false, false, false);
+// Default options may be NULL or LZWS_DECOMPRESSOR_DEFAULT_OPTIONS.
+lzws_decompressor_options_t options = {
+  .without_magic_header = false,
+  .msb                  = false,
+  .unaligned_bit_groups = false,
+  .quiet                = false
+};
 
+lzws_result_t result = lzws_decompressor_get_initial_state(&state_ptr, &options);
 if (result != 0) {
   return 1;
 }

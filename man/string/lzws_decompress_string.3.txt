@@ -13,9 +13,12 @@ SYNOPSIS
 
 ----
 lzws_result_t lzws_decompress_string(
-  lzws_byte_t* source, size_t source_length,
-  lzws_byte_t** destination_ptr, size_t* destination_length_ptr, size_t destination_buffer_length,
-  bool without_magic_header, bool msb, bool unaligned_bit_groups, bool quiet);
+  lzws_byte_t* source,
+  size_t source_length,
+  lzws_byte_t** destination_ptr,
+  size_t* destination_length_ptr,
+  size_t destination_buffer_length,
+  const lzws_decompressor_options_t* options_ptr);
 ----
 
 
@@ -38,7 +41,19 @@ OPTIONS
   If buffer length is *0* optimal buffer length will be auto selected.
   Minimal buffer length is *2*.
 
-Other options are related to algorithm customization.
+*`const lzws_decompressor_options_t* options_ptr`*::
+  Options related to algorithm customization.
+  It may be *NULL* (*LZWS_DECOMPRESSOR_DEFAULT_OPTIONS* will be used).
+
+----
+typedef struct
+{
+  bool without_magic_header;
+  bool msb;
+  bool unaligned_bit_groups;
+  bool quiet;
+} lzws_decompressor_options_t;
+----
 
 *`bool without_magic_header`*::
   Disable reading of magic header.
@@ -76,14 +91,24 @@ You need to decompress a small string provided by UNIX compress utility.
 ----
 const char compressed_text[]      = "...";
 size_t     compressed_text_length = strlen(compressed_text);
+char*      decompressed_text;
+size_t     decompressed_text_length;
 
-char*  decompressed_text;
-size_t decompressed_text_length;
+// Default options may be NULL or LZWS_DECOMPRESSOR_DEFAULT_OPTIONS.
+lzws_decompressor_options_t options = {
+  .without_magic_header = false,
+  .msb                  = false,
+  .unaligned_bit_groups = false,
+  .quiet                = false
+};
 
 lzws_result_t result = lzws_decompress_string(
-  (lzws_byte_t*)compressed_text, compressed_text_length,
-  (lzws_byte_t**)&decompressed_text, &decompressed_text_length, 0,
-  false, false, false);
+  (lzws_byte_t*)compressed_text,
+  compressed_text_length,
+  (lzws_byte_t**)&decompressed_text,
+  &decompressed_text_length,
+  0,
+  &options);
 
 if (result != 0) {
   return 1;

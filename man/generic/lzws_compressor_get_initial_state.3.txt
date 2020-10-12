@@ -14,7 +14,7 @@ SYNOPSIS
 ----
 lzws_result_t lzws_compressor_get_initial_state(
   lzws_compressor_state_t** state_ptr,
-  lzws_byte_fast_t max_code_bit_length, bool block_mode, bool msb, bool unaligned_bit_groups, bool quiet);
+  const lzws_compressor_options_t* options_ptr);
 ----
 
 
@@ -23,20 +23,41 @@ OPTIONS
 *`lzws_compressor_state_t** state_ptr`*::
   Pointer to new compressor state.
 
-Other options are related to algorithm customization.
+*`const lzws_compressor_options_t* options_ptr`*::
+  Options related to algorithm customization.
+  It may be *NULL* (*LZWS_COMPRESSOR_DEFAULT_OPTIONS* will be used).
+
+----
+typedef struct
+{
+  bool             without_magic_header;
+  lzws_byte_fast_t max_code_bit_length;
+  bool             block_mode;
+  bool             msb;
+  bool             unaligned_bit_groups;
+  bool             quiet;
+} lzws_compressor_options_t;
+----
+
+*`bool without_magic_header`*::
+  Disable writing of magic header.
 
 *`lzws_byte_fast_t max_code_bit_length`*::
   Set max code bit length.
   Min value *LZWS_LOWEST_MAX_CODE_BIT_LENGTH*, max - *LZWS_BIGGEST_MAX_CODE_BIT_LENGTH*.
+  This value will be written into destination header.
 
 *`bool block_mode`*::
   Enable block mode.
+  This value will be written into destination header.
 
 *`bool msb`*::
   Enable most significant bit mode.
+  This value won't be written into destination header.
 
 *`bool unaligned_bit_groups`*::
   Enable unaligned bit groups.
+  This value won't be written into destination header.
 
 *`bool quiet`*::
   Disable error messages.
@@ -61,10 +82,17 @@ You need to create compressor state compatible with UNIX compress utility.
 ----
 lzws_compressor_state_t* state_ptr;
 
-lzws_result_t result = lzws_compressor_get_initial_state(
-  &state_ptr,
-  LZWS_BIGGEST_MAX_CODE_BIT_LENGTH, true, false, false, false);
+// Default options may be NULL or LZWS_COMPRESSOR_DEFAULT_OPTIONS.
+lzws_compressor_options_t options = {
+  .without_magic_header = false,
+  .max_code_bit_length  = LZWS_BIGGEST_MAX_CODE_BIT_LENGTH,
+  .block_mode           = true,
+  .msb                  = false,
+  .unaligned_bit_groups = false,
+  .quiet                = false
+};
 
+lzws_result_t result = lzws_compressor_get_initial_state(&state_ptr, &options);
 if (result != 0) {
   return 1;
 }

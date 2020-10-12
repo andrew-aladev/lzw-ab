@@ -16,7 +16,8 @@ SYNOPSIS
 ----
 lzws_result_t lzws_compressor_finish(
   lzws_compressor_state_t* state_ptr,
-  lzws_byte_t** destination_ptr, size_t* destination_length_ptr);
+  lzws_byte_t** destination_ptr,
+  size_t* destination_length_ptr);
 ----
 
 
@@ -57,10 +58,7 @@ You want to finish compressor after several portions of data.
 
 ----
 while (true) {
-  lzws_result_t result = lzws_compressor_finish(
-    state_ptr,
-    &destination, &destination_length);
-
+  lzws_result_t result = lzws_compressor_finish(state_ptr, &destination, &destination_length);
   if (result != 0) {
     switch (result) {
       case LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION:
