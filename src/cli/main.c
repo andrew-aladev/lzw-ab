@@ -53,7 +53,7 @@ static inline void print_help()
     short_options,
     LZWS_LOWEST_MAX_CODE_BIT_LENGTH,
     LZWS_BIGGEST_MAX_CODE_BIT_LENGTH,
-    LZWS_BIGGEST_MAX_CODE_BIT_LENGTH);
+    LZWS_COMPRESSOR_DEFAULT_OPTIONS.max_code_bit_length);
 }
 
 int main(int argc, char** argv)

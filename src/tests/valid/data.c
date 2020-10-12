@@ -34,11 +34,7 @@ static inline lzws_result_t test_data(
     &compressed_data,
     &compressed_data_length,
     buffer_length,
-    compressor_state_ptr->without_magic_header,
-    compressor_state_ptr->max_code_bit_length,
-    compressor_state_ptr->block_mode,
-    compressor_state_ptr->msb,
-    compressor_state_ptr->unaligned_bit_groups);
+    &compressor_state_ptr->options);
 
   if (result != 0) {
     return 1;
@@ -53,9 +49,7 @@ static inline lzws_result_t test_data(
     (lzws_byte_t**) &result_data,
     &result_data_length,
     buffer_length,
-    decompressor_state_ptr->without_magic_header,
-    decompressor_state_ptr->msb,
-    decompressor_state_ptr->unaligned_bit_groups);
+    &decompressor_state_ptr->options);
 
   free(compressed_data);
 
@@ -90,6 +84,7 @@ static inline lzws_result_t test_random_string(
   }
 
   lzws_tests_set_random_string(random_string, RANDOM_STRING_LENGTH);
+
   lzws_result_t result = test_data(compressor_state_ptr, decompressor_state_ptr, random_string, buffer_length);
 
   free(random_string);
@@ -116,11 +111,11 @@ static inline lzws_result_t test_eof_after_completed_bits_group(
   lzws_decompressor_state_t* decompressor_state_ptr,
   size_t                     buffer_length)
 {
-  lzws_code_fast_t first_code    = lzws_get_first_free_code(compressor_state_ptr->block_mode);
+  lzws_code_fast_t first_code    = lzws_get_first_free_code(compressor_state_ptr->options.block_mode);
   lzws_code_fast_t target_number = (1 << LZWS_LOWEST_MAX_CODE_BIT_LENGTH) - first_code + 1;
   size_t           string_length = target_number * (target_number + 1) / 2 + 2; // + 1 byte for \0.
+  char             symbol        = 'a';
 
-  char  symbol = 'a';
   char* string = lzws_allocate_array(1, string_length, (void*) &symbol, false, true);
   if (string == NULL) {
     LZWS_LOG_ERROR("allocate array failed, string size: %zu", string_length);
@@ -128,7 +123,8 @@ static inline lzws_result_t test_eof_after_completed_bits_group(
   }
 
   string[string_length - 1] = '\0';
-  lzws_result_t result      = test_data(compressor_state_ptr, decompressor_state_ptr, string, buffer_length);
+
+  lzws_result_t result = test_data(compressor_state_ptr, decompressor_state_ptr, string, buffer_length);
 
   free(string);
 

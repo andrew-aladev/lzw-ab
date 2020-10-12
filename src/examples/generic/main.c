@@ -9,14 +9,8 @@
 #include "../../decompressor/main.h"
 #include "../../log.h"
 
-#define WITHOUT_MAGIC_HEADER false
-#define MAX_CODE_BIT_LENGTH  LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
-#define BLOCK_MODE           true
-#define MSB                  false
-#define UNALIGNED_BIT_GROUPS false
-#define QUIET                false
-
 #define BUFFER_LENGTH 512
+#define QUIET         false
 
 int main()
 {
@@ -24,9 +18,7 @@ int main()
   size_t                   text_length = strlen(text);
   lzws_compressor_state_t* compressor_state_ptr;
 
-  lzws_result_t result = lzws_compressor_get_initial_state(
-    &compressor_state_ptr, WITHOUT_MAGIC_HEADER, MAX_CODE_BIT_LENGTH, BLOCK_MODE, MSB, UNALIGNED_BIT_GROUPS, QUIET);
-
+  lzws_result_t result = lzws_compressor_get_initial_state(&compressor_state_ptr, NULL);
   if (result != 0) {
     LZWS_LOG_ERROR("compressor get initial state failed");
     return 1;
@@ -77,9 +69,7 @@ int main()
 
   lzws_decompressor_state_t* decompressor_state_ptr;
 
-  result = lzws_decompressor_get_initial_state(
-    &decompressor_state_ptr, WITHOUT_MAGIC_HEADER, MSB, UNALIGNED_BIT_GROUPS, QUIET);
-
+  result = lzws_decompressor_get_initial_state(&decompressor_state_ptr, NULL);
   if (result != 0) {
     LZWS_LOG_ERROR("decompressor get initial state failed");
     free(compressor_buffer);

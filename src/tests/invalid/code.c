@@ -69,14 +69,7 @@ static inline lzws_result_t test_data(
   size_t       destination_length;
 
   result = lzws_tests_decompress_string_and_file(
-    source,
-    source_length,
-    &destination,
-    &destination_length,
-    buffer_length,
-    decompressor_state_ptr->without_magic_header,
-    decompressor_state_ptr->msb,
-    decompressor_state_ptr->unaligned_bit_groups);
+    source, source_length, &destination, &destination_length, buffer_length, &decompressor_state_ptr->options);
 
   free(source);
 
@@ -121,7 +114,7 @@ static inline lzws_result_t test_all_datas(
 {
   lzws_result_t result;
 
-  if (compressor_state_ptr->block_mode) {
+  if (compressor_state_ptr->options.block_mode) {
     result = test_datas(
       compressor_state_ptr,
       decompressor_state_ptr,

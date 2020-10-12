@@ -116,8 +116,8 @@ lzws_result_t lzws_compress_string(
 
   lzws_byte_t* destination_buffer;
 
-  result =
-    lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, options_ptr->quiet);
+  result = lzws_create_destination_buffer_for_compressor(
+    &destination_buffer, &destination_buffer_length, state_ptr->options.quiet);
 
   if (result != 0) {
     lzws_compressor_free_state(state_ptr);
@@ -134,7 +134,7 @@ lzws_result_t lzws_compress_string(
     destination_ptr,
     destination_length_ptr,
     destination_buffer_length,
-    options_ptr->quiet);
+    state_ptr->options.quiet);
 
   lzws_compressor_free_state(state_ptr);
 
@@ -230,7 +230,7 @@ lzws_result_t lzws_decompress_string(
   lzws_byte_t* destination_buffer;
 
   result = lzws_create_destination_buffer_for_decompressor(
-    &destination_buffer, &destination_buffer_length, options_ptr->quiet);
+    &destination_buffer, &destination_buffer_length, state_ptr->options.quiet);
 
   if (result != 0) {
     lzws_decompressor_free_state(state_ptr);
@@ -247,7 +247,7 @@ lzws_result_t lzws_decompress_string(
     destination_ptr,
     destination_length_ptr,
     destination_buffer_length,
-    options_ptr->quiet);
+    state_ptr->options.quiet);
 
   lzws_decompressor_free_state(state_ptr);
 

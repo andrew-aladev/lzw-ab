@@ -34,7 +34,7 @@ static inline lzws_result_t test_invalid_header(
 
   // Magic header.
 
-  if (!compressor_state_ptr->without_magic_header) {
+  if (!compressor_state_ptr->options.without_magic_header) {
     header_size = MAGIC_HEADER_SIZE - 1;
     result      = lzws_compressor_write_magic_header(compressor_state_ptr, NULL, &header_size);
     if (result != LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION) {
@@ -43,7 +43,7 @@ static inline lzws_result_t test_invalid_header(
     }
   }
 
-  if (!decompressor_state_ptr->without_magic_header) {
+  if (!decompressor_state_ptr->options.without_magic_header) {
     header_size = MAGIC_HEADER_SIZE - 1;
     result      = lzws_decompressor_read_magic_header(decompressor_state_ptr, NULL, &header_size);
     if (result != LZWS_DECOMPRESSOR_NEEDS_MORE_SOURCE) {

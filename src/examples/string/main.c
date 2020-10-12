@@ -10,13 +10,6 @@
 // "0" means default buffer length.
 #define BUFFER_LENGTH 0
 
-#define WITHOUT_MAGIC_HEADER false
-#define MAX_CODE_BIT_LENGTH  LZWS_BIGGEST_MAX_CODE_BIT_LENGTH
-#define BLOCK_MODE           true
-#define MSB                  false
-#define UNALIGNED_BIT_GROUPS false
-#define QUIET                false
-
 int main()
 {
   const char text[]      = "example text";
@@ -25,17 +18,7 @@ int main()
   size_t     compressed_text_length;
 
   lzws_result_t result = lzws_compress_string(
-    (lzws_byte_t*) text,
-    text_length,
-    (lzws_byte_t**) &compressed_text,
-    &compressed_text_length,
-    BUFFER_LENGTH,
-    WITHOUT_MAGIC_HEADER,
-    MAX_CODE_BIT_LENGTH,
-    BLOCK_MODE,
-    MSB,
-    UNALIGNED_BIT_GROUPS,
-    QUIET);
+    (lzws_byte_t*) text, text_length, (lzws_byte_t**) &compressed_text, &compressed_text_length, BUFFER_LENGTH, NULL);
 
   if (result != 0) {
     LZWS_LOG_ERROR("string compressor failed");
@@ -53,10 +36,7 @@ int main()
     (lzws_byte_t**) &decompressed_text,
     &decompressed_text_length,
     BUFFER_LENGTH,
-    WITHOUT_MAGIC_HEADER,
-    MSB,
-    UNALIGNED_BIT_GROUPS,
-    QUIET);
+    NULL);
 
   free(compressed_text);
 

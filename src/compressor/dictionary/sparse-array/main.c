@@ -94,9 +94,10 @@ lzws_result_t lzws_compressor_allocate_dictionary(
     return LZWS_COMPRESSOR_ALLOCATE_FAILED;
   }
 
+  bool                                     block_mode = options_ptr->block_mode;
   lzws_compressor_dictionary_used_index_t* used_indexes;
 
-  if (options_ptr->block_mode) {
+  if (block_mode) {
     size_t used_indexes_length = get_used_indexes_length(dictionary_ptr, total_codes_length);
 
     // Used indexes don't require default values.
@@ -118,7 +119,7 @@ lzws_result_t lzws_compressor_allocate_dictionary(
 
   dictionary_ptr->next_codes = next_codes;
 
-  if (options_ptr->block_mode) {
+  if (block_mode) {
     dictionary_ptr->used_indexes = used_indexes;
   }
 

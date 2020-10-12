@@ -72,22 +72,14 @@ static inline lzws_result_t compress(
   lzws_result_t            result;
   lzws_compressor_state_t* compressor_state_copy_ptr;
 
-  result = lzws_compressor_get_initial_state(
-    &compressor_state_copy_ptr,
-    compressor_state_ptr->without_magic_header,
-    compressor_state_ptr->max_code_bit_length,
-    compressor_state_ptr->block_mode,
-    compressor_state_ptr->msb,
-    compressor_state_ptr->unaligned_bit_groups,
-    compressor_state_ptr->quiet);
-
+  result = lzws_compressor_get_initial_state(&compressor_state_copy_ptr, &compressor_state_ptr->options);
   if (result != 0) {
     return LZWS_TEST_CODES_STATE_INITIALIZE_FAILED;
   }
 
   size_t remaining_destination_buffer_length = destination_buffer_length;
 
-  if (!compressor_state_copy_ptr->without_magic_header) {
+  if (!compressor_state_copy_ptr->options.without_magic_header) {
     BUFFERED_COMPRESS(lzws_compressor_write_magic_header, compressor_state_copy_ptr);
   }
 
@@ -99,7 +91,7 @@ static inline lzws_result_t compress(
     lzws_code_t code = codes[index];
 
     if (
-      compressor_state_copy_ptr->block_mode && !compressor_state_copy_ptr->unaligned_bit_groups &&
+      compressor_state_copy_ptr->options.block_mode && !compressor_state_copy_ptr->options.unaligned_bit_groups &&
       prev_code == LZWS_CLEAR_CODE) {
       BUFFERED_COMPRESS(lzws_compressor_write_remainder_before_current_code, compressor_state_copy_ptr);
       BUFFERED_COMPRESS(lzws_compressor_write_alignment_before_current_code, compressor_state_copy_ptr);

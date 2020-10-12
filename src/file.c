@@ -300,7 +300,7 @@ lzws_result_t lzws_compress_file(
 
   lzws_byte_t* source_buffer;
 
-  result = lzws_create_source_buffer_for_compressor(&source_buffer, &source_buffer_length, options_ptr->quiet);
+  result = lzws_create_source_buffer_for_compressor(&source_buffer, &source_buffer_length, state_ptr->options.quiet);
   if (result != 0) {
     lzws_compressor_free_state(state_ptr);
     return LZWS_FILE_ALLOCATE_FAILED;
@@ -308,8 +308,8 @@ lzws_result_t lzws_compress_file(
 
   lzws_byte_t* destination_buffer;
 
-  result =
-    lzws_create_destination_buffer_for_compressor(&destination_buffer, &destination_buffer_length, options_ptr->quiet);
+  result = lzws_create_destination_buffer_for_compressor(
+    &destination_buffer, &destination_buffer_length, state_ptr->options.quiet);
 
   if (result != 0) {
     free(source_buffer);
@@ -325,7 +325,7 @@ lzws_result_t lzws_compress_file(
     destination_file,
     destination_buffer,
     destination_buffer_length,
-    options_ptr->quiet);
+    state_ptr->options.quiet);
 
   free(source_buffer);
   free(destination_buffer);
@@ -437,7 +437,7 @@ lzws_result_t lzws_decompress_file(
 
   lzws_byte_t* source_buffer;
 
-  result = lzws_create_source_buffer_for_decompressor(&source_buffer, &source_buffer_length, options_ptr->quiet);
+  result = lzws_create_source_buffer_for_decompressor(&source_buffer, &source_buffer_length, state_ptr->options.quiet);
   if (result != 0) {
     lzws_decompressor_free_state(state_ptr);
     return LZWS_FILE_ALLOCATE_FAILED;
@@ -446,7 +446,7 @@ lzws_result_t lzws_decompress_file(
   lzws_byte_t* destination_buffer;
 
   result = lzws_create_destination_buffer_for_decompressor(
-    &destination_buffer, &destination_buffer_length, options_ptr->quiet);
+    &destination_buffer, &destination_buffer_length, state_ptr->options.quiet);
 
   if (result != 0) {
     free(source_buffer);
@@ -462,7 +462,7 @@ lzws_result_t lzws_decompress_file(
     destination_file,
     destination_buffer,
     destination_buffer_length,
-    options_ptr->quiet);
+    state_ptr->options.quiet);
 
   free(source_buffer);
   free(destination_buffer);
