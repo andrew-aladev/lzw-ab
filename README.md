@@ -104,14 +104,16 @@ See the following example for string compression:
 ```c
 const char text[]      = "example text";
 size_t     text_length = strlen(text);
-
-char*  compressed_text;
-size_t compressed_text_length;
+char*      compressed_text;
+size_t     compressed_text_length;
 
 lzws_result_t result = lzws_compress_string(
-  (lzws_byte_t*)text, text_length,
-  (lzws_byte_t**)&compressed_text, &compressed_text_length, 0,
-  false, LZWS_BIGGEST_MAX_CODE_BIT_LENGTH, true, false, false, false);
+  (lzws_byte_t*)text,
+  text_length,
+  (lzws_byte_t**)&compressed_text,
+  &compressed_text_length,
+  0,
+  NULL);
 
 if (result != 0) {
   return 1;
