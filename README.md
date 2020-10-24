@@ -135,9 +135,9 @@ CTEST_OUTPUT_ON_FAILURE=1 make test
 
 ## CI
 
-See universal test script [scripts/toolchains.sh](scripts/toolchains.sh) for CI.
 Please visit [scripts/test-images](scripts/test-images).
-You can run this test script using many native and cross images.
+See universal test script [scripts/toolchains.sh](scripts/toolchains.sh) for CI.
+You can run this script using many native and cross images.
 
 ## Real world testing
 
@@ -192,5 +192,5 @@ Distributed under the BSD Software License (see [LICENSE](LICENSE)).
 Project depends on GMP with LGPL v2 license.
 So it is not possible to distribute project binaries with statically linked GMP library.
 
-Please use source code based distro like [Gentoo](https://www.gentoo.org) if you want static linking.
+Please use source code based distro like [gentoo](https://www.gentoo.org) if you want static linking.
 End user can build, link and use any software in any mode (without distribution).
