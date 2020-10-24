@@ -4,33 +4,34 @@
 | :---:  | :---:    | :---:  | :---:   |
 | [![Travis test status](https://travis-ci.com/andrew-aladev/lzws.svg?branch=master)](https://travis-ci.com/andrew-aladev/lzws) | [![AppVeyor test status](https://ci.appveyor.com/api/projects/status/github/andrew-aladev/lzws?branch=master&svg=true)](https://ci.appveyor.com/project/andrew-aladev/lzws/branch/master) | [![Circle test status](https://circleci.com/gh/andrew-aladev/lzws/tree/master.svg?style=shield)](https://circleci.com/gh/andrew-aladev/lzws/tree/master) | [![Codecov](https://codecov.io/gh/andrew-aladev/lzws/branch/master/graph/badge.svg)](https://codecov.io/gh/andrew-aladev/lzws) |
 
-LZW streaming compressor/decompressor based on LZW AB compatible with UNIX compress.
+LZW streaming compressor/decompressor based on [LZW AB](https://github.com/dbry/lzw-ab) compatible with [UNIX compress](https://en.wikipedia.org/wiki/Compress).
 It has no legacy code from [ncompress](https://github.com/vapier/ncompress/blob/ncompress-4.2.4/compress42.c).
 
 ## Compressor dictionaries
 
-- Linked list (idea from LZW AB). It has low memory usage <= 327 KB (16 bit codes). It is slow in general. It is recommended for small amount of data.
+- Linked list (idea from [LZW AB](https://github.com/dbry/lzw-ab)). It has low memory usage <= 327 KB (16 bit codes). It is slow in general. It is recommended for small amount of data.
 - Sparse array (enabled by default). It has high memory usage <= 33.5 MB (16 bit codes). It is fast. It is recommended for large amount of data.
 
-You can add your own implementation.
+You can add your own implementation, api for [dictionary](src/compressor/dictionary) is easy.
 
 ## Why?
 
+- You can compress and decompress `.Z` (`tar.Z`) archives.
+- You can resurrect legacy apis (like `Content-Encoding: compress` in HTTP 1.1).
 - You can support ancient software.
 - You can make your application looks like ancient software.
-- You can resurrect legacy apis (like `Content-Encoding: compress` in HTTP 1.1).
 
 ## New features
 
 - Accurate ratio calculation without overhead, compressor provides smaller archive (compatible with UNIX compress).
 - Unaligned bit groups switch (only disabled mode is compatible with UNIX compress).
-- LSB/MSB switch (only LSB mode is compatible with UNIX compress).
-- Magic header switch (only enabled magic header is compatible with UNIX compress).
+- [LSB/MSB](https://en.wikipedia.org/wiki/Bit_numbering) switch (only LSB mode is compatible with UNIX compress).
+- [Magic header](https://en.wikipedia.org/wiki/List_of_file_signatures) switch (only enabled magic header is compatible with UNIX compress).
 
 ## Dependencies
 
 - Runtime dependency is [GMP](https://gmplib.org) only.
-- Compilation dependencies: [cmake](https://cmake.org/), [asciidoc](http://asciidoc.org/) and [gcc](https://gcc.gnu.org/) or [clang](https://clang.llvm.org/).
+- Compilation dependencies: [cmake](https://cmake.org), [asciidoc](http://asciidoc.org) and [gcc](https://gcc.gnu.org) or [clang](https://clang.llvm.org).
 
 ## Operating systems
 
@@ -183,13 +184,13 @@ Generic API:
 
 ## License
 
-Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see AUTHORS).
-Distributed under the BSD Software License (see LICENSE).
+Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see [AUTHORS](AUTHORS)).
+Distributed under the BSD Software License (see [LICENSE](LICENSE)).
 
 ## Notes
 
 Project depends on GMP with LGPL v2 license.
 So it is not possible to distribute project binaries with statically linked GMP library.
 
-Please use source code based distro like Gentoo if you want static linking.
+Please use source code based distro like [Gentoo](https://www.gentoo.org) if you want static linking.
 End user can build, link and use any software in any mode (without distribution).
