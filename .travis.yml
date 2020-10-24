@@ -1,14 +1,16 @@
 language: c
 
-dist: focal
-osx_image: xcode12.2
-
 jobs:
   include:
     - os: linux
       arch: amd64
+      dist: focal
+    - os: linux
+      arch: arm64
+      dist: focal
     - os: osx
       arch: amd64
+      osx_image: xcode12.2
 
 addons:
   apt:
