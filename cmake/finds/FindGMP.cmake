@@ -11,7 +11,7 @@ else ()
   message (STATUS "${MESSAGE_PREFIX} - header file not found")
 endif ()
 
-find_library (CMAKE_GMP_SHARED_LIBRARY_PATH NAMES "libgmp.so" "libgmp.dylib")
+find_library (CMAKE_GMP_SHARED_LIBRARY_PATH NAMES "libgmp.so" "libgmp.dylib" "libgmp.dll")
 if (CMAKE_GMP_SHARED_LIBRARY_PATH)
   message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_GMP_SHARED_LIBRARY_PATH}\"")
 else ()
