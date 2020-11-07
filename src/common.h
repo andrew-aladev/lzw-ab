@@ -11,8 +11,8 @@
 
 #include "config.h"
 
-// We are working for POSIX systems only.
-// POSIX system requires CHAR_BIT to be 8.
+// We are working for POSIX systems and MinGW only.
+// These systems require CHAR_BIT to be 8.
 // We won't use "least" types from "stdint.h".
 
 // We will use precise types for source, destination, dictionary and constants to optimize memory consumption.
