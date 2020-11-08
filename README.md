@@ -33,10 +33,6 @@ You can add your own implementation, api for [dictionary](src/compressor/diction
 - Runtime dependency is [GMP](https://gmplib.org) only.
 - Compilation dependencies: [cmake](https://cmake.org), [asciidoc](http://asciidoc.org) and [gcc](https://gcc.gnu.org) or [clang](https://clang.llvm.org).
 
-## Operating systems
-
-GNU/Linux, FreeBSD, OSX.
-
 ## Installation
 
 You can download and install prebuilt versions [on releases page](https://github.com/andrew-aladev/lzws/releases).
@@ -132,6 +128,10 @@ cmake .. -DLZWS_EXAMPLES=ON
 make clean && make
 CTEST_OUTPUT_ON_FAILURE=1 make test
 ```
+
+## Operating systems
+
+GNU/Linux, FreeBSD, OSX.
 
 ## CI
 
