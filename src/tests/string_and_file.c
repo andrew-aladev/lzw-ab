@@ -27,12 +27,12 @@ static inline lzws_result_t open_source_file(FILE** source_file_ptr, lzws_byte_t
   FILE* source_file = fmemopen(source, source_file_length, "r");
   if (source_file == NULL) {
     LZWS_LOG_ERROR("fmemopen for source failed");
-    return LZWS_TEST_STRING_AND_FILE_NATIVE_STREAM_FAILED;
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
   if (source_length == 0 && fseek(source_file, 0, SEEK_END) != 0) {
     LZWS_LOG_ERROR("fseek to the end of file failed");
-    return LZWS_TEST_STRING_AND_FILE_NATIVE_STREAM_FAILED;
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
   *source_file_ptr = source_file;
@@ -71,7 +71,7 @@ static inline lzws_result_t prepare_files_with_destination(
     LZWS_LOG_ERROR("fmemopen for destination failed");
     fclose(source_file);
     free(destination);
-    return LZWS_TEST_STRING_AND_FILE_NATIVE_STREAM_FAILED;
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
   *source_file_ptr      = source_file;
@@ -98,7 +98,7 @@ static inline lzws_result_t prepare_files_without_destination(
   if (destination_file == NULL) {
     LZWS_LOG_ERROR("fopen for null destination failed");
     fclose(source_file);
-    return LZWS_TEST_STRING_AND_FILE_NATIVE_STREAM_FAILED;
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
   *source_file_ptr      = source_file;
