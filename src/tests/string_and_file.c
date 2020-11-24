@@ -10,8 +10,6 @@
 #include "../log.h"
 #include "../string.h"
 
-#define NULL_PATH_NAME "/dev/null"
-
 // -- files --
 
 static inline lzws_result_t open_source_file(FILE** source_file_ptr, lzws_byte_t* source, size_t source_length)
@@ -94,9 +92,9 @@ static inline lzws_result_t prepare_files_without_destination(
     return result;
   }
 
-  FILE* destination_file = fopen(NULL_PATH_NAME, "w");
+  FILE* destination_file = tmpfile();
   if (destination_file == NULL) {
-    LZWS_LOG_ERROR("fopen for null destination failed");
+    LZWS_LOG_ERROR("create temp file failed");
     fclose(source_file);
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
@@ -124,6 +122,7 @@ static inline lzws_result_t test_compress_string(
   lzws_result_t test_result =
     lzws_compress_string(source, source_length, &destination, &destination_length, buffer_length, options_ptr);
 
+  // It is fine to receive validation error.
   if (test_result != 0 && test_result != LZWS_STRING_VALIDATE_FAILED) {
     LZWS_LOG_ERROR("string api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
@@ -288,6 +287,7 @@ static inline lzws_result_t test_decompress_string(
   lzws_result_t test_result =
     lzws_decompress_string(source, source_length, &destination, &destination_length, buffer_length, options_ptr);
 
+  // It is fine to receive validation or corrupted source errors.
   if (
     test_result != 0 && test_result != LZWS_STRING_VALIDATE_FAILED &&
     test_result != LZWS_STRING_DECOMPRESSOR_CORRUPTED_SOURCE) {
