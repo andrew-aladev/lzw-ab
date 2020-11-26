@@ -12,95 +12,56 @@
 
 // -- files --
 
-static inline lzws_result_t open_source_file(FILE** source_file_ptr, lzws_byte_t* source, size_t source_length)
+static inline lzws_result_t
+  prepare_files(FILE** source_file_ptr, lzws_byte_t* source, size_t source_length, FILE** destination_file_ptr)
 {
-  // It is not possible for fmemopen to open empty source file using old glibc.
-  // So we have to create 1 byte file and seek to end.
-
-  size_t source_file_length = source_length;
-  if (source_length == 0) {
-    source_file_length = 1;
-  }
-
-  FILE* source_file = fmemopen(source, source_file_length, "r");
+  FILE* source_file = tmpfile();
   if (source_file == NULL) {
-    LZWS_LOG_ERROR("fmemopen for source failed");
+    LZWS_LOG_ERROR("failed to create temp file");
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
-  if (source_length == 0 && fseek(source_file, 0, SEEK_END) != 0) {
-    LZWS_LOG_ERROR("fseek to the end of file failed");
+  size_t written_length = fwrite(source, 1, source_length, source_file);
+  if (written_length != source_length) {
+    LZWS_LOG_ERROR("failed to write file");
+    fclose(source_file);
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
-  *source_file_ptr = source_file;
+  rewind(source_file);
+
+  FILE* destination_file = tmpfile();
+  if (destination_file == NULL) {
+    LZWS_LOG_ERROR("failed to create temp file");
+    fclose(source_file);
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
+  }
+
+  *source_file_ptr      = source_file;
+  *destination_file_ptr = destination_file;
 
   return 0;
 }
 
-static inline lzws_result_t prepare_files_with_destination(
-  FILE**        source_file_ptr,
-  lzws_byte_t*  source,
-  size_t        source_length,
-  FILE**        destination_file_ptr,
-  lzws_byte_t** destination_ptr,
-  size_t        destination_length)
+static inline lzws_result_t
+  read_destination(FILE* destination_file, lzws_byte_t** destination_ptr, size_t destination_length)
 {
-  FILE* source_file;
-
-  lzws_result_t result = open_source_file(&source_file, source, source_length);
-  if (result != 0) {
-    return result;
-  }
-
-  // POSIX group don't want users to use binary mode "b" for fmemopen.
-  // So we have to give fmemopen ability to write additional null byte.
-  size_t destination_file_length = destination_length + 1;
-
-  lzws_byte_t* destination = malloc(destination_file_length);
+  lzws_byte_t* destination = malloc(destination_length);
   if (destination == NULL) {
-    LZWS_LOG_ERROR("malloc failed, buffer length: %zu", destination_file_length);
-    fclose(source_file);
-    return LZWS_TEST_STRING_AND_FILE_ALLOCATE_FAILED;
+    LZWS_LOG_ERROR("malloc failed, destination length: %zu", destination_length);
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
-  FILE* destination_file = fmemopen(destination, destination_file_length, "w");
-  if (destination_file == NULL) {
-    LZWS_LOG_ERROR("fmemopen for destination failed");
-    fclose(source_file);
+  rewind(destination_file);
+
+  size_t read_length = fread(destination, 1, destination_length, destination_file);
+  if (read_length != destination_length || getc(destination_file) != EOF) {
+    LZWS_LOG_ERROR("failed to read destination file");
     free(destination);
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
-  *source_file_ptr      = source_file;
-  *destination_file_ptr = destination_file;
-  *destination_ptr      = destination;
-
-  return 0;
-}
-
-static inline lzws_result_t prepare_files_without_destination(
-  FILE**       source_file_ptr,
-  lzws_byte_t* source,
-  size_t       source_length,
-  FILE**       destination_file_ptr)
-{
-  FILE* source_file;
-
-  lzws_result_t result = open_source_file(&source_file, source, source_length);
-  if (result != 0) {
-    return result;
-  }
-
-  FILE* destination_file = tmpfile();
-  if (destination_file == NULL) {
-    LZWS_LOG_ERROR("create temp file failed");
-    fclose(source_file);
-    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
-  }
-
-  *source_file_ptr      = source_file;
-  *destination_file_ptr = destination_file;
+  *destination_ptr = destination;
 
   return 0;
 }
@@ -122,13 +83,18 @@ static inline lzws_result_t test_compress_string(
   lzws_result_t test_result =
     lzws_compress_string(source, source_length, &destination, &destination_length, buffer_length, options_ptr);
 
+  *test_result_ptr = test_result;
+
   // It is fine to receive validation error.
-  if (test_result != 0 && test_result != LZWS_STRING_VALIDATE_FAILED) {
+  if (test_result == LZWS_STRING_VALIDATE_FAILED) {
+    return 0;
+  }
+
+  if (test_result != 0) {
     LZWS_LOG_ERROR("string api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
 
-  *test_result_ptr        = test_result;
   *destination_ptr        = destination;
   *destination_length_ptr = destination_length;
 
@@ -144,13 +110,10 @@ static inline lzws_result_t test_compress_file_with_destination(
   size_t                           buffer_length,
   const lzws_compressor_options_t* options_ptr)
 {
-  FILE*        source_file;
-  FILE*        destination_file;
-  lzws_byte_t* destination;
+  FILE* source_file;
+  FILE* destination_file;
 
-  lzws_result_t result = prepare_files_with_destination(
-    &source_file, source, source_length, &destination_file, &destination, destination_length);
-
+  lzws_result_t result = prepare_files(&source_file, source, source_length, &destination_file);
   if (result != 0) {
     return result;
   }
@@ -159,14 +122,30 @@ static inline lzws_result_t test_compress_file_with_destination(
     lzws_compress_file(source_file, buffer_length, destination_file, buffer_length, options_ptr);
 
   fclose(source_file);
-  fclose(destination_file);
 
-  if (test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED) {
+  *test_result_ptr = test_result;
+
+  // It is fine to receive validation error.
+  if (test_result == LZWS_FILE_VALIDATE_FAILED) {
+    fclose(destination_file);
+    return 0;
+  }
+
+  if (test_result != 0) {
     LZWS_LOG_ERROR("file api failed");
+    fclose(destination_file);
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
 
-  *test_result_ptr = test_result;
+  lzws_byte_t* destination;
+  result = read_destination(destination_file, &destination, destination_length);
+
+  fclose(destination_file);
+
+  if (result != 0) {
+    return result;
+  }
+
   *destination_ptr = destination;
 
   return 0;
@@ -182,7 +161,7 @@ static inline lzws_result_t test_compress_file_without_destination(
   FILE* source_file;
   FILE* destination_file;
 
-  lzws_result_t result = prepare_files_without_destination(&source_file, source, source_length, &destination_file);
+  lzws_result_t result = prepare_files(&source_file, source, source_length, &destination_file);
   if (result != 0) {
     return result;
   }
@@ -193,12 +172,17 @@ static inline lzws_result_t test_compress_file_without_destination(
   fclose(source_file);
   fclose(destination_file);
 
-  if (test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED) {
+  *test_result_ptr = test_result;
+
+  // It is fine to receive validation error.
+  if (test_result == LZWS_FILE_VALIDATE_FAILED) {
+    return 0;
+  }
+
+  if (test_result != 0) {
     LZWS_LOG_ERROR("file api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
-
-  *test_result_ptr = test_result;
 
   return 0;
 }
@@ -251,7 +235,6 @@ lzws_result_t lzws_tests_compress_string_and_file(
   if (test_result != 0) {
     LZWS_LOG_ERROR("string compressor succeed, but file compressor failed");
     free(destination_for_string);
-    free(destination_for_file);
     return LZWS_TEST_STRING_AND_FILE_COMPRESSOR_IS_VOLATILE;
   }
 
@@ -287,15 +270,18 @@ static inline lzws_result_t test_decompress_string(
   lzws_result_t test_result =
     lzws_decompress_string(source, source_length, &destination, &destination_length, buffer_length, options_ptr);
 
+  *test_result_ptr = test_result;
+
   // It is fine to receive validation or corrupted source errors.
-  if (
-    test_result != 0 && test_result != LZWS_STRING_VALIDATE_FAILED &&
-    test_result != LZWS_STRING_DECOMPRESSOR_CORRUPTED_SOURCE) {
+  if (test_result == LZWS_STRING_VALIDATE_FAILED || test_result == LZWS_STRING_DECOMPRESSOR_CORRUPTED_SOURCE) {
+    return 0;
+  }
+
+  if (test_result != 0) {
     LZWS_LOG_ERROR("string api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
 
-  *test_result_ptr        = test_result;
   *destination_ptr        = destination;
   *destination_length_ptr = destination_length;
 
@@ -311,13 +297,10 @@ static inline lzws_result_t test_decompress_file_with_destination(
   size_t                             buffer_length,
   const lzws_decompressor_options_t* options_ptr)
 {
-  FILE*        source_file;
-  FILE*        destination_file;
-  lzws_byte_t* destination;
+  FILE* source_file;
+  FILE* destination_file;
 
-  lzws_result_t result = prepare_files_with_destination(
-    &source_file, source, source_length, &destination_file, &destination, destination_length);
-
+  lzws_result_t result = prepare_files(&source_file, source, source_length, &destination_file);
   if (result != 0) {
     return result;
   }
@@ -326,16 +309,30 @@ static inline lzws_result_t test_decompress_file_with_destination(
     lzws_decompress_file(source_file, buffer_length, destination_file, buffer_length, options_ptr);
 
   fclose(source_file);
-  fclose(destination_file);
 
-  if (
-    test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED &&
-    test_result != LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
+  *test_result_ptr = test_result;
+
+  // It is fine to receive validation or corrupted source errors.
+  if (test_result == LZWS_FILE_VALIDATE_FAILED || test_result == LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
+    fclose(destination_file);
+    return 0;
+  }
+
+  if (test_result != 0) {
     LZWS_LOG_ERROR("file api failed");
+    fclose(destination_file);
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
 
-  *test_result_ptr = test_result;
+  lzws_byte_t* destination;
+  result = read_destination(destination_file, &destination, destination_length);
+
+  fclose(destination_file);
+
+  if (result != 0) {
+    return result;
+  }
+
   *destination_ptr = destination;
 
   return 0;
@@ -351,7 +348,7 @@ static inline lzws_result_t test_decompress_file_without_destination(
   FILE* source_file;
   FILE* destination_file;
 
-  lzws_result_t result = prepare_files_without_destination(&source_file, source, source_length, &destination_file);
+  lzws_result_t result = prepare_files(&source_file, source, source_length, &destination_file);
   if (result != 0) {
     return result;
   }
@@ -362,14 +359,17 @@ static inline lzws_result_t test_decompress_file_without_destination(
   fclose(source_file);
   fclose(destination_file);
 
-  if (
-    test_result != 0 && test_result != LZWS_FILE_VALIDATE_FAILED &&
-    test_result != LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
+  *test_result_ptr = test_result;
+
+  // It is fine to receive validation or corrupted source errors.
+  if (test_result == LZWS_FILE_VALIDATE_FAILED || test_result == LZWS_FILE_DECOMPRESSOR_CORRUPTED_SOURCE) {
+    return 0;
+  }
+
+  if (test_result != 0) {
     LZWS_LOG_ERROR("file api failed");
     return LZWS_TEST_STRING_AND_FILE_API_FAILED;
   }
-
-  *test_result_ptr = test_result;
 
   return 0;
 }
@@ -422,7 +422,6 @@ lzws_result_t lzws_tests_decompress_string_and_file(
   if (test_result != 0) {
     LZWS_LOG_ERROR("string decompressor succeed, but file decompressor failed");
     free(destination_for_string);
-    free(destination_for_file);
     return LZWS_TEST_STRING_AND_FILE_DECOMPRESSOR_IS_VOLATILE;
   }
 
