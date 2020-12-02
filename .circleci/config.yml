@@ -8,4 +8,4 @@ jobs:
       only:
         - master
     steps:
-      - run: /home/toolchains.sh
+      - run: /home/coverage_toolchains.sh
