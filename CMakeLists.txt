@@ -20,6 +20,8 @@ if (NOT DEFINED CMAKE_INSTALL_MANDIR)
   set (CMAKE_INSTALL_MANDIR "share/man" CACHE PATH "Output directory for man files")
 endif ()
 
+set (CMAKE_GENERATOR "Unix Makefiles" CACHE INTERNAL "Cmake generator")
+
 # Common output directory is required for OS without rpath support.
 set (CMAKE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/result")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_OUTPUT_DIRECTORY})
