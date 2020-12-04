@@ -7,4 +7,4 @@ cd "$DIR"
 source "../../../utils.sh"
 source "./env.sh"
 
-run_image "/home/toolchains.sh"
+run_image "/home/coverage_toolchains.sh"

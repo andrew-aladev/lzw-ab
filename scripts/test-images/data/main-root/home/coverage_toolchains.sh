@@ -31,4 +31,4 @@ else
     "."
 fi
 
-./scripts/toolchains.sh
+./scripts/coverage_toolchains.sh

@@ -66,9 +66,9 @@ cmake .. -DLZWS_COMPRESSOR_DICTIONARY="linked-list"/"sparse-array"
 ```
 
 There is a script that tests all dictionaries using several toolchains (with sanitizers).
-This script was used on CI.
 ```sh
 ../scripts/toolchains.sh
+../scripts/coverage_toolchains.sh
 ```
 
 There is a script for release build.
@@ -131,12 +131,13 @@ CTEST_OUTPUT_ON_FAILURE=1 make test
 
 ## Operating systems
 
-GNU/Linux, FreeBSD, OSX.
+GNU/Linux, FreeBSD, OSX, Windows (MinGW).
 
 ## CI
 
 Please visit [scripts/test-images](scripts/test-images).
-See universal test script [scripts/toolchains.sh](scripts/toolchains.sh) for CI.
+See test script [scripts/toolchains.sh](scripts/toolchains.sh) and
+test script [scripts/coverage_toolchains.sh](scripts/coverage_toolchains.sh) for CI.
 You can run this script using many native and cross images.
 
 ## Real world testing
