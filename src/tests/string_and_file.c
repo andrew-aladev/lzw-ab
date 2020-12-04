@@ -28,14 +28,14 @@ static inline lzws_result_t
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
-  rewind(source_file);
-
   FILE* destination_file = tmpfile();
   if (destination_file == NULL) {
     LZWS_LOG_ERROR("failed to create temp file");
     fclose(source_file);
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
+
+  rewind(source_file);
 
   *source_file_ptr      = source_file;
   *destination_file_ptr = destination_file;
