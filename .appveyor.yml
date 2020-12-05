@@ -33,4 +33,4 @@ for:
       only:
         - job_name: Windows
     test_script:
-      - sh: scripts/coverage_toolchains.sh
+      - cmd: C:\msys64\usr\bin\bash -l scripts/coverage_toolchains.sh
