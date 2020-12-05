@@ -1,9 +1,14 @@
-image: Ubuntu2004
+build: off
+
+environment:
+  matrix:
+    - platform: x64
+      image: Ubuntu2004
+    # - platform: x64
+    #   image: Visual Studio 2019
 
 init:
   - sh: sudo apt-get install -y libgmp-dev
 
 test_script:
   - sh: scripts/coverage_toolchains.sh
-
-build: off
