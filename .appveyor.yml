@@ -4,10 +4,10 @@ environment:
   matrix:
     # - job_name: Linux
     #   appveyor_build_worker_image: Ubuntu2004
-    - job_name: MacOS
-      appveyor_build_worker_image: macos
-    # - job_name: Windows
-    #   appveyor_build_worker_image: Visual Studio 2019
+    # - job_name: MacOS
+    #   appveyor_build_worker_image: macos
+    - job_name: Windows
+      appveyor_build_worker_image: Visual Studio 2019
 
 for:
   -
@@ -25,5 +25,12 @@ for:
     matrix:
       only:
         - job_name: MacOS
+    test_script:
+      - sh: scripts/coverage_toolchains.sh
+
+  -
+    matrix:
+      only:
+        - job_name: Windows
     test_script:
       - sh: scripts/coverage_toolchains.sh
