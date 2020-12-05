@@ -33,5 +33,8 @@ for:
       only:
         - job_name: Windows
     test_script:
-      - cmd: C:\msys64\usr\bin\bash -lc "pacman --sync --noconfirm --needed gmp"
-      - cmd: C:\msys64\usr\bin\bash -lc "cd /c/projects/lzws && ./scripts/coverage_toolchains.sh"
+      - cmd: C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
+      - cmd: C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
+      - cmd: $env:CHERE_INVOKING = 'yes'
+      - cmd: $env:MSYSTEM = 'MINGW64'
+      - cmd: C:\msys64\usr\bin\bash -lc "./scripts/coverage_toolchains.sh"
