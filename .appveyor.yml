@@ -2,8 +2,8 @@ build: off
 
 environment:
   matrix:
-    - job_name: Linux
-      appveyor_build_worker_image: Ubuntu2004
+    # - job_name: Linux
+    #   appveyor_build_worker_image: Ubuntu2004
     - job_name: MacOS
       appveyor_build_worker_image: macos
     # - job_name: Windows
@@ -26,6 +26,6 @@ for:
       only:
         - job_name: MacOS
     init:
-      - sh: brew install gmp
+      - sh: brew upgrade gmp
     test_script:
       - sh: scripts/coverage_toolchains.sh
