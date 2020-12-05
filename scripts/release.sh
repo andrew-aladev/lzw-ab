@@ -10,7 +10,7 @@ cd "../build"
 
 # Packing binaries.
 
-find . \( -name "CMake*" -o -name "*.cmake" \) -exec rm -rf {} +
+find . \( -name "CMake*" -o -name "*.cmake" \) -depth -exec rm -rf {} +
 
 for dictionary in "linked-list" "sparse-array"; do
   cmake ".." \

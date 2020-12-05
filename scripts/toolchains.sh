@@ -43,14 +43,14 @@ while read -r toolchain; do
     find . \( \
       -name "CMake*" \
       -o -name "*.cmake" \
-    \) -exec rm -rf {} +
+    \) -depth -exec rm -rf {} +
 
     if [ "$COVERAGE_TOOLCHAIN" = true ]; then
       find . \( \
         -name "*.gcov" \
         -o -name "*.gcda" \
         -o -name "*.gcno" \
-      \) -exec rm -rf {} +
+      \) -depth -exec rm -rf {} +
     fi
 
     # Toolchain may not work on target platform.
