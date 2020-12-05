@@ -33,4 +33,4 @@ for:
       only:
         - job_name: Windows
     test_script:
-      - cmd: C:\msys64\usr\bin\bash -lc "pwd && ls -la"
+      - cmd: C:\msys64\usr\bin\bash -lc "cd /c/projects/lzws && ./scripts/coverage_toolchains.sh"
