@@ -4,8 +4,8 @@ environment:
   matrix:
     - job_name: Linux
       appveyor_build_worker_image: Ubuntu2004
-    # - job_name: MacOS
-    #   appveyor_build_worker_image: macos
+    - job_name: MacOS
+      appveyor_build_worker_image: macos
     # - job_name: Windows
     #   appveyor_build_worker_image: Visual Studio 2019
 
@@ -18,5 +18,14 @@ for:
       - sh: sudo apt-get install -y gcc llvm libgmp-dev
       - sh: sudo update-alternatives --set gcc /usr/bin/gcc-9
       - sh: sudo update-alternatives --set clang /usr/bin/clang-10
+    test_script:
+      - sh: scripts/coverage_toolchains.sh
+
+  -
+    matrix:
+      only:
+        - job_name: MacOS
+    init:
+      - sh: brew install gmp
     test_script:
       - sh: scripts/coverage_toolchains.sh
