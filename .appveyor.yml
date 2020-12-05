@@ -27,6 +27,5 @@ for:
         - job_name: MacOS
     init:
       - sh: brew upgrade gmp
-      - sh: brew install llvm
     test_script:
       - sh: scripts/coverage_toolchains.sh
