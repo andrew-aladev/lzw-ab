@@ -8,6 +8,8 @@ environment:
     #   appveyor_build_worker_image: macos
     - job_name: Windows
       appveyor_build_worker_image: Visual Studio 2019
+      CHERE_INVOKING: 1
+      MSYSTEM: MINGW64
 
 for:
   -
@@ -35,6 +37,4 @@ for:
     test_script:
       - cmd: C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
       - cmd: C:\msys64\usr\bin\bash -lc "pacman --noconfirm -Syuu"
-      - cmd: $env:CHERE_INVOKING = 'yes'
-      - cmd: $env:MSYSTEM = 'MINGW64'
       - cmd: C:\msys64\usr\bin\bash -lc "./scripts/coverage_toolchains.sh"
