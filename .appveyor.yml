@@ -15,6 +15,8 @@ for:
       only:
         - job_name: Linux
     init:
-      - sh: sudo apt-get install -y gcov llvm libgmp-dev
+      - sh: sudo apt-get install -y gcc llvm libgmp-dev
+      - sh: update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+      - sh: update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-9 9
     test_script:
       - sh: scripts/coverage_toolchains.sh
