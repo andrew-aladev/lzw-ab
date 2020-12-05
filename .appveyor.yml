@@ -16,7 +16,7 @@ for:
         - job_name: Linux
 
     init:
-      - sh: sudo apt-get install -y libgmp-dev
+      - sh: sudo apt-get install -y libgmp-dev llvm
 
     test_script:
       - sh: scripts/coverage_toolchains.sh
