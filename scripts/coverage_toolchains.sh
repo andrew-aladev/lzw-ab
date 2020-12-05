@@ -36,7 +36,7 @@ while read -r toolchain; do
       -o -name "*.gcov" \
       -o -name "*.gcda" \
       -o -name "*.gcno" \
-    \) -exec rm -rf {} +
+    \) -depth -exec rm -rf {} +
 
     # Toolchain may not work on target platform.
     cmake "../.." \
