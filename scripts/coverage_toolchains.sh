@@ -40,6 +40,7 @@ while read -r toolchain; do
 
     # Toolchain may not work on target platform.
     cmake "../.." \
+      -DCMAKE_VERBOSE_MAKEFILE=1 \
       -DCMAKE_TOOLCHAIN_FILE="$toolchain" \
       -DCMAKE_GENERATOR_USE_CURRENT_TOOLCHAIN=ON \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \

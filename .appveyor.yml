@@ -35,4 +35,4 @@ for:
       only:
         - job_name: Windows
     test_script:
-      - cmd: C:\msys64\usr\bin\bash -lc "./scripts/coverage_toolchains.sh -DCMAKE_VERBOSE_MAKEFILE=1"
+      - cmd: C:\msys64\usr\bin\bash -lc "./scripts/coverage_toolchains.sh"
