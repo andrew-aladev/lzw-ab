@@ -16,8 +16,8 @@ for:
         - job_name: Linux
     init:
       - sh: sudo apt-get install -y gcc llvm libgmp-dev
-      - sh: sudo update-alternatives --set /usr/bin/gcc gcc /usr/bin/gcc-9
-      - sh: sudo update-alternatives --set /usr/bin/gcov gcov /usr/bin/gcov-9
-      - sh: sudo update-alternatives --set /usr/bin/clang clang /usr/bin/clang-10
+      - sh: sudo update-alternatives --set gcc /usr/bin/gcc-9
+      - sh: sudo update-alternatives --set gcov /usr/bin/gcov-9
+      - sh: sudo update-alternatives --set clang /usr/bin/clang-10
     test_script:
       - sh: scripts/coverage_toolchains.sh
