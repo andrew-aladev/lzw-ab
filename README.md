@@ -138,7 +138,7 @@ GNU/Linux, FreeBSD, OSX, Windows (MinGW).
 Please visit [scripts/test-images](scripts/test-images).
 See test script [scripts/toolchains.sh](scripts/toolchains.sh) and
 test script [scripts/coverage_toolchains.sh](scripts/coverage_toolchains.sh) for CI.
-You can run this script using many native and cross images.
+You can run these scripts using many native and cross images.
 
 ## Real world testing
 
