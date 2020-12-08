@@ -30,13 +30,13 @@ while read -r toolchain; do
   for dictionary in "linked-list" "sparse-array"; do
     echo "toolchain: ${toolchain}, dictionary: ${dictionary}"
 
-    find . \( \
+    find . -depth \( \
       -name "CMake*" \
       -o -name "*.cmake" \
       -o -name "*.gcov" \
       -o -name "*.gcda" \
       -o -name "*.gcno" \
-    \) -depth -exec rm -rf {} +
+    \) -exec rm -rf {} +
 
     # Toolchain may not work on target platform.
     cmake "../.." \
