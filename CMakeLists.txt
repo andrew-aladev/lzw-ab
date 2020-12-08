@@ -5,7 +5,7 @@ if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   message (FATAL_ERROR "In-source builds are not allowed")
 endif ()
 
-set (LZWS_VERSION "1.4.1")
+set (LZWS_VERSION "1.4.2")
 
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
   set (CMAKE_INSTALL_LIBDIR "lib" CACHE PATH "output directory for libraries")
