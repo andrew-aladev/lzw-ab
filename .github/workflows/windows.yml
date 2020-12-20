@@ -1,0 +1,23 @@
+name: Windows test
+
+on:
+  - push
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup dependencies
+        if: startsWith(matrix.os, 'windows')
+        uses: msys2/setup-msys2@v2
+        with:
+          install: >-
+            gcc
+
+      - name: Coverage toolchains
+        run: scripts/coverage_toolchains.sh
+        shell: msys2 {0}
