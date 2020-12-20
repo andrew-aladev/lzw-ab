@@ -37,9 +37,9 @@ jobs:
       - name: Setup dependencies for windows
         if: startsWith(matrix.os, 'windows')
         uses: msys2/setup-msys2@v2
-          with:
-            install: >-
-              gcc
+        with:
+          install: >-
+            gcc
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
