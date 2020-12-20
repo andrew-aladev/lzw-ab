@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup dependencies
+      - name: Setup dependencies for ubuntu
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get install -y gcc-9 llvm-10 clang-10
@@ -33,6 +33,13 @@ jobs:
             --slave /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-10
           sudo update-alternatives \
             --install /usr/bin/clang clang /usr/bin/clang-10 100
+
+      - name: Setup dependencies for windows
+        if: startsWith(matrix.os, 'windows')
+        uses: msys2/setup-msys2@v2
+          with:
+            install: >-
+              gcc
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
