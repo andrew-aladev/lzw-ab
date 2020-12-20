@@ -36,3 +36,4 @@ jobs:
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
+        shell: bash
