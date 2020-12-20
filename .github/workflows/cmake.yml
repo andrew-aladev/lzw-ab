@@ -21,8 +21,11 @@ jobs:
       - name: Setup dependencies
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 100
-          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 100
+          sudo apt-get install -y gcc-9 llvm-10
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 1
+            --slave /usr/bin/gcov gcov /usr/bin/gcov-9
+          sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-10 1
+            --slave /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-10
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
