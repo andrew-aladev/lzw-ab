@@ -7,6 +7,10 @@ jobs:
   test:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        shell: msys2 {0}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -15,8 +19,11 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           install: >-
-            gcc
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-llvm
+            mingw-w64-x86_64-clang
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-gmp
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
-        shell: msys2 {0}
