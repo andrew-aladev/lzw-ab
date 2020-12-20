@@ -17,9 +17,18 @@ for:
       only:
         - job_name: Ubuntu
     init:
-      - sh: sudo apt-get install -y gcc llvm libgmp-dev
-      - sh: sudo update-alternatives --set gcc /usr/bin/gcc-9
-      - sh: sudo update-alternatives --set clang /usr/bin/clang-10
+      - sh: sudo apt-get install -y gcc-9 llvm-10 clang-10 libgmp-dev
+      - sh: sudo update-alternatives \
+        --install /usr/bin/gcc gcc /usr/bin/gcc-9 1 \
+        --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9 \
+        --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-9 \
+        --slave /usr/bin/gcov gcov /usr/bin/gcov-9
+      - sh: sudo update-alternatives \
+        --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-10 1 \
+        --slave /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-10 \
+        --slave /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-10
+      - sh: sudo update-alternatives \
+        --install /usr/bin/clang clang /usr/bin/clang-10 1
     test_script:
       - sh: scripts/coverage_toolchains.sh
 
