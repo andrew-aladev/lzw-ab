@@ -20,7 +20,7 @@ jobs:
 
       - name: Setup dependencies
         if: startsWith(matrix.os, 'ubuntu')
-        run: apt-get install libgmp-dev
+        run: sudo apt-get install libgmp-dev
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
