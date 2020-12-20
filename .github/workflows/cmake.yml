@@ -20,7 +20,9 @@ jobs:
 
       - name: Setup dependencies
         if: startsWith(matrix.os, 'ubuntu')
-        run: sudo apt-get install libgmp-dev
+        run: |
+          sudo update-alternatives --set gcc /usr/bin/gcc-9
+          sudo update-alternatives --set clang /usr/bin/clang-10
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
