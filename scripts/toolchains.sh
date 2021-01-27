@@ -74,10 +74,12 @@ while read -r toolchain; do
 
     if ([ "$COVERAGE_TOOLCHAIN" = true ] && [ -n "$CI" ]); then
       if (echo "$toolchain" | grep -q "clang/coverage.cmake$") && (command -v "llvm-cov" > /dev/null 2>&1); then
-        ./codecov.sh -x "llvm-cov gcov" || continue
+        cov="llvm-cov gcov"
       else
-        ./codecov.sh -x "gcov" || continue
+        cov="gcov"
       fi
+
+      ./codecov.sh -x "$cov" || continue
     fi
 
     some_test_passed=true
