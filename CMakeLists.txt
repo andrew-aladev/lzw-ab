@@ -31,6 +31,7 @@ if (NOT DEFINED LZWS_TARGET)
 endif ()
 
 set (LZWS_COMPRESSOR_DICTIONARY "sparse-array" CACHE STRING "dictionary implementation")
+set (LZWS_BIGNUM_LIBRARY        ""             CACHE STRING "bignum library")
 
 option (LZWS_SHARED   "build shared binaries" ON)
 option (LZWS_STATIC   "build static binaries" OFF)
@@ -42,6 +43,11 @@ option (LZWS_MAN      "build man"             ON)
 
 if (NOT LZWS_COMPRESSOR_DICTIONARY)
   message (FATAL_ERROR "Please select dictionary implementation.")
+endif ()
+
+set (LZWS_BIGNUM_LIBRARIES "GMP" "TomMath" "")
+if (NOT LZWS_BIGNUM_LIBRARY IN_LIST LZWS_BIGNUM_LIBRARIES)
+  message (FATAL_ERROR "Please select bignum library.")
 endif ()
 
 if (NOT LZWS_SHARED AND NOT LZWS_STATIC)
@@ -74,7 +80,16 @@ include (CheckIPO)
 cmake_check_ipo ()
 
 include (CheckGMP)
-cmake_check_gmp ()
+include (CheckTomMath)
+
+if (LZWS_BIGNUM_LIBRARY STREQUAL "GMP")
+  cmake_check_gmp ()
+elseif (LZWS_BIGNUM_LIBRARY STREQUAL "TomMath")
+  cmake_check_tommath ()
+else ()
+  cmake_check_gmp ()
+  cmake_check_tommath ()
+endif ()
 
 if (LZWS_SHARED AND NOT CMAKE_GMP_SHARED_LIBRARY_PATH)
   message (FATAL_ERROR "GMP shared library is not available.")

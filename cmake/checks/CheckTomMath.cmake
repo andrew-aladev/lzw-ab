@@ -11,7 +11,10 @@ function (cmake_check_tommath)
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/TomMath")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_tommath")
 
-  find_package (TomMath REQUIRED)
+  find_package (TomMath)
+
+  if (CMAKE_TOMMATH_FOUND)
+  endif ()
 
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()

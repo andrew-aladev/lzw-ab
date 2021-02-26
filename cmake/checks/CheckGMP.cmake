@@ -11,7 +11,10 @@ function (cmake_check_gmp)
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/GMP")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_gmp")
 
-  find_package (GMP REQUIRED)
+  find_package (GMP)
+
+  if (CMAKE_GMP_FOUND)
+  endif ()
 
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
