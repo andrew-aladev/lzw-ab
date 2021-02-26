@@ -45,7 +45,7 @@ m * d - s * n < 0
 m * d < s * n
 
 This formular is much better: we need to process 2 multiplications and compare it.
-We can use GMP library for such purpose.
+We can use any big number library for such purpose.
 This solution will be accurate and wont limit source length.
 
 We will count these multiplications and comparison once per 10000 new source length.

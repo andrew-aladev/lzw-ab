@@ -7,6 +7,6 @@ ENV TARGET=$TARGET
 COPY prefix-root "/usr/${TARGET}"
 COPY attached-toolchain-root /
 RUN build.sh -v dev-vcs/git dev-util/cmake && \
-  target-build.sh -v dev-libs/gmp
+  target-build.sh -v dev-libs/gmp dev-libs/libtommath
 
 RUN target-cleanup.sh

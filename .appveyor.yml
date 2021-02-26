@@ -17,7 +17,7 @@ for:
       only:
         - job_name: Ubuntu
     init:
-      - sh: sudo apt-get install -y gcc-9 llvm-10 clang-10 libgmp-dev
+      - sh: sudo apt-get install -y gcc-9 llvm-10 clang-10 libgmp-dev libtommath-dev
       - sh: sudo update-alternatives
           --install /usr/bin/gcc gcc /usr/bin/gcc-9 100
           --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9
@@ -36,6 +36,8 @@ for:
     matrix:
       only:
         - job_name: MacOS
+    init:
+      - sh: brew install gmp libtommath
     test_script:
       - sh: scripts/coverage_toolchains.sh
 
@@ -43,5 +45,7 @@ for:
     matrix:
       only:
         - job_name: Windows
+    init:
+      - cmd: C:\msys64\usr\bin\bash -cl "pacman --sync --noconfirm --needed mingw-w64-x86_64-gmp mingw-w64-x86_64-libtommath"
     test_script:
       - cmd: C:\msys64\usr\bin\bash -cl "./scripts/coverage_toolchains.sh"

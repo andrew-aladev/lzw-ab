@@ -30,7 +30,7 @@ You can add your own implementation, api for [dictionary](src/compressor/diction
 
 ## Dependencies
 
-- Runtime dependency is [GMP](https://gmplib.org) only.
+- Runtime dependency is [GMP](https://gmplib.org) or [TomMath](https://github.com/libtom/libtommath).
 - Compilation dependencies: [cmake](https://cmake.org), [asciidoc](http://asciidoc.org) and [gcc](https://gcc.gnu.org) or [clang](https://clang.llvm.org).
 
 ## Installation
@@ -189,8 +189,8 @@ Distributed under the BSD Software License (see [LICENSE](LICENSE)).
 
 ## Notes
 
-Project depends on GMP with LGPL v2 license.
-So it is not possible to distribute project binaries with statically linked GMP library.
+Project may depends on GMP with LGPL v2 license.
+It is not possible to distribute project binaries with statically linked GMP library.
 
 Please use source code based distro like [gentoo](https://www.gentoo.org) if you want static linking.
 End user can build, link and use any software in any mode (without distribution).

@@ -5,6 +5,8 @@
 #include <assert.h>
 #include <gmp.h>
 
+// We are going to create numbers, add something and compare results.
+
 int main()
 {
   mpz_t a, b, c, r1, r2;
