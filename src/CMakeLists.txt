@@ -8,6 +8,16 @@ else ()
   message (FATAL_ERROR "Invalid compressor dictionary implementation: ${LZWS_COMPRESSOR_DICTIONARY}")
 endif ()
 
+if (LZWS_BIGNUM_LIBRARY STREQUAL "GMP")
+  message (STATUS "Bignum library - GMP")
+  set (LZWS_BIGNUM_LIBRARY_GMP true)
+elseif (LZWS_BIGNUM_LIBRARY STREQUAL "TomMath")
+  message (STATUS "Bignum library - TomMath")
+  set (LZWS_BIGNUM_LIBRARY_TOMMATH true)
+else ()
+  message (FATAL_ERROR "Invalid bignum library: ${LZWS_BIGNUM_LIBRARY}")
+endif ()
+
 configure_file ("config.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/config.h")
 
 include (GenerateBytesWithReversedBitsTable)
@@ -46,7 +56,7 @@ set (SOURCES ${SOURCES}
 include (DefineRelativeFilePaths)
 cmake_define_relative_file_paths ("${SOURCES}")
 
-include_directories (${LZWS_BIGNUM_LIBRARY_INCLUDE_PATH})
+include_directories (${CMAKE_BIGNUM_LIBRARY_INCLUDE_PATH})
 
 foreach (HEADER ${HEADERS})
   file (RELATIVE_PATH HEADER_RELATIVE_PATH ${CMAKE_CURRENT_SOURCE_DIR} ${HEADER})
@@ -58,7 +68,7 @@ if (LZWS_SHARED)
   set (LIB_TARGET ${LZWS_TARGET})
 
   add_library (${LIB_TARGET} SHARED ${SOURCES})
-  target_link_libraries (${LIB_TARGET} ${LZWS_BIGNUM_LIBRARY_SHARED_PATH})
+  target_link_libraries (${LIB_TARGET} ${CMAKE_BIGNUM_LIBRARY_SHARED_PATH})
 
   install (TARGETS ${LIB_TARGET} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif ()
@@ -68,7 +78,7 @@ if (LZWS_STATIC)
   set (STATIC_LIB_NAME ${LZWS_TARGET})
 
   add_library (${STATIC_LIB_TARGET} STATIC ${SOURCES})
-  target_link_libraries (${STATIC_LIB_TARGET} ${LZWS_BIGNUM_LIBRARY_STATIC_PATH})
+  target_link_libraries (${STATIC_LIB_TARGET} ${CMAKE_BIGNUM_LIBRARY_STATIC_PATH})
 
   set_target_properties (${STATIC_LIB_TARGET} PROPERTIES OUTPUT_NAME ${STATIC_LIB_NAME})
   install (TARGETS ${STATIC_LIB_TARGET} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
