@@ -10,7 +10,11 @@
 int main()
 {
   mpz_t a, b, c, r1, r2;
-  mpz_inits(a, b, c, r1, r2, NULL);
+  mpz_init(a);
+  mpz_init(b);
+  mpz_init(c);
+  mpz_init(r1);
+  mpz_init(r2);
 
   mpz_add_ui(a, a, 1);
   mpz_add_ui(b, b, 2);
@@ -21,7 +25,11 @@ int main()
 
   assert(mpz_cmp(r1, r2) < 0);
 
-  mpz_clears(a, b, c, r1, r2, NULL);
+  mpz_clear(a);
+  mpz_clear(b);
+  mpz_clear(c);
+  mpz_clear(r1);
+  mpz_clear(r2);
 
   return 0;
 }

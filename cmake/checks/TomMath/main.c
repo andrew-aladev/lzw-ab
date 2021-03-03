@@ -10,7 +10,12 @@
 int main()
 {
   mp_int a, b, c, r1, r2, temp;
-  assert(mp_init_multi(&a, &b, &c, &r1, &r2, &temp, NULL) == MP_OKAY);
+  assert(mp_init(&a) == MP_OKAY);
+  assert(mp_init(&b) == MP_OKAY);
+  assert(mp_init(&c) == MP_OKAY);
+  assert(mp_init(&r1) == MP_OKAY);
+  assert(mp_init(&r2) == MP_OKAY);
+  assert(mp_init(&temp) == MP_OKAY);
 
   mp_set_u32(&temp, 1);
   assert(mp_add(&a, &temp, &a) == MP_OKAY);
@@ -26,7 +31,12 @@ int main()
 
   assert(mp_cmp(&r1, &r2) == MP_LT);
 
-  mp_clear_multi(&a, &b, &c, &r1, &r2, &temp, NULL);
+  mp_clear(&a);
+  mp_clear(&b);
+  mp_clear(&c);
+  mp_clear(&r1);
+  mp_clear(&r2);
+  mp_clear(&temp);
 
   return 0;
 }
