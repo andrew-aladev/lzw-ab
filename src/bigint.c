@@ -72,7 +72,7 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
   mp_set_u32(&bigint_addition, addition);
   bool failed = mp_add(bigint_ptr, &bigint_addition, bigint_ptr) != MP_OKAY;
 
-  mp_clear(bigint_addition);
+  mp_clear(&bigint_addition);
 
   if (failed) {
     if (!quiet) {
@@ -80,6 +80,39 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
     }
 
     return LZWS_BIGINT_ADD_FAILED;
+  }
+#endif
+
+  return 0;
+}
+
+lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool LZWS_UNUSED(quiet))
+{
+#if defined(LZWS_BIGNUM_LIBRARY_GMP)
+  mpz_mul_ui(*bigint_ptr, *bigint_ptr, multiplicator);
+
+#elif defined(LZWS_BIGNUM_LIBRARY_TOMMATH)
+  lzws_bigint_t bigint_multiplicator;
+
+  if (mp_init(&bigint_multiplicator) != MP_OKAY) {
+    if (!quiet) {
+      LZWS_LOG_ERROR("failed to initialize bigint");
+    }
+
+    return LZWS_BIGINT_INITIALIZE_FAILED;
+  }
+
+  mp_set_u32(&bigint_multiplicator, multiplicator);
+  bool failed = mp_mul(bigint_ptr, &bigint_multiplicator, bigint_ptr) != MP_OKAY;
+
+  mp_clear(&bigint_multiplicator);
+
+  if (failed) {
+    if (!quiet) {
+      LZWS_LOG_ERROR("failed to add int %" PRIu32 " to bigint", multiplicator);
+    }
+
+    return LZWS_BIGINT_MULTIPLY_FAILED;
   }
 #endif
 

@@ -65,6 +65,11 @@ You can use different dictionaries:
 cmake .. -DLZWS_COMPRESSOR_DICTIONARY="linked-list"/"sparse-array"
 ```
 
+You can use different bignum libraries:
+```sh
+cmake .. -DLZWS_BIGNUM_LIBRARY="GMP"/"TomMath"
+```
+
 There is a script that tests all dictionaries using several toolchains (with sanitizers).
 ```sh
 ../scripts/toolchains.sh

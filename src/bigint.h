@@ -31,6 +31,7 @@ enum
 
 lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...);
 lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool quiet);
+lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool quiet);
 void          lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...);
 
 #endif // LZWS_BIGINT_H

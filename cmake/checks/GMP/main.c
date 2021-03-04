@@ -9,27 +9,34 @@
 
 int main()
 {
-  mpz_t a, b, c, r1, r2;
+  mpz_t a, b;
+
+  // a = 0.
   mpz_init(a);
+
+  // b = 0.
   mpz_init(b);
-  mpz_init(c);
-  mpz_init(r1);
-  mpz_init(r2);
 
+  // a = a + 1.
   mpz_add_ui(a, a, 1);
+
+  // b = b + 2.
   mpz_add_ui(b, b, 2);
-  mpz_add_ui(c, c, 3);
 
-  mpz_mul(r1, a, b);
-  mpz_mul(r2, b, c);
+  // a (1) < b (2).
+  assert(mpz_cmp(a, b) < 0);
 
-  assert(mpz_cmp(r1, r2) < 0);
+  // a = a (1) * 3.
+  mpz_mul_ui(a, a, 3);
+
+  // b = b (2) * 1.
+  mpz_mul_ui(b, b, 1);
+
+  // b (2) < a (3).
+  assert(mpz_cmp(b, a) < 0);
 
   mpz_clear(a);
   mpz_clear(b);
-  mpz_clear(c);
-  mpz_clear(r1);
-  mpz_clear(r2);
 
   return 0;
 }
