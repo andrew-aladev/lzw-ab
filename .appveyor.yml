@@ -47,15 +47,15 @@ for:
         - job_name: Windows
     init:
       - cmd: >-
-            C:\msys64\usr\bin\bash -cl "
-            pacman --sync --noconfirm --needed
-              make
-              mingw-w64-x86_64-gcc
-              mingw-w64-x86_64-llvm
-              mingw-w64-x86_64-clang
-              mingw-w64-x86_64-cmake
-              mingw-w64-x86_64-gmp
-              mingw-w64-x86_64-libtommath
-            "
+          C:\msys64\usr\bin\bash -cl "
+          pacman --sync --noconfirm --needed
+          make
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-llvm
+          mingw-w64-x86_64-clang
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-gmp
+          mingw-w64-x86_64-libtommath
+          "
     test_script:
       - cmd: C:\msys64\usr\bin\bash -cl "./scripts/coverage_toolchains.sh"
