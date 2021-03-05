@@ -71,9 +71,6 @@ endif ()
 include (CheckC18)
 cmake_check_c18 ()
 
-include (CheckIPO)
-cmake_check_ipo ()
-
 include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
 
@@ -86,6 +83,9 @@ endif ()
 if (LZWS_STATIC AND NOT CMAKE_BIGNUM_LIBRARY_STATIC_PATH)
   message (FATAL_ERROR "Bignum static library is not available.")
 endif ()
+
+include (CheckIPO)
+cmake_check_ipo ()
 
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C18_C_FLAGS}")
 
@@ -100,12 +100,6 @@ endif ()
 set (CMAKE_C_FLAGS_DEBUG         "-O0 -g" CACHE STRING "debug cflags"         FORCE)
 set (CMAKE_C_FLAGS_RELEASE       "-O2"    CACHE STRING "release cflags"       FORCE)
 set (CMAKE_C_FLAGS_RELEASE_EMBED "-Os"    CACHE STRING "release embed cflags" FORCE)
-
-if (CMAKE_HAVE_IPO)
-  set (CMAKE_INTERPROCEDURAL_OPTIMIZATION true CACHE BOOL "status of IPO")
-else ()
-  set (CMAKE_INTERPROCEDURAL_OPTIMIZATION false CACHE BOOL "status of IPO")
-endif ()
 
 if (LZWS_TESTS)
   enable_testing ()
