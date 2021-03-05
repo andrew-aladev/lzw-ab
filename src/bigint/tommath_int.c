@@ -2,16 +2,13 @@
 // Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see AUTHORS).
 // Distributed under the BSD Software License (see LICENSE).
 
-#include "bigint.h"
+#include "main.h"
 
 #include <stdarg.h>
 
-#include "log.h"
-#include "macro.h"
+#include "../log.h"
 
-// Implementations for different bignum libraries.
-
-lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigint_t* bigint_ptr, ...)
+lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...)
 {
   lzws_bigint_t* current_bigint_ptr = bigint_ptr;
 
@@ -19,10 +16,6 @@ lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigi
   va_start(args, bigint_ptr);
 
   while (current_bigint_ptr != NULL) {
-#if defined(LZWS_BIGNUM_LIBRARY_GMP)
-    mpz_init(*current_bigint_ptr);
-
-#elif defined(LZWS_BIGNUM_LIBRARY_TOMMATH)
     if (mp_init(current_bigint_ptr) != MP_OKAY) {
       if (!quiet) {
         LZWS_LOG_ERROR("failed to initialize bigint");
@@ -36,6 +29,7 @@ lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigi
 
       while (initialized_bigint_ptr != current_bigint_ptr) {
         mp_clear(initialized_bigint_ptr);
+
         initialized_bigint_ptr = va_arg(initialized_args, lzws_bigint_t*);
       }
 
@@ -43,7 +37,6 @@ lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigi
 
       return LZWS_BIGINT_INITIALIZE_FAILED;
     }
-#endif
 
     current_bigint_ptr = va_arg(args, lzws_bigint_t*);
   }
@@ -53,12 +46,8 @@ lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigi
   return 0;
 }
 
-lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool LZWS_UNUSED(quiet))
+lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool quiet)
 {
-#if defined(LZWS_BIGNUM_LIBRARY_GMP)
-  mpz_add_ui(*bigint_ptr, *bigint_ptr, addition);
-
-#elif defined(LZWS_BIGNUM_LIBRARY_TOMMATH)
   lzws_bigint_t bigint_addition;
 
   if (mp_init(&bigint_addition) != MP_OKAY) {
@@ -81,17 +70,12 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
 
     return LZWS_BIGINT_ADD_FAILED;
   }
-#endif
 
   return 0;
 }
 
-lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool LZWS_UNUSED(quiet))
+lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool quiet)
 {
-#if defined(LZWS_BIGNUM_LIBRARY_GMP)
-  mpz_mul_ui(*bigint_ptr, *bigint_ptr, multiplicator);
-
-#elif defined(LZWS_BIGNUM_LIBRARY_TOMMATH)
   lzws_bigint_t bigint_multiplicator;
 
   if (mp_init(&bigint_multiplicator) != MP_OKAY) {
@@ -109,14 +93,26 @@ lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t
 
   if (failed) {
     if (!quiet) {
-      LZWS_LOG_ERROR("failed to add int %" PRIu32 " to bigint", multiplicator);
+      LZWS_LOG_ERROR("failed to multiply bigint by int %" PRIu32, multiplicator);
     }
 
     return LZWS_BIGINT_MULTIPLY_FAILED;
   }
-#endif
 
   return 0;
+}
+
+lzws_bigint_compare_result_t lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr)
+{
+  mp_ord result = mp_cmp(first_bigint_ptr, second_bigint_ptr);
+  switch (result) {
+    case MP_EQ:
+      return LZWS_BIGINT_COMPARE_EQUALS;
+    case MP_LT:
+      return LZWS_BIGINT_COMPARE_LESS_THAN;
+    default:
+      return LZWS_BIGINT_COMPARE_GREATER_THAN;
+  }
 }
 
 void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...)
@@ -127,11 +123,7 @@ void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...)
   va_start(args, bigint_ptr);
 
   while (current_bigint_ptr != NULL) {
-#if defined(LZWS_BIGNUM_LIBRARY_GMP)
-    mpz_clear(*current_bigint_ptr);
-#elif defined(LZWS_BIGNUM_LIBRARY_TOMMATH)
     mp_clear(current_bigint_ptr);
-#endif
 
     current_bigint_ptr = va_arg(args, lzws_bigint_t*);
   }
