@@ -5,7 +5,7 @@
 #if !defined(LZWS_COMPRESSOR_RATIO_MAIN_H)
 #define LZWS_COMPRESSOR_RATIO_MAIN_H
 
-#include "../../common.h"
+#include "../../bigint/main.h"
 #include "common.h"
 
 inline void lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr)
@@ -31,7 +31,7 @@ void lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr);
 
 inline void lzws_compressor_free_ratio(lzws_compressor_ratio_t* ratio_ptr)
 {
-  mpz_clears(ratio_ptr->source_length, ratio_ptr->destination_length, NULL);
+  lzws_bigint_clear_multiple(&ratio_ptr->source_length, &ratio_ptr->destination_length, NULL);
 }
 
 #endif // LZWS_COMPRESSOR_RATIO_MAIN_H

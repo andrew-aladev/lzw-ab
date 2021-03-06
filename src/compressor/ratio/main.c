@@ -26,9 +26,10 @@ bool lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr)
   mpz_mul_ui(destination_and_new_source, ratio_ptr->destination_length, ratio_ptr->new_source_length);
   mpz_mul_ui(source_and_new_destination, ratio_ptr->source_length, ratio_ptr->new_destination_length);
 
-  bool result = mpz_cmp(destination_and_new_source, source_and_new_destination) < 0;
+  bool result =
+    lzws_bigint_compare(&destination_and_new_source, &source_and_new_destination) == LZWS_BIGINT_COMPARE_LESS_THAN;
 
-  mpz_clears(destination_and_new_source, source_and_new_destination, NULL);
+  lzws_bigint_clear_multiple(&destination_and_new_source, &source_and_new_destination, NULL);
   lzws_compressor_clear_ratio(ratio_ptr);
 
   return result;
