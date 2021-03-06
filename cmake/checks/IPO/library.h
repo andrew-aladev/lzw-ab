@@ -3,3 +3,8 @@
 // Distributed under the BSD Software License (see LICENSE).
 
 int function();
+
+inline int inline_function()
+{
+  return 0;
+}

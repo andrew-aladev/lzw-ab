@@ -6,5 +6,5 @@
 
 int main()
 {
-  return function();
+  return function() + inline_function();
 }
