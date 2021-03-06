@@ -71,6 +71,9 @@ endif ()
 include (CheckC18)
 cmake_check_c18 ()
 
+include (CheckIPO)
+cmake_check_ipo ()
+
 include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
 
@@ -83,9 +86,6 @@ endif ()
 if (LZWS_STATIC AND NOT CMAKE_BIGNUM_LIBRARY_STATIC_PATH)
   message (FATAL_ERROR "Bignum static library is not available.")
 endif ()
-
-include (CheckIPO)
-cmake_check_ipo ()
 
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C18_C_FLAGS}")
 
