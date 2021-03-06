@@ -1,9 +1,12 @@
 cmake_minimum_required (VERSION 3.9)
-project ("cmake_check_basic" "C")
+project ("cmake_check_ipo" "C")
 
 set (CMAKE_TRY_RUN false CACHE BOOL "try run targets after build")
 
+add_library ("library" "library.c")
+
 add_executable ("main" "main.c")
+target_link_libraries ("main" "library")
 
 if (CMAKE_TRY_RUN)
   add_custom_command (

@@ -8,7 +8,7 @@ function (cmake_check_ipo)
   set (MESSAGE_PREFIX "Status of IPO support")
 
   set (NAME "cmake_check_ipo")
-  set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
+  set (SOURCE_DIR "${CURRENT_LIST_DIR}/IPO")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_ipo")
 
   include (GetVerboseFlags)
