@@ -3,6 +3,9 @@ project ("cmake_check_ipo" "C")
 
 set (CMAKE_TRY_RUN false CACHE BOOL "try run targets after build")
 
+# We need to force enable IPO.
+set (CMAKE_INTERPROCEDURAL_OPTIMIZATION true)
+
 add_library ("library" "library.c")
 
 add_executable ("main" "main.c")
