@@ -191,11 +191,3 @@ Generic API:
 
 Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see [AUTHORS](AUTHORS)).
 Distributed under the BSD Software License (see [LICENSE](LICENSE)).
-
-## Notes
-
-Project may depends on GMP with LGPL v2 license.
-It is not possible to distribute project binaries with statically linked GMP library.
-
-Please use source code based distro like [gentoo](https://www.gentoo.org) if you want static linking.
-End user can build, link and use any software in any mode (without distribution).
