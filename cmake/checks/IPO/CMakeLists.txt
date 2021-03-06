@@ -6,7 +6,8 @@ set (CMAKE_TRY_RUN false CACHE BOOL "try run targets after build")
 # We need to force enable IPO.
 set (CMAKE_INTERPROCEDURAL_OPTIMIZATION true)
 
-add_library ("library" "library.c")
+# We need to force shared library.
+add_library ("library" SHARED "library.c")
 
 add_executable ("main" "main.c")
 target_link_libraries ("main" "library")

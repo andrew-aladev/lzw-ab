@@ -8,5 +8,3 @@ int function()
 {
   return 0;
 }
-
-extern inline int inline_function();
