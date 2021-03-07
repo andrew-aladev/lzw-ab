@@ -19,8 +19,8 @@ inline void lzws_compressor_add_destination_symbol_to_ratio(lzws_compressor_rati
   ratio_ptr->new_destination_length++;
 }
 
-bool lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr);
-void lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr);
+lzws_result_t lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet, bool* result_ptr);
+lzws_result_t lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet);
 
 inline void lzws_compressor_free_ratio(lzws_compressor_ratio_t* ratio_ptr)
 {

@@ -46,7 +46,10 @@ lzws_result_t lzws_compressor_write_current_code(
 
   if (state_ptr->options.block_mode && current_code == LZWS_CLEAR_CODE) {
     // We need to clear state after writing clear code.
-    lzws_compressor_clear_state(state_ptr);
+    result = lzws_compressor_clear_state(state_ptr);
+    if (result != 0) {
+      return result;
+    }
 
     if (state_ptr->options.unaligned_bit_groups) {
       state_ptr->status = LZWS_COMPRESSOR_READ_NEXT_SYMBOL;
@@ -65,7 +68,10 @@ lzws_result_t lzws_compressor_write_current_code(
     if (lzws_compressor_is_dictionary_full(state_ptr)) {
       // Dictionary become full.
       // We need to clear ratio now.
-      lzws_compressor_clear_ratio_wrapper(state_ptr);
+      result = lzws_compressor_clear_ratio_wrapper(state_ptr);
+      if (result != 0) {
+        return result;
+      }
     }
   }
 

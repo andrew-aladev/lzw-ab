@@ -24,11 +24,17 @@ lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigi
   return 0;
 }
 
-extern inline lzws_result_t
-  lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool LZWS_UNUSED(quiet));
+extern inline lzws_result_t lzws_bigint_add_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       addition,
+  bool           LZWS_UNUSED(quiet));
 
-extern inline lzws_result_t
-  lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool LZWS_UNUSED(quiet));
+extern inline lzws_result_t lzws_bigint_multiply_by_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       multiplicator,
+  bool           LZWS_UNUSED(quiet));
 
 static inline lzws_bigint_compare_result_t get_compare_result(int mpz_result)
 {

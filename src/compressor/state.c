@@ -73,11 +73,18 @@ void lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr)
   state_ptr->max_last_used_code_for_bit_length = lzws_get_max_value_for_bits(LZWS_LOWEST_MAX_CODE_BIT_LENGTH);
 }
 
-void lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr)
+lzws_result_t lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr)
 {
   lzws_compressor_clear_dictionary_wrapper(state_ptr);
-  lzws_compressor_clear_ratio_wrapper(state_ptr);
+
+  lzws_result_t result = lzws_compressor_clear_ratio_wrapper(state_ptr);
+  if (result != 0) {
+    return result;
+  }
+
   lzws_compressor_reset_last_used_data(state_ptr);
+
+  return 0;
 }
 
 void lzws_compressor_free_state(lzws_compressor_state_t* state_ptr)

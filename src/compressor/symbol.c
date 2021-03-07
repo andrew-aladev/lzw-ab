@@ -44,8 +44,14 @@ lzws_result_t lzws_compressor_read_next_symbol(
   // We can ignore situation when current code equals clear code.
   // So we can compare current code with alphabet length.
 
+  bool          need_to_clear_by_ratio_wrapper;
+  lzws_result_t result = lzws_compressor_need_to_clear_by_ratio_wrapper(state_ptr, &need_to_clear_by_ratio_wrapper);
+  if (result != 0) {
+    return result;
+  }
+
   lzws_code_fast_t current_code = state_ptr->current_code;
-  if (current_code < LZWS_ALPHABET_LENGTH && lzws_compressor_need_to_clear_by_ratio_wrapper(state_ptr)) {
+  if (current_code < LZWS_ALPHABET_LENGTH && need_to_clear_by_ratio_wrapper) {
     state_ptr->next_symbol  = current_code;
     state_ptr->current_code = LZWS_CLEAR_CODE;
     state_ptr->status       = LZWS_COMPRESSOR_WRITE_CURRENT_CODE;

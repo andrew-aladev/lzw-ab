@@ -14,8 +14,17 @@ typedef mp_int lzws_bigint_t;
 
 lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...);
 
-lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool quiet);
-lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool quiet);
+lzws_result_t lzws_bigint_add_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       addition,
+  bool           quiet);
+
+lzws_result_t lzws_bigint_multiply_by_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       multiplicator,
+  bool           quiet);
 
 lzws_bigint_compare_result_t lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr);
 

@@ -15,18 +15,23 @@ typedef mpz_t lzws_bigint_t;
 
 lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...);
 
-inline lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool LZWS_UNUSED(quiet))
+inline lzws_result_t lzws_bigint_add_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       addition,
+  bool           LZWS_UNUSED(quiet))
 {
-  mpz_add_ui(*bigint_ptr, *bigint_ptr, addition);
-
+  mpz_add_ui(*destination_bigint_ptr, *source_bigint_ptr, addition);
   return 0;
 }
 
-inline lzws_result_t
-  lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool LZWS_UNUSED(quiet))
+inline lzws_result_t lzws_bigint_multiply_by_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       multiplicator,
+  bool           LZWS_UNUSED(quiet))
 {
-  mpz_mul_ui(*bigint_ptr, *bigint_ptr, multiplicator);
-
+  mpz_mul_ui(*destination_bigint_ptr, *source_bigint_ptr, multiplicator);
   return 0;
 }
 

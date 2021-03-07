@@ -31,20 +31,25 @@ inline void lzws_compressor_add_destination_symbol_to_ratio_wrapper(lzws_compres
   }
 }
 
-inline bool lzws_compressor_need_to_clear_by_ratio_wrapper(lzws_compressor_state_t* state_ptr)
+inline lzws_result_t lzws_compressor_need_to_clear_by_ratio_wrapper(
+  lzws_compressor_state_t* state_ptr,
+  bool*                    result_ptr)
 {
   if (!state_ptr->options.block_mode || !lzws_compressor_is_dictionary_full(state_ptr)) {
-    return false;
+    *result_ptr = false;
+    return 0;
   }
 
-  return lzws_compressor_need_to_clear_by_ratio(&state_ptr->ratio);
+  return lzws_compressor_need_to_clear_by_ratio(&state_ptr->ratio, state_ptr->options.quiet, result_ptr);
 }
 
-inline void lzws_compressor_clear_ratio_wrapper(lzws_compressor_state_t* state_ptr)
+inline lzws_result_t lzws_compressor_clear_ratio_wrapper(lzws_compressor_state_t* state_ptr)
 {
   if (state_ptr->options.block_mode) {
-    lzws_compressor_clear_ratio(&state_ptr->ratio);
+    return lzws_compressor_clear_ratio(&state_ptr->ratio, state_ptr->options.quiet);
   }
+
+  return 0;
 }
 
 inline void lzws_compressor_free_ratio_wrapper(lzws_compressor_state_t* state_ptr)

@@ -64,7 +64,11 @@ lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_
   return result;
 }
 
-lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool quiet)
+lzws_result_t lzws_bigint_add_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       addition,
+  bool           quiet)
 {
   lzws_bigint_t addition_bigint;
 
@@ -78,7 +82,7 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
   }
 
   mp_set_u32(&addition_bigint, addition);
-  mp_result = mp_add(bigint_ptr, &addition_bigint, bigint_ptr) != MP_OKAY;
+  mp_result = mp_add(source_bigint_ptr, &addition_bigint, destination_bigint_ptr);
 
   mp_clear(&addition_bigint);
 
@@ -93,7 +97,11 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
   return 0;
 }
 
-lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool quiet)
+lzws_result_t lzws_bigint_multiply_by_uint32(
+  lzws_bigint_t* destination_bigint_ptr,
+  lzws_bigint_t* source_bigint_ptr,
+  uint32_t       multiplicator,
+  bool           quiet)
 {
   lzws_bigint_t multiplicator_bigint;
 
@@ -107,7 +115,7 @@ lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t
   }
 
   mp_set_u32(&multiplicator_bigint, multiplicator);
-  mp_result = mp_mul(bigint_ptr, &multiplicator_bigint, bigint_ptr) != MP_OKAY;
+  mp_result = mp_mul(source_bigint_ptr, &multiplicator_bigint, destination_bigint_ptr);
 
   mp_clear(&multiplicator_bigint);
 
