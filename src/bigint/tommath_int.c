@@ -10,18 +10,10 @@
 
 // -- error --
 
-static inline lzws_result_t get_error_result(mp_err mp_result, bool quiet)
+static inline lzws_result_t get_error_result(mp_err mp_result)
 {
   if (mp_result == MP_MEM) {
-    if (!quiet) {
-      LZWS_LOG_ERROR("failed to allocate bigint");
-    }
-
     return LZWS_BIGINT_ALLOCATE_FAILED;
-  }
-
-  if (!quiet) {
-    LZWS_LOG_ERROR("unknown bigint error: %d", mp_result);
   }
 
   return LZWS_BIGINT_UNKNOWN_ERROR;
@@ -45,7 +37,7 @@ lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_
         LZWS_LOG_ERROR("failed to initialize bigint");
       }
 
-      result = get_error_result(mp_result, quiet);
+      result = get_error_result(mp_result);
 
       // We need to clear all initialized ints.
       lzws_bigint_t* initialized_bigint_ptr = bigint_ptr;
@@ -82,7 +74,7 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
       LZWS_LOG_ERROR("failed to initialize bigint");
     }
 
-    return get_error_result(mp_result, quiet);
+    return get_error_result(mp_result);
   }
 
   mp_set_u32(&addition_bigint, addition);
@@ -95,7 +87,7 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
       LZWS_LOG_ERROR("failed to add int %" PRIu32 " to bigint", addition);
     }
 
-    return get_error_result(mp_result, quiet);
+    return get_error_result(mp_result);
   }
 
   return 0;
@@ -111,7 +103,7 @@ lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t
       LZWS_LOG_ERROR("failed to initialize bigint");
     }
 
-    return get_error_result(mp_result, quiet);
+    return get_error_result(mp_result);
   }
 
   mp_set_u32(&multiplicator_bigint, multiplicator);
@@ -124,7 +116,7 @@ lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t
       LZWS_LOG_ERROR("failed to multiply bigint by int %" PRIu32, multiplicator);
     }
 
-    return get_error_result(mp_result, quiet);
+    return get_error_result(mp_result);
   }
 
   return 0;
@@ -157,7 +149,7 @@ lzws_result_t lzws_bigint_compare_with_uint32(
       LZWS_LOG_ERROR("failed to initialize bigint");
     }
 
-    return get_error_result(mp_result, quiet);
+    return get_error_result(mp_result);
   }
 
   mp_set_u32(&second_bigint, second_int);

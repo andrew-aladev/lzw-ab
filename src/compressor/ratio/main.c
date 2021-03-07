@@ -4,7 +4,36 @@
 
 #include "main.h"
 
-extern inline void lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr);
+#include "../common.h"
+
+// -- error --
+
+static inline lzws_result_t get_error_result(lzws_result_t bigint_result)
+{
+  if (bigint_result == LZWS_BIGINT_ALLOCATE_FAILED) {
+    return LZWS_COMPRESSOR_ALLOCATE_FAILED;
+  }
+
+  return LZWS_COMPRESSOR_UNKNOWN_ERROR;
+}
+
+// -- implementation --
+
+lzws_result_t lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet)
+{
+  ratio_ptr->new_source_length      = 0;
+  ratio_ptr->new_destination_length = 0;
+
+  lzws_result_t bigint_result =
+    lzws_bigint_initialize_multiple(quiet, &ratio_ptr->source_length, &ratio_ptr->destination_length, NULL);
+
+  if (bigint_result != 0) {
+    return get_error_result(bigint_result);
+  }
+
+  return 0;
+}
+
 extern inline void lzws_compressor_add_source_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr);
 extern inline void lzws_compressor_add_destination_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr);
 

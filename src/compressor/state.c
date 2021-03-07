@@ -55,7 +55,11 @@ lzws_result_t lzws_compressor_get_initial_state(
 
   lzws_compressor_initialize_alignment_wrapper(state_ptr);
   lzws_compressor_initialize_dictionary_wrapper(state_ptr);
-  lzws_compressor_initialize_ratio_wrapper(state_ptr);
+
+  lzws_result_t result = lzws_compressor_initialize_ratio_wrapper(state_ptr);
+  if (result != 0) {
+    return result;
+  }
 
   *result_state_ptr = state_ptr;
 

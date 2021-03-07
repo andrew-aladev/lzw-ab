@@ -7,13 +7,7 @@
 
 #include "common.h"
 
-inline void lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr)
-{
-  ratio_ptr->new_source_length      = 0;
-  ratio_ptr->new_destination_length = 0;
-
-  mpz_inits(ratio_ptr->source_length, ratio_ptr->destination_length, NULL);
-}
+lzws_result_t lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet);
 
 inline void lzws_compressor_add_source_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr)
 {

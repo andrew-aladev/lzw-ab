@@ -8,11 +8,13 @@
 #include "../state.h"
 #include "main.h"
 
-inline void lzws_compressor_initialize_ratio_wrapper(lzws_compressor_state_t* state_ptr)
+inline lzws_result_t lzws_compressor_initialize_ratio_wrapper(lzws_compressor_state_t* state_ptr)
 {
   if (state_ptr->options.block_mode) {
-    lzws_compressor_initialize_ratio(&state_ptr->ratio);
+    return lzws_compressor_initialize_ratio(&state_ptr->ratio, state_ptr->options.quiet);
   }
+
+  return 0;
 }
 
 inline void lzws_compressor_add_source_symbol_to_ratio_wrapper(lzws_compressor_state_t* state_ptr)
