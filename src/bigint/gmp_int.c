@@ -30,11 +30,11 @@ extern inline lzws_result_t
 extern inline lzws_result_t
   lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool LZWS_UNUSED(quiet));
 
-static inline lzws_bigint_compare_result_t get_compare_result(int result)
+static inline lzws_bigint_compare_result_t get_compare_result(int mpz_result)
 {
-  if (result == 0) {
+  if (mpz_result == 0) {
     return LZWS_BIGINT_COMPARE_EQUALS;
-  } else if (result < 0) {
+  } else if (mpz_result < 0) {
     return LZWS_BIGINT_COMPARE_LESS_THAN;
   } else {
     return LZWS_BIGINT_COMPARE_GREATER_THAN;
@@ -43,9 +43,9 @@ static inline lzws_bigint_compare_result_t get_compare_result(int result)
 
 lzws_bigint_compare_result_t lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr)
 {
-  int result = mpz_cmp(*first_bigint_ptr, *second_bigint_ptr);
+  int mpz_result = mpz_cmp(*first_bigint_ptr, *second_bigint_ptr);
 
-  return get_compare_result(result);
+  return get_compare_result(mpz_result);
 }
 
 lzws_result_t lzws_bigint_compare_with_uint32(
@@ -54,9 +54,9 @@ lzws_result_t lzws_bigint_compare_with_uint32(
   bool                          LZWS_UNUSED(quiet),
   lzws_bigint_compare_result_t* compare_result_ptr)
 {
-  int result = mpz_cmp_ui(*first_bigint_ptr, second_int);
+  int mpz_result = mpz_cmp_ui(*first_bigint_ptr, second_int);
 
-  *compare_result_ptr = get_compare_result(result);
+  *compare_result_ptr = get_compare_result(mpz_result);
 
   return 0;
 }

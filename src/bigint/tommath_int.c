@@ -10,31 +10,42 @@
 
 // -- error --
 
-static inline lzws_result_t get_error_result(mp_err result)
+static inline lzws_result_t get_error_result(mp_err mp_result, bool quiet)
 {
-  if (result == MP_MEM) {
+  if (mp_result == MP_MEM) {
+    if (!quiet) {
+      LZWS_LOG_ERROR("failed to allocate bigint");
+    }
+
     return LZWS_BIGINT_ALLOCATE_FAILED;
-  } else {
-    return LZWS_BIGINT_UNKNOWN_ERROR;
   }
+
+  if (!quiet) {
+    LZWS_LOG_ERROR("unknown bigint error: %d", mp_result);
+  }
+
+  return LZWS_BIGINT_UNKNOWN_ERROR;
 }
 
 // -- implementation --
 
 lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...)
 {
+  lzws_result_t  result             = 0;
   lzws_bigint_t* current_bigint_ptr = bigint_ptr;
 
   va_list args;
   va_start(args, bigint_ptr);
 
   while (current_bigint_ptr != NULL) {
-    mp_err result = mp_init(current_bigint_ptr);
+    mp_err mp_result = mp_init(current_bigint_ptr);
 
-    if (result != MP_OKAY) {
+    if (mp_result != MP_OKAY) {
       if (!quiet) {
         LZWS_LOG_ERROR("failed to initialize bigint");
       }
+
+      result = get_error_result(mp_result, quiet);
 
       // We need to clear all initialized ints.
       lzws_bigint_t* initialized_bigint_ptr = bigint_ptr;
@@ -50,7 +61,7 @@ lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_
 
       va_end(initialized_args);
 
-      return get_error_result(result);
+      break;
     }
 
     current_bigint_ptr = va_arg(args, lzws_bigint_t*);
@@ -58,33 +69,33 @@ lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_
 
   va_end(args);
 
-  return 0;
+  return result;
 }
 
 lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t addition, bool quiet)
 {
   lzws_bigint_t addition_bigint;
-  mp_err        result = mp_init(&addition_bigint);
 
-  if (result != MP_OKAY) {
+  mp_err mp_result = mp_init(&addition_bigint);
+  if (mp_result != MP_OKAY) {
     if (!quiet) {
       LZWS_LOG_ERROR("failed to initialize bigint");
     }
 
-    return get_error_result(result);
+    return get_error_result(mp_result, quiet);
   }
 
   mp_set_u32(&addition_bigint, addition);
-  result = mp_add(bigint_ptr, &addition_bigint, bigint_ptr) != MP_OKAY;
+  mp_result = mp_add(bigint_ptr, &addition_bigint, bigint_ptr) != MP_OKAY;
 
   mp_clear(&addition_bigint);
 
-  if (result != MP_OKAY) {
+  if (mp_result != MP_OKAY) {
     if (!quiet) {
       LZWS_LOG_ERROR("failed to add int %" PRIu32 " to bigint", addition);
     }
 
-    return get_error_result(result);
+    return get_error_result(mp_result, quiet);
   }
 
   return 0;
@@ -93,27 +104,27 @@ lzws_result_t lzws_bigint_add_uint32(lzws_bigint_t* bigint_ptr, uint32_t additio
 lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t multiplicator, bool quiet)
 {
   lzws_bigint_t multiplicator_bigint;
-  mp_err        result = mp_init(&multiplicator_bigint);
 
-  if (result != MP_OKAY) {
+  mp_err mp_result = mp_init(&multiplicator_bigint);
+  if (mp_result != MP_OKAY) {
     if (!quiet) {
       LZWS_LOG_ERROR("failed to initialize bigint");
     }
 
-    return get_error_result(result);
+    return get_error_result(mp_result, quiet);
   }
 
   mp_set_u32(&multiplicator_bigint, multiplicator);
-  result = mp_mul(bigint_ptr, &multiplicator_bigint, bigint_ptr) != MP_OKAY;
+  mp_result = mp_mul(bigint_ptr, &multiplicator_bigint, bigint_ptr) != MP_OKAY;
 
   mp_clear(&multiplicator_bigint);
 
-  if (result != MP_OKAY) {
+  if (mp_result != MP_OKAY) {
     if (!quiet) {
       LZWS_LOG_ERROR("failed to multiply bigint by int %" PRIu32, multiplicator);
     }
 
-    return get_error_result(result);
+    return get_error_result(mp_result, quiet);
   }
 
   return 0;
@@ -121,9 +132,8 @@ lzws_result_t lzws_bigint_multiply_by_uint32(lzws_bigint_t* bigint_ptr, uint32_t
 
 lzws_bigint_compare_result_t lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr)
 {
-  mp_ord result = mp_cmp(first_bigint_ptr, second_bigint_ptr);
-
-  switch (result) {
+  mp_ord mp_result = mp_cmp(first_bigint_ptr, second_bigint_ptr);
+  switch (mp_result) {
     case MP_EQ:
       return LZWS_BIGINT_COMPARE_EQUALS;
     case MP_LT:
@@ -140,14 +150,14 @@ lzws_result_t lzws_bigint_compare_with_uint32(
   lzws_bigint_compare_result_t* compare_result_ptr)
 {
   lzws_bigint_t second_bigint;
-  mp_err        result = mp_init(&second_bigint);
 
-  if (result != MP_OKAY) {
+  mp_err mp_result = mp_init(&second_bigint);
+  if (mp_result != MP_OKAY) {
     if (!quiet) {
       LZWS_LOG_ERROR("failed to initialize bigint");
     }
 
-    return get_error_result(result);
+    return get_error_result(mp_result, quiet);
   }
 
   mp_set_u32(&second_bigint, second_int);
