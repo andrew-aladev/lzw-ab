@@ -5,12 +5,23 @@
 #if !defined(LZWS_BIGINT_COMMON_H)
 #define LZWS_BIGINT_COMMON_H
 
-#include "../common.h"
+#include <stdint.h>
 
-#if defined(LZWS_BIGNUM_LIBRARY_GMP)
-#include "gmp_int.h"
-#elif defined(LZWS_BIGNUM_LIBRARY_TOMMATH)
-#include "tommath_int.h"
-#endif
+// Possible results:
+enum
+{
+  LZWS_BIGINT_ALLOCATE_FAILED = 1,
+  LZWS_BIGINT_UNKNOWN_ERROR
+};
+
+// Possible compare results:
+enum
+{
+  LZWS_BIGINT_COMPARE_EQUALS = 0,
+  LZWS_BIGINT_COMPARE_LESS_THAN,
+  LZWS_BIGINT_COMPARE_GREATER_THAN
+};
+
+typedef uint_fast8_t lzws_bigint_compare_result_t;
 
 #endif // LZWS_BIGINT_COMMON_H

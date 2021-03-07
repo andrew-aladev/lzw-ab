@@ -5,7 +5,6 @@
 #if !defined(LZWS_COMPRESSOR_RATIO_MAIN_H)
 #define LZWS_COMPRESSOR_RATIO_MAIN_H
 
-#include "../../bigint/main.h"
 #include "common.h"
 
 inline void lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr)

@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-#include "../../bigint/common.h"
+#include "../../bigint/main.h"
 
 typedef struct
 {
