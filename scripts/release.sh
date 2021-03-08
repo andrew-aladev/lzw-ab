@@ -10,18 +10,33 @@ cd "../build"
 
 # Packing binaries.
 
-find . -depth \( -name "CMake*" -o -name "*.cmake" \) -exec rm -rf {} +
+DICTIONARIES=("linked-list" "sparse-array")
+BIGNUM_LIBRARIES=("gmp" "tommath")
 
-for dictionary in "linked-list" "sparse-array"; do
-  cmake ".." \
-    -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
-    -DCMAKE_BUILD_TYPE="RELEASE"
-  make clean
-  make -j${CPU_COUNT} VERBOSE=1
+for dictionary in "${DICTIONARIES[@]}"; do
+  for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
+    echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
+    build_dir="${dictionary}-${bignum_library}"
 
-  CTEST_OUTPUT_ON_FAILURE=1 make test
+    # Cleanup.
+    rm -rf "$build_dir"
 
-  make package
+    mkdir "$build_dir"
+    cd "$build_dir"
+
+    cmake "../.." \
+      -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
+      -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
+      -DCMAKE_BUILD_TYPE="RELEASE"
+    make clean
+    make -j${CPU_COUNT} VERBOSE=1
+
+    CTEST_OUTPUT_ON_FAILURE=1 make test
+
+    make package
+
+    cd ".."
+  done
 done
 
 cd ".."

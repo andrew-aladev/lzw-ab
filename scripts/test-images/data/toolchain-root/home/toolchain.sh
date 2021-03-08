@@ -21,27 +21,34 @@ fi
 
 cd "$DIR/build"
 
-for dictionary in "linked-list" "sparse-array"; do
-  echo "dictionary: ${dictionary}"
+DICTIONARIES=("linked-list" "sparse-array")
+BIGNUM_LIBRARIES=("gmp" "tommath")
 
-  # Cleanup.
-  rm -rf "$dictionary"
+for dictionary in "${DICTIONARIES[@]}"; do
+  for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
+    echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
+    build_dir="${dictionary}-${bignum_library}"
 
-  mkdir "$dictionary"
-  cd "$dictionary"
+    # Cleanup.
+    rm -rf "$build_dir"
 
-  TARGET="$TARGET" cmake "../.." \
-    -DCMAKE_TOOLCHAIN_FILE="/home/toolchain.cmake" \
-    -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
-    -DLZWS_SHARED=ON \
-    -DLZWS_STATIC=ON \
-    -DLZWS_TESTS=ON \
-    -DLZWS_EXAMPLES=ON \
-    -DLZWS_MAN=OFF \
-    -DCMAKE_BUILD_TYPE="RELEASE"
+    mkdir "$build_dir"
+    cd "$build_dir"
 
-  make clean
-  make -j${CPU_COUNT}
+    TARGET="$TARGET" cmake "../.." \
+      -DCMAKE_TOOLCHAIN_FILE="/home/toolchain.cmake" \
+      -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
+      -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
+      -DLZWS_SHARED=ON \
+      -DLZWS_STATIC=ON \
+      -DLZWS_TESTS=ON \
+      -DLZWS_EXAMPLES=ON \
+      -DLZWS_MAN=OFF \
+      -DCMAKE_BUILD_TYPE="RELEASE"
 
-  cd ".."
+    make clean
+    make -j${CPU_COUNT}
+
+    cd ".."
+  done
 done

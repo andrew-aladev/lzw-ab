@@ -39,7 +39,7 @@ extern inline void lzws_compressor_add_destination_symbol_to_ratio(lzws_compress
 
 lzws_result_t lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet, bool* result_ptr)
 {
-  // We don't need to clear when checkpoint for source is not reached yet.
+  // We don't need to clear when checkpoint for source is not reached.
 
   if (ratio_ptr->new_source_length < LZWS_RATIO_SOURCE_CHECKPOINT_GAP) {
     *result_ptr = false;
