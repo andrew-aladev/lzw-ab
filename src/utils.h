@@ -10,6 +10,10 @@
 
 #include "constants.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 inline lzws_byte_fast_t lzws_get_byte_with_reversed_bits(lzws_byte_fast_t byte)
 {
   return LZWS_BYTES_WITH_REVERSED_BITS[byte];
@@ -62,5 +66,9 @@ void* lzws_allocate_array(
   const void*      item_ptr,
   bool             item_is_zero,
   bool             item_bytes_are_identical);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_UTILS_H

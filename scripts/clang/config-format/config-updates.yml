@@ -8,6 +8,7 @@ AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: true
 BraceWrapping:
   AfterExternBlock: false
+BreakBeforeBraces: Custom
 BreakBeforeTernaryOperators: false
 ColumnLimit: 120
 Cpp11BracedListStyle: true

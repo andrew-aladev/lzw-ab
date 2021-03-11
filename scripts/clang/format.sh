@@ -12,4 +12,4 @@ SOURCES=(
   "${BASE_DIR}/src"
 )
 
-find $SOURCES \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} \;
+find ${SOURCES[@]} \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} \;
