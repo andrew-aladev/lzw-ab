@@ -32,6 +32,7 @@ You can add your own implementation, api for [dictionary](src/compressor/diction
 
 - Runtime dependency is [GMP](https://gmplib.org) or [TomMath](https://github.com/libtom/libtommath).
 - Compilation dependencies: [cmake](https://cmake.org), [asciidoc](http://asciidoc.org) and [gcc](https://gcc.gnu.org) or [clang](https://clang.llvm.org).
+- Additional development tools: [yq](https://github.com/kislyuk/yq).
 
 ## Installation
 
