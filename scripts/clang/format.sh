@@ -4,7 +4,7 @@ set -e
 DIR=$(dirname "${BASH_SOURCE[0]}")
 cd "$DIR"
 
-./config-format/update.sh
+./format-config/update.sh
 
 BASE_DIR="../.."
 SOURCES=(

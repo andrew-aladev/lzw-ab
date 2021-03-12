@@ -14,4 +14,4 @@ echo "# This file has been auto generated, please don't edit directly." \
 SOURCE_STYLE=$(yq -cs ".[0]" < "$SOURCE")
 
 clang-format -style="$SOURCE_STYLE" --dump-config | \
-  yq -sy ".[0] * .[1]" /dev/stdin "$UPDATES" >> "$DESTINATION"
+  yq -sy ".[0] * .[1]" - "$UPDATES" >> "$DESTINATION"
