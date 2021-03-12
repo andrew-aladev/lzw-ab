@@ -7,6 +7,14 @@
 
 #include "../../common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 lzws_result_t lzws_test_valid_codes();
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_TESTS_VALID_CODE_H

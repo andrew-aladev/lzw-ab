@@ -7,6 +7,10 @@
 
 #include "state.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void lzws_compressor_read_byte(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_fast_t*        byte_ptr,
@@ -18,5 +22,9 @@ void lzws_compressor_write_byte(
   lzws_byte_fast_t         byte,
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_UTILS_H

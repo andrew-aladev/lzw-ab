@@ -7,6 +7,10 @@
 
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 lzws_result_t lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet);
 
 inline void lzws_compressor_add_source_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr)
@@ -26,5 +30,9 @@ inline void lzws_compressor_free_ratio(lzws_compressor_ratio_t* ratio_ptr)
 {
   lzws_bigint_clear_multiple(&ratio_ptr->source_length, &ratio_ptr->destination_length, NULL);
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_RATIO_MAIN_H

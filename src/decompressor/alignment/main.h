@@ -7,6 +7,10 @@
 
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 inline void lzws_decompressor_initialize_alignment(
   lzws_decompressor_alignment_t* alignment_ptr,
   lzws_byte_fast_t               free_code_bit_length)
@@ -42,5 +46,9 @@ inline void lzws_decompressor_reset_alignment_after_reading(
 {
   alignment_ptr->free_code_bit_length = free_code_bit_length;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_DECOMPRESSOR_ALIGNMENT_MAIN_H

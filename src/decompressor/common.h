@@ -7,6 +7,10 @@
 
 #include "../common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
   bool without_magic_header;
@@ -28,5 +32,9 @@ enum
   LZWS_DECOMPRESSOR_CORRUPTED_SOURCE,
   LZWS_DECOMPRESSOR_UNKNOWN_STATUS
 };
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_DECOMPRESSOR_COMMON_H

@@ -10,6 +10,10 @@
 #include "../compressor/state.h"
 #include "../decompressor/state.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef lzws_result_t (*lzws_test_compressor_t)(lzws_compressor_state_t* state_ptr, size_t buffer_length, va_list args);
 typedef lzws_result_t (
   *lzws_test_decompressor_t)(lzws_decompressor_state_t* state_ptr, size_t buffer_length, va_list args);
@@ -27,5 +31,9 @@ lzws_result_t lzws_test_compressor_and_decompressor_combinations(lzws_test_compr
 lzws_result_t lzws_test_compatible_compressor_and_decompressor_combinations(
   lzws_test_compressor_and_decompressor_t function,
   ...);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_TESTS_COMBINATION_H

@@ -7,10 +7,18 @@
 
 #include "../../common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
   lzws_byte_fast_t last_used_code_bit_length;
   lzws_byte_fast_t destination_byte_length;
 } lzws_compressor_alignment_t;
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_ALIGNMENT_COMMON_H

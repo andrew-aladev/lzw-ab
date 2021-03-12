@@ -10,6 +10,10 @@
 #include "dictionary/common.h"
 #include "ratio/common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum
 {
   LZWS_COMPRESSOR_WRITE_MAGIC_HEADER = 1,
@@ -74,5 +78,9 @@ inline size_t lzws_compressor_get_total_codes_length(const lzws_compressor_state
 {
   return state_ptr->max_code + 1;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_STATE_H

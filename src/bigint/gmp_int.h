@@ -11,6 +11,10 @@
 #include "../macro.h"
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef mpz_t lzws_bigint_t;
 
 lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...);
@@ -44,5 +48,9 @@ lzws_result_t lzws_bigint_compare_with_uint32(
   lzws_bigint_compare_result_t* compare_result_ptr);
 
 void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_BIGINT_GMP_INT_H

@@ -9,6 +9,10 @@
 #include "common.h"
 #include "dictionary/common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum
 {
   LZWS_DECOMPRESSOR_READ_MAGIC_HEADER = 1,
@@ -63,5 +67,9 @@ inline size_t lzws_decompressor_get_total_codes_length(const lzws_decompressor_s
 {
   return state_ptr->max_code + 1;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_DECOMPRESSOR_STATE_H

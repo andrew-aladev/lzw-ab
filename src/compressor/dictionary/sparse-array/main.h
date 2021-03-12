@@ -9,6 +9,10 @@
 
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void lzws_compressor_initialize_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   lzws_code_fast_t                 first_free_code,
@@ -38,5 +42,9 @@ void lzws_compressor_save_next_code_to_dictionary(
 void lzws_compressor_free_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   const lzws_compressor_options_t* options_ptr);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_DICTIONARY_SPARSE_ARRAY_MAIN_H

@@ -7,6 +7,10 @@
 
 #include "../compressor/state.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Possible results:
 enum
 {
@@ -23,5 +27,9 @@ lzws_result_t lzws_test_compressor_write_codes(
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr,
   size_t                   destination_buffer_length);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_TESTS_CODES_H

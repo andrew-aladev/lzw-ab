@@ -7,6 +7,10 @@
 
 #include "../../common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
   lzws_code_t* first_child_codes;
@@ -16,5 +20,9 @@ typedef struct
   lzws_code_fast_t first_child_codes_offset;
   lzws_code_fast_t next_sibling_codes_offset;
 } lzws_compressor_dictionary_t;
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_DICTIONARY_LINKED_LIST_COMMON_H

@@ -8,6 +8,14 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void lzws_tests_set_random_string(char* buffer, size_t buffer_length);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_TESTS_RANDOM_STRING_H

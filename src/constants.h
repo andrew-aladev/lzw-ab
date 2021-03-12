@@ -7,10 +7,18 @@
 
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Standard table to reverse single byte.
 extern const lzws_byte_t LZWS_BYTES_WITH_REVERSED_BITS[256];
 
 // Algorithm will try to access ((2 ** 0) - 1) - ((2 ** 16) - 1) only.
 extern const lzws_code_t LZWS_MASKS_FOR_LAST_BITS[17];
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_CONSTANTS_H

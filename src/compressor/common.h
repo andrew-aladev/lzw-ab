@@ -7,6 +7,10 @@
 
 #include "../common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
   bool             without_magic_header;
@@ -34,5 +38,9 @@ enum
 // So we can use zero as undefined next code.
 #define LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE                     0
 #define LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES true
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_COMMON_H

@@ -11,6 +11,10 @@
 
 #include "config.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // We are working for POSIX systems and Windows (MinGW) only.
 // These systems require CHAR_BIT to be 8.
 // We won't use "least" types from "stdint.h".
@@ -56,5 +60,9 @@ inline lzws_code_fast_t lzws_get_first_free_code(bool block_mode)
 {
   return block_mode ? LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE : LZWS_FIRST_FREE_CODE;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMMON_H

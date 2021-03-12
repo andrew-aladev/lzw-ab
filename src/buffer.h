@@ -9,6 +9,10 @@
 
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Possible results:
 enum
 {
@@ -40,5 +44,9 @@ lzws_result_t
   lzws_create_destination_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
 
 lzws_result_t lzws_resize_buffer(lzws_byte_t** buffer_ptr, size_t buffer_length, bool quiet);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_BUFFER_H

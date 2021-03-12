@@ -9,10 +9,18 @@
 
 #include "../../bigint/main.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
   uint_fast32_t new_source_length, new_destination_length;
   lzws_bigint_t source_length, destination_length;
 } lzws_compressor_ratio_t;
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_RATIO_COMMON_H

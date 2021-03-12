@@ -7,6 +7,10 @@
 
 #include "state.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // This function is optional.
 // Use it to be compatible with original UNIX compress utility.
 lzws_result_t lzws_compressor_write_magic_header(
@@ -18,5 +22,9 @@ lzws_result_t lzws_compressor_write_header(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_HEADER_H

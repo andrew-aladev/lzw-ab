@@ -10,6 +10,10 @@
 #include "compressor/common.h"
 #include "decompressor/common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Possible results:
 enum
 {
@@ -41,5 +45,9 @@ lzws_result_t lzws_decompress_file(
   FILE*                              destination_file,
   size_t                             destination_buffer_length,
   const lzws_decompressor_options_t* options_ptr);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_FILE_H

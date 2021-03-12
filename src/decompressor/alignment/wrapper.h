@@ -8,6 +8,10 @@
 #include "../state.h"
 #include "main.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 inline void lzws_decompressor_initialize_alignment_wrapper(lzws_decompressor_state_t* state_ptr)
 {
   if (!state_ptr->options.unaligned_bit_groups) {
@@ -42,5 +46,9 @@ lzws_result_t lzws_decompressor_read_alignment_before_next_code(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              source_ptr,
   size_t*                    source_length_ptr);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_DECOMPRESSOR_ALIGNMENT_WRAPPER_H

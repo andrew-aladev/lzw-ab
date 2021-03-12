@@ -7,6 +7,10 @@
 
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 inline void lzws_compressor_initialize_alignment(
   lzws_compressor_alignment_t* alignment_ptr,
   lzws_byte_fast_t             last_used_code_bit_length)
@@ -42,5 +46,9 @@ inline void lzws_compressor_reset_alignment_after_writing(
 {
   alignment_ptr->last_used_code_bit_length = last_used_code_bit_length;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_ALIGNMENT_MAIN_H

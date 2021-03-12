@@ -7,6 +7,10 @@
 
 #include "common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
 lzws_result_t lzws_decompressor_allocate_dictionary(
@@ -34,5 +38,9 @@ inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompresso
 }
 
 void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_DECOMPRESSOR_DICTIONARY_MAIN_H

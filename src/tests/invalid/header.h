@@ -7,6 +7,14 @@
 
 #include "../../common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 lzws_result_t lzws_test_invalid_header();
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_TESTS_INVALID_HEADER_H

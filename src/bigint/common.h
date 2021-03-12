@@ -7,6 +7,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Possible results:
 enum
 {
@@ -23,5 +27,9 @@ enum
 };
 
 typedef uint_fast8_t lzws_bigint_compare_result_t;
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_BIGINT_COMMON_H

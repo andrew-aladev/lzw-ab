@@ -9,6 +9,10 @@
 
 #include "../common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
   lzws_code_t* previous_codes;
@@ -19,5 +23,9 @@ typedef struct
   lzws_byte_t* output_buffer;
   size_t       output_length;
 } lzws_decompressor_dictionary_t;
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_DECOMPRESSOR_DICTIONARY_COMMON_H

@@ -8,6 +8,10 @@
 #include "../state.h"
 #include "main.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 inline lzws_result_t lzws_compressor_initialize_ratio_wrapper(lzws_compressor_state_t* state_ptr)
 {
   if (state_ptr->options.block_mode) {
@@ -58,5 +62,9 @@ inline void lzws_compressor_free_ratio_wrapper(lzws_compressor_state_t* state_pt
     lzws_compressor_free_ratio(&state_ptr->ratio);
   }
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif // LZWS_COMPRESSOR_RATIO_WRAPPER_H
