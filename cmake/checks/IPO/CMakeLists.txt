@@ -12,15 +12,15 @@ string (TOUPPER ${CHECK_NAME} CHECK_TARGET)
 # We need to force shared library.
 add_library (${CHECK_TARGET} SHARED "library.c")
 
+add_executable ("main" "main.c")
+target_link_libraries ("main" ${CHECK_TARGET})
+set_target_properties (${CHECK_TARGET} PROPERTIES OUTPUT_NAME ${CHECK_NAME})
+
 include (GenerateExportHeader)
 generate_export_header (
   ${CHECK_TARGET}
   EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/export.h"
 )
-
-add_executable ("main" "main.c")
-target_link_libraries ("main" ${CHECK_TARGET})
-set_target_properties (${CHECK_TARGET} PROPERTIES OUTPUT_NAME ${CHECK_NAME})
 
 if (CMAKE_TRY_RUN)
   add_custom_command (

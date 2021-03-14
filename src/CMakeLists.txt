@@ -65,46 +65,53 @@ foreach (HEADER ${HEADERS})
   install (FILES ${HEADER} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LZWS_TARGET}/${HEADER_RELATIVE_DIRECTORY_PATH}")
 endforeach ()
 
-include (GenerateExportHeader)
-
-string (TOUPPER ${LZWS_TARGET} LIB_BASE_NAME)
-
 if (LZWS_SHARED)
   set (LIB_NAME ${LZWS_TARGET})
   string (TOUPPER ${LZWS_TARGET} LIB_TARGET)
+
+  if (NOT DEFINED ANY_LIB_TARGET)
+    set (ANY_LIB_TARGET ${LIB_TARGET})
+  endif ()
 
   add_library (${LIB_TARGET} SHARED ${SOURCES})
   target_link_libraries (${LIB_TARGET} ${CMAKE_BIGNUM_LIBRARY_SHARED_PATH})
   set_target_properties (${LIB_TARGET} PROPERTIES OUTPUT_NAME ${LIB_NAME})
 
-  generate_export_header (
-    ${LIB_TARGET}
-    BASE_NAME ${LIB_BASE_NAME}
-    EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/export.h"
-  )
-
   install (TARGETS ${LIB_TARGET} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-  install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/export.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LZWS_TARGET}")
 endif ()
 
 if (LZWS_STATIC)
   set (STATIC_LIB_NAME "${LZWS_TARGET}-static")
   string (TOUPPER "${LZWS_TARGET}_static" STATIC_LIB_TARGET)
 
+  if (NOT DEFINED ANY_LIB_TARGET)
+    set (ANY_LIB_TARGET ${LIB_TARGET})
+  endif ()
+
   add_library (${STATIC_LIB_TARGET} STATIC ${SOURCES})
   target_link_libraries (${STATIC_LIB_TARGET} ${CMAKE_BIGNUM_LIBRARY_STATIC_PATH})
   set_target_properties (${STATIC_LIB_TARGET} PROPERTIES OUTPUT_NAME ${STATIC_LIB_NAME})
 
-  generate_export_header (
-    ${STATIC_LIB_TARGET}
-    BASE_NAME ${LIB_BASE_NAME}
-    EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/export.h"
-  )
-
   install (TARGETS ${STATIC_LIB_TARGET} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-  install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/export.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LZWS_TARGET}")
 endif ()
 
+# Export.
+string (TOUPPER ${LZWS_TARGET} LIB_BASE_NAME)
+
+include (GenerateExportHeader)
+generate_export_header (
+  ${ANY_LIB_TARGET}
+  BASE_NAME ${LIB_BASE_NAME}
+  EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/export.h"
+)
+
+if (LZWS_STATIC)
+  set_target_properties(${STATIC_LIB_TARGET} PROPERTIES COMPILE_FLAGS "-D${LIB_BASE_NAME}_STATIC_DEFINE")
+endif ()
+
+install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/export.h" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${LZWS_TARGET}")
+
+# Other.
 if (LZWS_CLI)
   add_subdirectory ("cli")
 endif ()

@@ -6,7 +6,7 @@
 #define LZWS_TESTS_CODES_H
 
 #include "../compressor/state.h"
-#include "export.h"
+#include "common.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-inline void lzws_compressor_initialize_alignment(
+LZWS_EXPORT inline void lzws_compressor_initialize_alignment(
   lzws_compressor_alignment_t* alignment_ptr,
   lzws_byte_fast_t             last_used_code_bit_length)
 {
@@ -19,7 +19,7 @@ inline void lzws_compressor_initialize_alignment(
   alignment_ptr->destination_byte_length   = 0;
 }
 
-inline void lzws_compressor_add_destination_byte_length_to_alignment(
+LZWS_EXPORT inline void lzws_compressor_add_destination_byte_length_to_alignment(
   lzws_compressor_alignment_t* alignment_ptr,
   lzws_byte_fast_t             destination_byte_length)
 {
@@ -28,19 +28,19 @@ inline void lzws_compressor_add_destination_byte_length_to_alignment(
     (alignment_ptr->destination_byte_length + destination_byte_length) % alignment_ptr->last_used_code_bit_length;
 }
 
-inline bool lzws_compressor_need_to_write_alignment(
+LZWS_EXPORT inline bool lzws_compressor_need_to_write_alignment(
   const lzws_compressor_alignment_t* alignment_ptr,
   lzws_byte_fast_t                   last_used_code_bit_length)
 {
   return alignment_ptr->last_used_code_bit_length != last_used_code_bit_length;
 }
 
-inline bool lzws_compressor_need_to_write_alignment_byte(const lzws_compressor_alignment_t* alignment_ptr)
+LZWS_EXPORT inline bool lzws_compressor_need_to_write_alignment_byte(const lzws_compressor_alignment_t* alignment_ptr)
 {
   return alignment_ptr->destination_byte_length != 0;
 }
 
-inline void lzws_compressor_reset_alignment_after_writing(
+LZWS_EXPORT inline void lzws_compressor_reset_alignment_after_writing(
   lzws_compressor_alignment_t* alignment_ptr,
   lzws_byte_fast_t             last_used_code_bit_length)
 {

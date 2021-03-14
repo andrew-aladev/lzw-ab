@@ -9,7 +9,7 @@
 
 #include "../compressor/common.h"
 #include "../decompressor/common.h"
-#include "export.h"
+#include "common.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -65,11 +65,6 @@ LZWS_EXPORT void lzws_compressor_initialize_dictionary(
   }
 }
 
-LZWS_EXPORT extern inline void lzws_compressor_initialize_dictionary(
-  lzws_compressor_dictionary_t*    dictionary_ptr,
-  lzws_code_fast_t                 first_free_code,
-  const lzws_compressor_options_t* options_ptr);
-
 LZWS_EXPORT lzws_result_t lzws_compressor_allocate_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   size_t                           total_codes_length,

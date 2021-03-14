@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "export.h"
+#include "common.h"
 
 #ifdef __cplusplus
 extern "C" {
