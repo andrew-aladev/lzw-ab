@@ -8,6 +8,11 @@
 extern "C" {
 #endif
 
+inline int inline_function()
+{
+  return 0;
+}
+
 CHECK_EXPORT int function();
 
 #ifdef __cplusplus

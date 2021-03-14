@@ -4,6 +4,8 @@
 
 #include "library.h"
 
+CHECK_EXPORT extern inline int inline_function();
+
 CHECK_EXPORT int function()
 {
   return 0;
