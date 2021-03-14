@@ -4,4 +4,4 @@
 
 #include "common.h"
 
-extern inline lzws_code_fast_t lzws_get_first_free_code(bool block_mode);
+LZWS_EXPORT extern inline lzws_code_fast_t lzws_get_first_free_code(bool block_mode);

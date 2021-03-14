@@ -19,7 +19,7 @@ static inline lzws_result_t get_error_result(lzws_result_t bigint_result)
 
 // -- implementation --
 
-lzws_result_t lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet)
+LZWS_EXPORT lzws_result_t lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet)
 {
   lzws_result_t bigint_result =
     lzws_bigint_initialize_multiple(quiet, &ratio_ptr->source_length, &ratio_ptr->destination_length, NULL);
@@ -34,10 +34,11 @@ lzws_result_t lzws_compressor_initialize_ratio(lzws_compressor_ratio_t* ratio_pt
   return 0;
 }
 
-extern inline void lzws_compressor_add_source_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr);
-extern inline void lzws_compressor_add_destination_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr);
+LZWS_EXPORT extern inline void lzws_compressor_add_source_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr);
+LZWS_EXPORT extern inline void lzws_compressor_add_destination_symbol_to_ratio(lzws_compressor_ratio_t* ratio_ptr);
 
-lzws_result_t lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet, bool* result_ptr)
+LZWS_EXPORT lzws_result_t
+  lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet, bool* result_ptr)
 {
   // We don't need to clear when checkpoint for source is not reached.
 
@@ -107,7 +108,7 @@ lzws_result_t lzws_compressor_need_to_clear_by_ratio(lzws_compressor_ratio_t* ra
   return 0;
 }
 
-lzws_result_t lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet)
+LZWS_EXPORT lzws_result_t lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet)
 {
   lzws_result_t bigint_result =
     lzws_bigint_add_uint32(&ratio_ptr->source_length, &ratio_ptr->source_length, ratio_ptr->new_source_length, quiet);
@@ -129,4 +130,4 @@ lzws_result_t lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr, bo
   return 0;
 }
 
-extern inline void lzws_compressor_free_ratio(lzws_compressor_ratio_t* ratio_ptr);
+LZWS_EXPORT extern inline void lzws_compressor_free_ratio(lzws_compressor_ratio_t* ratio_ptr);

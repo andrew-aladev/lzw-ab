@@ -4,4 +4,4 @@
 
 #include "remainder.h"
 
-extern inline void lzws_decompressor_clear_remainder(lzws_decompressor_state_t* state_ptr);
+LZWS_EXPORT extern inline void lzws_decompressor_clear_remainder(lzws_decompressor_state_t* state_ptr);

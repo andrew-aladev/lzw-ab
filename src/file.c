@@ -277,7 +277,7 @@ static inline lzws_result_t compress(
   return write_remaining_destination(destination_file, destination_buffer, destination_length, quiet);
 }
 
-lzws_result_t lzws_compress_file(
+LZWS_EXPORT lzws_result_t lzws_compress_file(
   FILE*                            source_file,
   size_t                           source_buffer_length,
   FILE*                            destination_file,
@@ -416,7 +416,7 @@ static inline lzws_result_t decompress(
   return write_remaining_destination(destination_file, destination_buffer, destination_length, quiet);
 }
 
-lzws_result_t lzws_decompress_file(
+LZWS_EXPORT lzws_result_t lzws_decompress_file(
   FILE*                              source_file,
   size_t                             source_buffer_length,
   FILE*                              destination_file,

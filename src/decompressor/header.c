@@ -7,7 +7,7 @@
 #include "../log.h"
 #include "../utils.h"
 
-lzws_result_t lzws_decompressor_read_magic_header(
+LZWS_EXPORT lzws_result_t lzws_decompressor_read_magic_header(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              source_ptr,
   size_t*                    source_length_ptr)
@@ -42,7 +42,7 @@ lzws_result_t lzws_decompressor_read_magic_header(
   return 0;
 }
 
-lzws_result_t lzws_decompressor_read_header(
+LZWS_EXPORT lzws_result_t lzws_decompressor_read_header(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              source_ptr,
   size_t*                    source_length_ptr)

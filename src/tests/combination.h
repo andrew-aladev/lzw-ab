@@ -9,6 +9,7 @@
 
 #include "../compressor/state.h"
 #include "../decompressor/state.h"
+#include "export.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,13 +25,13 @@ typedef lzws_result_t (*lzws_test_compressor_and_decompressor_t)(
   size_t                     buffer_length,
   va_list                    args);
 
-lzws_result_t lzws_test_compressor_combinations(lzws_test_compressor_t function, ...);
-lzws_result_t lzws_test_decompressor_combinations(lzws_test_decompressor_t function, ...);
+LZWS_TEST_EXPORT lzws_result_t lzws_test_compressor_combinations(lzws_test_compressor_t function, ...);
+LZWS_TEST_EXPORT lzws_result_t lzws_test_decompressor_combinations(lzws_test_decompressor_t function, ...);
 
-lzws_result_t lzws_test_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...);
-lzws_result_t lzws_test_compatible_compressor_and_decompressor_combinations(
-  lzws_test_compressor_and_decompressor_t function,
-  ...);
+LZWS_TEST_EXPORT lzws_result_t
+  lzws_test_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...);
+LZWS_TEST_EXPORT lzws_result_t
+  lzws_test_compatible_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...);
 
 #ifdef __cplusplus
 } // extern "C"

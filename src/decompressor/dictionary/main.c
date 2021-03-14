@@ -24,7 +24,7 @@ static inline lzws_code_fast_t get_code_index(
 
 // -- implementation --
 
-void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
+LZWS_EXPORT void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   dictionary_ptr->previous_codes       = NULL;
   dictionary_ptr->last_symbol_by_codes = NULL;
@@ -34,7 +34,7 @@ void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dic
   // Other data will be initialized during allocating of dictionary.
 }
 
-lzws_result_t lzws_decompressor_allocate_dictionary(
+LZWS_EXPORT lzws_result_t lzws_decompressor_allocate_dictionary(
   lzws_decompressor_dictionary_t*    dictionary_ptr,
   size_t                             total_codes_length,
   lzws_code_fast_t                   first_free_code,
@@ -147,7 +147,9 @@ static inline lzws_byte_t
   return first_symbol;
 }
 
-void lzws_decompressor_write_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code)
+LZWS_EXPORT void lzws_decompressor_write_code_to_dictionary(
+  lzws_decompressor_dictionary_t* dictionary_ptr,
+  lzws_code_fast_t                code)
 {
   prepare_output(dictionary_ptr, code, false);
 }
@@ -156,7 +158,7 @@ void lzws_decompressor_write_code_to_dictionary(lzws_decompressor_dictionary_t* 
 // Prefix code - ab, current code - cde, next code - abc.
 // We can see that last symbol of next code equals to first symbol of current code.
 
-void lzws_decompressor_add_code_to_dictionary(
+LZWS_EXPORT void lzws_decompressor_add_code_to_dictionary(
   lzws_decompressor_dictionary_t* dictionary_ptr,
   lzws_code_fast_t                prefix_code,
   lzws_code_fast_t                current_code,
@@ -178,10 +180,12 @@ void lzws_decompressor_add_code_to_dictionary(
   dictionary_ptr->last_symbol_by_codes[next_code_index] = first_symbol;
 }
 
-extern inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr);
-extern inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
+LZWS_EXPORT extern inline bool lzws_decompressor_has_symbol_in_dictionary(
+  const lzws_decompressor_dictionary_t* dictionary_ptr);
+LZWS_EXPORT extern inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(
+  lzws_decompressor_dictionary_t* dictionary_ptr);
 
-void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
+LZWS_EXPORT void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   lzws_code_t* previous_codes = dictionary_ptr->previous_codes;
   if (previous_codes != NULL) {

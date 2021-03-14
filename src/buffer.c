@@ -29,30 +29,31 @@ static inline lzws_result_t
   return 0;
 }
 
-lzws_result_t lzws_create_source_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
+LZWS_EXPORT lzws_result_t
+  lzws_create_source_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
 {
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_SOURCE_BUFFER_LENGTH_FOR_COMPRESSOR, quiet);
 }
 
-lzws_result_t
+LZWS_EXPORT lzws_result_t
   lzws_create_destination_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
 {
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_DESTINATION_BUFFER_LENGTH_FOR_COMPRESSOR, quiet);
 }
 
-lzws_result_t
+LZWS_EXPORT lzws_result_t
   lzws_create_source_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
 {
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_SOURCE_BUFFER_LENGTH_FOR_DECOMPRESSOR, quiet);
 }
 
-lzws_result_t
+LZWS_EXPORT lzws_result_t
   lzws_create_destination_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet)
 {
   return create_buffer(buffer_ptr, buffer_length_ptr, LZWS_DEFAULT_DESTINATION_BUFFER_LENGTH_FOR_DECOMPRESSOR, quiet);
 }
 
-lzws_result_t lzws_resize_buffer(lzws_byte_t** buffer_ptr, size_t buffer_length, bool quiet)
+LZWS_EXPORT lzws_result_t lzws_resize_buffer(lzws_byte_t** buffer_ptr, size_t buffer_length, bool quiet)
 {
   lzws_byte_t* new_buffer = realloc(*buffer_ptr, buffer_length);
   if (new_buffer == NULL && buffer_length != 0) {

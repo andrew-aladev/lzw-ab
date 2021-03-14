@@ -92,7 +92,7 @@ static inline lzws_result_t compress(
   return 0;
 }
 
-lzws_result_t lzws_compress_string(
+LZWS_EXPORT lzws_result_t lzws_compress_string(
   lzws_byte_t*                     source,
   size_t                           source_length,
   lzws_byte_t**                    destination_ptr,
@@ -207,7 +207,7 @@ static inline lzws_result_t decompress(
   return 0;
 }
 
-lzws_result_t lzws_decompress_string(
+LZWS_EXPORT lzws_result_t lzws_decompress_string(
   lzws_byte_t*                       source,
   size_t                             source_length,
   lzws_byte_t**                      destination_ptr,

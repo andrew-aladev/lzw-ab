@@ -4,7 +4,7 @@
 
 #include "library.h"
 
-int function()
+LIBRARY_EXPORT int function()
 {
   return 0;
 }

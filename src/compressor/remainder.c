@@ -37,7 +37,7 @@ static inline lzws_result_t
   return 0;
 }
 
-lzws_result_t lzws_compressor_write_remainder_before_read_next_symbol(
+LZWS_EXPORT lzws_result_t lzws_compressor_write_remainder_before_read_next_symbol(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr)
@@ -52,7 +52,7 @@ lzws_result_t lzws_compressor_write_remainder_before_read_next_symbol(
   return 0;
 }
 
-lzws_result_t lzws_compressor_write_remainder_before_current_code(
+LZWS_EXPORT lzws_result_t lzws_compressor_write_remainder_before_current_code(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr)
@@ -67,7 +67,7 @@ lzws_result_t lzws_compressor_write_remainder_before_current_code(
   return 0;
 }
 
-lzws_result_t lzws_compressor_flush_remainder_before_current_code(
+LZWS_EXPORT lzws_result_t lzws_compressor_flush_remainder_before_current_code(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr)
@@ -82,7 +82,7 @@ lzws_result_t lzws_compressor_flush_remainder_before_current_code(
   return 0;
 }
 
-lzws_result_t lzws_compressor_flush_remainder(
+LZWS_EXPORT lzws_result_t lzws_compressor_flush_remainder(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr)

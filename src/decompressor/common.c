@@ -4,5 +4,5 @@
 
 #include "common.h"
 
-const lzws_decompressor_options_t LZWS_DECOMPRESSOR_DEFAULT_OPTIONS =
+LZWS_EXPORT const lzws_decompressor_options_t LZWS_DECOMPRESSOR_DEFAULT_OPTIONS =
   {.without_magic_header = false, .msb = false, .unaligned_bit_groups = false, .quiet = false};

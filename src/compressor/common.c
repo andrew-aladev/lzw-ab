@@ -4,7 +4,7 @@
 
 #include "common.h"
 
-const lzws_compressor_options_t LZWS_COMPRESSOR_DEFAULT_OPTIONS = {
+LZWS_EXPORT const lzws_compressor_options_t LZWS_COMPRESSOR_DEFAULT_OPTIONS = {
   .without_magic_header = false,
   .max_code_bit_length  = LZWS_BIGGEST_MAX_CODE_BIT_LENGTH,
   .block_mode           = true,

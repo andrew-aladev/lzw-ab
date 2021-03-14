@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-lzws_result_t lzws_compressor_write_code(
+LZWS_EXPORT lzws_result_t lzws_compressor_write_code(
   lzws_compressor_state_t* state_ptr,
   lzws_code_fast_t         code,
   lzws_byte_t**            destination_ptr,

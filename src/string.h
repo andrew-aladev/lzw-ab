@@ -28,7 +28,7 @@ enum
 // Destination buffer length can be equal to 0.
 // In this case it will be replaced with default value.
 
-lzws_result_t lzws_compress_string(
+LZWS_EXPORT lzws_result_t lzws_compress_string(
   lzws_byte_t*                     source,
   size_t                           source_length,
   lzws_byte_t**                    destination_ptr,
@@ -36,7 +36,7 @@ lzws_result_t lzws_compress_string(
   size_t                           destination_buffer_length,
   const lzws_compressor_options_t* options_ptr);
 
-lzws_result_t lzws_decompress_string(
+LZWS_EXPORT lzws_result_t lzws_decompress_string(
   lzws_byte_t*                       source,
   size_t                             source_length,
   lzws_byte_t**                      destination_ptr,

@@ -8,11 +8,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "export.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void lzws_tests_set_random_string(char* buffer, size_t buffer_length);
+LZWS_TEST_EXPORT void lzws_tests_set_random_string(char* buffer, size_t buffer_length);
 
 #ifdef __cplusplus
 } // extern "C"

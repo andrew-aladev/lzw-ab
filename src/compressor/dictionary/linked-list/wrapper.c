@@ -4,9 +4,9 @@
 
 #include "wrapper.h"
 
-extern inline void lzws_compressor_initialize_dictionary_wrapper(lzws_compressor_state_t* state_ptr);
+LZWS_EXPORT extern inline void lzws_compressor_initialize_dictionary_wrapper(lzws_compressor_state_t* state_ptr);
 
-lzws_result_t lzws_compressor_allocate_dictionary_wrapper(lzws_compressor_state_t* state_ptr)
+LZWS_EXPORT lzws_result_t lzws_compressor_allocate_dictionary_wrapper(lzws_compressor_state_t* state_ptr)
 {
   size_t total_codes_length = lzws_compressor_get_total_codes_length(state_ptr);
 
@@ -22,17 +22,17 @@ lzws_result_t lzws_compressor_allocate_dictionary_wrapper(lzws_compressor_state_
   return 0;
 }
 
-extern inline void lzws_compressor_clear_dictionary_wrapper(lzws_compressor_state_t* state_ptr);
+LZWS_EXPORT extern inline void lzws_compressor_clear_dictionary_wrapper(lzws_compressor_state_t* state_ptr);
 
-extern inline lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary_wrapper(
+LZWS_EXPORT extern inline lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary_wrapper(
   const lzws_compressor_state_t* state_ptr,
   lzws_code_fast_t               current_code,
   lzws_byte_fast_t               next_symbol);
 
-extern inline void lzws_compressor_save_next_code_to_dictionary_wrapper(
+LZWS_EXPORT extern inline void lzws_compressor_save_next_code_to_dictionary_wrapper(
   lzws_compressor_state_t* state_ptr,
   lzws_code_fast_t         current_code,
   lzws_byte_fast_t         next_symbol,
   lzws_code_fast_t         next_code);
 
-extern inline void lzws_compressor_free_dictionary_wrapper(lzws_compressor_state_t* state_ptr);
+LZWS_EXPORT extern inline void lzws_compressor_free_dictionary_wrapper(lzws_compressor_state_t* state_ptr);

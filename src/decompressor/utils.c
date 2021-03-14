@@ -6,7 +6,7 @@
 
 #include "../utils.h"
 
-void lzws_decompressor_read_byte(
+LZWS_EXPORT void lzws_decompressor_read_byte(
   const lzws_decompressor_state_t* state,
   lzws_byte_fast_t*                byte_ptr,
   lzws_byte_t**                    source_ptr,

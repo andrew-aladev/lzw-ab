@@ -11,17 +11,17 @@
 extern "C" {
 #endif
 
-lzws_result_t lzws_compressor_read_first_symbol(
+LZWS_EXPORT lzws_result_t lzws_compressor_read_first_symbol(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            source_ptr,
   size_t*                  source_length_ptr);
 
-lzws_result_t lzws_compressor_read_next_symbol(
+LZWS_EXPORT lzws_result_t lzws_compressor_read_next_symbol(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            source_ptr,
   size_t*                  source_length_ptr);
 
-void lzws_compressor_process_eof_before_next_symbol(lzws_compressor_state_t* state_ptr);
+LZWS_EXPORT void lzws_compressor_process_eof_before_next_symbol(lzws_compressor_state_t* state_ptr);
 
 #ifdef __cplusplus
 } // extern "C"

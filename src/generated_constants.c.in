@@ -11,10 +11,10 @@
 
 // clang-format off
 
-const lzws_byte_t LZWS_BYTES_WITH_REVERSED_BITS[256] = {
+LZWS_EXPORT const lzws_byte_t LZWS_BYTES_WITH_REVERSED_BITS[256] = {
 @CMAKE_BYTES_WITH_REVERSED_BITS_TABLE@};
 
-const lzws_code_t LZWS_MASKS_FOR_LAST_BITS[17] = {
+LZWS_EXPORT const lzws_code_t LZWS_MASKS_FOR_LAST_BITS[17] = {
 @CMAKE_MASKS_FOR_LAST_BITS_TABLE@};
 
 // clang-format on

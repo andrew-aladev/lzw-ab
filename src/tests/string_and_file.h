@@ -9,6 +9,7 @@
 
 #include "../compressor/common.h"
 #include "../decompressor/common.h"
+#include "export.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,7 +30,7 @@ enum
 // We can test both string and file api.
 // It is possible to run every test part using 2 apis.
 
-lzws_result_t lzws_tests_compress_string_and_file(
+LZWS_TEST_EXPORT lzws_result_t lzws_tests_compress_string_and_file(
   lzws_byte_t*                     source,
   size_t                           source_length,
   lzws_byte_t**                    destination_ptr,
@@ -37,7 +38,7 @@ lzws_result_t lzws_tests_compress_string_and_file(
   size_t                           buffer_length,
   const lzws_compressor_options_t* options_ptr);
 
-lzws_result_t lzws_tests_decompress_string_and_file(
+LZWS_TEST_EXPORT lzws_result_t lzws_tests_decompress_string_and_file(
   lzws_byte_t*                       source,
   size_t                             source_length,
   lzws_byte_t**                      destination_ptr,

@@ -11,33 +11,36 @@
 extern "C" {
 #endif
 
-void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
+LZWS_EXPORT void lzws_decompressor_initialize_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
-lzws_result_t lzws_decompressor_allocate_dictionary(
+LZWS_EXPORT lzws_result_t lzws_decompressor_allocate_dictionary(
   lzws_decompressor_dictionary_t*    dictionary_ptr,
   size_t                             total_codes_length,
   lzws_code_fast_t                   first_free_code,
   const lzws_decompressor_options_t* options_ptr);
 
-void lzws_decompressor_write_code_to_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code);
+LZWS_EXPORT void lzws_decompressor_write_code_to_dictionary(
+  lzws_decompressor_dictionary_t* dictionary_ptr,
+  lzws_code_fast_t                code);
 
-void lzws_decompressor_add_code_to_dictionary(
+LZWS_EXPORT void lzws_decompressor_add_code_to_dictionary(
   lzws_decompressor_dictionary_t* dictionary_ptr,
   lzws_code_fast_t                prefix_code,
   lzws_code_fast_t                current_code,
   lzws_code_fast_t                next_code);
 
-inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr)
+LZWS_EXPORT inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   return dictionary_ptr->output_length != 0;
 }
 
-inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
+LZWS_EXPORT inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(
+  lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   return dictionary_ptr->output_buffer[--dictionary_ptr->output_length];
 }
 
-void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
+LZWS_EXPORT void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
 #ifdef __cplusplus
 } // extern "C"

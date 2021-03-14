@@ -28,7 +28,7 @@
     return result;                                       \
   }
 
-lzws_result_t lzws_decompress(
+LZWS_EXPORT lzws_result_t lzws_decompress(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              source_ptr,
   size_t*                    source_length_ptr,

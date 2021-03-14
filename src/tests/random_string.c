@@ -6,7 +6,7 @@
 
 #include <time.h>
 
-void lzws_tests_set_random_string(char* buffer, size_t buffer_length)
+LZWS_TEST_EXPORT void lzws_tests_set_random_string(char* buffer, size_t buffer_length)
 {
   if (buffer_length == 0) {
     return;

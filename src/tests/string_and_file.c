@@ -195,7 +195,7 @@ static inline lzws_result_t test_compress_file_without_destination(
   return 0;
 }
 
-lzws_result_t lzws_tests_compress_string_and_file(
+LZWS_TEST_EXPORT lzws_result_t lzws_tests_compress_string_and_file(
   lzws_byte_t*                     source,
   size_t                           source_length,
   lzws_byte_t**                    destination_ptr,
@@ -391,7 +391,7 @@ static inline lzws_result_t test_decompress_file_without_destination(
   return 0;
 }
 
-lzws_result_t lzws_tests_decompress_string_and_file(
+LZWS_TEST_EXPORT lzws_result_t lzws_tests_decompress_string_and_file(
   lzws_byte_t*                       source,
   size_t                             source_length,
   lzws_byte_t**                      destination_ptr,

@@ -6,7 +6,7 @@
 
 #include <stdarg.h>
 
-lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigint_t* bigint_ptr, ...)
+LZWS_EXPORT lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigint_t* bigint_ptr, ...)
 {
   lzws_bigint_t* current_bigint_ptr = bigint_ptr;
 
@@ -24,13 +24,13 @@ lzws_result_t lzws_bigint_initialize_multiple(bool LZWS_UNUSED(quiet), lzws_bigi
   return 0;
 }
 
-extern inline lzws_result_t lzws_bigint_add_uint32(
+LZWS_EXPORT extern inline lzws_result_t lzws_bigint_add_uint32(
   lzws_bigint_t* destination_bigint_ptr,
   lzws_bigint_t* source_bigint_ptr,
   uint32_t       addition,
   bool           LZWS_UNUSED(quiet));
 
-extern inline lzws_result_t lzws_bigint_multiply_by_uint32(
+LZWS_EXPORT extern inline lzws_result_t lzws_bigint_multiply_by_uint32(
   lzws_bigint_t* destination_bigint_ptr,
   lzws_bigint_t* source_bigint_ptr,
   uint32_t       multiplicator,
@@ -47,14 +47,15 @@ static inline lzws_bigint_compare_result_t get_compare_result(int mpz_result)
   }
 }
 
-lzws_bigint_compare_result_t lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr)
+LZWS_EXPORT lzws_bigint_compare_result_t
+  lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr)
 {
   int mpz_result = mpz_cmp(*first_bigint_ptr, *second_bigint_ptr);
 
   return get_compare_result(mpz_result);
 }
 
-lzws_result_t lzws_bigint_compare_with_uint32(
+LZWS_EXPORT lzws_result_t lzws_bigint_compare_with_uint32(
   lzws_bigint_t*                first_bigint_ptr,
   uint32_t                      second_int,
   bool                          LZWS_UNUSED(quiet),
@@ -67,7 +68,7 @@ lzws_result_t lzws_bigint_compare_with_uint32(
   return 0;
 }
 
-void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...)
+LZWS_EXPORT void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...)
 {
   lzws_bigint_t* current_bigint_ptr = bigint_ptr;
 

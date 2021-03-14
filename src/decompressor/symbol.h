@@ -11,12 +11,12 @@
 extern "C" {
 #endif
 
-lzws_result_t lzws_decompressor_write_first_symbol(
+LZWS_EXPORT lzws_result_t lzws_decompressor_write_first_symbol(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              destination_ptr,
   size_t*                    destination_length_ptr);
 
-lzws_result_t lzws_decompressor_write_symbols_for_current_code(
+LZWS_EXPORT lzws_result_t lzws_decompressor_write_symbols_for_current_code(
   lzws_decompressor_state_t* state_ptr,
   lzws_byte_t**              destination_ptr,
   size_t*                    destination_length_ptr);

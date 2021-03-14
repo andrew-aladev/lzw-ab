@@ -29,7 +29,7 @@
     return result;                                     \
   }
 
-lzws_result_t lzws_compress(
+LZWS_EXPORT lzws_result_t lzws_compress(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            source_ptr,
   size_t*                  source_length_ptr,
@@ -110,7 +110,7 @@ lzws_result_t lzws_compress(
   return 0;
 }
 
-lzws_result_t lzws_compressor_finish(
+LZWS_EXPORT lzws_result_t lzws_compressor_finish(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_t**            destination_ptr,
   size_t*                  destination_length_ptr)

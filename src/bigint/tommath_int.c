@@ -21,7 +21,7 @@ static inline lzws_result_t get_error_result(mp_err mp_result)
 
 // -- implementation --
 
-lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...)
+LZWS_EXPORT lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...)
 {
   lzws_result_t  result             = 0;
   lzws_bigint_t* current_bigint_ptr = bigint_ptr;
@@ -64,7 +64,7 @@ lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_
   return result;
 }
 
-lzws_result_t lzws_bigint_add_uint32(
+LZWS_EXPORT lzws_result_t lzws_bigint_add_uint32(
   lzws_bigint_t* destination_bigint_ptr,
   lzws_bigint_t* source_bigint_ptr,
   uint32_t       addition,
@@ -97,7 +97,7 @@ lzws_result_t lzws_bigint_add_uint32(
   return 0;
 }
 
-lzws_result_t lzws_bigint_multiply_by_uint32(
+LZWS_EXPORT lzws_result_t lzws_bigint_multiply_by_uint32(
   lzws_bigint_t* destination_bigint_ptr,
   lzws_bigint_t* source_bigint_ptr,
   uint32_t       multiplicator,
@@ -130,7 +130,8 @@ lzws_result_t lzws_bigint_multiply_by_uint32(
   return 0;
 }
 
-lzws_bigint_compare_result_t lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr)
+LZWS_EXPORT lzws_bigint_compare_result_t
+  lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr, lzws_bigint_t* second_bigint_ptr)
 {
   mp_ord mp_result = mp_cmp(first_bigint_ptr, second_bigint_ptr);
   switch (mp_result) {
@@ -143,7 +144,7 @@ lzws_bigint_compare_result_t lzws_bigint_compare(lzws_bigint_t* first_bigint_ptr
   }
 }
 
-lzws_result_t lzws_bigint_compare_with_uint32(
+LZWS_EXPORT lzws_result_t lzws_bigint_compare_with_uint32(
   lzws_bigint_t*                first_bigint_ptr,
   uint32_t                      second_int,
   bool                          quiet,
@@ -168,7 +169,7 @@ lzws_result_t lzws_bigint_compare_with_uint32(
   return 0;
 }
 
-void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...)
+LZWS_EXPORT void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...)
 {
   lzws_bigint_t* current_bigint_ptr = bigint_ptr;
 

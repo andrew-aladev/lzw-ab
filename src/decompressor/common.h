@@ -19,7 +19,7 @@ typedef struct
   bool quiet;
 } lzws_decompressor_options_t;
 
-extern const lzws_decompressor_options_t LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;
+LZWS_EXPORT extern const lzws_decompressor_options_t LZWS_DECOMPRESSOR_DEFAULT_OPTIONS;
 
 // Possible results:
 enum

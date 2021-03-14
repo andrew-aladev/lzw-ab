@@ -10,6 +10,7 @@
 #include <stdint.h>
 
 #include "config.h"
+#include "export.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,7 +57,7 @@ typedef uint_fast16_t lzws_code_fast_t;
 // We can use any value between 0 and alphabet length - 1 as undefined free code.
 #define LZWS_UNDEFINED_FREE_CODE 0
 
-inline lzws_code_fast_t lzws_get_first_free_code(bool block_mode)
+LZWS_EXPORT inline lzws_code_fast_t lzws_get_first_free_code(bool block_mode)
 {
   return block_mode ? LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE : LZWS_FIRST_FREE_CODE;
 }

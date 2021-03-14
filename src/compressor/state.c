@@ -10,7 +10,7 @@
 #include "dictionary/wrapper.h"
 #include "ratio/wrapper.h"
 
-lzws_result_t lzws_compressor_get_initial_state(
+LZWS_EXPORT lzws_result_t lzws_compressor_get_initial_state(
   lzws_compressor_state_t**        result_state_ptr,
   const lzws_compressor_options_t* options_ptr)
 {
@@ -66,14 +66,14 @@ lzws_result_t lzws_compressor_get_initial_state(
   return 0;
 }
 
-void lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr)
+LZWS_EXPORT void lzws_compressor_reset_last_used_data(lzws_compressor_state_t* state_ptr)
 {
   state_ptr->last_used_code                    = state_ptr->first_free_code - 1;
   state_ptr->last_used_code_bit_length         = LZWS_LOWEST_MAX_CODE_BIT_LENGTH;
   state_ptr->max_last_used_code_for_bit_length = lzws_get_max_value_for_bits(LZWS_LOWEST_MAX_CODE_BIT_LENGTH);
 }
 
-lzws_result_t lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr)
+LZWS_EXPORT lzws_result_t lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr)
 {
   lzws_compressor_clear_dictionary_wrapper(state_ptr);
 
@@ -87,13 +87,13 @@ lzws_result_t lzws_compressor_clear_state(lzws_compressor_state_t* state_ptr)
   return 0;
 }
 
-void lzws_compressor_free_state(lzws_compressor_state_t* state_ptr)
+LZWS_EXPORT void lzws_compressor_free_state(lzws_compressor_state_t* state_ptr)
 {
   lzws_compressor_free_dictionary_wrapper(state_ptr);
   lzws_compressor_free_ratio_wrapper(state_ptr);
   free(state_ptr);
 }
 
-extern inline bool   lzws_compressor_is_dictionary_full(const lzws_compressor_state_t* state_ptr);
-extern inline size_t lzws_compressor_get_last_used_codes_length(const lzws_compressor_state_t* state_ptr);
-extern inline size_t lzws_compressor_get_total_codes_length(const lzws_compressor_state_t* state_ptr);
+LZWS_EXPORT extern inline bool   lzws_compressor_is_dictionary_full(const lzws_compressor_state_t* state_ptr);
+LZWS_EXPORT extern inline size_t lzws_compressor_get_last_used_codes_length(const lzws_compressor_state_t* state_ptr);
+LZWS_EXPORT extern inline size_t lzws_compressor_get_total_codes_length(const lzws_compressor_state_t* state_ptr);

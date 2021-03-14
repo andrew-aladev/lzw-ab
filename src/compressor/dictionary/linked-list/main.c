@@ -46,7 +46,7 @@ static inline lzws_code_fast_t get_next_sibling_code_index(
 
 // -- implementation --
 
-void lzws_compressor_initialize_dictionary(
+LZWS_EXPORT void lzws_compressor_initialize_dictionary(
   lzws_compressor_dictionary_t* dictionary_ptr,
   lzws_code_fast_t              first_free_code)
 {
@@ -61,7 +61,7 @@ void lzws_compressor_initialize_dictionary(
   dictionary_ptr->next_sibling_codes_offset = first_free_code;
 }
 
-lzws_result_t lzws_compressor_allocate_dictionary(
+LZWS_EXPORT lzws_result_t lzws_compressor_allocate_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   size_t                           total_codes_length,
   const lzws_compressor_options_t* options_ptr)
@@ -129,7 +129,9 @@ lzws_result_t lzws_compressor_allocate_dictionary(
   return 0;
 }
 
-void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t total_codes_length)
+LZWS_EXPORT void lzws_compressor_clear_dictionary(
+  lzws_compressor_dictionary_t* dictionary_ptr,
+  size_t                        total_codes_length)
 {
   lzws_code_t undefined_next_code = LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
 
@@ -153,7 +155,7 @@ void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_p
   // Algorithm will access only initialized symbols.
 }
 
-lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
+LZWS_EXPORT lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   const lzws_compressor_dictionary_t* dictionary_ptr,
   lzws_code_fast_t                    first_free_code,
   lzws_code_fast_t                    current_code,
@@ -179,7 +181,7 @@ lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   return LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE;
 }
 
-void lzws_compressor_save_next_code_to_dictionary(
+LZWS_EXPORT void lzws_compressor_save_next_code_to_dictionary(
   lzws_compressor_dictionary_t* dictionary_ptr,
   lzws_code_fast_t              first_free_code,
   lzws_code_fast_t              current_code,
@@ -204,7 +206,7 @@ void lzws_compressor_save_next_code_to_dictionary(
   }
 }
 
-void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictionary_ptr)
+LZWS_EXPORT void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictionary_ptr)
 {
   lzws_code_t* first_child_codes = dictionary_ptr->first_child_codes;
   if (first_child_codes != NULL) {

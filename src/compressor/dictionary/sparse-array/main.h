@@ -13,25 +13,27 @@
 extern "C" {
 #endif
 
-void lzws_compressor_initialize_dictionary(
+LZWS_EXPORT void lzws_compressor_initialize_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   lzws_code_fast_t                 first_free_code,
   const lzws_compressor_options_t* options_ptr);
 
-lzws_result_t lzws_compressor_allocate_dictionary(
+LZWS_EXPORT lzws_result_t lzws_compressor_allocate_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   size_t                           total_codes_length,
   const lzws_compressor_options_t* options_ptr);
 
-void lzws_compressor_clear_dictionary(lzws_compressor_dictionary_t* dictionary_ptr, size_t used_codes_length);
+LZWS_EXPORT void lzws_compressor_clear_dictionary(
+  lzws_compressor_dictionary_t* dictionary_ptr,
+  size_t                        used_codes_length);
 
-lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
+LZWS_EXPORT lzws_code_fast_t lzws_compressor_get_next_code_from_dictionary(
   const lzws_compressor_dictionary_t* dictionary_ptr,
   lzws_code_fast_t                    first_free_code,
   lzws_code_fast_t                    current_code,
   lzws_byte_fast_t                    next_symbol);
 
-void lzws_compressor_save_next_code_to_dictionary(
+LZWS_EXPORT void lzws_compressor_save_next_code_to_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   lzws_code_fast_t                 first_free_code,
   const lzws_compressor_options_t* options_ptr,
@@ -39,7 +41,7 @@ void lzws_compressor_save_next_code_to_dictionary(
   lzws_byte_fast_t                 next_symbol,
   lzws_code_fast_t                 next_code);
 
-void lzws_compressor_free_dictionary(
+LZWS_EXPORT void lzws_compressor_free_dictionary(
   lzws_compressor_dictionary_t*    dictionary_ptr,
   const lzws_compressor_options_t* options_ptr);
 

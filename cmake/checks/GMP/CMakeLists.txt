@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.9)
+cmake_minimum_required (VERSION 3.12)
 project ("cmake_check_gmp" "C")
 
 set (CMAKE_GMP_INCLUDE_PATH        "" CACHE STRING "GMP include path")

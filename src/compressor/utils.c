@@ -7,7 +7,7 @@
 #include "../utils.h"
 #include "ratio/wrapper.h"
 
-void lzws_compressor_read_byte(
+LZWS_EXPORT void lzws_compressor_read_byte(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_fast_t*        byte_ptr,
   lzws_byte_t**            source_ptr,
@@ -17,7 +17,7 @@ void lzws_compressor_read_byte(
   lzws_compressor_add_source_symbol_to_ratio_wrapper(state_ptr);
 }
 
-void lzws_compressor_write_byte(
+LZWS_EXPORT void lzws_compressor_write_byte(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_fast_t         byte,
   lzws_byte_t**            destination_ptr,

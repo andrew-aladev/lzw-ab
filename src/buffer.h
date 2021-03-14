@@ -35,15 +35,16 @@ enum
 #define LZWS_DEFAULT_SOURCE_BUFFER_LENGTH_FOR_DECOMPRESSOR      (1 << 16) // 64 KB
 #define LZWS_DEFAULT_DESTINATION_BUFFER_LENGTH_FOR_DECOMPRESSOR (1 << 18) // 256 KB
 
-lzws_result_t lzws_create_source_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
-lzws_result_t
+LZWS_EXPORT lzws_result_t
+  lzws_create_source_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
+LZWS_EXPORT lzws_result_t
   lzws_create_destination_buffer_for_compressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
-lzws_result_t
+LZWS_EXPORT lzws_result_t
   lzws_create_source_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
-lzws_result_t
+LZWS_EXPORT lzws_result_t
   lzws_create_destination_buffer_for_decompressor(lzws_byte_t** buffer_ptr, size_t* buffer_length_ptr, bool quiet);
 
-lzws_result_t lzws_resize_buffer(lzws_byte_t** buffer_ptr, size_t buffer_length, bool quiet);
+LZWS_EXPORT lzws_result_t lzws_resize_buffer(lzws_byte_t** buffer_ptr, size_t buffer_length, bool quiet);
 
 #ifdef __cplusplus
 } // extern "C"

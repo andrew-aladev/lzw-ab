@@ -1,5 +1,8 @@
 attached-main-root/*
 attached-toolchain-root/*
 build/*
+cmake/checks/IPO/export.h
 src/config.h
+src/export.h
+src/tests/export.h
 tmp/*

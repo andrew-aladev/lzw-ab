@@ -73,7 +73,7 @@ static inline void add_byte_with_remainder(
   *remainder_bit_length_ptr = remainder_bit_length;
 }
 
-lzws_result_t lzws_decompressor_read_code(
+LZWS_EXPORT lzws_result_t lzws_decompressor_read_code(
   lzws_decompressor_state_t* state_ptr,
   lzws_code_fast_t*          code_ptr,
   lzws_byte_t**              source_ptr,

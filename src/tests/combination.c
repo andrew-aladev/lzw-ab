@@ -97,7 +97,7 @@ static inline lzws_result_t process_compressor_combinations(lzws_test_compressor
   return 0;
 }
 
-lzws_result_t lzws_test_compressor_combinations(lzws_test_compressor_t function, ...)
+LZWS_TEST_EXPORT lzws_result_t lzws_test_compressor_combinations(lzws_test_compressor_t function, ...)
 {
   va_list args;
   va_start(args, function);
@@ -136,7 +136,7 @@ static inline lzws_result_t test_decompressor(
   return result;
 }
 
-lzws_result_t process_decompressor_combinations(lzws_test_decompressor_t function, va_list args)
+static inline lzws_result_t process_decompressor_combinations(lzws_test_decompressor_t function, va_list args)
 {
   for (size_t index = 0; index < BUFFER_LENGTH_SIZE; index++) {
     size_t buffer_length = buffer_lengths[index];
@@ -173,7 +173,7 @@ lzws_result_t process_decompressor_combinations(lzws_test_decompressor_t functio
   return 0;
 }
 
-lzws_result_t lzws_test_decompressor_combinations(lzws_test_decompressor_t function, ...)
+LZWS_TEST_EXPORT lzws_result_t lzws_test_decompressor_combinations(lzws_test_decompressor_t function, ...)
 {
   va_list args;
   va_start(args, function);
@@ -225,7 +225,8 @@ static inline lzws_result_t test_compressor_combinations_with_decompressor(
     function_args);
 }
 
-lzws_result_t lzws_test_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...)
+LZWS_TEST_EXPORT lzws_result_t
+  lzws_test_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...)
 {
   va_list function_args;
   va_start(function_args, function);
@@ -263,9 +264,8 @@ static inline lzws_result_t test_compatible_compressor_and_decompressor_combinat
   return function(compressor_state_ptr, decompressor_state_ptr, buffer_length, function_args_copy);
 }
 
-lzws_result_t lzws_test_compatible_compressor_and_decompressor_combinations(
-  lzws_test_compressor_and_decompressor_t function,
-  ...)
+LZWS_TEST_EXPORT lzws_result_t
+  lzws_test_compatible_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...)
 {
   va_list function_args;
   va_start(function_args, function);
