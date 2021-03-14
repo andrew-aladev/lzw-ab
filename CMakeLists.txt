@@ -1,8 +1,6 @@
 cmake_minimum_required (VERSION 3.12)
 project ("lzws" "C")
 
-string (TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
-
 if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   message (FATAL_ERROR "In-source builds are not allowed")
 endif ()

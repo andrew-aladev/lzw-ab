@@ -6,18 +6,22 @@ set (CMAKE_TRY_RUN false CACHE BOOL "try run targets after build")
 # We need to force enable IPO.
 set (CMAKE_INTERPROCEDURAL_OPTIMIZATION true)
 
+set (CHECK_TARGET "check")
+string (TOUPPER ${CHECK_TARGET} CHECK_TARGET_MACRO)
+
 # We need to force shared library.
-add_library ("library" SHARED "library.c")
+add_library (${CHECK_TARGET} SHARED "library.c")
 
 include (GenerateExportHeader)
 generate_export_header (
-  "library"
-  BASE_NAME "LIBRARY"
+  ${CHECK_TARGET}
+  BASE_NAME ${CHECK_TARGET_MACRO}
+  EXPORT_MACRO_NAME "${CHECK_TARGET_MACRO}_EXPORT"
   EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/export.h"
 )
 
 add_executable ("main" "main.c")
-target_link_libraries ("main" "library")
+target_link_libraries ("main" ${CHECK_TARGET})
 
 if (CMAKE_TRY_RUN)
   add_custom_command (

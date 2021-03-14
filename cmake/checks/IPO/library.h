@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-LIBRARY_EXPORT int function();
+CHECK_EXPORT int function();
 
 #ifdef __cplusplus
 } // extern "C"
