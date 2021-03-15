@@ -12,14 +12,14 @@
 extern "C" {
 #endif
 
-LZWS_EXPORT inline void lzws_compressor_initialize_alignment_wrapper(lzws_compressor_state_t* state_ptr)
+inline void lzws_compressor_initialize_alignment_wrapper(lzws_compressor_state_t* state_ptr)
 {
   if (!state_ptr->options.unaligned_bit_groups) {
     lzws_compressor_initialize_alignment(&state_ptr->alignment, state_ptr->last_used_code_bit_length);
   }
 }
 
-LZWS_EXPORT inline void lzws_compressor_add_destination_byte_length_to_alignment_wrapper(
+inline void lzws_compressor_add_destination_byte_length_to_alignment_wrapper(
   lzws_compressor_state_t* state_ptr,
   lzws_byte_fast_t         destination_byte_length)
 {
@@ -28,7 +28,7 @@ LZWS_EXPORT inline void lzws_compressor_add_destination_byte_length_to_alignment
   }
 }
 
-LZWS_EXPORT inline bool lzws_compressor_need_to_write_alignment_wrapper(const lzws_compressor_state_t* state_ptr)
+inline bool lzws_compressor_need_to_write_alignment_wrapper(const lzws_compressor_state_t* state_ptr)
 {
   if (state_ptr->options.unaligned_bit_groups) {
     return false;

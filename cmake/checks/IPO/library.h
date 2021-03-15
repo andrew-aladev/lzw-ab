@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-CHECK_EXPORT inline int inline_function()
+inline int inline_function()
 {
   return 0;
 }
