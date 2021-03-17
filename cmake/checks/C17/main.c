@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdnoreturn.h>
 
 // clang-format off
 #define log_format(x) _Generic((x), \
@@ -32,7 +31,7 @@ typedef struct
 
 const data_t data = {.is_float = true, .number = 1.5};
 
-noreturn void func()
+void func()
 {
   log(u8"fit");
   log((void*) &data);
