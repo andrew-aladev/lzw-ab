@@ -11,28 +11,38 @@ function (cmake_get_verbose_flags)
 
   # -- Werror --
 
-  set (MESSAGE_PREFIX "Status of -Werror support")
+  set (FLAGS "-Werror" "/WX")
 
-  try_compile (
-    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-    CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=-Werror"
-      "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-    OUTPUT_VARIABLE COMPILE_OUTPUT
-  )
-  file (REMOVE_RECURSE ${BINARY_DIR})
+  set (MESSAGE_PREFIX "Status of Werror support")
 
-  if (CMAKE_VERBOSE_MAKEFILE)
-    message (STATUS ${COMPILE_OUTPUT})
-  endif ()
+  foreach (FLAG ${FLAGS})
+    try_compile (
+      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+      CMAKE_FLAGS
+        "-DCMAKE_C_FLAGS=${FLAG}"
+        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+      OUTPUT_VARIABLE COMPILE_OUTPUT
+    )
+    file (REMOVE_RECURSE ${BINARY_DIR})
 
-  if (COMPILE_RESULT)
-    set (CMAKE_WERROR_C_FLAGS "-Werror" CACHE STRING "Werror C flags")
-    message (STATUS "${MESSAGE_PREFIX} - yes")
-  else ()
-    set (CMAKE_WERROR_C_FLAGS "" CACHE STRING "Werror C flags")
+    if (CMAKE_VERBOSE_MAKEFILE)
+      message (STATUS ${COMPILE_OUTPUT})
+    endif ()
+
+    if (COMPILE_RESULT)
+      set (CMAKE_WERROR_C_FLAGS ${FLAG})
+      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+
+      break ()
+    endif ()
+  endforeach ()
+
+  if (NOT COMPILE_RESULT)
+    set (CMAKE_WERROR_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
+
+  set (CMAKE_WERROR_C_FLAGS ${CMAKE_WERROR_C_FLAGS} CACHE STRING "Werror C flags")
 
   # -- pedantic --
 
