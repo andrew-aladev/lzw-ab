@@ -3,7 +3,6 @@
 // Distributed under the BSD Software License (see LICENSE).
 
 #include <assert.h>
-#include <stdalign.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,7 +34,6 @@ const data_t data = {.is_float = true, .number = 1.5};
 
 noreturn void func()
 {
-  log(alignof(double));
   log(u8"fit");
   log((void*) &data);
   log(data.is_float);
