@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.12)
-project ("cmake_check_c18" "C")
+project ("cmake_check_c17" "C")
 
 set (CMAKE_TRY_RUN false CACHE BOOL "try run targets after build")
 

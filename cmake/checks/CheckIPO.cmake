@@ -14,6 +14,9 @@ function (cmake_check_ipo)
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
 
+  include (CheckC17)
+  cmake_check_c17 ()
+
   include (CheckRunnable)
   cmake_check_runnable ()
 
@@ -28,7 +31,7 @@ function (cmake_check_ipo)
     try_compile (
       COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
       CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_WERROR_C_FLAGS}"
+        "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS} ${CMAKE_WERROR_C_FLAGS}"
         "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
         "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
       OUTPUT_VARIABLE COMPILE_OUTPUT

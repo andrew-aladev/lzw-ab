@@ -14,8 +14,8 @@ function (cmake_check_tommath CHECK_MODE)
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
 
-  include (CheckC18)
-  cmake_check_c18 ()
+  include (CheckC17)
+  cmake_check_c17 ()
 
   include (CheckRunnable)
   cmake_check_runnable ()
@@ -26,7 +26,7 @@ function (cmake_check_tommath CHECK_MODE)
     try_compile (
       COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
       CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C18_C_FLAGS} ${CMAKE_WERROR_C_FLAGS}"
+        "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS} ${CMAKE_WERROR_C_FLAGS}"
         "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
         "-DCMAKE_TOMMATH_INCLUDE_PATH=${CMAKE_TOMMATH_INCLUDE_PATH}"
         "-DCMAKE_TOMMATH_SHARED_LIBRARY_PATH=${CMAKE_TOMMATH_SHARED_LIBRARY_PATH}"

@@ -68,8 +68,8 @@ if (LZWS_COVERAGE)
   cmake_get_coverage_flags ()
 endif ()
 
-include (CheckC18)
-cmake_check_c18 ()
+include (CheckC17)
+cmake_check_c17 ()
 
 include (CheckIPO)
 cmake_check_ipo ()
@@ -87,7 +87,7 @@ if (LZWS_STATIC AND NOT CMAKE_BIGNUM_LIBRARY_STATIC_PATH)
   message (FATAL_ERROR "Bignum static library is not available.")
 endif ()
 
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C18_C_FLAGS}")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C17_C_FLAGS}")
 
 if (LZWS_COVERAGE)
   set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_COVERAGE_C_FLAGS}")
