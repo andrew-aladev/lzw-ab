@@ -5,14 +5,9 @@ function (cmake_check_tommath CHECK_MODE)
     return ()
   endif ()
 
-  set (MESSAGE_PREFIX "Status of TomMath support")
-
   set (NAME "cmake_check_tommath")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/TomMath")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_tommath")
-
-  include (GetVerboseFlags)
-  cmake_get_verbose_flags ()
 
   include (CheckC17)
   cmake_check_c17 ()
@@ -22,11 +17,13 @@ function (cmake_check_tommath CHECK_MODE)
 
   find_package (TomMath)
 
+  set (MESSAGE_PREFIX "Status of TomMath support")
+
   if (CMAKE_TOMMATH_FOUND)
     try_compile (
       COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
       CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
+        "-DCMAKE_C_FLAGS=${CMAKE_C17_C_FLAGS}"
         "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
         "-DCMAKE_TOMMATH_INCLUDE_PATH=${CMAKE_TOMMATH_INCLUDE_PATH}"
         "-DCMAKE_TOMMATH_SHARED_LIBRARY_PATH=${CMAKE_TOMMATH_SHARED_LIBRARY_PATH}"

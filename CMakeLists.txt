@@ -60,6 +60,9 @@ set (
 include (GetVerboseFlags)
 cmake_get_verbose_flags ()
 
+include (GetBuildFlags)
+cmake_get_build_flags ()
+
 include (GetPipeFlags)
 cmake_get_pipe_flags ()
 
@@ -77,6 +80,16 @@ cmake_check_ipo ()
 include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
 
+if (NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
+  set (CMAKE_BUILD_TYPE "DEBUG")
+endif ()
+
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C17_C_FLAGS}")
+
+if (LZWS_COVERAGE)
+  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_COVERAGE_C_FLAGS}")
+endif ()
+
 # Bignum library selection may be updated.
 set (LZWS_BIGNUM_LIBRARY "${CMAKE_BIGNUM_LIBRARY}")
 
@@ -86,20 +99,6 @@ endif ()
 if (LZWS_STATIC AND NOT CMAKE_BIGNUM_LIBRARY_STATIC_PATH)
   message (FATAL_ERROR "Bignum static library is not available.")
 endif ()
-
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C17_C_FLAGS}")
-
-if (LZWS_COVERAGE)
-  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_COVERAGE_C_FLAGS}")
-endif ()
-
-if (NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
-  set (CMAKE_BUILD_TYPE "DEBUG")
-endif ()
-
-set (CMAKE_C_FLAGS_DEBUG         "-O0 -g" CACHE STRING "debug cflags"         FORCE)
-set (CMAKE_C_FLAGS_RELEASE       "-O2"    CACHE STRING "release cflags"       FORCE)
-set (CMAKE_C_FLAGS_RELEASE_EMBED "-Os"    CACHE STRING "release embed cflags" FORCE)
 
 if (LZWS_TESTS)
   enable_testing ()

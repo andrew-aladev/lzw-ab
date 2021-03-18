@@ -5,31 +5,43 @@ function (cmake_get_pipe_flags)
     return ()
   endif ()
 
-  set (MESSAGE_PREFIX "Status of -pipe support")
+  set (MESSAGE_PREFIX "Status of pipe support")
 
-  set (NAME "cmake_get_pipe_flags")
-  set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_pipe_flags")
+  if (NOT MSVC)
+    set (NAME "cmake_get_pipe_flags")
+    set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
+    set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_pipe_flags")
 
-  include (GetVerboseFlags)
-  cmake_get_verbose_flags ()
+    include (GetVerboseFlags)
+    cmake_get_verbose_flags ()
 
-  try_compile (
-    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-    CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_WERROR_C_FLAGS} -pipe"
-      "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-    OUTPUT_VARIABLE COMPILE_OUTPUT
-  )
-  file (REMOVE_RECURSE ${BINARY_DIR})
+    include (CheckRunnable)
+    cmake_check_runnable ()
 
-  if (CMAKE_VERBOSE_MAKEFILE)
-    message (STATUS ${COMPILE_OUTPUT})
-  endif ()
+    set (FLAG "-pipe")
 
-  if (COMPILE_RESULT)
-    set (CMAKE_PIPE_C_FLAGS "-pipe")
-    message (STATUS "${MESSAGE_PREFIX} - yes")
+    try_compile (
+      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+      CMAKE_FLAGS
+        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
+        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
+      OUTPUT_VARIABLE COMPILE_OUTPUT
+    )
+    file (REMOVE_RECURSE ${BINARY_DIR})
+
+    if (CMAKE_VERBOSE_MAKEFILE)
+      message (STATUS ${COMPILE_OUTPUT})
+    endif ()
+
+    if (COMPILE_RESULT)
+      set (CMAKE_PIPE_C_FLAGS ${FLAG})
+      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+    else ()
+      set (CMAKE_PIPE_C_FLAGS "")
+      message (STATUS "${MESSAGE_PREFIX} - no")
+    endif ()
+
   else ()
     set (CMAKE_PIPE_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")

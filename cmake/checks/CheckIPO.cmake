@@ -5,14 +5,9 @@ function (cmake_check_ipo)
     return ()
   endif ()
 
-  set (MESSAGE_PREFIX "Status of IPO support")
-
   set (NAME "cmake_check_ipo")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/IPO")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_ipo")
-
-  include (GetVerboseFlags)
-  cmake_get_verbose_flags ()
 
   include (CheckC17)
   cmake_check_c17 ()
@@ -27,11 +22,13 @@ function (cmake_check_ipo)
     message (STATUS ${CHECK_OUTPUT})
   endif ()
 
+  set (MESSAGE_PREFIX "Status of IPO support")
+
   if (CHECK_RESULT)
     try_compile (
       COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
       CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
+        "-DCMAKE_C_FLAGS=${CMAKE_C17_C_FLAGS}"
         "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
         "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
       OUTPUT_VARIABLE COMPILE_OUTPUT

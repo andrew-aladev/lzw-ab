@@ -1,64 +1,29 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-function (cmake_get_verbose_flags)
-  if (DEFINED CMAKE_GET_VERBOSE_FLAGS_PROCESSED)
+function (cmake_get_build_flags)
+  if (DEFINED CMAKE_GET_BUILD_FLAGS_PROCESSED)
     return ()
   endif ()
 
-  set (NAME "cmake_get_verbose_flags")
+  set (NAME "cmake_get_build_flags")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_verbose_flags")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_build_flags")
 
-  # -- Werror --
+  include (GetVerboseFlags)
+  cmake_get_verbose_flags ()
 
-  if (MSVC)
-    set (FLAGS "/WX")
-  else ()
-    set (FLAGS "-Werror")
-  endif ()
+  include (CheckRunnable)
+  cmake_check_runnable ()
 
-  set (MESSAGE_PREFIX "Status of Werror support")
-
-  foreach (FLAG ${FLAGS})
-    try_compile (
-      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-      CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${FLAG}"
-        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-      OUTPUT_VARIABLE COMPILE_OUTPUT
-    )
-    file (REMOVE_RECURSE ${BINARY_DIR})
-
-    if (CMAKE_VERBOSE_MAKEFILE)
-      message (STATUS ${COMPILE_OUTPUT})
-    endif ()
-
-    if (COMPILE_RESULT)
-      set (CMAKE_WERROR_C_FLAGS ${FLAG})
-      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-
-      break ()
-    endif ()
-  endforeach ()
-
-  if (NOT COMPILE_RESULT)
-    set (CMAKE_WERROR_C_FLAGS "")
-    message (STATUS "${MESSAGE_PREFIX} - no")
-  endif ()
-
-  set (CMAKE_WERROR_C_FLAGS ${CMAKE_WERROR_C_FLAGS} CACHE STRING "Werror C flags")
-
-  # -- pedantic --
+  # -- Debug --
 
   if (MSVC)
-    set (FLAGS "/permissive-")
+    set (FLAGS "/Od" "/Zi")
   else ()
-    set (FLAGS "-pedantic")
+    set (FLAGS "-O0" "-g")
   endif ()
 
-  set (MESSAGE_PREFIX "Status of pedantic support")
-
-  set (CMAKE_VERBOSE_C_FLAGS "")
+  set (MESSAGE_PREFIX "Status of Debug support")
 
   foreach (FLAG ${FLAGS})
     try_compile (
@@ -66,6 +31,7 @@ function (cmake_get_verbose_flags)
       CMAKE_FLAGS
         "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
         "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
       OUTPUT_VARIABLE COMPILE_OUTPUT
     )
     file (REMOVE_RECURSE ${BINARY_DIR})
@@ -75,26 +41,27 @@ function (cmake_get_verbose_flags)
     endif ()
 
     if (COMPILE_RESULT)
-      set (CMAKE_VERBOSE_C_FLAGS "${CMAKE_VERBOSE_C_FLAGS} ${FLAG}")
+      set (CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${FLAG}")
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-
-      break ()
     endif ()
   endforeach ()
 
   if (NOT COMPILE_RESULT)
+    set (CMAKE_C_FLAGS_DEBUG "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  # -- Wall --
+  set (CMAKE_C_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG} CACHE STRING "Debug C flags" FORCE)
+
+  # -- Release --
 
   if (MSVC)
-    set (FLAGS "/Wall")
+    set (FLAGS "/O2")
   else ()
-    set (FLAGS "-Wall")
+    set (FLAGS "-O2")
   endif ()
 
-  set (MESSAGE_PREFIX "Status of Wall support")
+  set (MESSAGE_PREFIX "Status of Release support")
 
   foreach (FLAG ${FLAGS})
     try_compile (
@@ -102,6 +69,7 @@ function (cmake_get_verbose_flags)
       CMAKE_FLAGS
         "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
         "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
       OUTPUT_VARIABLE COMPILE_OUTPUT
     )
     file (REMOVE_RECURSE ${BINARY_DIR})
@@ -111,26 +79,27 @@ function (cmake_get_verbose_flags)
     endif ()
 
     if (COMPILE_RESULT)
-      set (CMAKE_VERBOSE_C_FLAGS "${CMAKE_VERBOSE_C_FLAGS} ${FLAG}")
+      set (CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${FLAG}")
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-
-      break ()
     endif ()
   endforeach ()
 
   if (NOT COMPILE_RESULT)
+    set (CMAKE_C_FLAGS_RELEASE "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  # -- Wextra --
+  set (CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE} CACHE STRING "Release C flags" FORCE)
+
+  # -- RelWithDebInfo --
 
   if (MSVC)
-    set (FLAGS "/W4")
+    set (FLAGS "/O2" "/Zi")
   else ()
-    set (FLAGS "-Wextra")
+    set (FLAGS "-O2" "-g")
   endif ()
 
-  set (MESSAGE_PREFIX "Status of Wextra support")
+  set (MESSAGE_PREFIX "Status of RelWithDebInfo support")
 
   foreach (FLAG ${FLAGS})
     try_compile (
@@ -138,6 +107,7 @@ function (cmake_get_verbose_flags)
       CMAKE_FLAGS
         "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
         "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
       OUTPUT_VARIABLE COMPILE_OUTPUT
     )
     file (REMOVE_RECURSE ${BINARY_DIR})
@@ -147,25 +117,60 @@ function (cmake_get_verbose_flags)
     endif ()
 
     if (COMPILE_RESULT)
-      set (CMAKE_VERBOSE_C_FLAGS "${CMAKE_VERBOSE_C_FLAGS} ${FLAG}")
+      set (CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} ${FLAG}")
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-
-      break ()
     endif ()
   endforeach ()
 
   if (NOT COMPILE_RESULT)
+    set (CMAKE_C_FLAGS_RELWITHDEBINFO "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  # -- results --
+  set (CMAKE_C_FLAGS_RELWITHDEBINFO ${CMAKE_C_FLAGS_RELWITHDEBINFO} CACHE STRING "RelWithDebInfo C flags" FORCE)
 
-  set (CMAKE_VERBOSE_C_FLAGS ${CMAKE_VERBOSE_C_FLAGS} CACHE STRING "Verbose C flags")
-  set (CMAKE_GET_VERBOSE_FLAGS_PROCESSED true CACHE STRING "Verbose flags processed")
+  # -- MinSizeRel --
+
+  if (MSVC)
+    set (FLAGS "/Os")
+  else ()
+    set (FLAGS "-Os")
+  endif ()
+
+  set (MESSAGE_PREFIX "Status of MinSizeRel support")
+
+  foreach (FLAG ${FLAGS})
+    try_compile (
+      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+      CMAKE_FLAGS
+        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
+        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
+      OUTPUT_VARIABLE COMPILE_OUTPUT
+    )
+    file (REMOVE_RECURSE ${BINARY_DIR})
+
+    if (CMAKE_VERBOSE_MAKEFILE)
+      message (STATUS ${COMPILE_OUTPUT})
+    endif ()
+
+    if (COMPILE_RESULT)
+      set (CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} ${FLAG}")
+      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+    endif ()
+  endforeach ()
+
+  if (NOT COMPILE_RESULT)
+    set (CMAKE_C_FLAGS_MINSIZEREL "")
+    message (STATUS "${MESSAGE_PREFIX} - no")
+  endif ()
+
+  set (CMAKE_C_FLAGS_MINSIZEREL ${CMAKE_C_FLAGS_MINSIZEREL} CACHE STRING "MinSizeRel C flags" FORCE)
 
   mark_as_advanced (
-    CMAKE_WERROR_C_FLAGS
-    CMAKE_VERBOSE_C_FLAGS
-    CMAKE_GET_VERBOSE_FLAGS_PROCESSED
+    CMAKE_C_FLAGS_DEBUG
+    CMAKE_C_FLAGS_RELEASE
+    CMAKE_C_FLAGS_RELWITHDEBINFO
+    CMAKE_C_FLAGS_MINSIZEREL
   )
 endfunction ()

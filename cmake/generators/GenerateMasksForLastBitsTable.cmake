@@ -5,8 +5,6 @@ function (generate_masks_for_last_bits_table)
     return ()
   endif ()
 
-  set (MESSAGE_PREFIX "Masks for last bits table")
-
   set (NAME "cmake_generator_masks_for_last_bits_table")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/masks_for_last_bits_table")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/generator_masks_for_last_bits_table")
@@ -29,6 +27,8 @@ function (generate_masks_for_last_bits_table)
   if (CMAKE_VERBOSE_MAKEFILE)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
+
+  set (MESSAGE_PREFIX "Masks for last bits table")
 
   if (COMPILE_RESULT)
     execute_process (

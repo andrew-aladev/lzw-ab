@@ -5,35 +5,43 @@ function (cmake_get_coverage_flags)
     return ()
   endif ()
 
-  set (MESSAGE_PREFIX "Status of --coverage support")
+  set (MESSAGE_PREFIX "Status of coverage support")
 
-  set (NAME "cmake_get_coverage_flags")
-  set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_coverage_flags")
+  if (NOT MSVC)
+    set (NAME "cmake_get_coverage_flags")
+    set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
+    set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_coverage_flags")
 
-  include (GetVerboseFlags)
-  cmake_get_verbose_flags ()
+    include (GetVerboseFlags)
+    cmake_get_verbose_flags ()
 
-  include (CheckRunnable)
-  cmake_check_runnable ()
+    include (CheckRunnable)
+    cmake_check_runnable ()
 
-  try_compile (
-    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-    CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_WERROR_C_FLAGS} --coverage"
-      "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-      "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-    OUTPUT_VARIABLE COMPILE_OUTPUT
-  )
-  file (REMOVE_RECURSE ${BINARY_DIR})
+    set (FLAG "--coverage")
 
-  if (CMAKE_VERBOSE_MAKEFILE)
-    message (STATUS ${COMPILE_OUTPUT})
-  endif ()
+    try_compile (
+      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+      CMAKE_FLAGS
+        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
+        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
+      OUTPUT_VARIABLE COMPILE_OUTPUT
+    )
+    file (REMOVE_RECURSE ${BINARY_DIR})
 
-  if (COMPILE_RESULT)
-    set (CMAKE_COVERAGE_C_FLAGS "--coverage")
-    message (STATUS "${MESSAGE_PREFIX} - yes")
+    if (CMAKE_VERBOSE_MAKEFILE)
+      message (STATUS ${COMPILE_OUTPUT})
+    endif ()
+
+    if (COMPILE_RESULT)
+      set (CMAKE_COVERAGE_C_FLAGS ${FLAG})
+      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+    else ()
+      set (CMAKE_COVERAGE_C_FLAGS "")
+      message (STATUS "${MESSAGE_PREFIX} - no")
+    endif ()
+
   else ()
     set (CMAKE_COVERAGE_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
