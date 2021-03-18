@@ -3,13 +3,14 @@ project ("cmake_check_basic" "C")
 
 set (CMAKE_TRY_RUN false CACHE BOOL "try run targets after build")
 
-add_executable ("main" "main.c")
+set (EXECUTABLE "main")
+add_executable (${EXECUTABLE} "main.c")
 
 if (CMAKE_TRY_RUN)
   add_custom_command (
-    TARGET "main"
+    TARGET ${EXECUTABLE}
     POST_BUILD
-    COMMAND "./main"
+    COMMAND ${EXECUTABLE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   )
 endif ()

@@ -4,7 +4,7 @@
 
 #include "library.h"
 
-int main()
+int main(void)
 {
   return inline_function() + function();
 }

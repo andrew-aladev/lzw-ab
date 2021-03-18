@@ -12,8 +12,9 @@ string (TOUPPER ${CHECK_NAME} CHECK_TARGET)
 # We need to force shared library.
 add_library (${CHECK_TARGET} SHARED "library.c")
 
-add_executable ("main" "main.c")
-target_link_libraries ("main" ${CHECK_TARGET})
+set (EXECUTABLE "main")
+add_executable (${EXECUTABLE} "main.c")
+target_link_libraries (${EXECUTABLE} ${CHECK_TARGET})
 set_target_properties (${CHECK_TARGET} PROPERTIES OUTPUT_NAME ${CHECK_NAME})
 
 include (GenerateExportHeader)
@@ -24,9 +25,9 @@ generate_export_header (
 
 if (CMAKE_TRY_RUN)
   add_custom_command (
-    TARGET "main"
+    TARGET ${EXECUTABLE}
     POST_BUILD
-    COMMAND "./main"
+    COMMAND ${EXECUTABLE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   )
 endif ()

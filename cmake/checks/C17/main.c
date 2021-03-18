@@ -19,7 +19,7 @@
 
 #define log(x) printf(log_format(x), x), putchar('\n');
 
-void func()
+void func(void)
 {
   log(u8"fit");
 
@@ -28,7 +28,7 @@ void func()
   exit(0);
 }
 
-int main()
+int main(void)
 {
   func();
 

@@ -7,7 +7,7 @@
 
 // We are going to create numbers, add something and compare results.
 
-int main()
+int main(void)
 {
   mp_int a, b, temp;
 
