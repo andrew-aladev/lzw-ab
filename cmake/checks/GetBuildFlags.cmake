@@ -139,12 +139,12 @@ function (cmake_get_build_flags)
 
   # -- pipe --
 
+  set (MESSAGE_PREFIX "Status of pipe support")
+
   if (NOT MSVC)
     set (FLAG "-pipe")
 
     cmake_test_build_flag (${FLAG})
-
-    set (MESSAGE_PREFIX "Status of pipe support")
 
     if (TEST_RESULT)
       set (CMAKE_PIPE_C_FLAGS ${FLAG})

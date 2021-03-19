@@ -51,7 +51,7 @@ function (cmake_check_c17)
 
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
 
-      break()
+      break ()
     endif ()
   endforeach ()
 
