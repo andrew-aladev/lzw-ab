@@ -1,10 +1,6 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-function (cmake_check_runnable)
-  if (DEFINED CMAKE_CAN_RUN_EXE)
-    return ()
-  endif ()
-
+function (cmake_test_runnable)
   set (NAME "cmake_check_runnable")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_runnable")
@@ -26,9 +22,19 @@ function (cmake_check_runnable)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
+  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+endfunction ()
+
+function (cmake_check_runnable)
+  if (DEFINED CMAKE_CAN_RUN_EXE)
+    return ()
+  endif ()
+
+  cmake_test_runnable ()
+
   set (MESSAGE_PREFIX "Status of run exe support")
 
-  if (COMPILE_RESULT)
+  if (TEST_RESULT)
     set (CMAKE_CAN_RUN_EXE true)
     message (STATUS "${MESSAGE_PREFIX} - working")
   else ()

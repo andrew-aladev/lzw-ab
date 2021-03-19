@@ -1,10 +1,6 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-function (cmake_get_build_flags)
-  if (DEFINED CMAKE_GET_BUILD_FLAGS_PROCESSED)
-    return ()
-  endif ()
-
+function (cmake_test_build_flag FLAG)
   set (NAME "cmake_get_build_flags")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_build_flags")
@@ -15,162 +11,195 @@ function (cmake_get_build_flags)
   include (CheckRunnable)
   cmake_check_runnable ()
 
-  # -- Debug --
+  try_compile (
+    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+    CMAKE_FLAGS
+      "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
+      "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+      "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
+    OUTPUT_VARIABLE COMPILE_OUTPUT
+  )
+  file (REMOVE_RECURSE ${BINARY_DIR})
 
-  if (MSVC)
-    set (FLAGS "/Od" "/Zi")
-  else ()
-    set (FLAGS "-O0" "-g")
+  if (CMAKE_VERBOSE_MAKEFILE)
+    message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (MESSAGE_PREFIX "Status of Debug support")
+  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+endfunction ()
 
-  foreach (FLAG ${FLAGS})
-    try_compile (
-      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-      CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
-        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-      OUTPUT_VARIABLE COMPILE_OUTPUT
-    )
-    file (REMOVE_RECURSE ${BINARY_DIR})
+function (cmake_get_build_flags)
+  if (DEFINED CMAKE_GET_BUILD_FLAGS_PROCESSED)
+    return ()
+  endif ()
 
-    if (CMAKE_VERBOSE_MAKEFILE)
-      message (STATUS ${COMPILE_OUTPUT})
-    endif ()
+  # -- Debug info --
 
-    if (COMPILE_RESULT)
-      set (CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${FLAG}")
-      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-    endif ()
-  endforeach ()
+  if (MSVC)
+    set (FLAG "/Zi")
+  else ()
+    set (FLAG "-g")
+  endif ()
 
-  if (NOT COMPILE_RESULT)
-    set (CMAKE_C_FLAGS_DEBUG "")
+  cmake_test_build_flag (${FLAG})
+
+  set (MESSAGE_PREFIX "Status of debug info support")
+
+  if (TEST_RESULT)
+    set (CMAKE_DEBUG_INFO_C_FLAGS ${FLAG})
+    message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+  else ()
+    set (CMAKE_DEBUG_INFO_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_C_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG} CACHE STRING "Debug C flags" FORCE)
+  set (
+    CMAKE_DEBUG_INFO_C_FLAGS
+    ${CMAKE_DEBUG_INFO_C_FLAGS}
+    CACHE STRING "Debug info C flags"
+  )
 
-  # -- Release --
+  # -- No optimizations --
 
   if (MSVC)
-    set (FLAGS "/O2")
+    set (FLAG "/Od")
   else ()
-    set (FLAGS "-O2")
+    set (FLAG "-O0")
   endif ()
 
-  set (MESSAGE_PREFIX "Status of Release support")
+  cmake_test_build_flag (${FLAG})
 
-  foreach (FLAG ${FLAGS})
-    try_compile (
-      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-      CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
-        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-      OUTPUT_VARIABLE COMPILE_OUTPUT
-    )
-    file (REMOVE_RECURSE ${BINARY_DIR})
+  set (MESSAGE_PREFIX "Status of no optimizations support")
 
-    if (CMAKE_VERBOSE_MAKEFILE)
-      message (STATUS ${COMPILE_OUTPUT})
-    endif ()
-
-    if (COMPILE_RESULT)
-      set (CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${FLAG}")
-      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-    endif ()
-  endforeach ()
-
-  if (NOT COMPILE_RESULT)
-    set (CMAKE_C_FLAGS_RELEASE "")
+  if (TEST_RESULT)
+    set (CMAKE_NO_OPTIMIZATIONS_C_FLAGS ${FLAG})
+    message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+  else ()
+    set (CMAKE_NO_OPTIMIZATIONS_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE} CACHE STRING "Release C flags" FORCE)
+  set (
+    CMAKE_NO_OPTIMIZATIONS_C_FLAGS
+    ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "No optimizations C flags"
+  )
 
-  # -- RelWithDebInfo --
+  # -- Optimizations --
 
   if (MSVC)
-    set (FLAGS "/O2" "/Zi")
+    set (FLAG "/O2")
   else ()
-    set (FLAGS "-O2" "-g")
+    set (FLAG "-O2")
   endif ()
 
-  set (MESSAGE_PREFIX "Status of RelWithDebInfo support")
+  cmake_test_build_flag (${FLAG})
 
-  foreach (FLAG ${FLAGS})
-    try_compile (
-      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-      CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
-        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-      OUTPUT_VARIABLE COMPILE_OUTPUT
-    )
-    file (REMOVE_RECURSE ${BINARY_DIR})
+  set (MESSAGE_PREFIX "Status of optimizations support")
 
-    if (CMAKE_VERBOSE_MAKEFILE)
-      message (STATUS ${COMPILE_OUTPUT})
-    endif ()
-
-    if (COMPILE_RESULT)
-      set (CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} ${FLAG}")
-      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-    endif ()
-  endforeach ()
-
-  if (NOT COMPILE_RESULT)
-    set (CMAKE_C_FLAGS_RELWITHDEBINFO "")
+  if (TEST_RESULT)
+    set (CMAKE_OPTIMIZATIONS_C_FLAGS ${FLAG})
+    message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+  else ()
+    set (CMAKE_OPTIMIZATIONS_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_C_FLAGS_RELWITHDEBINFO ${CMAKE_C_FLAGS_RELWITHDEBINFO} CACHE STRING "RelWithDebInfo C flags" FORCE)
+  set (
+    CMAKE_OPTIMIZATIONS_C_FLAGS
+    ${CMAKE_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "Optimizations C flags"
+  )
 
-  # -- MinSizeRel --
+  # -- Min size optimizations --
 
   if (MSVC)
-    set (FLAGS "/Os")
+    set (FLAG "/Os")
   else ()
-    set (FLAGS "-Os")
+    set (FLAG "-Os")
   endif ()
 
-  set (MESSAGE_PREFIX "Status of MinSizeRel support")
+  cmake_test_build_flag (${FLAG})
 
-  foreach (FLAG ${FLAGS})
-    try_compile (
-      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-      CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
-        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-      OUTPUT_VARIABLE COMPILE_OUTPUT
-    )
-    file (REMOVE_RECURSE ${BINARY_DIR})
+  set (MESSAGE_PREFIX "Status of min size optimizations support")
 
-    if (CMAKE_VERBOSE_MAKEFILE)
-      message (STATUS ${COMPILE_OUTPUT})
-    endif ()
-
-    if (COMPILE_RESULT)
-      set (CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL} ${FLAG}")
-      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
-    endif ()
-  endforeach ()
-
-  if (NOT COMPILE_RESULT)
-    set (CMAKE_C_FLAGS_MINSIZEREL "")
+  if (TEST_RESULT)
+    set (CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS ${FLAG})
+    message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+  else ()
+    set (CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_C_FLAGS_MINSIZEREL ${CMAKE_C_FLAGS_MINSIZEREL} CACHE STRING "MinSizeRel C flags" FORCE)
+  set (
+    CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS
+    ${CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "Min size optimizations C flags"
+  )
+
+  # -- pipe --
+
+  if (NOT MSVC)
+    set (FLAG "-pipe")
+
+    cmake_test_build_flag (${FLAG})
+
+    set (MESSAGE_PREFIX "Status of pipe support")
+
+    if (TEST_RESULT)
+      set (CMAKE_PIPE_C_FLAGS ${FLAG})
+      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+    else ()
+      set (CMAKE_PIPE_C_FLAGS "")
+      message (STATUS "${MESSAGE_PREFIX} - no")
+    endif ()
+
+  else ()
+    set (CMAKE_PIPE_C_FLAGS "")
+    message (STATUS "${MESSAGE_PREFIX} - no")
+  endif ()
+
+  set (
+    CMAKE_PIPE_C_FLAGS
+    ${CMAKE_PIPE_C_FLAGS}
+    CACHE STRING "Pipe C flags"
+  )
+
+  # -- result --
+
+  set (
+    CMAKE_C_FLAGS_DEBUG
+    "${CMAKE_NO_OPTIMIZATIONS_C_FLAGS} ${CMAKE_DEBUG_INFO_C_FLAGS}"
+    CACHE STRING "Debug C flags" FORCE
+  )
+  set (
+    CMAKE_C_FLAGS_RELEASE
+    ${CMAKE_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "Release C flags" FORCE
+  )
+  set (
+    CMAKE_C_FLAGS_RELWITHDEBINFO
+    "${CMAKE_OPTIMIZATIONS_C_FLAGS} ${CMAKE_DEBUG_INFO_C_FLAGS}"
+    CACHE STRING "RelWithDebInfo C flags" FORCE
+  )
+  set (
+    CMAKE_C_FLAGS_MINSIZEREL
+    ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "MinSizeRel C flags" FORCE
+  )
+
+  set (CMAKE_GET_BUILD_FLAGS_PROCESSED true CACHE STRING "Build flags processed")
 
   mark_as_advanced (
+    CMAKE_DEBUG_INFO_C_FLAGS
+    CMAKE_NO_OPTIMIZATIONS_C_FLAGS
+    CMAKE_OPTIMIZATIONS_C_FLAGS
+    CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS
+    CMAKE_PIPE_C_FLAGS
     CMAKE_C_FLAGS_DEBUG
     CMAKE_C_FLAGS_RELEASE
     CMAKE_C_FLAGS_RELWITHDEBINFO
     CMAKE_C_FLAGS_MINSIZEREL
+    CMAKE_GET_BUILD_FLAGS_PROCESSED
   )
 endfunction ()

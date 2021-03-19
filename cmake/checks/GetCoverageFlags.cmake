@@ -1,5 +1,33 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
+function (cmake_test_coverage FLAG)
+  set (NAME "cmake_get_coverage_flags")
+  set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_coverage_flags")
+
+  include (GetVerboseFlags)
+  cmake_get_verbose_flags ()
+
+  include (CheckRunnable)
+  cmake_check_runnable ()
+
+  try_compile (
+    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+    CMAKE_FLAGS
+      "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
+      "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+      "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
+    OUTPUT_VARIABLE COMPILE_OUTPUT
+  )
+  file (REMOVE_RECURSE ${BINARY_DIR})
+
+  if (CMAKE_VERBOSE_MAKEFILE)
+    message (STATUS ${COMPILE_OUTPUT})
+  endif ()
+
+  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+endfunction ()
+
 function (cmake_get_coverage_flags)
   if (DEFINED CMAKE_GET_COVERAGE_FLAGS_PROCESSED)
     return ()
@@ -8,33 +36,11 @@ function (cmake_get_coverage_flags)
   set (MESSAGE_PREFIX "Status of coverage support")
 
   if (NOT MSVC)
-    set (NAME "cmake_get_coverage_flags")
-    set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
-    set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_coverage_flags")
-
-    include (GetVerboseFlags)
-    cmake_get_verbose_flags ()
-
-    include (CheckRunnable)
-    cmake_check_runnable ()
-
     set (FLAG "--coverage")
 
-    try_compile (
-      COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
-      CMAKE_FLAGS
-        "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
-        "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
-        "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-      OUTPUT_VARIABLE COMPILE_OUTPUT
-    )
-    file (REMOVE_RECURSE ${BINARY_DIR})
+    cmake_test_coverage (${FLAG})
 
-    if (CMAKE_VERBOSE_MAKEFILE)
-      message (STATUS ${COMPILE_OUTPUT})
-    endif ()
-
-    if (COMPILE_RESULT)
+    if (TEST_RESULT)
       set (CMAKE_COVERAGE_C_FLAGS ${FLAG})
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
     else ()
