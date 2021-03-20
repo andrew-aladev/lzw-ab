@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#include "print.h"
+#include "../common/print.h"
 
 #define XSTR(x) STR(x)
 #define STR(x)  #x

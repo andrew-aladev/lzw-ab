@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#include "print.h"
+#include "../common/print.h"
 
 #define BYTE_TEMPLATE        "0x%02x"
 #define BYTE_LENGTH_PER_LINE 16

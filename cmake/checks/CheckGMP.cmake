@@ -28,7 +28,7 @@ function (cmake_test_gmp)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_check_gmp CHECK_MODE)
@@ -43,7 +43,7 @@ function (cmake_check_gmp CHECK_MODE)
   if (CMAKE_GMP_FOUND)
     cmake_test_gmp ()
 
-    if (TEST_RESULT)
+    if (COMPILE_RESULT)
       set (CMAKE_GMP_WORKS true)
       message (STATUS "${MESSAGE_PREFIX} - working")
     else ()

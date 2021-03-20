@@ -25,7 +25,7 @@ function (cmake_test_ipo)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_check_ipo)
@@ -45,7 +45,7 @@ function (cmake_check_ipo)
   if (CHECK_RESULT)
     cmake_test_ipo ()
 
-    if (TEST_RESULT)
+    if (COMPILE_RESULT)
       set (CMAKE_INTERPROCEDURAL_OPTIMIZATION true)
       message (STATUS "${MESSAGE_PREFIX} - working")
     else ()

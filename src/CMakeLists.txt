@@ -21,10 +21,10 @@ endif ()
 configure_file ("config.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/config.h")
 
 include (GenerateBytesWithReversedBitsTable)
-generate_bytes_with_reversed_bits_table ()
+cmake_generate_bytes_with_reversed_bits_table ()
 
 include (GenerateMasksForLastBitsTable)
-generate_masks_for_last_bits_table ()
+cmake_generate_masks_for_last_bits_table ()
 
 if (DEFINED CMAKE_BYTES_WITH_REVERSED_BITS_TABLE AND DEFINED CMAKE_MASKS_FOR_LAST_BITS_TABLE)
   configure_file ("generated_constants.c.in" "${CMAKE_CURRENT_SOURCE_DIR}/generated_constants.c")

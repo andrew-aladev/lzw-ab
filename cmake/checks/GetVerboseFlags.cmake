@@ -18,7 +18,7 @@ function (cmake_test_verbose_flag FLAG)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_get_verbose_flags)
@@ -38,7 +38,7 @@ function (cmake_get_verbose_flags)
 
   set (MESSAGE_PREFIX "Status of Werror support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_WERROR_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -62,7 +62,7 @@ function (cmake_get_verbose_flags)
 
   set (MESSAGE_PREFIX "Status of pedantic support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_VERBOSE_C_FLAGS "${CMAKE_VERBOSE_C_FLAGS} ${FLAG}")
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -81,7 +81,7 @@ function (cmake_get_verbose_flags)
 
   set (MESSAGE_PREFIX "Status of Wall support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_VERBOSE_C_FLAGS "${CMAKE_VERBOSE_C_FLAGS} ${FLAG}")
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -100,7 +100,7 @@ function (cmake_get_verbose_flags)
 
   set (MESSAGE_PREFIX "Status of Wextra support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_VERBOSE_C_FLAGS "${CMAKE_VERBOSE_C_FLAGS} ${FLAG}")
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()

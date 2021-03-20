@@ -28,7 +28,7 @@ function (cmake_test_tommath)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_check_tommath CHECK_MODE)
@@ -43,7 +43,7 @@ function (cmake_check_tommath CHECK_MODE)
   if (CMAKE_TOMMATH_FOUND)
     cmake_test_tommath ()
 
-    if (TEST_RESULT)
+    if (COMPILE_RESULT)
       set (CMAKE_TOMMATH_WORKS true)
       message (STATUS "${MESSAGE_PREFIX} - working")
     else ()

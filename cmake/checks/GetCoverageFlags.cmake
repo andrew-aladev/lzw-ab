@@ -25,7 +25,7 @@ function (cmake_test_coverage FLAG)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_get_coverage_flags)
@@ -40,7 +40,7 @@ function (cmake_get_coverage_flags)
 
     cmake_test_coverage (${FLAG})
 
-    if (TEST_RESULT)
+    if (COMPILE_RESULT)
       set (CMAKE_COVERAGE_C_FLAGS ${FLAG})
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
     else ()

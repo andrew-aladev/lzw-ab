@@ -22,7 +22,7 @@ function (cmake_test_runnable)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_check_runnable)
@@ -34,7 +34,7 @@ function (cmake_check_runnable)
 
   set (MESSAGE_PREFIX "Status of run exe support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_CAN_RUN_EXE true)
     message (STATUS "${MESSAGE_PREFIX} - working")
   else ()

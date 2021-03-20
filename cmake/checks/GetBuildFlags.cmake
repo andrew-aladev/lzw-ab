@@ -25,7 +25,7 @@ function (cmake_test_build_flag FLAG)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_get_build_flags)
@@ -45,7 +45,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of debug info support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_DEBUG_INFO_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -71,7 +71,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of no optimizations support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_NO_OPTIMIZATIONS_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -97,7 +97,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of optimizations support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_OPTIMIZATIONS_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -123,7 +123,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of min size optimizations support")
 
-  if (TEST_RESULT)
+  if (COMPILE_RESULT)
     set (CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -146,7 +146,7 @@ function (cmake_get_build_flags)
 
     cmake_test_build_flag (${FLAG})
 
-    if (TEST_RESULT)
+    if (COMPILE_RESULT)
       set (CMAKE_PIPE_C_FLAGS ${FLAG})
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
     else ()

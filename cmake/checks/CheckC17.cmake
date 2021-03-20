@@ -22,7 +22,7 @@ function (cmake_test_c17 FLAG)
     message (STATUS ${COMPILE_OUTPUT})
   endif ()
 
-  set (TEST_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_check_c17)
@@ -41,7 +41,7 @@ function (cmake_check_c17)
   foreach (FLAG ${FLAGS})
     cmake_test_c17 (${FLAG})
 
-    if (TEST_RESULT)
+    if (COMPILE_RESULT)
       set (CMAKE_HAVE_C17 true)
       set (CMAKE_C17_C_FLAGS ${FLAG})
 
@@ -55,7 +55,7 @@ function (cmake_check_c17)
     endif ()
   endforeach ()
 
-  if (NOT TEST_RESULT)
+  if (NOT COMPILE_RESULT)
     set (CMAKE_HAVE_C17 false)
     set (CMAKE_C17_C_FLAGS "")
 
