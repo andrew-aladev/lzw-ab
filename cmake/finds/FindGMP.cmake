@@ -11,14 +11,22 @@ else ()
   message (STATUS "${MESSAGE_PREFIX} - header file not found")
 endif ()
 
-find_library (CMAKE_GMP_SHARED_LIBRARY_PATH NAMES "libgmp.so" "libgmp.dylib" "libgmp.dll")
+find_library (
+  CMAKE_GMP_SHARED_LIBRARY_PATH NAMES
+  "libgmp.so" "libgmp.dylib" "libgmp.dll"
+  "gmp.so" "gmp.dylib" "gmp.dll"
+)
 if (CMAKE_GMP_SHARED_LIBRARY_PATH)
   message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_GMP_SHARED_LIBRARY_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - shared library not found")
 endif ()
 
-find_library (CMAKE_GMP_STATIC_LIBRARY_PATH NAMES "libgmp.a")
+find_library (
+  CMAKE_GMP_STATIC_LIBRARY_PATH NAMES
+  "libgmp.a" "libgmp.lib"
+  "gmp.a" "gmp.lib"
+)
 if (CMAKE_GMP_STATIC_LIBRARY_PATH)
   message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_GMP_STATIC_LIBRARY_PATH}\"")
 else ()

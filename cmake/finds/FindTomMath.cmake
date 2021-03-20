@@ -11,14 +11,22 @@ else ()
   message (STATUS "${MESSAGE_PREFIX} - header file not found")
 endif ()
 
-find_library (CMAKE_TOMMATH_SHARED_LIBRARY_PATH NAMES "libtommath.so" "libtommath.dylib" "libtommath.dll")
+find_library (
+  CMAKE_TOMMATH_SHARED_LIBRARY_PATH NAMES
+  "libtommath.so" "libtommath.dylib" "libtommath.dll"
+  "tommath.so" "tommath.dylib" "tommath.dll"
+)
 if (CMAKE_TOMMATH_SHARED_LIBRARY_PATH)
   message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_TOMMATH_SHARED_LIBRARY_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - shared library not found")
 endif ()
 
-find_library (CMAKE_TOMMATH_STATIC_LIBRARY_PATH NAMES "libtommath.a")
+find_library (
+  CMAKE_TOMMATH_STATIC_LIBRARY_PATH NAMES
+  "libtommath.a" "libtommath.lib"
+  "tommath.a" "tommath.lib"
+)
 if (CMAKE_TOMMATH_STATIC_LIBRARY_PATH)
   message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_TOMMATH_STATIC_LIBRARY_PATH}\"")
 else ()
