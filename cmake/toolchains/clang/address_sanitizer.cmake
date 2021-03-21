@@ -1,5 +1,10 @@
-set (CMAKE_C_COMPILER "clang")
-set (CMAKE_C_COMPILER_AR "llvm-ar")
-set (CMAKE_C_COMPILER_RANLIB "llvm-ranlib")
+include ("${CMAKE_CURRENT_LIST_DIR}/default.cmake")
 
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address" CACHE STRING "cmake C flags")
+set (
+  CMAKE_DEFAULT_C_FLAGS ${CMAKE_C_FLAGS}
+  CACHE STRING "cmake default C flags"
+)
+set (
+  CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address"
+  CACHE STRING "cmake C flags"
+)

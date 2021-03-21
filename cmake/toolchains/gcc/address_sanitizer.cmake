@@ -1,3 +1,10 @@
-set (CMAKE_C_COMPILER "gcc")
+include ("${CMAKE_CURRENT_LIST_DIR}/default.cmake")
 
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -Wno-maybe-uninitialized" CACHE STRING "cmake C flags")
+set (
+  CMAKE_DEFAULT_C_FLAGS ${CMAKE_C_FLAGS}
+  CACHE STRING "cmake default C flags"
+)
+set (
+  CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -Wno-maybe-uninitialized"
+  CACHE STRING "cmake C flags"
+)
