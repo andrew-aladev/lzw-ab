@@ -1,9 +1,9 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function (cmake_test_build_flag FLAG)
-  set (NAME "cmake_get_build_flags")
+  set (NAME "cmake_test_build_flag")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/get_build_flags")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_build_flag")
 
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
@@ -12,20 +12,20 @@ function (cmake_test_build_flag FLAG)
   cmake_check_runnable ()
 
   try_compile (
-    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+    TEST_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
     CMAKE_FLAGS
       "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS} ${FLAG}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-    OUTPUT_VARIABLE COMPILE_OUTPUT
+    OUTPUT_VARIABLE TEST_OUTPUT
   )
   file (REMOVE_RECURSE ${BINARY_DIR})
 
   if (CMAKE_VERBOSE_MAKEFILE)
-    message (STATUS ${COMPILE_OUTPUT})
+    message (STATUS ${TEST_OUTPUT})
   endif ()
 
-  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (TEST_RESULT ${TEST_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_get_build_flags)
@@ -45,7 +45,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of debug info support")
 
-  if (COMPILE_RESULT)
+  if (TEST_RESULT)
     set (CMAKE_DEBUG_INFO_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -71,7 +71,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of no optimizations support")
 
-  if (COMPILE_RESULT)
+  if (TEST_RESULT)
     set (CMAKE_NO_OPTIMIZATIONS_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -97,7 +97,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of optimizations support")
 
-  if (COMPILE_RESULT)
+  if (TEST_RESULT)
     set (CMAKE_OPTIMIZATIONS_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -123,7 +123,7 @@ function (cmake_get_build_flags)
 
   set (MESSAGE_PREFIX "Status of min size optimizations support")
 
-  if (COMPILE_RESULT)
+  if (TEST_RESULT)
     set (CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS ${FLAG})
     message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
   else ()
@@ -146,7 +146,7 @@ function (cmake_get_build_flags)
 
     cmake_test_build_flag (${FLAG})
 
-    if (COMPILE_RESULT)
+    if (TEST_RESULT)
       set (CMAKE_PIPE_C_FLAGS ${FLAG})
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
     else ()

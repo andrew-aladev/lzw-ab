@@ -5,7 +5,7 @@ set (CMAKE_TOMMATH_INCLUDE_PATH        "" CACHE STRING "TomMath include path")
 set (CMAKE_TOMMATH_SHARED_LIBRARY_PATH "" CACHE STRING "TomMath shared library path")
 set (CMAKE_TOMMATH_STATIC_LIBRARY_PATH "" CACHE STRING "TomMath static library path")
 
-set (CMAKE_TRY_RUN false CACHE BOOL "try run targets after build")
+set (CMAKE_TRY_RUN false CACHE BOOL "try run target after build")
 
 include_directories (${CMAKE_TOMMATH_INCLUDE_PATH})
 

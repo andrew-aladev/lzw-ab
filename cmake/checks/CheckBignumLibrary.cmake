@@ -15,15 +15,19 @@ function (cmake_check_bignum_library BIGNUM_LIBRARY)
     cmake_check_tommath (REQUIRED)
   else ()
     # Bignum library selection.
+
     foreach (BIGNUM_LIBRARY_VARIANT ${BIGNUM_LIBRARIES})
       if (BIGNUM_LIBRARY_VARIANT STREQUAL "gmp")
         cmake_check_gmp (OPTIONAL)
+
         if (CMAKE_GMP_WORKS)
           set (BIGNUM_LIBRARY "gmp")
           break ()
         endif ()
+
       elseif (BIGNUM_LIBRARY_VARIANT STREQUAL "tommath")
         cmake_check_tommath (OPTIONAL)
+
         if (CMAKE_TOMMATH_WORKS)
           set (BIGNUM_LIBRARY "tommath")
           break ()

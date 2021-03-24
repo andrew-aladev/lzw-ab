@@ -1,9 +1,9 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function (cmake_run_masks_for_last_bits_table)
-  set (NAME "cmake_generator_masks_for_last_bits_table")
+  set (NAME "cmake_run_masks_for_last_bits_table")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/masks_for_last_bits_table")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/generator_masks_for_last_bits_table")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/run_masks_for_last_bits_table")
 
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()

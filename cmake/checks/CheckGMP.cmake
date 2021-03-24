@@ -1,9 +1,12 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function (cmake_test_gmp)
-  set (NAME "cmake_check_gmp")
+  set (NAME "cmake_test_gmp")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/GMP")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_gmp")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_gmp")
+
+  include (GetVerboseFlags)
+  cmake_get_verbose_flags ()
 
   include (CheckC17)
   cmake_check_c17 ()
@@ -12,23 +15,23 @@ function (cmake_test_gmp)
   cmake_check_runnable ()
 
   try_compile (
-    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+    TEST_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
     CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=${CMAKE_C17_C_FLAGS}"
+      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_GMP_INCLUDE_PATH=${CMAKE_GMP_INCLUDE_PATH}"
       "-DCMAKE_GMP_SHARED_LIBRARY_PATH=${CMAKE_GMP_SHARED_LIBRARY_PATH}"
       "-DCMAKE_GMP_STATIC_LIBRARY_PATH=${CMAKE_GMP_STATIC_LIBRARY_PATH}"
       "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
-    OUTPUT_VARIABLE COMPILE_OUTPUT
+    OUTPUT_VARIABLE TEST_OUTPUT
   )
   file (REMOVE_RECURSE ${BINARY_DIR})
 
   if (CMAKE_VERBOSE_MAKEFILE)
-    message (STATUS ${COMPILE_OUTPUT})
+    message (STATUS ${TEST_OUTPUT})
   endif ()
 
-  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (TEST_RESULT ${TEST_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_check_gmp CHECK_MODE)
@@ -43,7 +46,7 @@ function (cmake_check_gmp CHECK_MODE)
   if (CMAKE_GMP_FOUND)
     cmake_test_gmp ()
 
-    if (COMPILE_RESULT)
+    if (TEST_RESULT)
       set (CMAKE_GMP_WORKS true)
       message (STATUS "${MESSAGE_PREFIX} - working")
     else ()

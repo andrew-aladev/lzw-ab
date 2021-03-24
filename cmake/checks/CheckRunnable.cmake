@@ -1,28 +1,28 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function (cmake_test_runnable)
-  set (NAME "cmake_check_runnable")
+  set (NAME "cmake_test_runnable")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/basic")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/check_runnable")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_runnable")
 
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
 
   try_compile (
-    COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
+    TEST_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
     CMAKE_FLAGS
       "-DCMAKE_C_FLAGS=${CMAKE_WERROR_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_TRY_RUN=1"
-    OUTPUT_VARIABLE COMPILE_OUTPUT
+    OUTPUT_VARIABLE TEST_OUTPUT
   )
   file (REMOVE_RECURSE ${BINARY_DIR})
 
   if (CMAKE_VERBOSE_MAKEFILE)
-    message (STATUS ${COMPILE_OUTPUT})
+    message (STATUS ${TEST_OUTPUT})
   endif ()
 
-  set (COMPILE_RESULT ${COMPILE_RESULT} PARENT_SCOPE)
+  set (TEST_RESULT ${TEST_RESULT} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_check_runnable)
@@ -34,7 +34,7 @@ function (cmake_check_runnable)
 
   set (MESSAGE_PREFIX "Status of run exe support")
 
-  if (COMPILE_RESULT)
+  if (TEST_RESULT)
     set (CMAKE_CAN_RUN_EXE true)
     message (STATUS "${MESSAGE_PREFIX} - working")
   else ()
