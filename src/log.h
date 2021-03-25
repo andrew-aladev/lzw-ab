@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 // Relative file path can be provided during each source file compilation.
-#ifndef __RELATIVE_FILE_PATH__
+#if !defined(__RELATIVE_FILE_PATH__)
 #define __RELATIVE_FILE_PATH__ __FILE__
 #endif
 

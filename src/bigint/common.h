@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -28,7 +28,7 @@ enum
 
 typedef uint_fast8_t lzws_bigint_compare_result_t;
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

@@ -10,7 +10,7 @@
 #include "compressor/common.h"
 #include "decompressor/common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -44,7 +44,7 @@ LZWS_EXPORT lzws_result_t lzws_decompress_string(
   size_t                             destination_buffer_length,
   const lzws_decompressor_options_t* options_ptr);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

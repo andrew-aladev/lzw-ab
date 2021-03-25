@@ -12,7 +12,7 @@
 #include "config.h"
 #include "export.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -62,7 +62,7 @@ inline lzws_code_fast_t lzws_get_first_free_code(bool block_mode)
   return block_mode ? LZWS_FIRST_FREE_CODE_IN_BLOCK_MODE : LZWS_FIRST_FREE_CODE;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

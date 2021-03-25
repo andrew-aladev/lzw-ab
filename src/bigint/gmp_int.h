@@ -11,7 +11,7 @@
 #include "../macro.h"
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -50,7 +50,7 @@ LZWS_EXPORT lzws_result_t lzws_bigint_compare_with_uint32(
 
 LZWS_EXPORT void lzws_bigint_clear_multiple(lzws_bigint_t* bigint_ptr, ...);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

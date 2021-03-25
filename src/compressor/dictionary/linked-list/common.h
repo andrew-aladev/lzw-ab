@@ -7,7 +7,7 @@
 
 #include "../../common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -21,7 +21,7 @@ typedef struct
   lzws_code_fast_t next_sibling_codes_offset;
 } lzws_compressor_dictionary_t;
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

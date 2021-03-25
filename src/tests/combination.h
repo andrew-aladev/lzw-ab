@@ -11,7 +11,7 @@
 #include "../decompressor/state.h"
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -33,7 +33,7 @@ LZWS_TEST_EXPORT lzws_result_t
 LZWS_TEST_EXPORT lzws_result_t
   lzws_test_compatible_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

@@ -8,7 +8,7 @@
 #include "../compressor/state.h"
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -29,7 +29,7 @@ LZWS_TEST_EXPORT lzws_result_t lzws_test_compressor_write_codes(
   size_t*                  destination_length_ptr,
   size_t                   destination_buffer_length);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

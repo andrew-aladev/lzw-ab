@@ -11,7 +11,7 @@
 #include "../decompressor/common.h"
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -46,7 +46,7 @@ LZWS_TEST_EXPORT lzws_result_t lzws_tests_decompress_string_and_file(
   size_t                             buffer_length,
   const lzws_decompressor_options_t* options_ptr);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

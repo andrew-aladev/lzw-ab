@@ -1,11 +1,11 @@
 cmake_minimum_required (VERSION 3.12)
 project ("cmake_check_tommath" "C")
 
-set (CMAKE_TOMMATH_INCLUDE_PATH        "" CACHE STRING "TomMath include path")
-set (CMAKE_TOMMATH_SHARED_LIBRARY_PATH "" CACHE STRING "TomMath shared library path")
-set (CMAKE_TOMMATH_STATIC_LIBRARY_PATH "" CACHE STRING "TomMath static library path")
+option (CMAKE_TOMMATH_INCLUDE_PATH "TomMath include path" "")
+option (CMAKE_TOMMATH_SHARED_LIBRARY_PATH "TomMath shared library path" "")
+option (CMAKE_TOMMATH_STATIC_LIBRARY_PATH "TomMath static library path" "")
 
-set (CMAKE_TRY_RUN false CACHE BOOL "try run target after build")
+option (CMAKE_TRY_RUN "try run target after build" OFF)
 
 include_directories (${CMAKE_TOMMATH_INCLUDE_PATH})
 

@@ -9,7 +9,7 @@
 
 #include "../common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -24,7 +24,7 @@ typedef struct
   size_t       output_length;
 } lzws_decompressor_dictionary_t;
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

@@ -9,7 +9,7 @@
 
 #include "../../bigint/main.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -19,7 +19,7 @@ typedef struct
   lzws_bigint_t source_length, destination_length;
 } lzws_compressor_ratio_t;
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

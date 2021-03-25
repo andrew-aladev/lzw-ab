@@ -7,7 +7,7 @@
 
 #include "state.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -21,7 +21,7 @@ inline void lzws_decompressor_clear_remainder(lzws_decompressor_state_t* state_p
   state_ptr->remainder_bit_length = 0;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

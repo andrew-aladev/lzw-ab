@@ -7,13 +7,13 @@
 
 #include "../../common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
 lzws_result_t lzws_test_invalid_max_code_bit_length();
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

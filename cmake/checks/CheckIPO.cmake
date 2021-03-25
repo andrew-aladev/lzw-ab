@@ -11,6 +11,9 @@ function (cmake_test_ipo)
   include (CheckC17)
   cmake_check_c17 ()
 
+  include (GetExportMode)
+  cmake_get_export_mode ()
+
   include (CheckRunnable)
   cmake_check_runnable ()
 

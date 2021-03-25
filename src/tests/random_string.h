@@ -10,13 +10,13 @@
 
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
 LZWS_TEST_EXPORT void lzws_tests_set_random_string(char* buffer, size_t buffer_length);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

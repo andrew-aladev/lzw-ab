@@ -7,7 +7,7 @@
 
 #include "../common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -33,7 +33,7 @@ enum
   LZWS_DECOMPRESSOR_UNKNOWN_STATUS
 };
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

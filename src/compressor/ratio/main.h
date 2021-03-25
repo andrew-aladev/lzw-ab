@@ -7,7 +7,7 @@
 
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -32,7 +32,7 @@ inline void lzws_compressor_free_ratio(lzws_compressor_ratio_t* ratio_ptr)
   lzws_bigint_clear_multiple(&ratio_ptr->source_length, &ratio_ptr->destination_length, NULL);
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

@@ -7,7 +7,7 @@
 
 #include "state.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -23,7 +23,7 @@ LZWS_EXPORT lzws_result_t lzws_compressor_read_next_symbol(
 
 LZWS_EXPORT void lzws_compressor_process_eof_before_next_symbol(lzws_compressor_state_t* state_ptr);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

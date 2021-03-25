@@ -9,7 +9,7 @@
 
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -41,7 +41,7 @@ LZWS_EXPORT void lzws_compressor_save_next_code_to_dictionary(
 
 LZWS_EXPORT void lzws_compressor_free_dictionary(lzws_compressor_dictionary_t* dictionary_ptr);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

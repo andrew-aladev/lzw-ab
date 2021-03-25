@@ -10,7 +10,7 @@
 #include "dictionary/common.h"
 #include "ratio/common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -78,7 +78,7 @@ inline size_t lzws_compressor_get_total_codes_length(const lzws_compressor_state
   return state_ptr->max_code + 1;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

@@ -7,7 +7,7 @@
 
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -41,7 +41,7 @@ inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompresso
 
 LZWS_EXPORT void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

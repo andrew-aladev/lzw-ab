@@ -7,7 +7,7 @@
 
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -47,7 +47,7 @@ inline void lzws_compressor_reset_alignment_after_writing(
   alignment_ptr->last_used_code_bit_length = last_used_code_bit_length;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

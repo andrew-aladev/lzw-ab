@@ -7,7 +7,7 @@
 
 #include "../common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -39,7 +39,7 @@ enum
 #define LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE                     0
 #define LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE_HAS_IDENTICAL_BYTES true
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

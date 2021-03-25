@@ -8,7 +8,7 @@
 #include "../../state.h"
 #include "main.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -51,7 +51,7 @@ inline void lzws_compressor_free_dictionary_wrapper(lzws_compressor_state_t* sta
   lzws_compressor_free_dictionary(&state_ptr->dictionary, &state_ptr->options);
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

@@ -7,7 +7,7 @@
 
 #include "state.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -18,7 +18,7 @@ LZWS_EXPORT lzws_result_t lzws_decompress(
   lzws_byte_t**              destination_ptr,
   size_t*                    destination_length_ptr);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

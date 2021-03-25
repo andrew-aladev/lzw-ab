@@ -7,7 +7,7 @@
 
 #include "../../common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -17,7 +17,7 @@ typedef struct
   lzws_byte_fast_t destination_byte_length;
 } lzws_compressor_alignment_t;
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

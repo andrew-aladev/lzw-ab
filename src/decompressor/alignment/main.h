@@ -7,7 +7,7 @@
 
 #include "common.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -47,7 +47,7 @@ inline void lzws_decompressor_reset_alignment_after_reading(
   alignment_ptr->free_code_bit_length = free_code_bit_length;
 }
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

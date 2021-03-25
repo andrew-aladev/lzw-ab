@@ -7,7 +7,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -18,7 +18,7 @@ inline int inline_function()
 
 CHECK_EXPORT int function();
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

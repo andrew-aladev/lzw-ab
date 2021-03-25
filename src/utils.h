@@ -10,7 +10,7 @@
 
 #include "constants.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -63,7 +63,7 @@ LZWS_EXPORT void* lzws_allocate_array(
   bool             item_is_zero,
   bool             item_bytes_are_identical);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 

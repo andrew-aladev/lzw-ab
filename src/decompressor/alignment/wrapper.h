@@ -8,7 +8,7 @@
 #include "../state.h"
 #include "main.h"
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -47,7 +47,7 @@ LZWS_EXPORT lzws_result_t lzws_decompressor_read_alignment_before_next_code(
   lzws_byte_t**              source_ptr,
   size_t*                    source_length_ptr);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 } // extern "C"
 #endif
 
