@@ -9,42 +9,36 @@
 
 #if defined(EXPORT_STATIC_FLAG)
 
-#define EXPORT_FUNCTION
-#define EXPORT_DATA
+#define EXPORT
+#define NO_EXPORT
 
 #else
 
-#if !defined(EXPORT_FUNCTION)
+#if !defined(EXPORT)
 #if defined(EXPORT_MODE_DLL)
 
 #if defined(EXPORT_BUILD_FLAG)
-#define EXPORT_FUNCTION __declspec(dllexport)
+#define EXPORT __declspec(dllexport)
 #else
-#define EXPORT_FUNCTION __declspec(dllimport)
+#define EXPORT __declspec(dllimport)
 #endif
 
 #elif defined(EXPORT_MODE_VISIBILITY)
-#define EXPORT_FUNCTION __attribute__((visibility("default")))
+#define EXPORT __attribute__((visibility("default")))
 #else
-#define EXPORT_FUNCTION
+#define EXPORT
 #endif
-#endif // EXPORT_FUNCTION
+#endif // EXPORT
 
-#if !defined(EXPORT_DATA)
-#if defined(EXPORT_MODE_DLL) || defined(EXPORT_MODE_DLL_WITH_ALL_SYMBOLS)
-
-#if defined(EXPORT_BUILD_FLAG)
-#define EXPORT_DATA __declspec(dllexport)
-#else
-#define EXPORT_DATA __declspec(dllimport)
-#endif
-
+#if !defined(NO_EXPORT)
+#if defined(EXPORT_MODE_DLL)
+#define NO_EXPORT
 #elif defined(EXPORT_MODE_VISIBILITY)
-#define EXPORT_DATA __attribute__((visibility("default")))
+#define NO_EXPORT __attribute__((visibility("hidden")))
 #else
-#define EXPORT_DATA
+#define NO_EXPORT
 #endif
-#endif // EXPORT_DATA
+#endif // NO_EXPORT
 
 #endif // EXPORT_STATIC_FLAG
 

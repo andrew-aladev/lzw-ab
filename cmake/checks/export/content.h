@@ -11,14 +11,21 @@
 extern "C" {
 #endif
 
-EXPORT_DATA extern const int data;
+EXPORT extern const int    data;
+NO_EXPORT extern const int hidden_data;
 
-EXPORT_FUNCTION inline int inline_function()
+EXPORT inline int inline_function()
 {
   return 0;
 }
 
-EXPORT_FUNCTION int function();
+NO_EXPORT inline int hidden_inline_function()
+{
+  return 1;
+}
+
+EXPORT int    function();
+NO_EXPORT int hidden_function();
 
 #if defined(__cplusplus)
 } // extern "C"

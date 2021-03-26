@@ -4,11 +4,18 @@
 
 #include "content.h"
 
-EXPORT_DATA const int data = 0;
+EXPORT const int    data        = 0;
+NO_EXPORT const int hidden_data = 1;
 
-EXPORT_FUNCTION extern inline int inline_function();
+EXPORT extern inline int    inline_function();
+NO_EXPORT extern inline int hidden_inline_function();
 
-EXPORT_FUNCTION int function()
+EXPORT int function()
 {
   return 0;
+}
+
+NO_EXPORT int hidden_function()
+{
+  return 1;
 }
