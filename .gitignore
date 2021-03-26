@@ -2,7 +2,6 @@ attached-main-root/*
 attached-toolchain-root/*
 build/*
 cmake/checks/export/config.h
-cmake/checks/IPO/export.h
 src/config.h
 src/export.h
 src/tests/export.h

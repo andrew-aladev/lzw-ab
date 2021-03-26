@@ -2,7 +2,7 @@ set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function (cmake_test_ipo)
   set (NAME "cmake_test_ipo")
-  set (SOURCE_DIR "${CURRENT_LIST_DIR}/IPO")
+  set (SOURCE_DIR "${CURRENT_LIST_DIR}/export")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_ipo")
 
   include (GetVerboseFlags)
@@ -12,7 +12,7 @@ function (cmake_test_ipo)
   cmake_check_c17 ()
 
   include (GetExportMode)
-  cmake_get_export_mode ()
+  cmake_get_export_mode (REQUIRED)
 
   include (CheckRunnable)
   cmake_check_runnable ()
@@ -22,6 +22,8 @@ function (cmake_test_ipo)
     CMAKE_FLAGS
       "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
+      "-DCMAKE_EXPORT_MODE_UPPERCASE=${CMAKE_EXPORT_MODE_UPPERCASE}"
+      "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=${CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS}"
       "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
     OUTPUT_VARIABLE TEST_OUTPUT
   )

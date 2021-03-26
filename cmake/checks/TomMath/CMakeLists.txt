@@ -4,7 +4,6 @@ project ("cmake_check_tommath" "C")
 option (CMAKE_TOMMATH_INCLUDE_PATH "TomMath include path" "")
 option (CMAKE_TOMMATH_SHARED_LIBRARY_PATH "TomMath shared library path" "")
 option (CMAKE_TOMMATH_STATIC_LIBRARY_PATH "TomMath static library path" "")
-
 option (CMAKE_TRY_RUN "try run target after build" OFF)
 
 include_directories (${CMAKE_TOMMATH_INCLUDE_PATH})

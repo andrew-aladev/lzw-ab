@@ -4,7 +4,6 @@ project ("cmake_check_gmp" "C")
 option (CMAKE_GMP_INCLUDE_PATH "GMP include path" "")
 option (CMAKE_GMP_SHARED_LIBRARY_PATH "GMP shared library path" "")
 option (CMAKE_GMP_STATIC_LIBRARY_PATH "GMP static library path" "")
-
 option (CMAKE_TRY_RUN "try run target after build" OFF)
 
 include_directories (${CMAKE_GMP_INCLUDE_PATH})

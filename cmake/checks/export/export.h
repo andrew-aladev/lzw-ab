@@ -31,7 +31,7 @@
 #endif // EXPORT_FUNCTION
 
 #if !defined(EXPORT_DATA)
-#if defined(EXPORT_MODE_DLL) || defined(EXPORT_MODE_DLL_AUTO)
+#if defined(EXPORT_MODE_DLL) || defined(EXPORT_MODE_DLL_WITH_ALL_SYMBOLS)
 
 #if defined(EXPORT_BUILD_FLAG)
 #define EXPORT_DATA __declspec(dllexport)
