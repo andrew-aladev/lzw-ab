@@ -27,6 +27,10 @@ target_link_libraries (${EXECUTABLE} ${CHECK_TARGET})
 set (STATIC_EXECUTABLE "${EXECUTABLE}_static")
 add_executable (${STATIC_EXECUTABLE} "main.c")
 target_link_libraries (${STATIC_EXECUTABLE} ${CHECK_STATIC_TARGET})
+set_target_properties (
+  ${STATIC_EXECUTABLE} PROPERTIES COMPILE_FLAGS
+  "-DEXPORT_STATIC_FLAG"
+)
 
 if (CMAKE_TRY_RUN)
   add_custom_command (
