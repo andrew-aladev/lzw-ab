@@ -7,7 +7,7 @@
 
 // clang-format off
 
-#cmakedefine EXPORT_MODE_@CMAKE_EXPORT_MODE_UPPERCASE@
+#define EXPORT_MODE_@CMAKE_EXPORT_MODE_UPPERCASE@
 
 // clang-format on
 

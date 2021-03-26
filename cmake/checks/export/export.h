@@ -23,7 +23,7 @@
 #define EXPORT_FUNCTION __declspec(dllimport)
 #endif
 
-#elsif defined(EXPORT_MODE_VISIBILITY)
+#elif defined(EXPORT_MODE_VISIBILITY)
 #define EXPORT_FUNCTION __attribute__((visibility("default")))
 #else
 #define EXPORT_FUNCTION
@@ -39,7 +39,7 @@
 #define EXPORT_DATA __declspec(dllimport)
 #endif
 
-#elsif defined(EXPORT_MODE_VISIBILITY)
+#elif defined(EXPORT_MODE_VISIBILITY)
 #define EXPORT_DATA __attribute__((visibility("default")))
 #else
 #define EXPORT_DATA
