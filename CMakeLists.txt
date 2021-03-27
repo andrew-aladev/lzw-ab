@@ -30,6 +30,8 @@ if (NOT DEFINED LZWS_TARGET)
   set (LZWS_TARGET ${PROJECT_NAME})
 endif ()
 
+string (TOUPPER ${LZWS_TARGET} LZWS_TARGET_UPPERCASE)
+
 set (LZWS_COMPRESSOR_DICTIONARY "sparse-array" CACHE STRING "dictionary implementation")
 set (LZWS_BIGNUM_LIBRARY        ""             CACHE STRING "bignum library")
 
@@ -70,6 +72,9 @@ endif ()
 
 include (CheckC17)
 cmake_check_c17 ()
+
+include (GetExportMode)
+cmake_get_export_mode (REQUIRED)
 
 include (CheckIPO)
 cmake_check_ipo ()

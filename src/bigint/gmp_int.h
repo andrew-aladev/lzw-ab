@@ -19,7 +19,7 @@ typedef mpz_t lzws_bigint_t;
 
 LZWS_EXPORT lzws_result_t lzws_bigint_initialize_multiple(bool quiet, lzws_bigint_t* bigint_ptr, ...);
 
-inline lzws_result_t lzws_bigint_add_uint32(
+LZWS_EXPORT inline lzws_result_t lzws_bigint_add_uint32(
   lzws_bigint_t* destination_bigint_ptr,
   lzws_bigint_t* source_bigint_ptr,
   uint32_t       addition,
@@ -29,7 +29,7 @@ inline lzws_result_t lzws_bigint_add_uint32(
   return 0;
 }
 
-inline lzws_result_t lzws_bigint_multiply_by_uint32(
+LZWS_EXPORT inline lzws_result_t lzws_bigint_multiply_by_uint32(
   lzws_bigint_t* destination_bigint_ptr,
   lzws_bigint_t* source_bigint_ptr,
   uint32_t       multiplicator,

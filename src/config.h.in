@@ -7,6 +7,12 @@
 
 #cmakedefine LZWS_VERSION "@LZWS_VERSION@"
 
+// clang-format off
+
+#define LZWS_EXPORT_MODE_@CMAKE_EXPORT_MODE_UPPERCASE@
+
+// clang-format on
+
 #cmakedefine LZWS_COMPRESSOR_DICTIONARY_LINKED_LIST
 #cmakedefine LZWS_COMPRESSOR_DICTIONARY_SPARSE_ARRAY
 

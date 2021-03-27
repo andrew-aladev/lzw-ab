@@ -3,6 +3,4 @@ attached-toolchain-root/*
 build/*
 cmake/checks/export/config.h
 src/config.h
-src/export.h
-src/tests/export.h
 tmp/*

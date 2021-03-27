@@ -22,15 +22,19 @@ if (LZWS_SHARED)
 endif ()
 
 if (LZWS_STATIC)
-  set (STATIC_TEST_NAME "static-test-valid")
-  set (STATIC_TEST_TARGET "${LZWS_TARGET}-${STATIC_TEST_NAME}")
+  set (TEST_STATIC_NAME "static-test-valid")
+  set (TEST_STATIC_TARGET "${LZWS_TARGET}-${TEST_STATIC_NAME}")
 
-  add_executable (${STATIC_TEST_TARGET} ${SOURCES})
-  target_link_libraries (${STATIC_TEST_TARGET} ${STATIC_TEST_LIB_TARGET})
+  add_executable (${TEST_STATIC_TARGET} ${SOURCES})
+  target_link_libraries (${TEST_STATIC_TARGET} ${TEST_LIB_STATIC_TARGET})
+  set_target_properties (
+    ${TEST_STATIC_TARGET} PROPERTIES COMPILE_FLAGS
+    "-D${LZWS_TARGET_UPPERCASE}_EXPORT_STATIC_FLAG"
+  )
 
   add_test (
-    NAME ${STATIC_TEST_NAME}
-    COMMAND ${STATIC_TEST_TARGET}
+    NAME ${TEST_STATIC_NAME}
+    COMMAND ${TEST_STATIC_TARGET}
     WORKING_DIRECTORY ${CMAKE_OUTPUT_DIRECTORY}
   )
 endif ()

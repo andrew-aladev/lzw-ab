@@ -14,10 +14,9 @@
 
 #else
 
-#if !defined(EXPORT)
 #if defined(EXPORT_MODE_DLL)
 
-#if defined(EXPORT_BUILD_FLAG)
+#if defined(EXPORT_LIBRARY_FLAG)
 #define EXPORT __declspec(dllexport)
 #else
 #define EXPORT __declspec(dllimport)
@@ -28,9 +27,7 @@
 #else
 #define EXPORT
 #endif
-#endif // EXPORT
 
-#if !defined(NO_EXPORT)
 #if defined(EXPORT_MODE_DLL)
 #define NO_EXPORT
 #elif defined(EXPORT_MODE_VISIBILITY)
@@ -38,7 +35,6 @@
 #else
 #define NO_EXPORT
 #endif
-#endif // NO_EXPORT
 
 #endif // EXPORT_STATIC_FLAG
 

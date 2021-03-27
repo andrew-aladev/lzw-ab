@@ -6,7 +6,6 @@
 #define LZWS_TESTS_CODES_H
 
 #include "../compressor/state.h"
-#include "common.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -21,7 +20,7 @@ enum
   LZWS_TEST_CODES_COMPRESSOR_UNEXPECTED_ERROR
 };
 
-LZWS_TEST_EXPORT lzws_result_t lzws_test_compressor_write_codes(
+LZWS_EXPORT lzws_result_t lzws_test_compressor_write_codes(
   lzws_compressor_state_t* compressor_state_ptr,
   const lzws_code_t*       codes,
   size_t                   codes_length,

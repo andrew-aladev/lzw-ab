@@ -10,14 +10,14 @@ set (CHECK_TARGET "check")
 add_library (${CHECK_TARGET} SHARED "content.c" "empty.c")
 set_target_properties (
   ${CHECK_TARGET} PROPERTIES COMPILE_FLAGS
-  "-DEXPORT_BUILD_FLAG"
+  "-DEXPORT_LIBRARY_FLAG"
 )
 
 set (CHECK_STATIC_TARGET "${CHECK_TARGET}_static")
 add_library (${CHECK_STATIC_TARGET} STATIC "content.c" "empty.c")
 set_target_properties (
   ${CHECK_STATIC_TARGET} PROPERTIES COMPILE_FLAGS
-  "-DEXPORT_BUILD_FLAG -DEXPORT_STATIC_FLAG"
+  "-DEXPORT_LIBRARY_FLAG -DEXPORT_STATIC_FLAG"
 )
 
 set (EXECUTABLE "main")

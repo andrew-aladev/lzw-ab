@@ -97,7 +97,7 @@ static inline lzws_result_t process_compressor_combinations(lzws_test_compressor
   return 0;
 }
 
-LZWS_TEST_EXPORT lzws_result_t lzws_test_compressor_combinations(lzws_test_compressor_t function, ...)
+LZWS_EXPORT lzws_result_t lzws_test_compressor_combinations(lzws_test_compressor_t function, ...)
 {
   va_list args;
   va_start(args, function);
@@ -173,7 +173,7 @@ static inline lzws_result_t process_decompressor_combinations(lzws_test_decompre
   return 0;
 }
 
-LZWS_TEST_EXPORT lzws_result_t lzws_test_decompressor_combinations(lzws_test_decompressor_t function, ...)
+LZWS_EXPORT lzws_result_t lzws_test_decompressor_combinations(lzws_test_decompressor_t function, ...)
 {
   va_list args;
   va_start(args, function);
@@ -225,7 +225,7 @@ static inline lzws_result_t test_compressor_combinations_with_decompressor(
     function_args);
 }
 
-LZWS_TEST_EXPORT lzws_result_t
+LZWS_EXPORT lzws_result_t
   lzws_test_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...)
 {
   va_list function_args;
@@ -264,7 +264,7 @@ static inline lzws_result_t test_compatible_compressor_and_decompressor_combinat
   return function(compressor_state_ptr, decompressor_state_ptr, buffer_length, function_args_copy);
 }
 
-LZWS_TEST_EXPORT lzws_result_t
+LZWS_EXPORT lzws_result_t
   lzws_test_compatible_compressor_and_decompressor_combinations(lzws_test_compressor_and_decompressor_t function, ...)
 {
   va_list function_args;

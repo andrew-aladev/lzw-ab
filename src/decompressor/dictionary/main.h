@@ -29,12 +29,13 @@ LZWS_EXPORT void lzws_decompressor_add_code_to_dictionary(
   lzws_code_fast_t                current_code,
   lzws_code_fast_t                next_code);
 
-inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr)
+LZWS_EXPORT inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   return dictionary_ptr->output_length != 0;
 }
 
-inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
+LZWS_EXPORT inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(
+  lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   return dictionary_ptr->output_buffer[--dictionary_ptr->output_length];
 }

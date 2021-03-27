@@ -9,18 +9,34 @@ if (LZWS_SHARED)
 
   add_executable (${CLI_TARGET} ${SOURCES})
   target_link_libraries (${CLI_TARGET} ${LIB_TARGET})
+  set_target_properties (
+    ${CLI_TARGET} PROPERTIES OUTPUT_NAME
+    ${CLI_NAME}
+  )
 
-  set_target_properties (${CLI_TARGET} PROPERTIES OUTPUT_NAME ${CLI_NAME})
-  install (TARGETS ${CLI_TARGET} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install (
+    TARGETS ${CLI_TARGET} RUNTIME DESTINATION
+    ${CMAKE_INSTALL_BINDIR}
+  )
 endif ()
 
 if (LZWS_STATIC)
-  set (STATIC_CLI_TARGET "${LZWS_TARGET}-static-cli")
-  set (STATIC_CLI_NAME "${LZWS_TARGET}-static")
+  set (CLI_STATIC_TARGET "${LZWS_TARGET}-static-cli")
+  set (CLI_STATIC_NAME "${LZWS_TARGET}-static")
 
-  add_executable (${STATIC_CLI_TARGET} ${SOURCES})
-  target_link_libraries (${STATIC_CLI_TARGET} ${STATIC_LIB_TARGET})
+  add_executable (${CLI_STATIC_TARGET} ${SOURCES})
+  target_link_libraries (${CLI_STATIC_TARGET} ${LIB_STATIC_TARGET})
+  set_target_properties (
+    ${CLI_STATIC_TARGET} PROPERTIES COMPILE_FLAGS
+    "-D${LZWS_TARGET_UPPERCASE}_EXPORT_STATIC_FLAG"
+  )
+  set_target_properties (
+    ${CLI_STATIC_TARGET} PROPERTIES OUTPUT_NAME
+    ${CLI_STATIC_NAME}
+  )
 
-  set_target_properties (${STATIC_CLI_TARGET} PROPERTIES OUTPUT_NAME ${STATIC_CLI_NAME})
-  install (TARGETS ${STATIC_CLI_TARGET} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install (
+    TARGETS ${CLI_STATIC_TARGET} RUNTIME DESTINATION
+    ${CMAKE_INSTALL_BINDIR}
+  )
 endif ()

@@ -8,13 +8,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "common.h"
+#include "../common.h"
 
 #if defined(__cplusplus)
 extern "C" {
 #endif
 
-LZWS_TEST_EXPORT void lzws_tests_set_random_string(char* buffer, size_t buffer_length);
+LZWS_EXPORT void lzws_tests_set_random_string(char* buffer, size_t buffer_length);
 
 #if defined(__cplusplus)
 } // extern "C"
