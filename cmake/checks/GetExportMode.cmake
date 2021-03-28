@@ -1,6 +1,6 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-function (cmake_test_export_mode EXPORT_MODE_UPPERCASE)
+function (cmake_test_export_mode EXPORT_MODE_UPPERCASE EXPORT_LIBRARY_LDFLAGS)
   set (NAME "cmake_test_export_mode")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/export")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_export_mode")
@@ -20,6 +20,7 @@ function (cmake_test_export_mode EXPORT_MODE_UPPERCASE)
       "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_EXPORT_MODE_UPPERCASE=${EXPORT_MODE_UPPERCASE}"
+      "-DCMAKE_EXPORT_LIBRARY_LDFLAGS=${EXPORT_LIBRARY_LDFLAGS}"
       "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
     OUTPUT_VARIABLE TEST_OUTPUT
   )
@@ -48,21 +49,29 @@ function (cmake_get_export_mode CHECK_MODE)
   foreach (EXPORT_MODE ${EXPORT_MODES})
     string (TOUPPER ${EXPORT_MODE} EXPORT_MODE_UPPERCASE)
 
-    cmake_test_export_mode (${EXPORT_MODE_UPPERCASE})
+    if (EXPORT_MODE STREQUAL "vanilla")
+      set (EXPORT_LIBRARY_LDFLAGS "-Wl, --export-all-symbols")
+    else ()
+      set (EXPORT_LIBRARY_LDFLAGS "")
+    endif ()
+
+    cmake_test_export_mode (${EXPORT_MODE_UPPERCASE} "${EXPORT_LIBRARY_LDFLAGS}")
 
     if (TEST_RESULT)
       set (CMAKE_EXPORT_MODE ${EXPORT_MODE})
-      message (STATUS "${MESSAGE_PREFIX} - ${EXPORT_MODE}")
+      set (CMAKE_EXPORT_MODE_UPPERCASE ${EXPORT_MODE_UPPERCASE})
+      set (CMAKE_EXPORT_LIBRARY_LDFLAGS ${EXPORT_LIBRARY_LDFLAGS})
+      message (STATUS "${MESSAGE_PREFIX} - ${EXPORT_MODE}, ldfags - ${EXPORT_LIBRARY_LDFLAGS}")
       break ()
     endif ()
   endforeach ()
 
   if (NOT TEST_RESULT)
     set (CMAKE_EXPORT_MODE "")
+    set (CMAKE_EXPORT_MODE_UPPERCASE "")
+    set (CMAKE_EXPORT_LIBRARY_LDFLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
-
-  string (TOUPPER ${CMAKE_EXPORT_MODE} CMAKE_EXPORT_MODE_UPPERCASE)
 
   set (
     CMAKE_EXPORT_MODE ${CMAKE_EXPORT_MODE}
@@ -72,8 +81,16 @@ function (cmake_get_export_mode CHECK_MODE)
     CMAKE_EXPORT_MODE_UPPERCASE ${CMAKE_EXPORT_MODE_UPPERCASE}
     CACHE STRING "Export mode uppercase"
   )
+  set (
+    CMAKE_EXPORT_LIBRARY_LDFLAGS ${CMAKE_EXPORT_LIBRARY_LDFLAGS}
+    CACHE STRING "Export library LD flags"
+  )
 
-  mark_as_advanced (CMAKE_EXPORT_MODE CMAKE_EXPORT_MODE_UPPERCASE)
+  mark_as_advanced (
+    CMAKE_EXPORT_MODE
+    CMAKE_EXPORT_MODE_UPPERCASE
+    CMAKE_EXPORT_LIBRARY_LDFLAGS
+  )
 
   if (CMAKE_EXPORT_MODE STREQUAL "" AND CHECK_MODE STREQUAL "REQUIRED")
     message (FATAL_ERROR "${MESSAGE_PREFIX} - export mode is required")
