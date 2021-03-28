@@ -5,7 +5,7 @@
 #include "code.h"
 #include "data.h"
 
-int main()
+int main(void)
 {
   if (lzws_test_valid_codes() != 0) {
     return 1;

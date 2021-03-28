@@ -12,7 +12,7 @@
 #define BUFFER_LENGTH 512
 #define QUIET         false
 
-int main()
+int main(void)
 {
   const char               text[]      = "example text";
   size_t                   text_length = strlen(text);

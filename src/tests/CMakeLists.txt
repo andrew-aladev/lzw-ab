@@ -10,6 +10,7 @@ cmake_define_relative_file_paths ("${SOURCES}")
 
 if (LZWS_SHARED)
   set (TEST_LIB_TARGET "${LZWS_TARGET}-test")
+
   add_library (${TEST_LIB_TARGET} SHARED ${SOURCES})
   target_link_libraries (${TEST_LIB_TARGET} ${LIB_TARGET})
   set_target_properties (
@@ -20,6 +21,7 @@ endif ()
 
 if (LZWS_STATIC)
   set (TEST_LIB_STATIC_TARGET "${LZWS_TARGET}-static-test")
+
   add_library (${TEST_LIB_STATIC_TARGET} STATIC ${SOURCES})
   target_link_libraries (${TEST_LIB_STATIC_TARGET} ${LIB_STATIC_TARGET})
   set_target_properties (

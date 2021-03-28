@@ -12,7 +12,7 @@ static const lzws_byte_t max_code_bit_lengths[] = {
   LZWS_BIGGEST_MAX_CODE_BIT_LENGTH + 1};
 #define MAX_CODE_BIT_LENGTH sizeof(max_code_bit_lengths)
 
-lzws_result_t lzws_test_invalid_max_code_bit_length()
+lzws_result_t lzws_test_invalid_max_code_bit_length(void)
 {
   lzws_result_t result;
 

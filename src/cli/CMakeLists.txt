@@ -4,8 +4,8 @@ include (DefineRelativeFilePaths)
 cmake_define_relative_file_paths ("${SOURCES}")
 
 if (LZWS_SHARED)
-  set (CLI_TARGET "${LZWS_TARGET}-cli")
   set (CLI_NAME ${LZWS_TARGET})
+  set (CLI_TARGET "${LZWS_TARGET}-cli")
 
   add_executable (${CLI_TARGET} ${SOURCES})
   target_link_libraries (${CLI_TARGET} ${LIB_TARGET})
@@ -21,8 +21,8 @@ if (LZWS_SHARED)
 endif ()
 
 if (LZWS_STATIC)
-  set (CLI_STATIC_TARGET "${LZWS_TARGET}-static-cli")
   set (CLI_STATIC_NAME "${LZWS_TARGET}-static")
+  set (CLI_STATIC_TARGET "${LZWS_TARGET}-static-cli")
 
   add_executable (${CLI_STATIC_TARGET} ${SOURCES})
   target_link_libraries (${CLI_STATIC_TARGET} ${LIB_STATIC_TARGET})

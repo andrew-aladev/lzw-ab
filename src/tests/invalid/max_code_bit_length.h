@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-lzws_result_t lzws_test_invalid_max_code_bit_length();
+lzws_result_t lzws_test_invalid_max_code_bit_length(void);
 
 #if defined(__cplusplus)
 } // extern "C"

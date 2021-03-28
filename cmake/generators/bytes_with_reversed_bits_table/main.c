@@ -22,7 +22,7 @@ static inline void print_bytes_with_reversed_bits(uint8_t byte)
   PRINTF(BYTE_TEMPLATE, byte_with_reversed_bits);
 }
 
-int main()
+int main(void)
 {
   INITIALIZE_SPACERS(true);
 

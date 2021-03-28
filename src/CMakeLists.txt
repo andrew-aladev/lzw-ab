@@ -83,8 +83,8 @@ if (LZWS_SHARED)
 endif ()
 
 if (LZWS_STATIC)
-  set (LIB_STATIC_TARGET "${LZWS_TARGET}-static")
   set (LIB_STATIC_NAME ${LZWS_TARGET})
+  set (LIB_STATIC_TARGET "${LZWS_TARGET}-static")
 
   add_library (${LIB_STATIC_TARGET} STATIC ${SOURCES})
   target_link_libraries (${LIB_STATIC_TARGET} ${CMAKE_BIGNUM_LIBRARY_STATIC_PATH})

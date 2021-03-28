@@ -11,7 +11,7 @@
 // "0" means default buffer length.
 #define BUFFER_LENGTH 0
 
-int main()
+int main(void)
 {
   const char text[]      = "example text";
   size_t     text_length = strlen(text);

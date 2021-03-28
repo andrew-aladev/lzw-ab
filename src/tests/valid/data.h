@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-lzws_result_t lzws_test_valid_datas();
+lzws_result_t lzws_test_valid_datas(void);
 
 #if defined(__cplusplus)
 } // extern "C"

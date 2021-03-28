@@ -93,7 +93,7 @@ static inline lzws_result_t test_invalid_header(
   return 0;
 }
 
-lzws_result_t lzws_test_invalid_header()
+lzws_result_t lzws_test_invalid_header(void)
 {
   return lzws_test_compatible_compressor_and_decompressor_combinations(test_invalid_header);
 }

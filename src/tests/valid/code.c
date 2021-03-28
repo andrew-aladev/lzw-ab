@@ -266,7 +266,7 @@ static inline lzws_result_t test_all_datas(
   return 0;
 }
 
-lzws_result_t lzws_test_valid_codes()
+lzws_result_t lzws_test_valid_codes(void)
 {
   return lzws_test_compatible_compressor_and_decompressor_combinations(test_all_datas);
 }

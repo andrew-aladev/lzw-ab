@@ -7,15 +7,15 @@
 EXPORT const int    data        = 0;
 NO_EXPORT const int hidden_data = 1;
 
-EXPORT extern inline int    inline_function();
-NO_EXPORT extern inline int hidden_inline_function();
+EXPORT extern inline int    inline_function(void);
+NO_EXPORT extern inline int hidden_inline_function(void);
 
-EXPORT int function()
+EXPORT int function(void)
 {
   return 0;
 }
 
-NO_EXPORT int hidden_function()
+NO_EXPORT int hidden_function(void)
 {
   return 1;
 }

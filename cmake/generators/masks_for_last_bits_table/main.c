@@ -16,7 +16,7 @@
 #define BYTE_LENGTH_PER_LINE 4
 #define BYTE_LENGTH_GLUE     ", "
 
-int main()
+int main(void)
 {
   INITIALIZE_SPACERS(true);
 

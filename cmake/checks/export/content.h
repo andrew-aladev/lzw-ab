@@ -14,18 +14,18 @@ extern "C" {
 EXPORT extern const int    data;
 NO_EXPORT extern const int hidden_data;
 
-EXPORT inline int inline_function()
+EXPORT inline int inline_function(void)
 {
   return 0;
 }
 
-NO_EXPORT inline int hidden_inline_function()
+NO_EXPORT inline int hidden_inline_function(void)
 {
   return 1;
 }
 
-EXPORT int    function();
-NO_EXPORT int hidden_function();
+EXPORT int    function(void);
+NO_EXPORT int hidden_function(void);
 
 #if defined(__cplusplus)
 } // extern "C"

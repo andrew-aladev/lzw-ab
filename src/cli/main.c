@@ -40,12 +40,12 @@ static const struct option long_options[] = {
   {"version", optional_argument, NULL, 'v'},
   {NULL, 0, NULL, 0}};
 
-static inline void print_version()
+static inline void print_version(void)
 {
   fprintf(stderr, "%s\n", LZWS_VERSION);
 }
 
-static inline void print_help()
+static inline void print_help(void)
 {
   fprintf(
     stderr,

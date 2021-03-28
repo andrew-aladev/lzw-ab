@@ -6,7 +6,7 @@
 #include "header.h"
 #include "max_code_bit_length.h"
 
-int main()
+int main(void)
 {
   if (lzws_test_invalid_codes() != 0) {
     return 1;
