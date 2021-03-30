@@ -1,6 +1,6 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-function (cmake_test_export_mode EXPORT_MODE_UPPERCASE EXPORT_LIBRARY_LDFLAGS)
+function (cmake_test_export_mode EXPORT_MODE_UPPERCASE EXPORT_SHARED_LIBRARY_LD_FLAGS)
   set (NAME "cmake_test_export_mode")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/export")
   set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_export_mode")
@@ -20,7 +20,7 @@ function (cmake_test_export_mode EXPORT_MODE_UPPERCASE EXPORT_LIBRARY_LDFLAGS)
       "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_EXPORT_MODE_UPPERCASE=${EXPORT_MODE_UPPERCASE}"
-      "-DCMAKE_EXPORT_LIBRARY_LDFLAGS=${EXPORT_LIBRARY_LDFLAGS}"
+      "-DCMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS=${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
       "-DCMAKE_TRY_RUN=${CMAKE_CAN_RUN_EXE}"
     OUTPUT_VARIABLE TEST_OUTPUT
   )
@@ -38,6 +38,9 @@ function (cmake_get_export_mode CHECK_MODE)
     return ()
   endif ()
 
+  include (GetExportAllFlags)
+  cmake_get_export_all_flags ()
+
   if (WIN32 OR CYGWIN)
     set (EXPORT_MODES "dll" "vanilla")
   else ()
@@ -50,18 +53,25 @@ function (cmake_get_export_mode CHECK_MODE)
     string (TOUPPER ${EXPORT_MODE} EXPORT_MODE_UPPERCASE)
 
     if (EXPORT_MODE STREQUAL "vanilla")
-      set (EXPORT_LIBRARY_LDFLAGS "-Wl, --export-all-symbols")
+      set (EXPORT_SHARED_LIBRARY_LD_FLAGS ${CMAKE_EXPORT_ALL_LD_FLAGS})
     else ()
-      set (EXPORT_LIBRARY_LDFLAGS "")
+      set (EXPORT_SHARED_LIBRARY_LD_FLAGS "")
     endif ()
 
-    cmake_test_export_mode (${EXPORT_MODE_UPPERCASE} "${EXPORT_LIBRARY_LDFLAGS}")
+    cmake_test_export_mode ("${EXPORT_MODE_UPPERCASE}" "${EXPORT_SHARED_LIBRARY_LD_FLAGS}")
 
     if (TEST_RESULT)
       set (CMAKE_EXPORT_MODE ${EXPORT_MODE})
       set (CMAKE_EXPORT_MODE_UPPERCASE ${EXPORT_MODE_UPPERCASE})
-      set (CMAKE_EXPORT_LIBRARY_LDFLAGS ${EXPORT_LIBRARY_LDFLAGS})
-      message (STATUS "${MESSAGE_PREFIX} - ${EXPORT_MODE}, ldfags - ${EXPORT_LIBRARY_LDFLAGS}")
+      set (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS ${EXPORT_SHARED_LIBRARY_LD_FLAGS})
+
+      set (MESSAGE_TEXT "${MESSAGE_PREFIX} - ${EXPORT_MODE}")
+
+      if (NOT EXPORT_SHARED_LIBRARY_LD_FLAGS STREQUAL "")
+        set (MESSAGE_TEXT "${MESSAGE_TEXT}, shared library LD flags - ${EXPORT_SHARED_LIBRARY_LD_FLAGS}")
+      endif ()
+
+      message (STATUS ${MESSAGE_TEXT})
       break ()
     endif ()
   endforeach ()
@@ -69,7 +79,7 @@ function (cmake_get_export_mode CHECK_MODE)
   if (NOT TEST_RESULT)
     set (CMAKE_EXPORT_MODE "")
     set (CMAKE_EXPORT_MODE_UPPERCASE "")
-    set (CMAKE_EXPORT_LIBRARY_LDFLAGS "")
+    set (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
@@ -82,14 +92,14 @@ function (cmake_get_export_mode CHECK_MODE)
     CACHE STRING "Export mode uppercase"
   )
   set (
-    CMAKE_EXPORT_LIBRARY_LDFLAGS ${CMAKE_EXPORT_LIBRARY_LDFLAGS}
+    CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS ${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS}
     CACHE STRING "Export library LD flags"
   )
 
   mark_as_advanced (
     CMAKE_EXPORT_MODE
     CMAKE_EXPORT_MODE_UPPERCASE
-    CMAKE_EXPORT_LIBRARY_LDFLAGS
+    CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS
   )
 
   if (CMAKE_EXPORT_MODE STREQUAL "" AND CHECK_MODE STREQUAL "REQUIRED")

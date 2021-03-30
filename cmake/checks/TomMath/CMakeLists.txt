@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.12)
+cmake_minimum_required (VERSION 3.13)
 project ("cmake_check_tommath" "C")
 
 option (CMAKE_TOMMATH_INCLUDE_PATH "TomMath include path" "")

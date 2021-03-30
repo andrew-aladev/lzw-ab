@@ -1,15 +1,18 @@
-cmake_minimum_required (VERSION 3.12)
+cmake_minimum_required (VERSION 3.13)
 project ("cmake_check_export_mode" "C")
 
 option (CMAKE_EXPORT_MODE_UPPERCASE "export mode uppercase" "")
-option (CMAKE_EXPORT_LIBRARY_LDFLAGS "export library LD flags" "")
+option (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS "export shared library LD flags" "")
 option (CMAKE_TRY_RUN "try run target after build" OFF)
 
 configure_file ("config.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/config.h")
 
 set (CHECK_TARGET "check")
 add_library (${CHECK_TARGET} SHARED "content.c" "empty.c")
-target_link_options (${CHECK_TARGET} PRIVATE ${CMAKE_EXPORT_LIBRARY_LDFLAGS})
+target_link_options (
+  ${CHECK_TARGET} PRIVATE
+  "SHELL:${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+)
 set_target_properties (
   ${CHECK_TARGET} PROPERTIES COMPILE_FLAGS
   "-DEXPORT_LIBRARY_FLAG"

@@ -13,7 +13,10 @@ if (LZWS_SHARED)
 
   add_library (${TEST_LIB_TARGET} SHARED ${SOURCES})
   target_link_libraries (${TEST_LIB_TARGET} ${LIB_TARGET})
-  target_link_options (${TEST_LIB_TARGET} PRIVATE ${CMAKE_EXPORT_LIBRARY_LDFLAGS})
+  target_link_options (
+    ${TEST_LIB_TARGET} PRIVATE
+    "SHELL:${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+  )
   set_target_properties (
     ${TEST_LIB_TARGET} PROPERTIES COMPILE_FLAGS
     "-D${LZWS_TARGET_UPPERCASE}_EXPORT_LIBRARY_FLAG"
