@@ -111,7 +111,7 @@ function (cmake_get_verbose_flags)
 
   # -- result --
 
-  set (CMAKE_GET_VERBOSE_FLAGS_PROCESSED true CACHE STRING "Verbose flags processed")
+  set (CMAKE_GET_VERBOSE_FLAGS_PROCESSED true CACHE BOOL "Verbose flags processed")
 
   mark_as_advanced (
     CMAKE_WERROR_C_FLAGS

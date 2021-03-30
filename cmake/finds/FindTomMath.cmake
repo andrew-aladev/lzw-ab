@@ -39,7 +39,7 @@ else ()
   set (CMAKE_TOMMATH_FOUND false)
 endif ()
 
-set (CMAKE_TOMMATH_FOUND ${CMAKE_TOMMATH_FOUND} CACHE STRING "TomMath found")
+set (CMAKE_TOMMATH_FOUND ${CMAKE_TOMMATH_FOUND} CACHE BOOL "TomMath found")
 
 mark_as_advanced (
   CMAKE_TOMMATH_FOUND

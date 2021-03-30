@@ -54,7 +54,7 @@ function (cmake_get_coverage_flags)
   endif ()
 
   set (CMAKE_COVERAGE_C_FLAGS ${CMAKE_COVERAGE_C_FLAGS} CACHE STRING "Coverage C flags")
-  set (CMAKE_GET_COVERAGE_FLAGS_PROCESSED true CACHE STRING "Coverage flags processed")
+  set (CMAKE_GET_COVERAGE_FLAGS_PROCESSED true CACHE BOOL "Coverage flags processed")
 
   mark_as_advanced (CMAKE_COVERAGE_C_FLAGS CMAKE_GET_COVERAGE_FLAGS_PROCESSED)
 endfunction ()

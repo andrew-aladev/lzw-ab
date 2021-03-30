@@ -188,7 +188,7 @@ function (cmake_get_build_flags)
     CACHE STRING "MinSizeRel C flags" FORCE
   )
 
-  set (CMAKE_GET_BUILD_FLAGS_PROCESSED true CACHE STRING "Build flags processed")
+  set (CMAKE_GET_BUILD_FLAGS_PROCESSED true CACHE BOOL "Build flags processed")
 
   mark_as_advanced (
     CMAKE_DEBUG_INFO_C_FLAGS

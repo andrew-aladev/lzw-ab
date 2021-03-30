@@ -39,7 +39,7 @@ else ()
   set (CMAKE_GMP_FOUND false)
 endif ()
 
-set (CMAKE_GMP_FOUND ${CMAKE_GMP_FOUND} CACHE STRING "GMP found")
+set (CMAKE_GMP_FOUND ${CMAKE_GMP_FOUND} CACHE BOOL "GMP found")
 
 mark_as_advanced (
   CMAKE_GMP_FOUND

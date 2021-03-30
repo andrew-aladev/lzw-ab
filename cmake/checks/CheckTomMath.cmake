@@ -59,7 +59,7 @@ function (cmake_check_tommath CHECK_MODE)
     message (STATUS "${MESSAGE_PREFIX} - not working")
   endif ()
 
-  set (CMAKE_TOMMATH_WORKS ${CMAKE_TOMMATH_WORKS} CACHE STRING "Status of TomMath")
+  set (CMAKE_TOMMATH_WORKS ${CMAKE_TOMMATH_WORKS} CACHE BOOL "Status of TomMath")
 
   mark_as_advanced (CMAKE_TOMMATH_WORKS)
 
