@@ -9,7 +9,7 @@ function (cmake_test_export_mode EXPORT_MODE_UPPERCASE EXPORT_SHARED_LIBRARY_LD_
   cmake_get_verbose_flags ()
 
   include (CheckC17)
-  cmake_check_c17 ()
+  cmake_check_c17 (REQUIRED)
 
   include (CheckRunnable)
   cmake_check_runnable ()

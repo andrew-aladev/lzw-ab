@@ -9,7 +9,7 @@ function (cmake_test_ipo)
   cmake_get_verbose_flags ()
 
   include (CheckC17)
-  cmake_check_c17 ()
+  cmake_check_c17 (REQUIRED)
 
   include (GetExportMode)
   cmake_get_export_mode (REQUIRED)

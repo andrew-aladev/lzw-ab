@@ -12,7 +12,7 @@ function (cmake_run_masks_for_last_bits_table)
   cmake_get_build_flags ()
 
   include (CheckC17)
-  cmake_check_c17 ()
+  cmake_check_c17 (REQUIRED)
 
   try_compile (
     COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}

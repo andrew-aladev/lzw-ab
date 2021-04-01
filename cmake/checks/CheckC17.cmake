@@ -28,8 +28,14 @@ function (cmake_test_c17 FLAG)
   set (TEST_RESULT ${TEST_RESULT} PARENT_SCOPE)
 endfunction ()
 
-function (cmake_check_c17)
+function (cmake_check_c17 CHECK_MODE)
+  set (MESSAGE_PREFIX "Status of C17 support")
+
   if (DEFINED CMAKE_HAVE_C17)
+    if (NOT CMAKE_HAVE_C17 AND CHECK_MODE STREQUAL "REQUIRED")
+      message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
+    endif ()
+
     return ()
   endif ()
 
@@ -38,8 +44,6 @@ function (cmake_check_c17)
   else ()
     set (FLAGS "-std=gnu18" "-std=c18" "-std=gnu17" "-std=c17" "")
   endif ()
-
-  set (MESSAGE_PREFIX "Status of C17 support")
 
   foreach (FLAG ${FLAGS})
     cmake_test_c17 (${FLAG})
@@ -67,4 +71,8 @@ function (cmake_check_c17)
   set (CMAKE_C17_C_FLAGS ${CMAKE_C17_C_FLAGS} CACHE STRING "C17 C flags")
 
   mark_as_advanced (CMAKE_HAVE_C17 CMAKE_C17_C_FLAGS)
+
+  if (NOT CMAKE_HAVE_C17 AND CHECK_MODE STREQUAL "REQUIRED")
+    message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
+  endif ()
 endfunction ()

@@ -71,7 +71,7 @@ if (LZWS_COVERAGE)
 endif ()
 
 include (CheckC17)
-cmake_check_c17 ()
+cmake_check_c17 (REQUIRED)
 
 include (GetExportMode)
 cmake_get_export_mode (REQUIRED)

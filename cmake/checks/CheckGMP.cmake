@@ -9,7 +9,7 @@ function (cmake_test_gmp)
   cmake_get_verbose_flags ()
 
   include (CheckC17)
-  cmake_check_c17 ()
+  cmake_check_c17 (REQUIRED)
 
   include (CheckRunnable)
   cmake_check_runnable ()
