@@ -35,13 +35,17 @@ function (cmake_test_tommath)
 endfunction ()
 
 function (cmake_check_tommath CHECK_MODE)
+  set (MESSAGE_PREFIX "Status of TomMath support")
+
   if (DEFINED CMAKE_TOMMATH_WORKS)
+    if (NOT CMAKE_TOMMATH_WORKS AND CHECK_MODE STREQUAL "REQUIRED")
+      message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
+    endif ()
+
     return ()
   endif ()
 
   find_package (TomMath)
-
-  set (MESSAGE_PREFIX "Status of TomMath support")
 
   if (CMAKE_TOMMATH_FOUND)
     cmake_test_tommath ()
@@ -64,6 +68,6 @@ function (cmake_check_tommath CHECK_MODE)
   mark_as_advanced (CMAKE_TOMMATH_WORKS)
 
   if (NOT CMAKE_TOMMATH_WORKS AND CHECK_MODE STREQUAL "REQUIRED")
-    message (FATAL_ERROR "${MESSAGE_PREFIX} - TomMath is required")
+    message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
   endif ()
 endfunction ()
