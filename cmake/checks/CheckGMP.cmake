@@ -35,13 +35,17 @@ function (cmake_test_gmp)
 endfunction ()
 
 function (cmake_check_gmp CHECK_MODE)
+  set (MESSAGE_PREFIX "Status of GMP support")
+
   if (DEFINED CMAKE_GMP_WORKS)
+    if (NOT CMAKE_GMP_WORKS AND CHECK_MODE STREQUAL "REQUIRED")
+      message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
+    endif ()
+
     return ()
   endif ()
 
   find_package (GMP)
-
-  set (MESSAGE_PREFIX "Status of GMP support")
 
   if (CMAKE_GMP_FOUND)
     cmake_test_gmp ()
@@ -64,6 +68,6 @@ function (cmake_check_gmp CHECK_MODE)
   mark_as_advanced (CMAKE_GMP_WORKS)
 
   if (NOT CMAKE_GMP_WORKS AND CHECK_MODE STREQUAL "REQUIRED")
-    message (FATAL_ERROR "${MESSAGE_PREFIX} - GMP is required")
+    message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
   endif ()
 endfunction ()
