@@ -15,7 +15,7 @@ if (LZWS_SHARED)
   target_link_libraries (${TEST_LIB_TARGET} ${LIB_TARGET})
   target_link_options (
     ${TEST_LIB_TARGET} PRIVATE
-    "SHELL:${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+    "SHELL:${CMAKE_SHARED_LIBRARY_LD_FLAGS}"
   )
   set_target_properties (
     ${TEST_LIB_TARGET} PROPERTIES COMPILE_FLAGS

@@ -82,18 +82,20 @@ cmake_check_ipo ()
 include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
 
+# Bignum library selection may be updated.
+set (LZWS_BIGNUM_LIBRARY ${CMAKE_BIGNUM_LIBRARY})
+
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C17_C_FLAGS}")
 
 if (LZWS_COVERAGE)
   set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_COVERAGE_C_FLAGS}")
 endif ()
 
+set (CMAKE_SHARED_LIBRARY_LD_FLAGS ${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS})
+
 if (NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
   set (CMAKE_BUILD_TYPE "DEBUG")
 endif ()
-
-# Bignum library selection may be updated.
-set (LZWS_BIGNUM_LIBRARY "${CMAKE_BIGNUM_LIBRARY}")
 
 if (LZWS_SHARED AND NOT CMAKE_BIGNUM_LIBRARY_SHARED_PATH)
   message (FATAL_ERROR "Bignum shared library is not available.")

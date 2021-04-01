@@ -76,7 +76,7 @@ if (LZWS_SHARED)
   target_link_libraries (${LIB_TARGET} ${CMAKE_BIGNUM_LIBRARY_SHARED_PATH})
   target_link_options (
     ${LIB_TARGET} PRIVATE
-    "SHELL:${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+    "SHELL:${CMAKE_SHARED_LIBRARY_LD_FLAGS}"
   )
   set_target_properties (
     ${LIB_TARGET} PROPERTIES COMPILE_FLAGS
