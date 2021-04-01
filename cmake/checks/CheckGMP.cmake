@@ -63,7 +63,10 @@ function (cmake_check_gmp CHECK_MODE)
     message (STATUS "${MESSAGE_PREFIX} - not working")
   endif ()
 
-  set (CMAKE_GMP_WORKS ${CMAKE_GMP_WORKS} CACHE BOOL "Status of GMP")
+  set (
+    CMAKE_GMP_WORKS ${CMAKE_GMP_WORKS}
+    CACHE BOOL "Status of GMP"
+  )
 
   mark_as_advanced (CMAKE_GMP_WORKS)
 

@@ -29,7 +29,7 @@ function (cmake_test_coverage FLAG)
 endfunction ()
 
 function (cmake_get_coverage_flags)
-  if (DEFINED CMAKE_GET_COVERAGE_FLAGS_PROCESSED)
+  if (DEFINED CMAKE_HAVE_COVERAGE)
     return ()
   endif ()
 
@@ -41,20 +41,29 @@ function (cmake_get_coverage_flags)
     cmake_test_coverage (${FLAG})
 
     if (TEST_RESULT)
+      set (CMAKE_HAVE_COVERAGE true)
       set (CMAKE_COVERAGE_C_FLAGS ${FLAG})
       message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
     else ()
+      set (CMAKE_HAVE_COVERAGE false)
       set (CMAKE_COVERAGE_C_FLAGS "")
       message (STATUS "${MESSAGE_PREFIX} - no")
     endif ()
 
   else ()
+    set (CMAKE_HAVE_COVERAGE false)
     set (CMAKE_COVERAGE_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_COVERAGE_C_FLAGS ${CMAKE_COVERAGE_C_FLAGS} CACHE STRING "Coverage C flags")
-  set (CMAKE_GET_COVERAGE_FLAGS_PROCESSED true CACHE BOOL "Coverage flags processed")
+  set (
+    CMAKE_HAVE_COVERAGE ${CMAKE_HAVE_COVERAGE}
+    CACHE BOOL "Coverage flags processed"
+  )
+  set (
+    CMAKE_COVERAGE_C_FLAGS ${CMAKE_COVERAGE_C_FLAGS}
+    CACHE STRING "Coverage C flags"
+  )
 
-  mark_as_advanced (CMAKE_COVERAGE_C_FLAGS CMAKE_GET_COVERAGE_FLAGS_PROCESSED)
+  mark_as_advanced (CMAKE_HAVE_COVERAGE CMAKE_COVERAGE_C_FLAGS)
 endfunction ()

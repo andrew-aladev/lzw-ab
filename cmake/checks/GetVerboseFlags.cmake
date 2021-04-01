@@ -46,7 +46,10 @@ function (cmake_get_verbose_flags)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_WERROR_C_FLAGS ${CMAKE_WERROR_C_FLAGS} CACHE STRING "Werror C flags")
+  set (
+    CMAKE_WERROR_C_FLAGS ${CMAKE_WERROR_C_FLAGS}
+    CACHE STRING "Werror C flags"
+  )
 
   # -- pedantic --
 
@@ -107,11 +110,17 @@ function (cmake_get_verbose_flags)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_VERBOSE_C_FLAGS ${CMAKE_VERBOSE_C_FLAGS} CACHE STRING "Verbose C flags")
+  set (
+    CMAKE_VERBOSE_C_FLAGS ${CMAKE_VERBOSE_C_FLAGS}
+    CACHE STRING "Verbose C flags"
+  )
 
   # -- result --
 
-  set (CMAKE_GET_VERBOSE_FLAGS_PROCESSED true CACHE BOOL "Verbose flags processed")
+  set (
+    CMAKE_GET_VERBOSE_FLAGS_PROCESSED true
+    CACHE BOOL "Verbose flags processed"
+  )
 
   mark_as_advanced (
     CMAKE_WERROR_C_FLAGS

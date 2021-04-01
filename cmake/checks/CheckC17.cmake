@@ -67,8 +67,14 @@ function (cmake_check_c17 CHECK_MODE)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_HAVE_C17 ${CMAKE_HAVE_C17} CACHE BOOL "Status of C17")
-  set (CMAKE_C17_C_FLAGS ${CMAKE_C17_C_FLAGS} CACHE STRING "C17 C flags")
+  set (
+    CMAKE_HAVE_C17 ${CMAKE_HAVE_C17}
+    CACHE BOOL "Status of C17"
+  )
+  set (
+    CMAKE_C17_C_FLAGS ${CMAKE_C17_C_FLAGS}
+    CACHE STRING "C17 C flags"
+  )
 
   mark_as_advanced (CMAKE_HAVE_C17 CMAKE_C17_C_FLAGS)
 

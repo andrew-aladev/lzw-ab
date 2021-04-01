@@ -42,7 +42,10 @@ function (cmake_check_runnable)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (CMAKE_CAN_RUN_EXE ${CMAKE_CAN_RUN_EXE} CACHE BOOL "Status of run exe")
+  set (
+    CMAKE_CAN_RUN_EXE ${CMAKE_CAN_RUN_EXE}
+    CACHE BOOL "Status of run exe"
+  )
 
   mark_as_advanced (CMAKE_CAN_RUN_EXE)
 endfunction ()

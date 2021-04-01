@@ -54,8 +54,7 @@ function (cmake_get_build_flags)
   endif ()
 
   set (
-    CMAKE_DEBUG_INFO_C_FLAGS
-    ${CMAKE_DEBUG_INFO_C_FLAGS}
+    CMAKE_DEBUG_INFO_C_FLAGS ${CMAKE_DEBUG_INFO_C_FLAGS}
     CACHE STRING "Debug info C flags"
   )
 
@@ -80,8 +79,7 @@ function (cmake_get_build_flags)
   endif ()
 
   set (
-    CMAKE_NO_OPTIMIZATIONS_C_FLAGS
-    ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
+    CMAKE_NO_OPTIMIZATIONS_C_FLAGS ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
     CACHE STRING "No optimizations C flags"
   )
 
@@ -106,8 +104,7 @@ function (cmake_get_build_flags)
   endif ()
 
   set (
-    CMAKE_OPTIMIZATIONS_C_FLAGS
-    ${CMAKE_OPTIMIZATIONS_C_FLAGS}
+    CMAKE_OPTIMIZATIONS_C_FLAGS ${CMAKE_OPTIMIZATIONS_C_FLAGS}
     CACHE STRING "Optimizations C flags"
   )
 
@@ -132,8 +129,7 @@ function (cmake_get_build_flags)
   endif ()
 
   set (
-    CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS
-    ${CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS}
+    CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS ${CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS}
     CACHE STRING "Min size optimizations C flags"
   )
 
@@ -160,8 +156,7 @@ function (cmake_get_build_flags)
   endif ()
 
   set (
-    CMAKE_PIPE_C_FLAGS
-    ${CMAKE_PIPE_C_FLAGS}
+    CMAKE_PIPE_C_FLAGS ${CMAKE_PIPE_C_FLAGS}
     CACHE STRING "Pipe C flags"
   )
 
@@ -173,8 +168,7 @@ function (cmake_get_build_flags)
     CACHE STRING "Debug C flags" FORCE
   )
   set (
-    CMAKE_C_FLAGS_RELEASE
-    ${CMAKE_OPTIMIZATIONS_C_FLAGS}
+    CMAKE_C_FLAGS_RELEASE ${CMAKE_OPTIMIZATIONS_C_FLAGS}
     CACHE STRING "Release C flags" FORCE
   )
   set (
@@ -183,12 +177,13 @@ function (cmake_get_build_flags)
     CACHE STRING "RelWithDebInfo C flags" FORCE
   )
   set (
-    CMAKE_C_FLAGS_MINSIZEREL
-    ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
+    CMAKE_C_FLAGS_MINSIZEREL ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
     CACHE STRING "MinSizeRel C flags" FORCE
   )
-
-  set (CMAKE_GET_BUILD_FLAGS_PROCESSED true CACHE BOOL "Build flags processed")
+  set (
+    CMAKE_GET_BUILD_FLAGS_PROCESSED true
+    CACHE BOOL "Build flags processed"
+  )
 
   mark_as_advanced (
     CMAKE_DEBUG_INFO_C_FLAGS

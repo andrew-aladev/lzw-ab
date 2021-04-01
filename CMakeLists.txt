@@ -8,16 +8,28 @@ endif ()
 set (LZWS_VERSION "1.4.3")
 
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
-  set (CMAKE_INSTALL_LIBDIR "lib" CACHE PATH "output directory for libraries")
+  set (
+    CMAKE_INSTALL_LIBDIR "lib"
+    CACHE PATH "output directory for libraries"
+  )
 endif ()
 if (NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
-  set (CMAKE_INSTALL_INCLUDEDIR "include" CACHE PATH "output directory for include files")
+  set (
+    CMAKE_INSTALL_INCLUDEDIR "include"
+    CACHE PATH "output directory for include files"
+  )
 endif ()
 if (NOT DEFINED CMAKE_INSTALL_BINDIR)
-  set (CMAKE_INSTALL_BINDIR "bin" CACHE PATH "output directory for binaries")
+  set (
+    CMAKE_INSTALL_BINDIR "bin"
+    CACHE PATH "output directory for binaries"
+  )
 endif ()
 if (NOT DEFINED CMAKE_INSTALL_MANDIR)
-  set (CMAKE_INSTALL_MANDIR "share/man" CACHE PATH "Output directory for man files")
+  set (
+    CMAKE_INSTALL_MANDIR "share/man"
+    CACHE PATH "Output directory for man files"
+  )
 endif ()
 
 # Common output directory is required for OS without rpath support.
@@ -32,8 +44,14 @@ endif ()
 
 string (TOUPPER ${LZWS_TARGET} LZWS_TARGET_UPPERCASE)
 
-set (LZWS_COMPRESSOR_DICTIONARY "sparse-array" CACHE STRING "dictionary implementation")
-set (LZWS_BIGNUM_LIBRARY        ""             CACHE STRING "bignum library")
+set (
+  LZWS_COMPRESSOR_DICTIONARY "sparse-array"
+  CACHE STRING "dictionary implementation"
+)
+set (
+  LZWS_BIGNUM_LIBRARY ""
+  CACHE STRING "bignum library"
+)
 
 option (LZWS_SHARED   "build shared binaries" ON)
 option (LZWS_STATIC   "build static binaries" OFF)

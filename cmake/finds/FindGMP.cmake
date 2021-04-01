@@ -33,13 +33,19 @@ else ()
   message (STATUS "${MESSAGE_PREFIX} - static library not found")
 endif ()
 
-if (CMAKE_GMP_INCLUDE_PATH AND (CMAKE_GMP_SHARED_LIBRARY_PATH OR CMAKE_GMP_STATIC_LIBRARY_PATH))
+if (
+  CMAKE_GMP_INCLUDE_PATH AND
+  (CMAKE_GMP_SHARED_LIBRARY_PATH OR CMAKE_GMP_STATIC_LIBRARY_PATH)
+)
   set (CMAKE_GMP_FOUND true)
 else ()
   set (CMAKE_GMP_FOUND false)
 endif ()
 
-set (CMAKE_GMP_FOUND ${CMAKE_GMP_FOUND} CACHE BOOL "GMP found")
+set (
+  CMAKE_GMP_FOUND ${CMAKE_GMP_FOUND}
+  CACHE BOOL "GMP found"
+)
 
 mark_as_advanced (
   CMAKE_GMP_FOUND
@@ -49,5 +55,5 @@ mark_as_advanced (
 )
 
 if (NOT CMAKE_GMP_FOUND AND GMP_FIND_REQUIRED)
-  message (FATAL_ERROR "${MESSAGE_PREFIX} - GMP is required")
+  message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
 endif ()
