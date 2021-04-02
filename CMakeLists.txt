@@ -13,18 +13,21 @@ if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
     CACHE PATH "output directory for libraries"
   )
 endif ()
+
 if (NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
   set (
     CMAKE_INSTALL_INCLUDEDIR "include"
     CACHE PATH "output directory for include files"
   )
 endif ()
+
 if (NOT DEFINED CMAKE_INSTALL_BINDIR)
   set (
     CMAKE_INSTALL_BINDIR "bin"
     CACHE PATH "output directory for binaries"
   )
 endif ()
+
 if (NOT DEFINED CMAKE_INSTALL_MANDIR)
   set (
     CMAKE_INSTALL_MANDIR "share/man"

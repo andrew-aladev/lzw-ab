@@ -17,7 +17,10 @@ function (add_man_target NAME MANDIR)
   set (TARGET "${LZWS_TARGET}-${NAME}")
   add_custom_target (${TARGET} ALL DEPENDS ${RESULT})
 
-  install (FILES ${RESULT} DESTINATION "${CMAKE_INSTALL_MANDIR}/${MANDIR}")
+  install (
+    FILES ${RESULT}
+    DESTINATION "${CMAKE_INSTALL_MANDIR}/${MANDIR}"
+  )
 endfunction ()
 
 add_man_target ("lzws.1" "man1")
