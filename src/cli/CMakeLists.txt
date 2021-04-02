@@ -9,6 +9,10 @@ if (LZWS_SHARED)
 
   add_executable (${CLI_TARGET} ${SOURCES})
   target_link_libraries (${CLI_TARGET} ${LIB_TARGET})
+  target_link_options (
+    ${CLI_TARGET} PRIVATE
+    "SHELL:${CMAKE_EXECUTABLE_LD_FLAGS}"
+  )
   set_target_properties (
     ${CLI_TARGET} PROPERTIES
     OUTPUT_NAME ${CLI_NAME}

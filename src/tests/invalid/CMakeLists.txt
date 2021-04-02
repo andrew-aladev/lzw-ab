@@ -14,6 +14,10 @@ if (LZWS_SHARED)
 
   add_executable (${TEST_TARGET} ${SOURCES})
   target_link_libraries (${TEST_TARGET} ${TEST_LIB_TARGET})
+  target_link_options (
+    ${TEST_TARGET} PRIVATE
+    "SHELL:${CMAKE_EXECUTABLE_LD_FLAGS}"
+  )
 
   add_test (
     NAME ${TEST_NAME}

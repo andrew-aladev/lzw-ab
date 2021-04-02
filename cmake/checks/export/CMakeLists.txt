@@ -2,7 +2,8 @@ cmake_minimum_required (VERSION 3.13)
 project ("cmake_check_export_mode" "C")
 
 option (CMAKE_EXPORT_MODE_UPPERCASE "export mode uppercase" "")
-option (CMAKE_SHARED_LIBRARY_LD_FLAGS "export shared library LD flags" "")
+option (CMAKE_SHARED_LIBRARY_LD_FLAGS "shared library LD flags" "")
+option (CMAKE_EXECUTABLE_LD_FLAGS "executable LD flags" "")
 option (CMAKE_TRY_RUN "try run target after build" OFF)
 
 configure_file ("config.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/config.h")
@@ -28,6 +29,10 @@ set_target_properties (
 set (EXECUTABLE "main")
 add_executable (${EXECUTABLE} "main.c")
 target_link_libraries (${EXECUTABLE} ${CHECK_TARGET})
+target_link_options (
+  ${EXECUTABLE} PRIVATE
+  "SHELL:${CMAKE_EXECUTABLE_LD_FLAGS}"
+)
 
 set (STATIC_EXECUTABLE "${EXECUTABLE}_static")
 add_executable (${STATIC_EXECUTABLE} "main.c")
