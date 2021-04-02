@@ -88,7 +88,7 @@ wget "https://cdn.kernel.org/pub/linux/kernel/v2.6/linux-2.6.39.4.tar.xz"
 tar xf linux-2.6.39.4.tar.xz
 tar cf linux.tar linux-2.6.39.4
 
-cmake ".." \
+cmake .. \
   -DLZWS_COMPRESSOR_DICTIONARY="sparse-array" \
   -DCMAKE_BUILD_TYPE="RELEASE"
 make clean && make

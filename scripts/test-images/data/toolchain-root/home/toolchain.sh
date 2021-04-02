@@ -36,6 +36,7 @@ for dictionary in "${DICTIONARIES[@]}"; do
     cd "$build_dir"
 
     TARGET="$TARGET" cmake "../.." \
+      -G "Unix Makefiles" \
       -DCMAKE_TOOLCHAIN_FILE="/home/toolchain.cmake" \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \

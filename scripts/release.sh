@@ -25,6 +25,7 @@ for dictionary in "${DICTIONARIES[@]}"; do
     cd "$build_dir"
 
     cmake "../.." \
+      -G "Unix Makefiles" \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
       -DCMAKE_BUILD_TYPE="RELEASE"
