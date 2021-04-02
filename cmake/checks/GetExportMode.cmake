@@ -107,6 +107,7 @@ function (cmake_get_export_all_flags EXPORT_MODE_UPPERCASE)
           MESSAGE_STATUS
           "${MESSAGE_STATUS}, executable LD flags - ${EXPORT_EXECUTABLE_LD_FLAGS}"
         )
+        message (STATUS ${MESSAGE_STATUS})
 
         break ()
       endif ()
