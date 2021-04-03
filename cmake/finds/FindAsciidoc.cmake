@@ -2,13 +2,21 @@ if (DEFINED CMAKE_ASCIIDOC_FOUND)
   return ()
 endif ()
 
-find_program (CMAKE_ASCIIDOC_BINARY asciidoc)
-find_program (CMAKE_ASCIIDOC_A2X_BINARY a2x)
-
 set (MESSAGE_PREFIX "Status of Asciidoc")
 
-message (STATUS "${MESSAGE_PREFIX} - main binary path is ${CMAKE_ASCIIDOC_BINARY}")
-message (STATUS "${MESSAGE_PREFIX} - a2x binary path is ${CMAKE_ASCIIDOC_A2X_BINARY}")
+find_program (CMAKE_ASCIIDOC_BINARY asciidoc)
+if (CMAKE_ASCIIDOC_BINARY)
+  message (STATUS "${MESSAGE_PREFIX} - main binary path: ${CMAKE_ASCIIDOC_BINARY}")
+else ()
+  message (STATUS "${MESSAGE_PREFIX} - main binary path not found")
+endif ()
+
+find_program (CMAKE_ASCIIDOC_A2X_BINARY a2x)
+if (CMAKE_ASCIIDOC_BINARY)
+  message (STATUS "${MESSAGE_PREFIX} - a2x binary path: ${CMAKE_ASCIIDOC_A2X_BINARY}")
+else ()
+  message (STATUS "${MESSAGE_PREFIX} - a2x binary path not found")
+endif ()
 
 if (CMAKE_ASCIIDOC_BINARY AND CMAKE_ASCIIDOC_A2X_BINARY)
   set (CMAKE_ASCIIDOC_FOUND true)

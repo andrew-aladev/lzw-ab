@@ -101,11 +101,11 @@ function (cmake_get_export_all_flags EXPORT_MODE_UPPERCASE)
 
         set (
           MESSAGE_STATUS
-          "${MESSAGE_STATUS}, shared library LD flags - ${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+          "${MESSAGE_STATUS} - shared library LD flags: ${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
         )
         set (
           MESSAGE_STATUS
-          "${MESSAGE_STATUS}, executable LD flags - ${EXPORT_EXECUTABLE_LD_FLAGS}"
+          "${MESSAGE_STATUS}, executable LD flags: ${EXPORT_EXECUTABLE_LD_FLAGS}"
         )
         message (STATUS ${MESSAGE_STATUS})
 
