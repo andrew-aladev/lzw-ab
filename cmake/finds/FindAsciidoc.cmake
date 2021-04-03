@@ -4,14 +4,14 @@ endif ()
 
 set (MESSAGE_PREFIX "Status of Asciidoc")
 
-find_program (CMAKE_ASCIIDOC_BINARY asciidoc)
+find_program (CMAKE_ASCIIDOC_BINARY "asciidoc" "asciidoc.py")
 if (CMAKE_ASCIIDOC_BINARY)
   message (STATUS "${MESSAGE_PREFIX} - main binary path: ${CMAKE_ASCIIDOC_BINARY}")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - main binary path not found")
 endif ()
 
-find_program (CMAKE_ASCIIDOC_A2X_BINARY a2x)
+find_program (CMAKE_ASCIIDOC_A2X_BINARY "a2x" "a2x.py")
 if (CMAKE_ASCIIDOC_BINARY)
   message (STATUS "${MESSAGE_PREFIX} - a2x binary path: ${CMAKE_ASCIIDOC_A2X_BINARY}")
 else ()
