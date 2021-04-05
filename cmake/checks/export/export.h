@@ -14,23 +14,17 @@
 
 #else
 
-#if defined(EXPORT_MODE_DLL)
-
-#if defined(EXPORT_LIBRARY_FLAG)
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT __declspec(dllimport)
-#endif
-
-#elif defined(EXPORT_MODE_VISIBILITY)
+#if defined(EXPORT_MODE_VISIBILITY)
 #define EXPORT __attribute__((visibility("default")))
+#elif (defined(EXPORT_MODE_DLL) || defined(EXPORT_MODE_DLLEXPORT)) && defined(EXPORT_LIBRARY_FLAG)
+#define EXPORT __declspec(dllexport)
+#elif (defined(EXPORT_MODE_DLL) || defined(EXPORT_MODE_DLLIMPORT)) && !defined(EXPORT_LIBRARY_FLAG)
+#define EXPORT __declspec(dllimport)
 #else
 #define EXPORT
 #endif
 
-#if defined(EXPORT_MODE_DLL)
-#define NO_EXPORT
-#elif defined(EXPORT_MODE_VISIBILITY)
+#if defined(EXPORT_MODE_VISIBILITY)
 #define NO_EXPORT __attribute__((visibility("hidden")))
 #else
 #define NO_EXPORT

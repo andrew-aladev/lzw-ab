@@ -14,23 +14,17 @@
 
 #else
 
-#if defined(LZWS_EXPORT_MODE_DLL)
-
-#if defined(LZWS_EXPORT_LIBRARY_FLAG)
-#define LZWS_EXPORT __declspec(dllexport)
-#else
-#define LZWS_EXPORT __declspec(dllimport)
-#endif
-
-#elif defined(LZWS_EXPORT_MODE_VISIBILITY)
+#if defined(LZWS_EXPORT_MODE_VISIBILITY)
 #define LZWS_EXPORT __attribute__((visibility("default")))
+#elif (defined(LZWS_EXPORT_MODE_DLL) || defined(LZWS_EXPORT_MODE_DLLEXPORT)) && defined(LZWS_EXPORT_LIBRARY_FLAG)
+#define LZWS_EXPORT __declspec(dllexport)
+#elif (defined(LZWS_EXPORT_MODE_DLL) || defined(LZWS_EXPORT_MODE_DLLIMPORT)) && !defined(LZWS_EXPORT_LIBRARY_FLAG)
+#define LZWS_EXPORT __declspec(dllimport)
 #else
 #define LZWS_EXPORT
 #endif
 
-#if defined(LZWS_EXPORT_MODE_DLL)
-#define LZWS_NO_EXPORT
-#elif defined(LZWS_EXPORT_MODE_VISIBILITY)
+#if defined(LZWS_EXPORT_MODE_VISIBILITY)
 #define LZWS_NO_EXPORT __attribute__((visibility("hidden")))
 #else
 #define LZWS_NO_EXPORT

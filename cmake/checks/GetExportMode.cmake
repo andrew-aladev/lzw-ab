@@ -1,14 +1,14 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 function (
-  cmake_test_export_mode
+  cmake_test_export_mode_with_ld_flags
   EXPORT_MODE_UPPERCASE
   EXPORT_SHARED_LIBRARY_LD_FLAGS
   EXPORT_EXECUTABLE_LD_FLAGS
 )
-  set (NAME "cmake_test_export_mode")
+  set (NAME "cmake_test_export_mode_with_ld_flags")
   set (SOURCE_DIR "${CURRENT_LIST_DIR}/export")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_export_mode")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_export_mode_with_ld_flags")
 
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
@@ -39,114 +39,57 @@ function (
   set (TEST_RESULT ${TEST_RESULT} PARENT_SCOPE)
 endfunction ()
 
-function (cmake_get_export_all_flags EXPORT_MODE_UPPERCASE)
-  if (DEFINED CMAKE_HAVE_EXPORT_ALL)
-    return ()
-  endif ()
+function (
+  cmake_test_export_mode_with_ld_flag_groups
+  EXPORT_MODE_UPPERCASE
+  EXPORT_ALL_LD_FLAG_GROUPS
+  IMPORT_ALL_LD_FLAG_GROUPS
+)
+  list (LENGTH EXPORT_ALL_LD_FLAG_GROUPS EXPORT_ALL_LD_FLAG_COUNT)
+  math (EXPR EXPORT_ALL_LD_FLAG_COUNT "${EXPORT_ALL_LD_FLAG_COUNT}-1")
 
-  set (MESSAGE_PREFIX "Status of export all support")
-
-  if (NOT MSVC)
-    set (
-      EXPORT_SHARED_LIBRARY_LD_FLAG_GROUPS
-      "-Wl,--export-all-symbols -Wl,--enable-auto-import"
-      "-fvisibility=default"
-      ""
-    )
-    set (
-      EXPORT_EXECUTABLE_LD_FLAG_GROUPS
-      "-Wl,--enable-auto-import"
-      "-fvisibility=default"
-      ""
-    )
-
+  foreach (index RANGE ${EXPORT_ALL_LD_FLAG_COUNT})
     list (
-      LENGTH EXPORT_SHARED_LIBRARY_LD_FLAG_GROUPS
-      EXPORT_SHARED_LIBRARY_LD_FLAG_COUNT
+      GET EXPORT_ALL_LD_FLAG_GROUPS
+      ${index} EXPORT_SHARED_LIBRARY_LD_FLAGS
     )
-    math (
-      EXPR EXPORT_SHARED_LIBRARY_LD_FLAG_COUNT
-      "${EXPORT_SHARED_LIBRARY_LD_FLAG_COUNT}-1"
-    )
-
-    foreach (index RANGE ${EXPORT_SHARED_LIBRARY_LD_FLAG_COUNT})
-      list (
-        GET EXPORT_SHARED_LIBRARY_LD_FLAG_GROUPS
-        ${index} EXPORT_SHARED_LIBRARY_LD_FLAGS
-      )
-      list (
-        GET EXPORT_EXECUTABLE_LD_FLAG_GROUPS
-        ${index} EXPORT_EXECUTABLE_LD_FLAGS
-      )
-
-      cmake_test_export_mode (
-        "${EXPORT_MODE_UPPERCASE}"
-        "${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
-        "${EXPORT_EXECUTABLE_LD_FLAGS}"
-      )
-
-      if (TEST_RESULT)
-        set (CMAKE_HAVE_EXPORT_ALL true)
-        set (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS ${EXPORT_SHARED_LIBRARY_LD_FLAGS})
-        set (CMAKE_EXPORT_EXECUTABLE_LD_FLAGS ${EXPORT_EXECUTABLE_LD_FLAGS})
-        set (MESSAGE_STATUS ${MESSAGE_PREFIX})
-
-        if (EXPORT_SHARED_LIBRARY_LD_FLAGS STREQUAL "")
-          set (EXPORT_SHARED_LIBRARY_LD_FLAGS "vanilla")
-        endif ()
-
-        if (EXPORT_EXECUTABLE_LD_FLAGS STREQUAL "")
-          set (EXPORT_EXECUTABLE_LD_FLAGS "vanilla")
-        endif ()
-
-        set (
-          MESSAGE_STATUS
-          "${MESSAGE_STATUS} - shared library LD flags: ${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
-        )
-        set (
-          MESSAGE_STATUS
-          "${MESSAGE_STATUS}, executable LD flags: ${EXPORT_EXECUTABLE_LD_FLAGS}"
-        )
-        message (STATUS ${MESSAGE_STATUS})
-
-        break ()
-      endif ()
-    endforeach ()
-
-    if (NOT TEST_RESULT)
-      set (CMAKE_HAVE_EXPORT_ALL false)
-      set (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS "")
-      set (CMAKE_EXPORT_EXECUTABLE_LD_FLAGS "")
-      message (STATUS "${MESSAGE_PREFIX} - no")
+    if (EXPORT_SHARED_LIBRARY_LD_FLAGS STREQUAL "vanilla")
+      set (EXPORT_SHARED_LIBRARY_LD_FLAGS "")
     endif ()
 
-  else ()
-    set (CMAKE_HAVE_EXPORT_ALL false)
-    set (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS "")
-    set (CMAKE_EXPORT_EXECUTABLE_LD_FLAGS "")
-    message (STATUS "${MESSAGE_PREFIX} - no")
+    list (
+      GET IMPORT_ALL_LD_FLAG_GROUPS
+      ${index} EXPORT_EXECUTABLE_LD_FLAGS
+    )
+    if (EXPORT_EXECUTABLE_LD_FLAGS STREQUAL "vanilla")
+      set (EXPORT_EXECUTABLE_LD_FLAGS "")
+    endif ()
+
+    cmake_test_export_mode_with_ld_flags (
+      "${EXPORT_MODE_UPPERCASE}"
+      "${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+      "${EXPORT_EXECUTABLE_LD_FLAGS}"
+    )
+
+    if (TEST_RESULT)
+      break ()
+    endif ()
+  endforeach ()
+
+  if (NOT TEST_RESULT)
+    set (EXPORT_SHARED_LIBRARY_LD_FLAGS "")
+    set (EXPORT_EXECUTABLE_LD_FLAGS "")
   endif ()
 
+  set (TEST_RESULT ${TEST_RESULT} PARENT_SCOPE)
   set (
-    CMAKE_HAVE_EXPORT_ALL ${CMAKE_HAVE_EXPORT_ALL}
-    CACHE BOOL "Status of export all"
-  )
-  set (
-    CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS ${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS}
-    CACHE STRING "Export shared library LD flags"
+    EXPORT_SHARED_LIBRARY_LD_FLAGS "${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+    PARENT_SCOPE
   )
   set (
-    CMAKE_EXPORT_EXECUTABLE_LD_FLAGS ${CMAKE_EXPORT_EXECUTABLE_LD_FLAGS}
-    CACHE STRING "Export executable LD flags"
+    EXPORT_EXECUTABLE_LD_FLAGS "${EXPORT_EXECUTABLE_LD_FLAGS}"
+    PARENT_SCOPE
   )
-
-  mark_as_advanced (
-    CMAKE_HAVE_EXPORT_ALL
-    CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS
-    CMAKE_EXPORT_EXECUTABLE_LD_FLAGS
-  )
-
-  set (TEST_RESULT ${CMAKE_HAVE_EXPORT_ALL} PARENT_SCOPE)
 endfunction ()
 
 function (cmake_get_export_mode CHECK_MODE)
@@ -161,27 +104,86 @@ function (cmake_get_export_mode CHECK_MODE)
   endif ()
 
   if (WIN32 OR CYGWIN OR MSYS OR MINGW)
-    set (EXPORT_MODES "dll" "vanilla")
+    set (EXPORT_MODES "dll" "dllexport" "dllimport" "auto")
   else ()
-    set (EXPORT_MODES "visibility" "vanilla")
+    set (EXPORT_MODES "visibility" "auto")
+  endif ()
+
+  if (WIN32 OR CYGWIN OR MSYS OR MINGW)
+    if (MSVC)
+      set (DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS "vanilla")
+      set (DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS "vanilla")
+    else ()
+      set (
+        DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS
+        "-Wl,--export-all-symbols -Wl,--enable-auto-import"
+        "vanilla"
+      )
+      set (
+        DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS
+        "-Wl,--enable-auto-import"
+        "vanilla"
+      )
+    endif ()
+  else ()
+    set (
+      DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS
+      "-fvisibility=default"
+      "vanilla"
+    )
+    set (
+      DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS
+      "-fvisibility=default"
+      "vanilla"
+    )
   endif ()
 
   foreach (EXPORT_MODE ${EXPORT_MODES})
     string (TOUPPER ${EXPORT_MODE} EXPORT_MODE_UPPERCASE)
 
-    if (EXPORT_MODE STREQUAL "vanilla")
-      cmake_get_export_all_flags ("${EXPORT_MODE_UPPERCASE}")
+    if (EXPORT_MODE STREQUAL "dllexport")
+      set (EXPORT_ALL_LD_FLAG_GROUPS "vanilla")
+      set (IMPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS})
+    elseif (EXPORT_MODE STREQUAL "dllimport")
+      set (EXPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS})
+      set (IMPORT_ALL_LD_FLAG_GROUPS "vanilla")
+    elseif (EXPORT_MODE STREQUAL "auto")
+      set (EXPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS})
+      set (IMPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS})
     else ()
-      cmake_test_export_mode ("${EXPORT_MODE_UPPERCASE}" "" "")
-      set (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS "")
-      set (CMAKE_EXPORT_EXECUTABLE_LD_FLAGS "")
+      set (EXPORT_ALL_LD_FLAG_GROUPS "vanilla")
+      set (IMPORT_ALL_LD_FLAG_GROUPS "vanilla")
     endif ()
+
+    cmake_test_export_mode_with_ld_flag_groups (
+      "${EXPORT_MODE_UPPERCASE}"
+      "${EXPORT_ALL_LD_FLAG_GROUPS}"
+      "${IMPORT_ALL_LD_FLAG_GROUPS}"
+    )
 
     if (TEST_RESULT)
       set (CMAKE_HAVE_EXPORT true)
       set (CMAKE_EXPORT_MODE ${EXPORT_MODE})
       set (CMAKE_EXPORT_MODE_UPPERCASE ${EXPORT_MODE_UPPERCASE})
-      message (STATUS "${MESSAGE_PREFIX} - ${EXPORT_MODE}")
+      set (CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS ${EXPORT_SHARED_LIBRARY_LD_FLAGS})
+      set (CMAKE_EXPORT_EXECUTABLE_LD_FLAGS ${EXPORT_EXECUTABLE_LD_FLAGS})
+      set (MESSAGE_STATUS "${MESSAGE_PREFIX} - ${EXPORT_MODE}")
+
+      if (NOT EXPORT_SHARED_LIBRARY_LD_FLAGS STREQUAL "")
+        set (
+          MESSAGE_STATUS
+          "${MESSAGE_STATUS}, shared library LD flags: ${EXPORT_SHARED_LIBRARY_LD_FLAGS}"
+        )
+      endif ()
+
+      if (NOT EXPORT_EXECUTABLE_LD_FLAGS STREQUAL "")
+        set (
+          MESSAGE_STATUS
+          "${MESSAGE_STATUS}, executable LD flags: ${EXPORT_EXECUTABLE_LD_FLAGS}"
+        )
+      endif ()
+
+      message (STATUS ${MESSAGE_STATUS})
       break ()
     endif ()
   endforeach ()
