@@ -16,9 +16,9 @@
 
 #if defined(EXPORT_MODE_VISIBILITY)
 #define EXPORT __attribute__((visibility("default")))
-#elif (defined(EXPORT_MODE_DLL) || defined(EXPORT_MODE_DLLEXPORT)) && defined(EXPORT_LIBRARY_FLAG)
+#elif defined(EXPORT_MODE_DLL) && defined(EXPORT_LIBRARY_FLAG)
 #define EXPORT __declspec(dllexport)
-#elif (defined(EXPORT_MODE_DLL) || defined(EXPORT_MODE_DLLIMPORT)) && !defined(EXPORT_LIBRARY_FLAG)
+#elif defined(EXPORT_MODE_DLL) && !defined(EXPORT_LIBRARY_FLAG)
 #define EXPORT __declspec(dllimport)
 #else
 #define EXPORT

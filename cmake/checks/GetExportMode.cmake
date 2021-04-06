@@ -42,15 +42,15 @@ endfunction ()
 function (
   cmake_test_export_mode_with_ld_flag_groups
   EXPORT_MODE_UPPERCASE
-  EXPORT_ALL_LD_FLAG_GROUPS
-  IMPORT_ALL_LD_FLAG_GROUPS
+  EXPORT_LD_FLAG_GROUPS
+  IMPORT_LD_FLAG_GROUPS
 )
-  list (LENGTH EXPORT_ALL_LD_FLAG_GROUPS EXPORT_ALL_LD_FLAG_COUNT)
-  math (EXPR EXPORT_ALL_LD_FLAG_COUNT "${EXPORT_ALL_LD_FLAG_COUNT}-1")
+  list (LENGTH EXPORT_LD_FLAG_GROUPS EXPORT_LD_FLAG_COUNT)
+  math (EXPR EXPORT_LD_FLAG_COUNT "${EXPORT_LD_FLAG_COUNT}-1")
 
-  foreach (index RANGE ${EXPORT_ALL_LD_FLAG_COUNT})
+  foreach (index RANGE ${EXPORT_LD_FLAG_COUNT})
     list (
-      GET EXPORT_ALL_LD_FLAG_GROUPS
+      GET EXPORT_LD_FLAG_GROUPS
       ${index} EXPORT_SHARED_LIBRARY_LD_FLAGS
     )
     if (EXPORT_SHARED_LIBRARY_LD_FLAGS STREQUAL "vanilla")
@@ -58,7 +58,7 @@ function (
     endif ()
 
     list (
-      GET IMPORT_ALL_LD_FLAG_GROUPS
+      GET IMPORT_LD_FLAG_GROUPS
       ${index} EXPORT_EXECUTABLE_LD_FLAGS
     )
     if (EXPORT_EXECUTABLE_LD_FLAGS STREQUAL "vanilla")
@@ -104,35 +104,35 @@ function (cmake_get_export_mode CHECK_MODE)
   endif ()
 
   if (WIN32 OR CYGWIN OR MSYS OR MINGW)
-    set (EXPORT_MODES "dll" "dllexport" "dllimport" "auto")
+    set (EXPORT_MODES "dll" "auto")
   else ()
     set (EXPORT_MODES "visibility" "auto")
   endif ()
 
   if (WIN32 OR CYGWIN OR MSYS OR MINGW)
     if (MSVC)
-      set (DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS "vanilla")
-      set (DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS "vanilla")
+      set (DEFAULT_EXPORT_LD_FLAG_GROUPS "vanilla")
+      set (DEFAULT_IMPORT_LD_FLAG_GROUPS "vanilla")
     else ()
       set (
-        DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS
+        DEFAULT_EXPORT_LD_FLAG_GROUPS
         "-Wl,--export-all-symbols -Wl,--enable-auto-import"
         "vanilla"
       )
       set (
-        DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS
+        DEFAULT_IMPORT_LD_FLAG_GROUPS
         "-Wl,--enable-auto-import"
         "vanilla"
       )
     endif ()
   else ()
     set (
-      DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS
+      DEFAULT_EXPORT_LD_FLAG_GROUPS
       "-fvisibility=default"
       "vanilla"
     )
     set (
-      DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS
+      DEFAULT_IMPORT_LD_FLAG_GROUPS
       "-fvisibility=default"
       "vanilla"
     )
@@ -141,24 +141,18 @@ function (cmake_get_export_mode CHECK_MODE)
   foreach (EXPORT_MODE ${EXPORT_MODES})
     string (TOUPPER ${EXPORT_MODE} EXPORT_MODE_UPPERCASE)
 
-    if (EXPORT_MODE STREQUAL "dllexport")
-      set (EXPORT_ALL_LD_FLAG_GROUPS "vanilla")
-      set (IMPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS})
-    elseif (EXPORT_MODE STREQUAL "dllimport")
-      set (EXPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS})
-      set (IMPORT_ALL_LD_FLAG_GROUPS "vanilla")
-    elseif (EXPORT_MODE STREQUAL "auto")
-      set (EXPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_EXPORT_ALL_LD_FLAG_GROUPS})
-      set (IMPORT_ALL_LD_FLAG_GROUPS ${DEFAULT_IMPORT_ALL_LD_FLAG_GROUPS})
+    if (EXPORT_MODE STREQUAL "auto")
+      set (EXPORT_LD_FLAG_GROUPS ${DEFAULT_EXPORT_LD_FLAG_GROUPS})
+      set (IMPORT_LD_FLAG_GROUPS ${DEFAULT_IMPORT_LD_FLAG_GROUPS})
     else ()
-      set (EXPORT_ALL_LD_FLAG_GROUPS "vanilla")
-      set (IMPORT_ALL_LD_FLAG_GROUPS "vanilla")
+      set (EXPORT_LD_FLAG_GROUPS "vanilla")
+      set (IMPORT_LD_FLAG_GROUPS "vanilla")
     endif ()
 
     cmake_test_export_mode_with_ld_flag_groups (
       "${EXPORT_MODE_UPPERCASE}"
-      "${EXPORT_ALL_LD_FLAG_GROUPS}"
-      "${IMPORT_ALL_LD_FLAG_GROUPS}"
+      "${EXPORT_LD_FLAG_GROUPS}"
+      "${IMPORT_LD_FLAG_GROUPS}"
     )
 
     if (TEST_RESULT)
