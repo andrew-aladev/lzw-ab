@@ -16,7 +16,7 @@ BIGNUM_LIBRARIES=("gmp" "tommath")
 for dictionary in "${DICTIONARIES[@]}"; do
   for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
     echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
-    build_dir="${dictionary}-${bignum_library}"
+    build_dir="lzws-${dictionary}-${bignum_library}"
 
     # Cleanup.
     rm -rf "$build_dir"

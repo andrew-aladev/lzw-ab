@@ -17,25 +17,29 @@ static inline lzws_result_t
 {
   FILE* source_file = tmpfile();
   if (source_file == NULL) {
-    LZWS_LOG_ERROR("failed to create temp file");
+    LZWS_LOG_ERROR("failed to create source file");
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
   size_t written_length = fwrite(source, 1, source_length, source_file);
   if (written_length != source_length) {
-    LZWS_LOG_ERROR("failed to write file");
+    LZWS_LOG_ERROR("failed to write source file");
+    fclose(source_file);
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
+  }
+
+  if (fseek(source_file, 0L, SEEK_SET) != 0) {
+    LZWS_LOG_ERROR("failed to seek source file");
     fclose(source_file);
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
 
   FILE* destination_file = tmpfile();
   if (destination_file == NULL) {
-    LZWS_LOG_ERROR("failed to create temp file");
+    LZWS_LOG_ERROR("failed to create destination file");
     fclose(source_file);
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
-
-  rewind(source_file);
 
   *source_file_ptr      = source_file;
   *destination_file_ptr = destination_file;
@@ -46,13 +50,16 @@ static inline lzws_result_t
 static inline lzws_result_t
   read_destination(FILE* destination_file, lzws_byte_t** destination_ptr, size_t destination_length)
 {
+  if (fseek(destination_file, 0L, SEEK_SET) != 0) {
+    LZWS_LOG_ERROR("failed to seek destination file");
+    return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
+  }
+
   lzws_byte_t* destination = malloc(destination_length);
   if (destination == NULL) {
     LZWS_LOG_ERROR("malloc failed, destination length: %zu", destination_length);
     return LZWS_TEST_STRING_AND_FILE_NATIVE_ERROR;
   }
-
-  rewind(destination_file);
 
   size_t read_length = fread(destination, 1, destination_length, destination_file);
   if (read_length != destination_length || getc(destination_file) != EOF) {
