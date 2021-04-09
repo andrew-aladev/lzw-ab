@@ -53,11 +53,6 @@ function (cmake_get_build_flags)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (
-    CMAKE_DEBUG_INFO_C_FLAGS ${CMAKE_DEBUG_INFO_C_FLAGS}
-    CACHE STRING "Debug info C flags"
-  )
-
   # -- No optimizations --
 
   if (MSVC)
@@ -77,11 +72,6 @@ function (cmake_get_build_flags)
     set (CMAKE_NO_OPTIMIZATIONS_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
-
-  set (
-    CMAKE_NO_OPTIMIZATIONS_C_FLAGS ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
-    CACHE STRING "No optimizations C flags"
-  )
 
   # -- Optimizations --
 
@@ -103,11 +93,6 @@ function (cmake_get_build_flags)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (
-    CMAKE_OPTIMIZATIONS_C_FLAGS ${CMAKE_OPTIMIZATIONS_C_FLAGS}
-    CACHE STRING "Optimizations C flags"
-  )
-
   # -- Min size optimizations --
 
   if (MSVC)
@@ -127,11 +112,6 @@ function (cmake_get_build_flags)
     set (CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
-
-  set (
-    CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS ${CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS}
-    CACHE STRING "Min size optimizations C flags"
-  )
 
   # -- pipe --
 
@@ -155,13 +135,28 @@ function (cmake_get_build_flags)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
+  # -- result --
+
+  set (
+    CMAKE_DEBUG_INFO_C_FLAGS ${CMAKE_DEBUG_INFO_C_FLAGS}
+    CACHE STRING "Debug info C flags"
+  )
+  set (
+    CMAKE_NO_OPTIMIZATIONS_C_FLAGS ${CMAKE_NO_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "No optimizations C flags"
+  )
+  set (
+    CMAKE_OPTIMIZATIONS_C_FLAGS ${CMAKE_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "Optimizations C flags"
+  )
+  set (
+    CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS ${CMAKE_MIN_SIZE_OPTIMIZATIONS_C_FLAGS}
+    CACHE STRING "Min size optimizations C flags"
+  )
   set (
     CMAKE_PIPE_C_FLAGS ${CMAKE_PIPE_C_FLAGS}
     CACHE STRING "Pipe C flags"
   )
-
-  # -- result --
-
   set (
     CMAKE_C_FLAGS_DEBUG
     "${CMAKE_NO_OPTIMIZATIONS_C_FLAGS} ${CMAKE_DEBUG_INFO_C_FLAGS}"

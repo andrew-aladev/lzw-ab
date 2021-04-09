@@ -13,11 +13,11 @@ LZWS_EXPORT void lzws_tests_set_random_string(char* buffer, size_t buffer_length
   }
 
   size_t   last_index = buffer_length - 1;
-  uint32_t value      = time(NULL);
+  uint32_t value      = (uint32_t) time(NULL);
 
   for (size_t index = 0; index < last_index; index++) {
     value         = value * 1103515245 + 12345;
-    buffer[index] = ((value / 65536) % 255) + 1;
+    buffer[index] = (char) (((value / 65536) % 255) + 1);
   }
 
   buffer[last_index] = '\0';

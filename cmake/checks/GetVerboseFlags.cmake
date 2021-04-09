@@ -46,11 +46,6 @@ function (cmake_get_verbose_flags)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
-  set (
-    CMAKE_WERROR_C_FLAGS ${CMAKE_WERROR_C_FLAGS}
-    CACHE STRING "Werror C flags"
-  )
-
   # -- pedantic --
 
   if (MSVC)
@@ -110,13 +105,35 @@ function (cmake_get_verbose_flags)
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
+  # -- Wconversion --
+
+  set (MESSAGE_PREFIX "Status of Wconversion support")
+
+  if (NOT MSVC)
+    set (FLAG "-Wconversion")
+
+    cmake_test_verbose_flag (${FLAG})
+
+    if (TEST_RESULT)
+      set (CMAKE_VERBOSE_C_FLAGS "${CMAKE_VERBOSE_C_FLAGS} ${FLAG}")
+      message (STATUS "${MESSAGE_PREFIX} - ${FLAG}")
+    else ()
+      message (STATUS "${MESSAGE_PREFIX} - no")
+    endif ()
+  else ()
+    message (STATUS "${MESSAGE_PREFIX} - no")
+  endif ()
+
+  # -- result --
+
+  set (
+    CMAKE_WERROR_C_FLAGS ${CMAKE_WERROR_C_FLAGS}
+    CACHE STRING "Werror C flags"
+  )
   set (
     CMAKE_VERBOSE_C_FLAGS ${CMAKE_VERBOSE_C_FLAGS}
     CACHE STRING "Verbose C flags"
   )
-
-  # -- result --
-
   set (
     CMAKE_GET_VERBOSE_FLAGS_PROCESSED true
     CACHE BOOL "Verbose flags processed"

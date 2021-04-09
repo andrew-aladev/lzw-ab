@@ -16,7 +16,8 @@ static inline void print_bytes_with_reversed_bits(uint8_t byte)
 
   for (uint8_t bit_index = 0; bit_index < 8; bit_index++) {
     uint8_t bit_value = (byte >> bit_index) & 1;
-    byte_with_reversed_bits |= bit_value << (7 - bit_index);
+    bit_value         = (uint8_t)(bit_value << (7 - bit_index));
+    byte_with_reversed_bits |= bit_value;
   }
 
   PRINTF(BYTE_TEMPLATE, byte_with_reversed_bits);

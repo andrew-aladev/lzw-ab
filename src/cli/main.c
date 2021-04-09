@@ -73,7 +73,7 @@ int main(int argc, char** argv)
   while ((option = getopt_long(argc, argv, short_options, long_options, NULL)) != -1) {
     switch (option) {
       case 'b':
-        max_code_bit_length = atoi(optarg);
+        max_code_bit_length = (lzws_byte_fast_t) atoi(optarg);
         break;
       case 'd':
         is_compressor = false;
