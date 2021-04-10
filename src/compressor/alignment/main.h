@@ -24,8 +24,8 @@ LZWS_EXPORT inline void lzws_compressor_add_destination_byte_length_to_alignment
   lzws_byte_fast_t             destination_byte_length)
 {
   // Destination byte length can be aligned by last used code bit length * 8.
-  alignment_ptr->destination_byte_length =
-    (alignment_ptr->destination_byte_length + destination_byte_length) % alignment_ptr->last_used_code_bit_length;
+  alignment_ptr->destination_byte_length = (lzws_byte_fast_t)(
+    (alignment_ptr->destination_byte_length + destination_byte_length) % alignment_ptr->last_used_code_bit_length);
 }
 
 LZWS_EXPORT inline bool lzws_compressor_need_to_write_alignment(

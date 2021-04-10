@@ -35,7 +35,7 @@ static inline lzws_compressor_dictionary_used_index_t get_next_code_index(
     current_code -= dictionary_ptr->next_codes_offset;
   }
 
-  return (current_code << LZWS_ALPHABET_BIT_LENGTH) | next_symbol;
+  return (lzws_compressor_dictionary_used_index_t)((current_code << LZWS_ALPHABET_BIT_LENGTH) | next_symbol);
 }
 
 static inline lzws_code_fast_t get_index_of_used_index(
@@ -167,7 +167,7 @@ LZWS_EXPORT void lzws_compressor_save_next_code_to_dictionary(
     dictionary_ptr->used_indexes[index] = code_index;
   }
 
-  dictionary_ptr->next_codes[code_index] = next_code;
+  dictionary_ptr->next_codes[code_index] = (lzws_code_t) next_code;
 }
 
 LZWS_EXPORT void lzws_compressor_free_dictionary(

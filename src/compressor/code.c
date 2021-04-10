@@ -12,12 +12,12 @@ static inline lzws_byte_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_byte_fa
 {
   lzws_code_fast_t code                      = *code_ptr;
   lzws_byte_fast_t code_bit_length           = *code_bit_length_ptr;
-  lzws_byte_fast_t remaining_code_bit_length = code_bit_length - 8;
+  lzws_byte_fast_t remaining_code_bit_length = (lzws_byte_fast_t)(code_bit_length - 8);
   lzws_byte_fast_t byte;
 
   if (msb) {
     // Taking first bits from code.
-    byte = code >> remaining_code_bit_length;
+    byte = (lzws_byte_fast_t)(code >> remaining_code_bit_length);
 
     // Removing first bits from code.
     code &= lzws_get_mask_for_last_bits(remaining_code_bit_length);
@@ -48,25 +48,25 @@ static inline lzws_byte_fast_t get_byte_with_remainder(
 
   lzws_code_fast_t code                      = *code_ptr;
   lzws_byte_fast_t code_bit_length           = *code_bit_length_ptr;
-  lzws_byte_fast_t current_code_bit_length   = 8 - remainder_bit_length;
-  lzws_byte_fast_t remaining_code_bit_length = code_bit_length - current_code_bit_length;
+  lzws_byte_fast_t current_code_bit_length   = (lzws_byte_fast_t)(8 - remainder_bit_length);
+  lzws_byte_fast_t remaining_code_bit_length = (lzws_byte_fast_t)(code_bit_length - current_code_bit_length);
   lzws_byte_fast_t byte;
 
   if (msb) {
     // Taking first bits from code.
-    byte = code >> remaining_code_bit_length;
+    byte = (lzws_byte_fast_t)(code >> remaining_code_bit_length);
 
     // Remainder is sitting on the top.
-    byte = (remainder << current_code_bit_length) | byte;
+    byte = (lzws_byte_fast_t)((remainder << current_code_bit_length) | byte);
 
     // Removing first bits from code.
     code &= lzws_get_mask_for_last_bits(remaining_code_bit_length);
   } else {
     // Taking last bits from code.
-    byte = code & lzws_get_mask_for_last_bits(current_code_bit_length);
+    byte = (lzws_byte_fast_t)(code & lzws_get_mask_for_last_bits(current_code_bit_length));
 
     // Remainder is sitting on the bottom.
-    byte = (byte << remainder_bit_length) | remainder;
+    byte = (lzws_byte_fast_t)((byte << remainder_bit_length) | remainder);
 
     // Removing last bits from code.
     code >>= current_code_bit_length;
@@ -91,7 +91,7 @@ LZWS_EXPORT lzws_result_t lzws_compressor_write_code(
   // Remainder bit length will always be <= 7.
   // So destination byte length will always be >= 1.
   lzws_byte_fast_t destination_byte_length =
-    lzws_floor_bit_length_to_byte_length(code_bit_length + remainder_bit_length);
+    (lzws_byte_fast_t) lzws_floor_bit_length_to_byte_length((size_t)(code_bit_length + remainder_bit_length));
 
   if (*destination_length_ptr < destination_byte_length) {
     return LZWS_COMPRESSOR_NEEDS_MORE_DESTINATION;
@@ -114,7 +114,7 @@ LZWS_EXPORT lzws_result_t lzws_compressor_write_code(
     destination_byte_length--;
   }
 
-  state_ptr->remainder            = code;
+  state_ptr->remainder            = (lzws_byte_fast_t) code;
   state_ptr->remainder_bit_length = code_bit_length;
 
   return 0;

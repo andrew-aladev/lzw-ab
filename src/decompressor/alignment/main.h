@@ -25,7 +25,7 @@ LZWS_EXPORT inline void lzws_decompressor_add_source_byte_length_to_alignment(
 {
   // Source byte length can be aligned by free code bit length * 8.
   alignment_ptr->source_byte_length =
-    (alignment_ptr->source_byte_length + source_byte_length) % alignment_ptr->free_code_bit_length;
+    (lzws_byte_fast_t)((alignment_ptr->source_byte_length + source_byte_length) % alignment_ptr->free_code_bit_length);
 }
 
 LZWS_EXPORT inline bool lzws_decompressor_need_to_read_alignment(

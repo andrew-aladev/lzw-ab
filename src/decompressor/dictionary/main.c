@@ -132,7 +132,7 @@ static inline lzws_byte_fast_t
     code = previous_codes[code_index];
   }
 
-  lzws_byte_fast_t first_symbol = code;
+  lzws_byte_fast_t first_symbol = (lzws_byte_fast_t) code;
 
   output_buffer[output_length] = first_symbol;
   output_length++;
@@ -176,7 +176,7 @@ LZWS_EXPORT void lzws_decompressor_add_code_to_dictionary(
   lzws_code_fast_t next_code_index = get_code_index(dictionary_ptr, next_code);
   lzws_byte_t      first_symbol    = prepare_output(dictionary_ptr, code, is_prefix);
 
-  dictionary_ptr->previous_codes[next_code_index]       = prefix_code;
+  dictionary_ptr->previous_codes[next_code_index]       = (lzws_code_t) prefix_code;
   dictionary_ptr->last_symbol_by_codes[next_code_index] = first_symbol;
 }
 

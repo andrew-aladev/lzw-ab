@@ -198,11 +198,11 @@ LZWS_EXPORT void lzws_compressor_save_next_code_to_dictionary(
   lzws_code_fast_t first_child_code   = first_child_codes[current_code_index];
 
   // Saving first child.
-  first_child_codes[current_code_index] = next_code;
+  first_child_codes[current_code_index] = (lzws_code_t) next_code;
 
   if (first_child_code != LZWS_COMPRESSOR_UNDEFINED_NEXT_CODE) {
     // Saving next sibling.
-    dictionary_ptr->next_sibling_codes[next_code_index] = first_child_code;
+    dictionary_ptr->next_sibling_codes[next_code_index] = (lzws_code_t) first_child_code;
   }
 }
 

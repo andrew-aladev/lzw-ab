@@ -26,7 +26,7 @@ static inline lzws_result_t
 
   if (state_ptr->options.msb) {
     // Adding right padding.
-    remainder <<= 8 - remainder_bit_length;
+    remainder = (lzws_byte_fast_t)(remainder << (8 - remainder_bit_length));
   }
 
   lzws_compressor_write_byte(state_ptr, remainder, destination_ptr, destination_length_ptr);

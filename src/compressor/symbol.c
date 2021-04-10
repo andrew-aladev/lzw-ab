@@ -52,7 +52,7 @@ LZWS_EXPORT lzws_result_t lzws_compressor_read_next_symbol(
 
   lzws_code_fast_t current_code = state_ptr->current_code;
   if (current_code < LZWS_ALPHABET_LENGTH && need_to_clear_by_ratio_wrapper) {
-    state_ptr->next_symbol  = current_code;
+    state_ptr->next_symbol  = (lzws_byte_fast_t) current_code;
     state_ptr->current_code = LZWS_CLEAR_CODE;
     state_ptr->status       = LZWS_COMPRESSOR_WRITE_CURRENT_CODE;
 

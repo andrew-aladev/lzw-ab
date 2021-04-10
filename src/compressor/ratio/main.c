@@ -76,7 +76,7 @@ LZWS_EXPORT lzws_result_t
   }
 
   bigint_result = lzws_bigint_multiply_by_uint32(
-    &destination_and_new_source, &ratio_ptr->destination_length, ratio_ptr->new_source_length, quiet);
+    &destination_and_new_source, &ratio_ptr->destination_length, (uint32_t) ratio_ptr->new_source_length, quiet);
 
   if (bigint_result != 0) {
     lzws_bigint_clear_multiple(&destination_and_new_source, &source_and_new_destination, NULL);
@@ -84,7 +84,7 @@ LZWS_EXPORT lzws_result_t
   }
 
   bigint_result = lzws_bigint_multiply_by_uint32(
-    &source_and_new_destination, &ratio_ptr->source_length, ratio_ptr->new_destination_length, quiet);
+    &source_and_new_destination, &ratio_ptr->source_length, (uint32_t) ratio_ptr->new_destination_length, quiet);
 
   if (bigint_result != 0) {
     lzws_bigint_clear_multiple(&destination_and_new_source, &source_and_new_destination, NULL);
@@ -110,15 +110,18 @@ LZWS_EXPORT lzws_result_t
 
 LZWS_EXPORT lzws_result_t lzws_compressor_clear_ratio(lzws_compressor_ratio_t* ratio_ptr, bool quiet)
 {
-  lzws_result_t bigint_result =
-    lzws_bigint_add_uint32(&ratio_ptr->source_length, &ratio_ptr->source_length, ratio_ptr->new_source_length, quiet);
+  lzws_result_t bigint_result = lzws_bigint_add_uint32(
+    &ratio_ptr->source_length, &ratio_ptr->source_length, (uint32_t) ratio_ptr->new_source_length, quiet);
 
   if (bigint_result != 0) {
     return get_error_result(bigint_result);
   }
 
   bigint_result = lzws_bigint_add_uint32(
-    &ratio_ptr->destination_length, &ratio_ptr->destination_length, ratio_ptr->new_destination_length, quiet);
+    &ratio_ptr->destination_length,
+    &ratio_ptr->destination_length,
+    (uint32_t) ratio_ptr->new_destination_length,
+    quiet);
 
   if (bigint_result != 0) {
     return get_error_result(bigint_result);

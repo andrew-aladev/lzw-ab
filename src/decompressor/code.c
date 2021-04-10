@@ -18,7 +18,7 @@ static inline void
     code = (code << 8) | byte;
   } else {
     // Code is sitting on the bottom.
-    code = (byte << code_bit_length) | code;
+    code = (lzws_code_fast_t)(byte << code_bit_length) | code;
   }
 
   *code_ptr = code;
@@ -33,7 +33,7 @@ static inline void add_byte_with_remainder(
   lzws_byte_fast_t* remainder_bit_length_ptr,
   bool              msb)
 {
-  lzws_byte_fast_t code_part_bit_length = target_code_bit_length - code_bit_length;
+  lzws_byte_fast_t code_part_bit_length = (lzws_byte_fast_t)(target_code_bit_length - code_bit_length);
   if (code_part_bit_length == 8) {
     add_byte(code_ptr, code_bit_length, byte, msb);
 
@@ -46,26 +46,26 @@ static inline void add_byte_with_remainder(
   lzws_code_fast_t code = *code_ptr;
   lzws_byte_fast_t code_part;
   lzws_byte_fast_t remainder;
-  lzws_byte_fast_t remainder_bit_length = 8 - code_part_bit_length;
+  lzws_byte_fast_t remainder_bit_length = (lzws_byte_fast_t)(8 - code_part_bit_length);
 
   if (msb) {
     // Taking first bits from byte.
-    code_part = byte >> remainder_bit_length;
+    code_part = (lzws_byte_fast_t)(byte >> remainder_bit_length);
 
     // Last bits of byte is a remainder.
-    remainder = byte & lzws_get_mask_for_last_bits(remainder_bit_length);
+    remainder = (lzws_byte_fast_t)(byte & lzws_get_mask_for_last_bits(remainder_bit_length));
 
     // Code is sitting on the top.
-    code = (code << code_part_bit_length) | code_part;
+    code = (lzws_code_fast_t)(code << code_part_bit_length) | code_part;
   } else {
     // Taking last bits from byte.
-    code_part = byte & lzws_get_mask_for_last_bits(code_part_bit_length);
+    code_part = (lzws_byte_fast_t)(byte & lzws_get_mask_for_last_bits(code_part_bit_length));
 
     // First bits of byte is a remainder.
-    remainder = byte >> code_part_bit_length;
+    remainder = (lzws_byte_fast_t)(byte >> code_part_bit_length);
 
     // Code is sitting on the bottom.
-    code = (code_part << code_bit_length) | code;
+    code = (lzws_code_fast_t)(code_part << code_bit_length) | code;
   }
 
   *code_ptr                 = code;
@@ -86,7 +86,7 @@ LZWS_EXPORT lzws_result_t lzws_decompressor_read_code(
   // Remainder bit length will always be <= 7.
   // So source byte length will always be >= 1.
   lzws_byte_fast_t source_byte_length =
-    lzws_ceil_bit_length_to_byte_length(target_code_bit_length - remainder_bit_length);
+    (lzws_byte_fast_t) lzws_ceil_bit_length_to_byte_length((size_t)(target_code_bit_length - remainder_bit_length));
 
   if (*source_length_ptr < source_byte_length) {
     return LZWS_DECOMPRESSOR_NEEDS_MORE_SOURCE;
@@ -102,7 +102,7 @@ LZWS_EXPORT lzws_result_t lzws_decompressor_read_code(
     lzws_decompressor_read_byte(state_ptr, &byte, source_ptr, source_length_ptr);
     add_byte(&code, code_bit_length, byte, state_ptr->options.msb);
 
-    code_bit_length += 8;
+    code_bit_length = (lzws_byte_fast_t)(code_bit_length + 8);
     source_byte_length--;
   }
 
