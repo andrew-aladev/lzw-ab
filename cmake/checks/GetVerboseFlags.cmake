@@ -89,7 +89,7 @@ function (cmake_get_verbose_flags)
   # -- Wextra --
 
   if (MSVC)
-    set (FLAG "/W4")
+    set (FLAG "/W3")
   else ()
     set (FLAG "-Wextra")
   endif ()
