@@ -34,6 +34,6 @@ LZWS_EXPORT extern inline void lzws_decompressor_add_code_to_dictionary_wrapper(
 
 LZWS_EXPORT extern inline bool lzws_decompressor_has_symbol_in_dictionary_wrapper(
   const lzws_decompressor_state_t* state_ptr);
-LZWS_EXPORT extern inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary_wrapper(
+LZWS_EXPORT extern inline lzws_byte_fast_t lzws_decompressor_get_symbol_from_dictionary_wrapper(
   lzws_decompressor_state_t* state_ptr);
 LZWS_EXPORT extern inline void lzws_decompressor_free_dictionary_wrapper(lzws_decompressor_state_t* state_ptr);

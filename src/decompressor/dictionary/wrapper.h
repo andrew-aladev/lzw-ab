@@ -40,7 +40,7 @@ LZWS_EXPORT inline bool lzws_decompressor_has_symbol_in_dictionary_wrapper(const
   return lzws_decompressor_has_symbol_in_dictionary(&state_ptr->dictionary);
 }
 
-LZWS_EXPORT inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary_wrapper(
+LZWS_EXPORT inline lzws_byte_fast_t lzws_decompressor_get_symbol_from_dictionary_wrapper(
   lzws_decompressor_state_t* state_ptr)
 {
   return lzws_decompressor_get_symbol_from_dictionary(&state_ptr->dictionary);

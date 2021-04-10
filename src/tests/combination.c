@@ -63,7 +63,7 @@ static inline lzws_result_t process_compressor_combinations(lzws_test_compressor
     for (size_t jndex = 0; jndex < WITHOUT_MAGIC_HEADERS_LENGTH; jndex++) {
       bool without_magic_header = without_magic_headers[jndex];
 
-      for (lzws_byte_fast_t max_code_bit_length = LZWS_LOWEST_MAX_CODE_BIT_LENGTH;
+      for (lzws_byte_t max_code_bit_length = LZWS_LOWEST_MAX_CODE_BIT_LENGTH;
            max_code_bit_length <= LZWS_BIGGEST_MAX_CODE_BIT_LENGTH;
            max_code_bit_length++) {
         for (size_t kndex = 0; kndex < BLOCK_MODE_LENGTH; kndex++) {

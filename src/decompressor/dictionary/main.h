@@ -34,7 +34,7 @@ LZWS_EXPORT inline bool lzws_decompressor_has_symbol_in_dictionary(const lzws_de
   return dictionary_ptr->output_length != 0;
 }
 
-LZWS_EXPORT inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(
+LZWS_EXPORT inline lzws_byte_fast_t lzws_decompressor_get_symbol_from_dictionary(
   lzws_decompressor_dictionary_t* dictionary_ptr)
 {
   return dictionary_ptr->output_buffer[--dictionary_ptr->output_length];

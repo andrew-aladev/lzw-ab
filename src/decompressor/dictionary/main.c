@@ -100,7 +100,7 @@ LZWS_EXPORT lzws_result_t lzws_decompressor_allocate_dictionary(
   return 0;
 }
 
-static inline lzws_byte_t
+static inline lzws_byte_fast_t
   prepare_output(lzws_decompressor_dictionary_t* dictionary_ptr, lzws_code_fast_t code, bool is_prefix)
 {
   // First symbol equals last symbol when code is a prefix.
@@ -132,7 +132,7 @@ static inline lzws_byte_t
     code = previous_codes[code_index];
   }
 
-  lzws_byte_t first_symbol = code;
+  lzws_byte_fast_t first_symbol = code;
 
   output_buffer[output_length] = first_symbol;
   output_length++;
@@ -182,7 +182,7 @@ LZWS_EXPORT void lzws_decompressor_add_code_to_dictionary(
 
 LZWS_EXPORT extern inline bool lzws_decompressor_has_symbol_in_dictionary(
   const lzws_decompressor_dictionary_t* dictionary_ptr);
-LZWS_EXPORT extern inline lzws_byte_t lzws_decompressor_get_symbol_from_dictionary(
+LZWS_EXPORT extern inline lzws_byte_fast_t lzws_decompressor_get_symbol_from_dictionary(
   lzws_decompressor_dictionary_t* dictionary_ptr);
 
 LZWS_EXPORT void lzws_decompressor_free_dictionary(lzws_decompressor_dictionary_t* dictionary_ptr)
