@@ -29,12 +29,10 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
       -DCMAKE_BUILD_TYPE="RELEASE"
-    make clean
-    make -j${CPU_COUNT} VERBOSE=1
-
-    CTEST_OUTPUT_ON_FAILURE=1 make test
-
-    make package
+    cmake --build "." --target clean
+    cmake --build "." -j${CPU_COUNT} --verbose
+    CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target test
+    cmake --build "." --target package
 
     cd ".."
   done

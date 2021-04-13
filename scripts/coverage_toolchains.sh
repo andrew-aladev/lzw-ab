@@ -59,9 +59,9 @@ while read -r toolchain; do
         -DCMAKE_BUILD_TYPE=DEBUG \
         || continue
 
-      make clean
-      make -j${CPU_COUNT}
-      CTEST_OUTPUT_ON_FAILURE=1 make test
+      cmake --build "." --target clean
+      cmake --build "." -j${CPU_COUNT}
+      CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target test
 
       if ([ -n "$CI" ]); then
         if (echo "$toolchain" | grep -q "clang/coverage.cmake$") && (command -v "llvm-cov" > /dev/null 2>&1); then

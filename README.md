@@ -50,15 +50,15 @@ You can also use [overlay](https://github.com/andrew-aladev/overlay) for gentoo.
 
 ```sh
 cd build
-cmake .. && make
+cmake .. && cmake --build .
 echo -n "TOBEORNOTTOBEORTOBEORNOT" | ./src/cli/lzws | ./src/cli/lzws -d
 ```
 
 Debug build:
 ```sh
 cmake .. -DLZWS_STATIC=ON -DLZWS_EXAMPLES=ON -DCMAKE_VERBOSE_MAKEFILE=ON
-make clean && make VERBOSE=1
-CTEST_OUTPUT_ON_FAILURE=1 make test
+cmake --build . --target clean && cmake --build . --verbose
+CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target test
 ```
 
 You can use different dictionaries:
@@ -91,7 +91,7 @@ tar cf linux.tar linux-2.6.39.4
 cmake .. \
   -DLZWS_COMPRESSOR_DICTIONARY="sparse-array" \
   -DCMAKE_BUILD_TYPE="RELEASE"
-make clean && make
+cmake --build . --target clean && cmake --build .
 
 time ./src/cli/lzws < linux.tar > linux.tar.Z
 time ./src/cli/lzws -d < linux.tar.Z > linux.tar.new
@@ -131,8 +131,8 @@ See [examples](src/examples) for more details.
 You can build and test all examples:
 ```sh
 cmake .. -DLZWS_EXAMPLES=ON
-make clean && make
-CTEST_OUTPUT_ON_FAILURE=1 make test
+cmake --build . --target clean && cmake --build .
+CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target test
 ```
 
 ## Operating systems
