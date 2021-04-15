@@ -3,6 +3,7 @@
 // Distributed under the BSD Software License (see LICENSE).
 
 #include <getopt.h>
+#include <popt.h>
 #include <stdlib.h>
 
 #include "../file.h"
