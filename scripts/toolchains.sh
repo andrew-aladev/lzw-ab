@@ -74,9 +74,9 @@ while read -r toolchain; do
         -DCMAKE_BUILD_TYPE=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "DEBUG"; else echo "RELEASE"; fi) \
         || continue
 
-      cmake --build "." --target clean
+      cmake --build "." --target "clean"
       cmake --build "." -j${CPU_COUNT}
-      CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target test
+      CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target "test"
 
       if ([ "$COVERAGE_TOOLCHAIN" = true ] && [ -n "$CI" ]); then
         if (echo "$toolchain" | grep -q "clang/coverage.cmake$") && (command -v "llvm-cov" > /dev/null 2>&1); then

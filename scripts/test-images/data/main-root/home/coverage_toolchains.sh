@@ -14,7 +14,7 @@ if [ -d "$DIR" ]; then
     echo "dictionary: ${dictionary}"
 
     cd "$dictionary"
-    CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target test
+    CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target "test"
 
     cd ".."
   done

@@ -50,25 +50,25 @@ You can also use [overlay](https://github.com/andrew-aladev/overlay) for gentoo.
 
 ```sh
 cd build
-cmake .. && cmake --build .
+cmake ".." && cmake --build "."
 echo -n "TOBEORNOTTOBEORTOBEORNOT" | ./src/cli/lzws | ./src/cli/lzws -d
 ```
 
 Debug build:
 ```sh
-cmake .. -DLZWS_STATIC=ON -DLZWS_EXAMPLES=ON -DCMAKE_VERBOSE_MAKEFILE=ON
-cmake --build . --target clean && cmake --build . --verbose
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target test
+cmake ".." -DLZWS_STATIC=ON -DLZWS_EXAMPLES=ON -DCMAKE_VERBOSE_MAKEFILE=ON
+cmake --build "." --target "clean" && cmake --build "." --verbose
+CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target "test"
 ```
 
 You can use different dictionaries:
 ```sh
-cmake .. -DLZWS_COMPRESSOR_DICTIONARY="linked-list"/"sparse-array"
+cmake ".." -DLZWS_COMPRESSOR_DICTIONARY="linked-list"/"sparse-array"
 ```
 
 You can use different bignum libraries:
 ```sh
-cmake .. -DLZWS_BIGNUM_LIBRARY="gmp"/"tommath"
+cmake ".." -DLZWS_BIGNUM_LIBRARY="gmp"/"tommath"
 ```
 
 There is a script that tests all dictionaries using several toolchains (with sanitizers).
@@ -88,10 +88,10 @@ wget "https://cdn.kernel.org/pub/linux/kernel/v2.6/linux-2.6.39.4.tar.xz"
 tar xf linux-2.6.39.4.tar.xz
 tar cf linux.tar linux-2.6.39.4
 
-cmake .. \
+cmake ".." \
   -DLZWS_COMPRESSOR_DICTIONARY="sparse-array" \
   -DCMAKE_BUILD_TYPE="RELEASE"
-cmake --build . --target clean && cmake --build .
+cmake --build "." --target "clean" && cmake --build "."
 
 time ./src/cli/lzws < linux.tar > linux.tar.Z
 time ./src/cli/lzws -d < linux.tar.Z > linux.tar.new
@@ -130,9 +130,9 @@ See [examples](src/examples) for more details.
 
 You can build and test all examples:
 ```sh
-cmake .. -DLZWS_EXAMPLES=ON
-cmake --build . --target clean && cmake --build .
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target test
+cmake ".." -DLZWS_EXAMPLES=ON
+cmake --build "." --target "clean" && cmake --build "."
+CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target "test"
 ```
 
 ## Operating systems
