@@ -62,7 +62,7 @@ option (LZWS_CLI      "build cli"             OFF)
 option (LZWS_TESTS    "build tests"           ON)
 option (LZWS_COVERAGE "enable coverage"       OFF)
 option (LZWS_EXAMPLES "build examples"        OFF)
-option (LZWS_MAN      "build man"             ON)
+option (LZWS_MAN      "build man"             OFF)
 
 if (NOT LZWS_COMPRESSOR_DICTIONARY)
   message (FATAL_ERROR "Please select dictionary implementation.")
