@@ -29,7 +29,7 @@ function (cmake_run_bytes_with_reversed_bits_table)
 
   if (COMPILE_RESULT)
     execute_process (
-      COMMAND "${BINARY_DIR}/main"
+      COMMAND "${BINARY_DIR}/result"
       RESULT_VARIABLE RUN_RESULT
       OUTPUT_VARIABLE RUN_OUTPUT
       ERROR_VARIABLE RUN_ERRORS
