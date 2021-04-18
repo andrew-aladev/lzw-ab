@@ -57,8 +57,8 @@ echo -n "TOBEORNOTTOBEORTOBEORNOT" | ./src/cli/lzws | ./src/cli/lzws -d
 Debug build:
 ```sh
 cmake ".." -DLZWS_STATIC=ON -DLZWS_EXAMPLES=ON -DCMAKE_VERBOSE_MAKEFILE=ON
-cmake --build "." --target "clean" && cmake --build "." --verbose
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target "test"
+cmake --build "." --target "clean"
+cmake --build "." --target "check"
 ```
 
 You can use different dictionaries:
@@ -131,8 +131,8 @@ See [examples](src/examples) for more details.
 You can build and test all examples:
 ```sh
 cmake ".." -DLZWS_EXAMPLES=ON
-cmake --build "." --target "clean" && cmake --build "."
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target "test"
+cmake --build "." --target "clean"
+cmake --build "." --target "check"
 ```
 
 ## Operating systems

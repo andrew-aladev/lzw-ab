@@ -34,7 +34,8 @@ add_subdirectory ("bigint")
 add_subdirectory ("compressor")
 add_subdirectory ("decompressor")
 
-set (HEADERS ${HEADERS}
+set (
+  HEADERS ${HEADERS}
   "${CMAKE_CURRENT_SOURCE_DIR}/buffer.h"
   "${CMAKE_CURRENT_SOURCE_DIR}/common.h"
   "${CMAKE_CURRENT_SOURCE_DIR}/config.h"
@@ -46,7 +47,8 @@ set (HEADERS ${HEADERS}
   "${CMAKE_CURRENT_SOURCE_DIR}/string.h"
   "${CMAKE_CURRENT_SOURCE_DIR}/utils.h"
 )
-set (SOURCES ${SOURCES}
+set (
+  SOURCES ${SOURCES}
   "${CMAKE_CURRENT_SOURCE_DIR}/buffer.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/common.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/file.c"
@@ -120,3 +122,10 @@ endif ()
 if (LZWS_TESTS)
   add_subdirectory ("tests")
 endif ()
+
+add_custom_target (
+  "check"
+  ${CMAKE_COMMAND} -E "env" "CTEST_OUTPUT_ON_FAILURE=1"
+  ${CMAKE_CTEST_COMMAND} -C "$<CONFIG>"
+  DEPENDS ${TEST_TARGETS}
+)

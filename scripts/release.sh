@@ -30,8 +30,7 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
       -DCMAKE_BUILD_TYPE="RELEASE"
     cmake --build "." --target "clean"
-    cmake --build "." -j${CPU_COUNT} --verbose
-    CTEST_OUTPUT_ON_FAILURE=1 cmake --build "." --target "test"
+    cmake --build "." -j${CPU_COUNT} --target "check" --verbose
     cmake --build "." --target "package"
 
     cd ".."

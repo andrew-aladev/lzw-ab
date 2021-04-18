@@ -1,4 +1,5 @@
-set (SOURCES
+set (
+  SOURCES
   "${CMAKE_CURRENT_SOURCE_DIR}/code.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/combination.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/random_string.c"
@@ -36,3 +37,5 @@ endif ()
 
 add_subdirectory ("valid")
 add_subdirectory ("invalid")
+
+set (TEST_TARGETS ${TEST_TARGETS} PARENT_SCOPE)
