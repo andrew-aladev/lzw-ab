@@ -15,7 +15,7 @@ jobs:
         run: |
           sudo apt-get install -y \
             gcc-9 llvm-10 clang-10 \
-            libgmp-dev libtommath-dev libpopt-dev
+            libgmp-dev libtommath-dev
           sudo update-alternatives \
             --install /usr/bin/gcc gcc /usr/bin/gcc-9 100 \
             --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9 \
@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup dependencies
-        run: brew install gmp libtommath popt
+        run: brew install gmp libtommath
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
@@ -66,7 +66,6 @@ jobs:
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-gmp
             mingw-w64-x86_64-libtommath
-            mingw-w64-x86_64-popt
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh

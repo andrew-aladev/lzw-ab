@@ -103,11 +103,6 @@ cmake_check_ipo ()
 include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
 
-if (LZWS_CLI)
-  include (CheckPopt)
-  cmake_check_popt (REQUIRED)
-endif ()
-
 # Bignum library selection may be updated.
 set (LZWS_BIGNUM_LIBRARY ${CMAKE_BIGNUM_LIBRARY})
 
@@ -124,24 +119,12 @@ if (NOT DEFINED CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
   set (CMAKE_BUILD_TYPE "DEBUG")
 endif ()
 
-if (LZWS_SHARED)
-  if (NOT CMAKE_BIGNUM_LIBRARY_SHARED_PATH)
-    message (FATAL_ERROR "Bignum shared library is not available.")
-  endif ()
-
-  if (LZWS_CLI AND NOT CMAKE_POPT_SHARED_LIBRARY_PATH)
-    message (FATAL_ERROR "Popt shared library is not available.")
-  endif ()
+if (LZWS_SHARED AND NOT CMAKE_BIGNUM_LIBRARY_SHARED_PATH)
+  message (FATAL_ERROR "Bignum shared library is not available.")
 endif ()
 
-if (LZWS_STATIC)
-  if (NOT CMAKE_BIGNUM_LIBRARY_STATIC_PATH)
-    message (FATAL_ERROR "Bignum static library is not available.")
-  endif ()
-
-  if (LZWS_CLI AND NOT CMAKE_POPT_STATIC_LIBRARY_PATH)
-    message (FATAL_ERROR "Popt static library is not available.")
-  endif ()
+if (LZWS_STATIC AND NOT CMAKE_BIGNUM_LIBRARY_STATIC_PATH)
+  message (FATAL_ERROR "Bignum static library is not available.")
 endif ()
 
 if (LZWS_TESTS)

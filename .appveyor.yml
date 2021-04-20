@@ -19,7 +19,7 @@ for:
     init:
       - sh: sudo apt-get install -y
           gcc-9 llvm-10 clang-10
-          libgmp-dev libtommath-dev libpopt-dev
+          libgmp-dev libtommath-dev
       - sh: sudo update-alternatives
           --install /usr/bin/gcc gcc /usr/bin/gcc-9 100
           --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9
@@ -39,7 +39,7 @@ for:
       only:
         - job_name: MacOS
     init:
-      - sh: brew install gmp libtommath popt
+      - sh: brew install gmp libtommath
     test_script:
       - sh: scripts/coverage_toolchains.sh
 
@@ -58,7 +58,6 @@ for:
           mingw-w64-x86_64-cmake
           mingw-w64-x86_64-gmp
           mingw-w64-x86_64-libtommath
-          mingw-w64-x86_64-popt
           "
     test_script:
       - cmd: C:\msys64\usr\bin\bash -cl "./scripts/coverage_toolchains.sh"
