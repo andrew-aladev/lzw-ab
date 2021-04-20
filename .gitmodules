@@ -2,3 +2,7 @@
 	path = archive-collector
 	url = https://github.com/andrew-aladev/lzws-archive-collector.git
 	branch = master
+[submodule "argtable3"]
+	path = argtable3
+	url = https://github.com/andrew-aladev/argtable3.git
+	branch = release-v3.2.0.7402e6e
