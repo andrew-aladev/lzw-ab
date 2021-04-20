@@ -58,7 +58,7 @@ set (
 
 option (LZWS_SHARED   "build shared binaries" ON)
 option (LZWS_STATIC   "build static binaries" OFF)
-option (LZWS_CLI      "build cli"             OFF)
+option (LZWS_CLI      "build cli"             ON)
 option (LZWS_TESTS    "build tests"           ON)
 option (LZWS_COVERAGE "enable coverage"       OFF)
 option (LZWS_EXAMPLES "build examples"        OFF)
@@ -102,6 +102,23 @@ cmake_check_ipo ()
 
 include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
+
+if (LZWS_CLI)
+  include (ExternalProject)
+  ExternalProject_Add (
+    "argtable3"
+    PREFIX "argtable3"
+    SOURCE_DIR "${PROJECT_SOURCE_DIR}/argtable3"
+    INSTALL_COMMAND ""
+    CMAKE_ARGS
+      "-DARGTABLE3_ENABLE_CONAN:BOOL=OFF"
+      "-DARGTABLE3_ENABLE_TESTS:BOOL=OFF"
+      "-DARGTABLE3_ENABLE_ARG_REX_DEBUG:BOOL=OFF"
+      "-DARGTABLE3_BUILD_STATIC_EXAMPLES:BOOL=OFF"
+      "-DARGTABLE3_REPLACE_GETOPT:BOOL=OFF"
+      "-DARGTABLE3_LONG_ONLY:BOOL=OFF"
+  )
+endif ()
 
 # Bignum library selection may be updated.
 set (LZWS_BIGNUM_LIBRARY ${CMAKE_BIGNUM_LIBRARY})
