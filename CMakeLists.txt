@@ -104,11 +104,17 @@ include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
 
 if (LZWS_CLI)
+  # It is possible to choose between the following git urls:
+  # https://github.com/andrew-aladev/argtable3.git
+  # https://bitbucket.org/andrew-aladev/argtable3.git
+  # https://gitlab.com/andrew-aladev/argtable3.git
+
   include (ExternalProject)
   ExternalProject_Add (
     "argtable3"
     PREFIX "argtable3"
-    SOURCE_DIR "${PROJECT_SOURCE_DIR}/argtable3"
+    GIT_REPOSITORY "https://github.com/andrew-aladev/argtable3.git"
+    GIT_TAG "release-v3.2.0.7402e6e"
     INSTALL_COMMAND ""
     CMAKE_ARGS
       "-DARGTABLE3_ENABLE_CONAN:BOOL=OFF"
