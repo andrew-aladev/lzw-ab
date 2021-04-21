@@ -4,3 +4,4 @@ build/*
 cmake/checks/export/config.h
 src/config.h
 tmp/*
+.clang_complete
