@@ -5,7 +5,12 @@ cmake_define_relative_file_paths ("${SOURCES}")
 
 set (ARGTABLE3_TAG "release-v3.2.0.7402e6e")
 
-if (LZWS_ARGTABLE3_MODE STREQUAL "github")
+if (LZWS_ARGTABLE3_MODE STREQUAL "submodule")
+  set (
+    ARGTABLE3_OPTIONS
+    SOURCE_DIR "${PROJECT_SOURCE_DIR}/argtable3"
+  )
+elseif (LZWS_ARGTABLE3_MODE STREQUAL "github")
   set (
     ARGTABLE3_OPTIONS
     GIT_REPOSITORY "https://github.com/andrew-aladev/argtable3.git"
@@ -40,11 +45,6 @@ elseif (LZWS_ARGTABLE3_MODE STREQUAL "gitlab-archive")
     ARGTABLE3_OPTIONS
     URL "https://gitlab.com/andrew-aladev/argtable3/-/archive/${ARGTABLE3_TAG}/argtable3-${ARGTABLE3_TAG}.tar.gz"
     URL_HASH "SHA256=e4c97d1136e5656d288bed3745481beb0695190c5f20ed1aa5bb15f606f420cb"
-  )
-elseif (LZWS_ARGTABLE3_MODE STREQUAL "submodule")
-  set (
-    ARGTABLE3_OPTIONS
-    SOURCE_DIR "${PROJECT_SOURCE_DIR}/argtable3"
   )
 else ()
   message (FATAL_ERROR "Invalid argtable3 mode: ${LZWS_ARGTABLE3_MODE}")
