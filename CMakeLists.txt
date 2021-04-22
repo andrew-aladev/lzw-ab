@@ -64,6 +64,8 @@ option (LZWS_COVERAGE "enable coverage"       OFF)
 option (LZWS_EXAMPLES "build examples"        OFF)
 option (LZWS_MAN      "build man"             OFF)
 
+set (LZWS_ARGTABLE3_MODE "github-archive" CACHE STRING "argtable3 mode")
+
 if (NOT LZWS_COMPRESSOR_DICTIONARY)
   message (FATAL_ERROR "Please select dictionary implementation.")
 endif ()
@@ -102,29 +104,6 @@ cmake_check_ipo ()
 
 include (CheckBignumLibrary)
 cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
-
-if (LZWS_CLI)
-  # It is possible to choose between the following git urls:
-  # https://github.com/andrew-aladev/argtable3.git
-  # https://bitbucket.org/andrew-aladev/argtable3.git
-  # https://gitlab.com/andrew-aladev/argtable3.git
-
-  include (ExternalProject)
-  ExternalProject_Add (
-    "argtable3"
-    PREFIX "argtable3"
-    GIT_REPOSITORY "https://github.com/andrew-aladev/argtable3.git"
-    GIT_TAG "release-v3.2.0.7402e6e"
-    INSTALL_COMMAND ""
-    CMAKE_ARGS
-      "-DARGTABLE3_ENABLE_CONAN:BOOL=OFF"
-      "-DARGTABLE3_ENABLE_TESTS:BOOL=OFF"
-      "-DARGTABLE3_ENABLE_ARG_REX_DEBUG:BOOL=OFF"
-      "-DARGTABLE3_BUILD_STATIC_EXAMPLES:BOOL=OFF"
-      "-DARGTABLE3_REPLACE_GETOPT:BOOL=ON"
-      "-DARGTABLE3_LONG_ONLY:BOOL=OFF"
-  )
-endif ()
 
 # Bignum library selection may be updated.
 set (LZWS_BIGNUM_LIBRARY ${CMAKE_BIGNUM_LIBRARY})

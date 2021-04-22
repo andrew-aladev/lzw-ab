@@ -59,7 +59,6 @@ while read -r toolchain; do
 
       # Toolchain may not work on target platform.
       cmake "../.." \
-        -G "Unix Makefiles" \
         -DCMAKE_TOOLCHAIN_FILE="$toolchain" \
         -DCMAKE_GENERATOR_USE_CURRENT_TOOLCHAIN=ON \
         -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
