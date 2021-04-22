@@ -23,7 +23,7 @@ static inline lzws_byte_fast_t get_byte(lzws_code_fast_t* code_ptr, lzws_byte_fa
     code &= lzws_get_mask_for_last_bits(remaining_code_bit_length);
   } else {
     // Taking last bits from code.
-    byte = code & 0xff;
+    byte = (lzws_byte_fast_t)(code & 0xff);
 
     // Removing last bits from code.
     code >>= 8;
