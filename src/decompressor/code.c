@@ -15,7 +15,7 @@ static inline void
 
   if (msb) {
     // Code is sitting on the top.
-    code = (code << 8) | byte;
+    code = (lzws_code_fast_t)((code << 8) | byte);
   } else {
     // Code is sitting on the bottom.
     code = (lzws_code_fast_t)(byte << code_bit_length) | code;
