@@ -56,7 +56,7 @@ static inline void add_byte_with_remainder(
     remainder = (lzws_byte_fast_t)(byte & lzws_get_mask_for_last_bits(remainder_bit_length));
 
     // Code is sitting on the top.
-    code = (lzws_code_fast_t)(code << code_part_bit_length) | code_part;
+    code = (lzws_code_fast_t)((code << code_part_bit_length) | code_part);
   } else {
     // Taking last bits from byte.
     code_part = (lzws_byte_fast_t)(byte & lzws_get_mask_for_last_bits(code_part_bit_length));
