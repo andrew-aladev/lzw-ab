@@ -5,44 +5,44 @@ set (argtable3_TAG "release-v3.2.0.7402e6e")
 
 if (EXISTS "${PROJECT_SOURCE_DIR}/argtable3/src")
   set (argtable3_SOURCE_DIR "${PROJECT_SOURCE_DIR}/argtable3")
-elseif (LZWS_ARGTABLE3_FALLBACK_MODE STREQUAL "github")
+elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "github")
   set (
     argtable3_FETCH_OPTIONS
     GIT_REPOSITORY "https://github.com/andrew-aladev/argtable3.git"
     GIT_TAG ${argtable3_TAG}
   )
-elseif (LZWS_ARGTABLE3_FALLBACK_MODE STREQUAL "github-archive")
+elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "github-archive")
   set (
     argtable3_FETCH_OPTIONS
     URL "https://github.com/andrew-aladev/argtable3/archive/refs/tags/${argtable3_TAG}.tar.gz"
     URL_HASH "SHA256=e4c97d1136e5656d288bed3745481beb0695190c5f20ed1aa5bb15f606f420cb"
   )
-elseif (LZWS_ARGTABLE3_FALLBACK_MODE STREQUAL "bitbucket")
+elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "bitbucket")
   set (
     argtable3_FETCH_OPTIONS
     GIT_REPOSITORY "https://bitbucket.org/andrew-aladev/argtable3.git"
     GIT_TAG ${argtable3_TAG}
   )
-elseif (LZWS_ARGTABLE3_FALLBACK_MODE STREQUAL "bitbucket-archive")
+elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "bitbucket-archive")
   set (
     argtable3_FETCH_OPTIONS
     URL "https://bitbucket.org/andrew-aladev/argtable3/get/${argtable3_TAG}.tar.gz"
     URL_HASH "SHA256=2635fc4d21131f9c5928bd849e1b57d67492d05eb4690348d7d36092b48217e5"
   )
-elseif (LZWS_ARGTABLE3_FALLBACK_MODE STREQUAL "gitlab")
+elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "gitlab")
   set (
     argtable3_FETCH_OPTIONS
     GIT_REPOSITORY "https://gitlab.com/andrew-aladev/argtable3.git"
     GIT_TAG ${argtable3_TAG}
   )
-elseif (LZWS_ARGTABLE3_FALLBACK_MODE STREQUAL "gitlab-archive")
+elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "gitlab-archive")
   set (
     argtable3_FETCH_OPTIONS
     URL "https://gitlab.com/andrew-aladev/argtable3/-/archive/${argtable3_TAG}/argtable3-${argtable3_TAG}.tar.gz"
     URL_HASH "SHA256=e4c97d1136e5656d288bed3745481beb0695190c5f20ed1aa5bb15f606f420cb"
   )
 else ()
-  message (FATAL_ERROR "Invalid argtable3 fallback mode: ${LZWS_ARGTABLE3_FALLBACK_MODE}")
+  message (FATAL_ERROR "Invalid argtable3 fallback: ${LZWS_ARGTABLE3_FALLBACK}")
 endif ()
 
 if (DEFINED argtable3_FETCH_OPTIONS)
