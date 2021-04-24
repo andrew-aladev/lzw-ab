@@ -2,7 +2,6 @@
 // Copyright (c) 2016 David Bryant, 2018+ other authors, all rights reserved (see AUTHORS).
 // Distributed under the BSD Software License (see LICENSE).
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,8 +21,6 @@
 void func(void)
 {
   log(u8"fit");
-
-  static_assert(1 < 2, "1 < 2");
 
   exit(0);
 }
