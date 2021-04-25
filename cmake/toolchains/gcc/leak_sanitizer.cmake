@@ -1,6 +1,8 @@
 include ("${CMAKE_CURRENT_LIST_DIR}/default.cmake")
 
-if (NOT CMAKE_GENERATOR MATCHES "Visual Studio")
+if (CMAKE_GENERATOR MATCHES "Visual Studio")
+  message (FATAL_ERROR "gcc leak sanitizer toolchain is not supported")
+else ()
   set (
     CMAKE_DEFAULT_C_FLAGS ${CMAKE_C_FLAGS}
     CACHE STRING "cmake default C flags"

@@ -32,7 +32,7 @@ BIGNUM_LIBRARIES=("gmp" "tommath")
 while read -r toolchain; do
   for dictionary in "${DICTIONARIES[@]}"; do
     for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
-      echo "toolchain: ${toolchain}, dictionary: ${dictionary}"
+      echo "toolchain: ${toolchain}, dictionary: ${dictionary}, bignum library: ${bignum_library}"
 
       # Only special toolchain can use coverage.
       if (echo "$toolchain" | grep -q "coverage.cmake$"); then

@@ -6,9 +6,9 @@ if (CMAKE_GENERATOR MATCHES "Visual Studio")
     CACHE STRING "cmake default C flags"
   )
   set (
-    CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /fsanitize=address"
+    CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Ob0"
     CACHE STRING "cmake C flags"
   )
 else ()
-  message (FATAL_ERROR "msvc address sanitizer toolchain is not supported")
+  message (FATAL_ERROR "msvc coverage toolchain is not supported")
 endif ()
