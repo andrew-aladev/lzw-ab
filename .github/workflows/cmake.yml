@@ -44,7 +44,7 @@ jobs:
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
 
-  windows:
+  windows-mingw:
     runs-on: windows-latest
 
     defaults:
@@ -60,12 +60,43 @@ jobs:
         with:
           install: >-
             make
-            mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-llvm
-            mingw-w64-x86_64-clang
             mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-clang
+            mingw-w64-x86_64-llvm
             mingw-w64-x86_64-gmp
             mingw-w64-x86_64-libtommath
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
+
+  windows-cygwin:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: cmd
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache cygwin packages
+        uses: actions/cache@v2
+        with:
+          path: C:\cygwin-packages
+          key: cygwin-packages-${{ hashFiles("**") }}
+          restore-keys: cygwin-packages-
+
+      - name: Fetch cygwin setup
+        run: Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile C:\cygwin-setup.exe
+        shell: powershell
+
+      - name: Setup dependencies
+        run: |
+          C:\cygwin-setup.exe -g -O \
+            -s https://mirrors.kernel.org/sourceware/cygwin -l C:\cygwin-packages \
+            -P "cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
+
+      - name: Coverage toolchains
+        run: C:\cygwin64\bin\bash scripts/coverage_toolchains.sh
