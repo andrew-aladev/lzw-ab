@@ -94,9 +94,11 @@ jobs:
 
       - name: Setup dependencies
         run: |
-          C:\cygwin-setup.exe -g -O \
-            -s https://mirrors.kernel.org/sourceware/cygwin -l C:\cygwin-packages \
-            -P 'cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel'
+          C:\cygwin-setup.exe --quiet-mode --upgrade-also \
+            --no-desktop --no-shortcuts --no-startmenu \
+            --only-site --site https://mirrors.kernel.org/sourceware/cygwin \
+            --local-package-dir C:\cygwin-packages \
+            --packages 'cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel'
 
       - name: Coverage toolchains
         run: C:\cygwin64\bin\bash scripts/coverage_toolchains.sh
