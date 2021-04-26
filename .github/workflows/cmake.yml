@@ -85,7 +85,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: C:\cygwin-packages
-          key: cygwin-packages-${{ hashFiles("**") }}
+          key: cygwin-packages-${{ hashFiles('**') }}
           restore-keys: cygwin-packages-
 
       - name: Fetch cygwin setup
@@ -96,7 +96,7 @@ jobs:
         run: |
           C:\cygwin-setup.exe -g -O \
             -s https://mirrors.kernel.org/sourceware/cygwin -l C:\cygwin-packages \
-            -P "cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
+            -P 'cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel'
 
       - name: Coverage toolchains
         run: C:\cygwin64\bin\bash scripts/coverage_toolchains.sh
