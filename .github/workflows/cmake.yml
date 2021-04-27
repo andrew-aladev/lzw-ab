@@ -90,4 +90,4 @@ jobs:
 
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
-        shell: C:\cygwin\bin\bash.exe '{0}'
+        shell: C:\cygwin\bin\bash.exe -o igncr '{0}'
