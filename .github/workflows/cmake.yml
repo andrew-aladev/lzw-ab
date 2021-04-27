@@ -49,7 +49,7 @@ jobs:
 
     defaults:
       run:
-        shell: msys2 {0}
+        shell: msys2 '{0}'
 
     steps:
       - name: Checkout
@@ -81,24 +81,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Cache cygwin packages
-        uses: actions/cache@v2
-        with:
-          path: C:\cygwin-packages
-          key: cygwin-packages-${{ hashFiles('**') }}
-          restore-keys: cygwin-packages-
-
-      - name: Fetch cygwin setup
-        run: Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile C:\cygwin-setup.exe
-        shell: powershell
-
       - name: Setup dependencies
-        run: |
-          C:\cygwin-setup.exe --quiet-mode --upgrade-also \
-            --no-desktop --no-shortcuts --no-startmenu \
-            --only-site --site https://mirrors.kernel.org/sourceware/cygwin \
-            --local-package-dir C:\cygwin-packages \
-            --packages 'cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel'
+        uses: egor-tensin/setup-cygwin@v3
+        with:
+          platform: x64
+          install-dir: C:\cygwin
+          packages: cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
 
       - name: Coverage toolchains
-        run: C:\cygwin64\bin\bash scripts/coverage_toolchains.sh
+        run: scripts\coverage_toolchains.sh
+        shell: C:\cygwin\bin\bash.exe '{0}'
