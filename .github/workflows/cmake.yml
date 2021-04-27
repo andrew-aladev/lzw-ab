@@ -85,8 +85,8 @@ jobs:
         uses: egor-tensin/setup-cygwin@v3
         with:
           platform: x64
-          install-dir: C:\cygwin
+          install-dir: C:\cygwin64
           packages: cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
 
       - name: Coverage toolchains
-        run: C:\cygwin\bin\bash.exe -o igncr scripts\coverage_toolchains.sh
+        run: C:\cygwin64\bin\bash.exe -l %cd%\scripts\coverage_toolchains.sh
