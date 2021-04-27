@@ -89,4 +89,4 @@ jobs:
           packages: cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
 
       - name: Coverage toolchains
-        run: C:\cygwin64\bin\bash.exe --login --norc -o igncr %cd%\scripts\coverage_toolchains.sh
+        run: C:\cygwin64\bin\bash.exe -cl "env SHELLOPTS=igncr '%cd%\scripts\coverage_toolchains.sh'"
