@@ -56,6 +56,7 @@ while read -r toolchain; do
         -DLZWS_EXAMPLES=ON \
         -DLZWS_MAN=OFF \
         -DCMAKE_BUILD_TYPE=DEBUG \
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
         || continue
 
       cmake --build "." --target "clean"
@@ -77,6 +78,6 @@ while read -r toolchain; do
 done < <(find "$toolchains" -type f -name "coverage.cmake")
 
 if [ "$some_test_passed" = false ]; then
-  echo "At least one test should pass" > /dev/stderr
+  >&2 echo "At least one test should pass"
   exit 1
 fi
