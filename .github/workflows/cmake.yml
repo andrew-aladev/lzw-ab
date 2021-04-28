@@ -78,15 +78,8 @@ jobs:
         shell: cmd
 
     steps:
-      - name: Remove strawberryperl from PATH
-        run: |
-          Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module AdminToolkit
-          if (Test-Path "C:\Strawberry") {
-            Remove-Path "C:\Strawberry\c\bin"
-            $env:path = $env:path.replace("C:\Strawberry\c\bin;", "")
-          }
-        shell: pwsh
+      - name: Remove strawberryperl
+        run: choco uninstall strawberryperl
 
       - name: Checkout
         uses: actions/checkout@v2
