@@ -84,7 +84,7 @@ jobs:
             Remove-Path "C:\Strawberry\c\bin"
             $env:path = $env:path.replace("C:\Strawberry\c\bin;", "")
           }
-        shell: powershell
+        shell: pwsh
 
       - name: Checkout
         uses: actions/checkout@v2
