@@ -6,10 +6,13 @@ environment:
       appveyor_build_worker_image: Ubuntu2004
     - job_name: macos
       appveyor_build_worker_image: macos
-    - job_name: windows
+    - job_name: windows-mingw
       appveyor_build_worker_image: Visual Studio 2019
       CHERE_INVOKING: 1
       MSYSTEM: MINGW64
+    - job_name: windows-cygwin
+      appveyor_build_worker_image: Visual Studio 2019
+      CYGWIN_NOWINPATH: 1
 
 for:
   -
@@ -46,7 +49,7 @@ for:
   -
     matrix:
       only:
-        - job_name: windows
+        - job_name: windows-mingw
     init:
       - cmd: >-
           C:\msys64\usr\bin\bash -cl "
@@ -60,4 +63,18 @@ for:
           mingw-w64-x86_64-libtommath
           "
     test_script:
-      - cmd: C:\msys64\usr\bin\bash -l %cd%\scripts\coverage_toolchains.sh
+      - cmd: C:\msys64\usr\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"
+
+  -
+    matrix:
+      only:
+        - job_name: windows-cygwin
+    init:
+      - cmd: >-
+          C:\cygwin64\setup-x86_64.exe --quiet-mode --only-site
+          --site "https://mirrors.kernel.org/sourceware/cygwin"
+          --root "C:\cygwin64"
+          --local-package-dir "C:\cygwin64\var\cache\setup"
+          --packages "cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
+    test_script:
+      - cmd: C:\cygwin64\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"

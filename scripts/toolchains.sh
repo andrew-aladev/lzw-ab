@@ -92,6 +92,6 @@ while read -r toolchain; do
 done < <(find "$toolchains" -type f)
 
 if [ "$some_test_passed" = false ]; then
-  echo "At least one test should pass" > "/dev/stderr"
+  echo "At least one test should pass" > /dev/stderr
   exit 1
 fi
