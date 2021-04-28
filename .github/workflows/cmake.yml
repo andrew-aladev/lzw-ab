@@ -78,6 +78,14 @@ jobs:
         shell: cmd
 
     steps:
+      - name: Remove strawberryperl from PATH
+        run: |
+          if (Test-Path "C:\Strawberry") {
+            Remove-Path "C:\Strawberry\c\bin"
+            $env:path = $env:path.replace("C:\Strawberry\c\bin;", "")
+          }
+        shell: powershell
+
       - name: Checkout
         uses: actions/checkout@v2
 
