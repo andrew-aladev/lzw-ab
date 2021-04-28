@@ -60,6 +60,7 @@ jobs:
         with:
           install: >-
             make
+            mingw-w64-x86_64-curl
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-clang
@@ -86,7 +87,7 @@ jobs:
         with:
           platform: x64
           install-dir: C:\cygwin64
-          packages: cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
+          packages: curl cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
 
       - name: Coverage toolchains
         run: |
