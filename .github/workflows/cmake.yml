@@ -49,7 +49,7 @@ jobs:
 
     defaults:
       run:
-        shell: msys2 '{0}'
+        shell: msys2 "{0}"
 
     steps:
       - name: Checkout
@@ -78,9 +78,6 @@ jobs:
         shell: cmd
 
     steps:
-      - name: Remove strawberryperl
-        run: choco uninstall strawberryperl
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -92,6 +89,8 @@ jobs:
           packages: cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
 
       - name: Coverage toolchains
-        run: C:\cygwin64\bin\bash.exe -l "%cd%\scripts\coverage_toolchains.sh"
+        run: |
+          set PATH=""
+          C:\cygwin64\bin\bash.exe -l "%cd%\scripts\coverage_toolchains.sh"
         env:
           SHELLOPTS: igncr
