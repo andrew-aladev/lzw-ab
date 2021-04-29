@@ -44,7 +44,7 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -DLZWS_TESTS=ON \
       -DLZWS_EXAMPLES=ON \
       -DLZWS_MAN=OFF \
-      -DCMAKE_BUILD_TYPE="RELEASE"
+      -DCMAKE_BUILD_TYPE="Release"
 
     cmake --build "." --target "clean"
     cmake --build "." -j${CPU_COUNT}

@@ -55,7 +55,7 @@ while read -r toolchain; do
         -DLZWS_COVERAGE=ON \
         -DLZWS_EXAMPLES=ON \
         -DLZWS_MAN=OFF \
-        -DCMAKE_BUILD_TYPE=DEBUG \
+        -DCMAKE_BUILD_TYPE="Debug" \
         || continue
 
       cmake --build "." --target "clean"

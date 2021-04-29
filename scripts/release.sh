@@ -30,7 +30,7 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
       -DLZWS_SHARED=ON \
       -DLZWS_STATIC=ON \
-      -DCMAKE_BUILD_TYPE="RELEASE" \
+      -DCMAKE_BUILD_TYPE="Release" \
       || continue
 
     cmake --build "." --target "clean"
