@@ -6,11 +6,9 @@ on:
 jobs:
   ubuntu:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Setup dependencies
         run: |
           sudo apt-get install -y \
@@ -27,34 +25,50 @@ jobs:
             --slave /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-10
           sudo update-alternatives \
             --install /usr/bin/clang clang /usr/bin/clang-10 100
-
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
 
   macos:
     runs-on: macos-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Setup dependencies
         run: brew install gmp libtommath
-
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
 
-  windows-mingw:
+  windows:
     runs-on: windows-latest
-
     defaults:
       run:
-        shell: msys2 "{0}"
-
+        shell: cmd
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup dependencies
+        run: |
+          git clone "https://github.com/libtom/libtommath.git" --depth 1 --branch "v1.2.0"
+          cd "libtommath"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+          nmake -f "makefile.msvc" install
+          cd ..
+      - name: Coverage toolchains
+        run: |
+          set "INCLUDE=C:\devel\include;%INCLUDE%"
+          set "LIB=C:\devel\lib;%LIB%"
+          set "PATH=C:\devel\bin;%PATH%"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+          bash -l "%cd%\scripts\coverage_toolchains.sh"
 
+  windows-mingw:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 "{0}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Setup dependencies
         uses: msys2/setup-msys2@v2
         with:
@@ -67,28 +81,23 @@ jobs:
             mingw-w64-x86_64-llvm
             mingw-w64-x86_64-gmp
             mingw-w64-x86_64-libtommath
-
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
 
   windows-cygwin:
     runs-on: windows-latest
-
     defaults:
       run:
         shell: cmd
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Setup dependencies
         uses: egor-tensin/setup-cygwin@v3
         with:
           platform: x64
           install-dir: C:\cygwin64
           packages: curl cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
-
       - name: Coverage toolchains
         run: |
           set "PATH="

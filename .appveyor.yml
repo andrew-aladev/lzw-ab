@@ -6,6 +6,8 @@ environment:
       appveyor_build_worker_image: Ubuntu2004
     - job_name: macos
       appveyor_build_worker_image: macos
+    - job_name: windows
+      appveyor_build_worker_image: Visual Studio 2019
     - job_name: windows-mingw
       appveyor_build_worker_image: Visual Studio 2019
       CHERE_INVOKING: 1
@@ -45,6 +47,25 @@ for:
       - sh: brew install gmp libtommath
     test_script:
       - sh: scripts/coverage_toolchains.sh
+
+  -
+    matrix:
+      only:
+        - job_name: windows
+    init:
+      - cmd: >-
+          git clone "https://github.com/libtom/libtommath.git" --depth 1 --branch "v1.2.0"
+          cd "libtommath"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+          nmake -f "makefile.msvc" install
+          cd ..
+    test_script:
+      - cmd: >-
+          set "INCLUDE=C:\devel\include;%INCLUDE%"
+          set "LIB=C:\devel\lib;%LIB%"
+          set "PATH=C:\devel\bin;%PATH%"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+          bash -l "%cd%\scripts\coverage_toolchains.sh"
 
   -
     matrix:
