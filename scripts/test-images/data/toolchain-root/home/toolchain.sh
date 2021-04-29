@@ -21,21 +21,22 @@ fi
 
 cd "$DIR/build"
 
+some_test_passed=false
+
 DICTIONARIES=("linked-list" "sparse-array")
 BIGNUM_LIBRARIES=("gmp" "tommath")
 
 for dictionary in "${DICTIONARIES[@]}"; do
   for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
     echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
-    build_dir="${dictionary}-${bignum_library}"
 
-    # Cleanup.
-    rm -rf "$build_dir"
+    find . -depth \( \
+      -name "CMake*" \
+      -o -name "*.cmake" \
+    \) -exec rm -rf {} +
 
-    mkdir "$build_dir"
-    cd "$build_dir"
-
-    TARGET="$TARGET" cmake "../.." \
+    # It may not work on target platform.
+    TARGET="$TARGET" cmake ".." \
       -DCMAKE_TOOLCHAIN_FILE="/home/toolchain.cmake" \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
@@ -44,11 +45,17 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -DLZWS_TESTS=ON \
       -DLZWS_EXAMPLES=ON \
       -DLZWS_MAN=OFF \
-      -DCMAKE_BUILD_TYPE="Release"
+      -DCMAKE_BUILD_TYPE="Release" \
+      || continue
 
     cmake --build "." --target "clean"
-    cmake --build "." -j${CPU_COUNT}
+    cmake --build "." -j${CPU_COUNT} --config "Release"
 
-    cd ".."
+    some_test_passed=true
   done
 done
+
+if [ "$some_test_passed" = false ]; then
+  >&2 echo "At least one test should pass"
+  exit 1
+fi

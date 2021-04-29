@@ -34,8 +34,8 @@ for dictionary in "${DICTIONARIES[@]}"; do
       || continue
 
     cmake --build "." --target "clean"
-    cmake --build "." -j${CPU_COUNT} --target "check" --verbose
-    cmake --build "." --target "package"
+    cmake --build "." -j${CPU_COUNT} --target "check" --config "Release" --verbose
+    cmake --build "." --target "package" --config "Release"
 
     some_release_passed=true
   done

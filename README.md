@@ -91,7 +91,7 @@ tar cf linux.tar linux-2.6.39.4
 cmake ".." \
   -DLZWS_COMPRESSOR_DICTIONARY="sparse-array" \
   -DCMAKE_BUILD_TYPE="Release"
-cmake --build "." --target "clean" && cmake --build "."
+cmake --build "." --target "clean" && cmake --build "." --config "Release"
 
 time ./src/cli/lzws < linux.tar > linux.tar.Z
 time ./src/cli/lzws -d < linux.tar.Z > linux.tar.new

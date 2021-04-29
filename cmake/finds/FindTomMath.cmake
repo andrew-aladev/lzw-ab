@@ -6,7 +6,7 @@ set (MESSAGE_PREFIX "Status of TomMath")
 
 find_path (CMAKE_TOMMATH_INCLUDE_PATH NAMES "tommath.h")
 if (CMAKE_TOMMATH_INCLUDE_PATH)
-  message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_TOMMATH_INCLUDE_PATH}\"")
+  message (STATUS "${MESSAGE_PREFIX} - header file found: \"${CMAKE_TOMMATH_INCLUDE_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - header file not found")
 endif ()
@@ -17,7 +17,7 @@ find_library (
   "tommath.so" "tommath.dylib" "tommath.dll"
 )
 if (CMAKE_TOMMATH_SHARED_LIBRARY_PATH)
-  message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_TOMMATH_SHARED_LIBRARY_PATH}\"")
+  message (STATUS "${MESSAGE_PREFIX} - shared library found: \"${CMAKE_TOMMATH_SHARED_LIBRARY_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - shared library not found")
 endif ()
@@ -28,7 +28,7 @@ find_library (
   "tommath.a" "tommath.lib"
 )
 if (CMAKE_TOMMATH_STATIC_LIBRARY_PATH)
-  message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_TOMMATH_STATIC_LIBRARY_PATH}\"")
+  message (STATUS "${MESSAGE_PREFIX} - static library found: \"${CMAKE_TOMMATH_STATIC_LIBRARY_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - static library not found")
 endif ()

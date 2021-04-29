@@ -57,6 +57,9 @@ while read -r toolchain; do
         \) -exec rm -rf {} +
       fi
 
+      coverage=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "ON"; else echo "OFF"; fi)
+      build_type=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "Debug"; else echo "Release"; fi)
+
       # Toolchain may not work on target platform.
       cmake "../.." \
         -DCMAKE_TOOLCHAIN_FILE="$toolchain" \
@@ -67,14 +70,14 @@ while read -r toolchain; do
         -DLZWS_STATIC=ON \
         -DLZWS_CLI=OFF \
         -DLZWS_TESTS=ON \
-        -DLZWS_COVERAGE=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "ON"; else echo "OFF"; fi) \
+        -DLZWS_COVERAGE=$coverage \
         -DLZWS_EXAMPLES=ON \
         -DLZWS_MAN=OFF \
-        -DCMAKE_BUILD_TYPE=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "Debug"; else echo "Release"; fi) \
+        -DCMAKE_BUILD_TYPE="$build_type" \
         || continue
 
       cmake --build "." --target "clean"
-      cmake --build "." -j${CPU_COUNT} --target "check"
+      cmake --build "." -j${CPU_COUNT} --target "check" --config "$build_type"
 
       if ([ "$COVERAGE_TOOLCHAIN" = true ] && [ -n "$CI" ]); then
         if (echo "$toolchain" | grep -q "clang/coverage.cmake$") && (command -v "llvm-cov" > /dev/null 2>&1); then

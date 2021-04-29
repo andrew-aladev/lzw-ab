@@ -59,7 +59,7 @@ while read -r toolchain; do
         || continue
 
       cmake --build "." --target "clean"
-      cmake --build "." -j${CPU_COUNT} --target "check"
+      cmake --build "." -j${CPU_COUNT} --target "check" --config "Debug"
 
       if ([ -n "$CI" ]); then
         if (echo "$toolchain" | grep -q "clang/coverage.cmake$") && (command -v "llvm-cov" > /dev/null 2>&1); then

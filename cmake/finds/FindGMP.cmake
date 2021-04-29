@@ -6,7 +6,7 @@ set (MESSAGE_PREFIX "Status of GMP")
 
 find_path (CMAKE_GMP_INCLUDE_PATH NAMES "gmp.h")
 if (CMAKE_GMP_INCLUDE_PATH)
-  message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_GMP_INCLUDE_PATH}\"")
+  message (STATUS "${MESSAGE_PREFIX} - header file found: \"${CMAKE_GMP_INCLUDE_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - header file not found")
 endif ()
@@ -17,7 +17,7 @@ find_library (
   "gmp.so" "gmp.dylib" "gmp.dll"
 )
 if (CMAKE_GMP_SHARED_LIBRARY_PATH)
-  message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_GMP_SHARED_LIBRARY_PATH}\"")
+  message (STATUS "${MESSAGE_PREFIX} - shared library found: \"${CMAKE_GMP_SHARED_LIBRARY_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - shared library not found")
 endif ()
@@ -28,7 +28,7 @@ find_library (
   "gmp.a" "gmp.lib"
 )
 if (CMAKE_GMP_STATIC_LIBRARY_PATH)
-  message (STATUS "${MESSAGE_PREFIX} - found: \"${CMAKE_GMP_STATIC_LIBRARY_PATH}\"")
+  message (STATUS "${MESSAGE_PREFIX} - static library found: \"${CMAKE_GMP_STATIC_LIBRARY_PATH}\"")
 else ()
   message (STATUS "${MESSAGE_PREFIX} - static library not found")
 endif ()
