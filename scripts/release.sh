@@ -28,6 +28,8 @@ for dictionary in "${DICTIONARIES[@]}"; do
     cmake ".." \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
+      -DLZWS_SHARED=ON \
+      -DLZWS_STATIC=ON \
       -DCMAKE_BUILD_TYPE="RELEASE" \
       || continue
 
