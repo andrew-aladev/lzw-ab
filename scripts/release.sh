@@ -10,31 +10,39 @@ cd "../build"
 
 # Packing binaries.
 
+some_release_passed=false
+
 DICTIONARIES=("linked-list" "sparse-array")
 BIGNUM_LIBRARIES=("gmp" "tommath")
 
 for dictionary in "${DICTIONARIES[@]}"; do
   for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
     echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
-    build_dir="lzws-${dictionary}-${bignum_library}"
 
-    # Cleanup.
-    rm -rf "$build_dir"
+    find . -depth \( \
+      -name "CMake*" \
+      -o -name "*.cmake" \
+    \) -exec rm -rf {} +
 
-    mkdir "$build_dir"
-    cd "$build_dir"
-
-    cmake "../.." \
+    # It may not work on target platform.
+    cmake ".." \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
-      -DCMAKE_BUILD_TYPE="RELEASE"
+      -DCMAKE_BUILD_TYPE="RELEASE" \
+      || continue
+
     cmake --build "." --target "clean"
     cmake --build "." -j${CPU_COUNT} --target "check" --verbose
     cmake --build "." --target "package"
 
-    cd ".."
+    some_release_passed=true
   done
 done
+
+if [ "$some_release_passed" = false ]; then
+  >&2 echo "At least one release should pass"
+  exit 1
+fi
 
 cd ".."
 
