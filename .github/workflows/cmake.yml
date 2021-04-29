@@ -50,7 +50,7 @@ jobs:
         run: |
           git clone "https://github.com/libtom/libtommath.git" --depth 1 --branch "v1.2.0"
           cd "libtommath"
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           nmake -f "makefile.msvc" install
           cd ..
       - name: Coverage toolchains
@@ -58,8 +58,8 @@ jobs:
           set "INCLUDE=C:\devel\include;%INCLUDE%"
           set "LIB=C:\devel\lib;%LIB%"
           set "PATH=C:\devel\bin;%PATH%"
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-          bash -l "%cd%\scripts\coverage_toolchains.sh"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
 
   windows-mingw:
     runs-on: windows-latest
