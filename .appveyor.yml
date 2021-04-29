@@ -79,5 +79,5 @@ for:
           --packages "curl,cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
     test_script:
       - cmd: >-
-          set PATH=""
+          set "PATH="
           C:\cygwin64\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"

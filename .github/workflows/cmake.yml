@@ -91,7 +91,7 @@ jobs:
 
       - name: Coverage toolchains
         run: |
-          set PATH=""
+          set "PATH="
           C:\cygwin64\bin\bash.exe -l "%cd%\scripts\coverage_toolchains.sh"
         env:
           SHELLOPTS: igncr
