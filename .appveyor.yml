@@ -55,14 +55,14 @@ for:
     init:
       - cmd: git clone "https://github.com/libtom/libtommath.git" --depth 1
       - cmd: cd "libtommath"
-      - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+      - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - cmd: nmake -f "makefile.msvc" install
       - cmd: cd ..
     test_script:
       - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%"
       - cmd: set "LIB=C:\devel\lib;%LIB%"
       - cmd: set "PATH=C:\devel\bin;%PATH%"
-      - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+      - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - cmd: call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
 
   -
