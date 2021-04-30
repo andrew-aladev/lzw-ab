@@ -22,16 +22,27 @@ if (LZWS_SHARED)
     ${TEST_LIB_TARGET} PROPERTIES
     COMPILE_FLAGS "-D${LZWS_TARGET_UPPERCASE}_EXPORT_LIBRARY_FLAG"
   )
+  # MSVC provides additional static library "test_lib_target.dll.lib"
+  # and pdf file "test_lib_target.dll.pdb"
+  # for shared library "test_lib_target.dll".
+  set_target_properties (
+    ${TEST_LIB_TARGET} PROPERTIES
+    ARCHIVE_OUTPUT_NAME "${TEST_LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+    PDB_NAME "${TEST_LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+  )
 endif ()
 
 if (LZWS_STATIC)
-  set (TEST_LIB_STATIC_TARGET "${LZWS_TARGET}-static-test")
+  set (TEST_LIB_STATIC_NAME "${LZWS_TARGET}-test")
+  set (TEST_LIB_STATIC_TARGET "${TEST_LIB_STATIC_NAME}-static")
 
   add_library (${TEST_LIB_STATIC_TARGET} STATIC ${SOURCES})
   target_link_libraries (${TEST_LIB_STATIC_TARGET} ${LIB_STATIC_TARGET})
   set_target_properties (
     ${TEST_LIB_STATIC_TARGET} PROPERTIES
     COMPILE_FLAGS "-D${LZWS_TARGET_UPPERCASE}_EXPORT_STATIC_FLAG"
+    OUTPUT_NAME ${TEST_LIB_STATIC_NAME}
+    ARCHIVE_OUTPUT_DIRECTORY "${TEST_LIB_STATIC_TARGET}"
   )
 endif ()
 
