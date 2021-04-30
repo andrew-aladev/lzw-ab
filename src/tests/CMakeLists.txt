@@ -22,14 +22,17 @@ if (LZWS_SHARED)
     ${TEST_LIB_TARGET} PROPERTIES
     COMPILE_FLAGS "-D${LZWS_TARGET_UPPERCASE}_EXPORT_LIBRARY_FLAG"
   )
-  # MSVC provides additional static library "test_lib_target.dll.lib"
-  # and pdf file "test_lib_target.dll.pdb"
-  # for shared library "test_lib_target.dll".
-  set_target_properties (
-    ${TEST_LIB_TARGET} PROPERTIES
-    ARCHIVE_OUTPUT_NAME "${TEST_LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
-    PDB_NAME "${TEST_LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
-  )
+
+  if (CMAKE_GENERATOR MATCHES "Visual Studio")
+    # Visual Studio provides additional static library "test_lib_target.dll.lib"
+    # and pdf file "test_lib_target.dll.pdb"
+    # for shared library "test_lib_target.dll".
+    set_target_properties (
+      ${TEST_LIB_TARGET} PROPERTIES
+      ARCHIVE_OUTPUT_NAME "${TEST_LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+      PDB_NAME "${TEST_LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+    )
+  endif ()
 endif ()
 
 if (LZWS_STATIC)
