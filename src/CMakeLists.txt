@@ -85,6 +85,12 @@ if (LZWS_SHARED)
     ${LIB_TARGET} PROPERTIES
     COMPILE_FLAGS "-D${LZWS_TARGET_UPPERCASE}_EXPORT_LIBRARY_FLAG"
   )
+  # MSVC provides additional static library "lib_target.dll.lib"
+  # for shared library "lib_target.dll".
+  set_target_properties (
+    ${LIB_TARGET} PROPERTIES
+    ARCHIVE_OUTPUT_NAME "${LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+  )
 
   install (
     TARGETS ${LIB_TARGET} LIBRARY
