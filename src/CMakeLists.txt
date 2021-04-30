@@ -86,10 +86,12 @@ if (LZWS_SHARED)
     COMPILE_FLAGS "-D${LZWS_TARGET_UPPERCASE}_EXPORT_LIBRARY_FLAG"
   )
   # MSVC provides additional static library "lib_target.dll.lib"
+  # and pdf file "lib_target.dll.pdb"
   # for shared library "lib_target.dll".
   set_target_properties (
     ${LIB_TARGET} PROPERTIES
     ARCHIVE_OUTPUT_NAME "${LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
+    PDB_NAME "${LIB_TARGET}${CMAKE_SHARED_LIBRARY_SUFFIX}"
   )
 
   install (
