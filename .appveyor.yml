@@ -6,6 +6,7 @@ environment:
       appveyor_build_worker_image: Ubuntu2004
     - job_name: macos
       appveyor_build_worker_image: macos
+      XML_CATALOG_FILES: /usr/local/etc/xml/catalog
     - job_name: windows
       appveyor_build_worker_image: Visual Studio 2019
     - job_name: windows-mingw
@@ -15,6 +16,7 @@ environment:
     - job_name: windows-cygwin
       appveyor_build_worker_image: Visual Studio 2019
       CYGWIN_NOWINPATH: 1
+      SHELLOPTS: igncr
 
 for:
   -
@@ -25,6 +27,7 @@ for:
       - sh: sudo apt-get install -y
           gcc-9 llvm-10 clang-10
           libgmp-dev libtommath-dev
+          asciidoc docbook-xml
       - sh: sudo update-alternatives
           --install /usr/bin/gcc gcc /usr/bin/gcc-9 100
           --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9
@@ -44,7 +47,7 @@ for:
       only:
         - job_name: macos
     init:
-      - sh: brew install gmp libtommath
+      - sh: brew install gmp libtommath asciidoc docbook
     test_script:
       - sh: scripts/coverage_toolchains.sh
 
@@ -82,6 +85,8 @@ for:
           mingw-w64-x86_64-llvm
           mingw-w64-x86_64-gmp
           mingw-w64-x86_64-libtommath
+          mingw-w64-x86_64-asciidoc
+          mingw-w64-x86_64-docbook-xml
           "
     test_script:
       - cmd: C:\msys64\usr\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"
@@ -96,7 +101,7 @@ for:
           --site "https://mirrors.kernel.org/sourceware/cygwin"
           --root "C:\cygwin64"
           --local-package-dir "C:\cygwin64\var\cache\setup"
-          --packages "curl,cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
+          --packages "curl,cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel,asciidoc,docbook-xml45"
     test_script:
       - cmd: set "PATH="
       - cmd: C:\cygwin64\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"

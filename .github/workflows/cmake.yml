@@ -13,7 +13,8 @@ jobs:
         run: |
           sudo apt-get install -y \
             gcc-9 llvm-10 clang-10 \
-            libgmp-dev libtommath-dev
+            libgmp-dev libtommath-dev \
+            asciidoc docbook-xml
           sudo update-alternatives \
             --install /usr/bin/gcc gcc /usr/bin/gcc-9 100 \
             --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9 \
@@ -34,9 +35,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup dependencies
-        run: brew install gmp libtommath
+        run: brew install gmp libtommath asciidoc docbook
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
+        env:
+          XML_CATALOG_FILES: /usr/local/etc/xml/catalog
 
   windows:
     runs-on: windows-latest
@@ -81,6 +84,8 @@ jobs:
             mingw-w64-x86_64-llvm
             mingw-w64-x86_64-gmp
             mingw-w64-x86_64-libtommath
+            mingw-w64-x86_64-asciidoc
+            mingw-w64-x86_64-docbook-xml
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
 
@@ -97,7 +102,7 @@ jobs:
         with:
           platform: x64
           install-dir: C:\cygwin64
-          packages: curl cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
+          packages: curl cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel asciidoc docbook-xml45
       - name: Coverage toolchains
         run: |
           set "PATH="
