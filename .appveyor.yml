@@ -58,7 +58,7 @@ for:
       - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - cmd: nmake -f "makefile.msvc" install
       - cmd: cd ..
-      - cmd: move lzws lzws.old || true
+      - cmd: rmdir /Q /S "C:\projects\lzws" || true
     test_script:
       - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%"
       - cmd: set "LIB=C:\devel\lib;%LIB%"
