@@ -24,6 +24,7 @@ for:
       only:
         - job_name: ubuntu
     init:
+      - sh: sudo apt-get update
       - sh: sudo apt-get install -y
           gcc-9 llvm-10 clang-10
           libgmp-dev libtommath-dev
