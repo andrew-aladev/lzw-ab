@@ -58,7 +58,10 @@ jobs:
           cd "libtommath"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           nmake -f "makefile.msvc" install
-          cd ..
+          cd "C:\"
+          choco install xsltproc
+          curl "https://docbook.org/xml/4.5/docbook-xml-4.5.zip" -o "docbook-xml-4.5.zip"
+          mkdir "docbook-xml-4.5" && tar -xf "docbook-xml-4.5.zip" -C "docbook-xml-4.5"
       - name: Coverage toolchains
         run: |
           set "INCLUDE=C:\devel\include;%INCLUDE%"
@@ -66,6 +69,8 @@ jobs:
           set "PATH=C:\devel\bin;%PATH%"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
+        env:
+          XML_CATALOG_FILES: C:\docbook-xml-4.5
 
   windows-mingw:
     runs-on: windows-latest

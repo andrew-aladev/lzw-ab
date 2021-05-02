@@ -9,6 +9,7 @@ environment:
       XML_CATALOG_FILES: /usr/local/etc/xml/catalog
     - job_name: windows
       appveyor_build_worker_image: Visual Studio 2019
+      XML_CATALOG_FILES: C:\docbook-xml-4.5
     - job_name: windows-mingw
       appveyor_build_worker_image: Visual Studio 2019
       CHERE_INVOKING: 1
@@ -57,12 +58,15 @@ for:
       only:
         - job_name: windows
     init:
+      - cmd: rmdir /Q /S "C:\projects\lzws" || true
       - cmd: git clone "https://github.com/libtom/libtommath.git" --depth 1
       - cmd: cd "libtommath"
       - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - cmd: nmake -f "makefile.msvc" install
-      - cmd: cd ..
-      - cmd: rmdir /Q /S "C:\projects\lzws" || true
+      - cmd: cd "C:\"
+      - cmd: choco install xsltproc
+      - cmd: curl "https://docbook.org/xml/4.5/docbook-xml-4.5.zip" -o "docbook-xml-4.5.zip"
+      - cmd: mkdir "docbook-xml-4.5" && tar -xf "docbook-xml-4.5.zip" -C "docbook-xml-4.5"
     test_script:
       - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%"
       - cmd: set "LIB=C:\devel\lib;%LIB%"
