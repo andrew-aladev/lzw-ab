@@ -37,6 +37,7 @@ Operating systems: GNU/Linux, OSX, FreeBSD, Windows (Visual Studio, MinGW, Cygwi
 ## Installation
 
 You can download and install prebuilt packages [on releases page](https://github.com/andrew-aladev/lzws/releases).
+
 You can use [scripts/release.sh](scripts/release.sh), it will create package for your system from source.
 You can also use [overlay](https://github.com/andrew-aladev/overlay) for gentoo.
 
@@ -46,11 +47,14 @@ Installation for Windows (Visual Studio) from source is not so trivial:
 3. Install [asciidoc](https://asciidoc.org/INSTALL.html).
 4. Download [docbook-xml-4.5.zip](https://docbook.org/xml/4.5/docbook-xml-4.5.zip) and unpack it to `C:\ProgramData\chocolatey\lib\docbook-bundle\docbook-4.5`.
 5. Edit `C:\ProgramData\chocolatey\lib\docbook-bundle\catalog.xml` and append `<nextCatalog catalog="./docbook-4.5/catalog.xml"/>`.
-6. Launch `x64 Native Tools Command Promp` (`vcvars64.bat`) as admin.
-7. `git clone "https://github.com/libtom/libtommath.git" --depth 1 && cd "libtommath" && nmake -f "makefile.msvc" install && cd ..`
-8. `set "XML_CATALOG_FILES=C:\ProgramData\chocolatey\lib\docbook-bundle\catalog.xml"`
-9. `set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"`
-10. `cd build && bash ..\scripts\release.sh`
+6. Launch `x64 Native Tools Command Promp` as admin.
+
+```cmd
+git clone "https://github.com/libtom/libtommath.git" --depth 1 && cd "libtommath" && nmake -f "makefile.msvc" install && cd ..
+set "XML_CATALOG_FILES=C:\ProgramData\chocolatey\lib\docbook-bundle\catalog.xml"
+set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"
+cd build && bash ..\scripts\release.sh
+```
 
 ## Quick start
 
@@ -63,7 +67,7 @@ echo -n "TOBEORNOTTOBEORTOBEORNOT" | ./src/cli/lzws | ./src/cli/lzws -d
 | Option                       | Values                           | Default          | Description               |
 |------------------------------|----------------------------------|------------------|---------------------------|
 | `LZWS_COMPRESSOR_DICTIONARY` | `sparse-array`, `linked-list`    | `sparse-array`   | dictionary implementation |
-| `LZWS_BIGNUM_LIBRARY`        | `gmp`, `tommath`, ` `            | ` ` (auto)       | bignum library            |
+| `LZWS_BIGNUM_LIBRARY`        | `gmp`, `tommath`, `""` (auto)    | `""` (auto)      | bignum library            |
 | `LZWS_SHARED`                | `ON`, `OFF`                      | `ON`             | build shared binaries     |
 | `LZWS_STATIC`                | `ON`, `OFF`                      | `OFF`            | build static binaries     |
 | `LZWS_CLI`                   | `ON`, `OFF`                      | `ON`             | build cli                 |
@@ -75,21 +79,9 @@ echo -n "TOBEORNOTTOBEORTOBEORNOT" | ./src/cli/lzws | ./src/cli/lzws -d
 |                              | `bitbucket`, `bitbucket-archive` |                  |                           |
 |                              | `gitlab`, `gitlab-archive`       |                  |                           |
 
-## Examples
+## Examples and docs
 
-See [`examples`](examples) folder.
-
-## Man
-
-See [`man`](man) folder.
-
-## Documentation
-
-- [compressor_ratio.txt](doc/compressor_ratio.txt)
-- [compressor_with_linked_list.txt](doc/compressor_with_linked_list.txt)
-- [compressor_with_sparse_array.txt](doc/compressor_with_sparse_array.txt)
-- [decompressor.txt](doc/decompressor.txt)
-- [output_compatibility.txt](doc/output_compatibility.txt)
+See [`examples`](src/examples), [`man`](man) and [`doc`](doc) folders.
 
 ## CI
 
@@ -108,4 +100,4 @@ Distributed under the BSD Software License (see [LICENSE](LICENSE)).
 
 ## Notice
 
-Release with GMP comes without static linked binaries (GMP LGPL license limitation).
+Releases with GMP provided without static linked binaries (GMP LGPL license limitation).
