@@ -24,12 +24,15 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -o -name "*.cmake" \
     \) -exec rm -rf {} +
 
+    # Releases with GMP provided without static linked binaries (GMP LGPL license limitation).
+    static=$(if [ "$bignum_library" = "gmp" ]; then echo "OFF"; else echo "ON"; fi)
+
     # It may not work on target platform.
     cmake ".." \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
       -DLZWS_SHARED=ON \
-      -DLZWS_STATIC=ON \
+      -DLZWS_STATIC=$static \
       -DLZWS_CLI=ON \
       -DLZWS_TESTS=ON \
       -DLZWS_COVERAGE=OFF \

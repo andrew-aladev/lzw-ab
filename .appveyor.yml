@@ -1,4 +1,5 @@
 build: off
+clone_depth: 10
 
 environment:
   matrix:
