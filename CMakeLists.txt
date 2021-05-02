@@ -64,7 +64,7 @@ option (LZWS_COVERAGE "enable coverage"       OFF)
 option (LZWS_EXAMPLES "build examples"        OFF)
 option (LZWS_MAN      "build man"             OFF)
 
-set (LZWS_ARGTABLE3_FALLBACK "github-archive" CACHE STRING "argtable3 mode")
+set (LZWS_ARGTABLE3_FALLBACK "github-archive" CACHE STRING "argtable3 fallback")
 
 if (NOT LZWS_COMPRESSOR_DICTIONARY)
   message (FATAL_ERROR "Please select dictionary implementation.")

@@ -58,9 +58,7 @@ for:
       - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - cmd: nmake -f "makefile.msvc" install
     test_script:
-      - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%"
-      - cmd: set "LIB=C:\devel\lib;%LIB%"
-      - cmd: set "PATH=C:\devel\bin;%PATH%"
+      - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"
       - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - cmd: call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
 

@@ -54,9 +54,7 @@ jobs:
           nmake -f "makefile.msvc" install
       - name: Coverage toolchains
         run: |
-          set "INCLUDE=C:\devel\include;%INCLUDE%"
-          set "LIB=C:\devel\lib;%LIB%"
-          set "PATH=C:\devel\bin;%PATH%"
+          set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
 
