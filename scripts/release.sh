@@ -30,6 +30,11 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
       -DLZWS_SHARED=ON \
       -DLZWS_STATIC=ON \
+      -DLZWS_CLI=ON \
+      -DLZWS_TESTS=ON \
+      -DLZWS_COVERAGE=OFF \
+      -DLZWS_EXAMPLES=ON \
+      -DLZWS_MAN=ON \
       -DCMAKE_BUILD_TYPE="Release" \
       || continue
 

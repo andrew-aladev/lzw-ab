@@ -12,10 +12,7 @@ jobs:
       - name: Setup dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            gcc-9 llvm-10 clang-10 \
-            libgmp-dev libtommath-dev \
-            asciidoc docbook-xml
+          sudo apt-get install -y gcc-9 llvm-10 clang-10 libgmp-dev libtommath-dev
           sudo update-alternatives \
             --install /usr/bin/gcc gcc /usr/bin/gcc-9 100 \
             --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9 \
@@ -38,11 +35,9 @@ jobs:
       - name: Setup dependencies
         run: |
           brew update
-          brew install gmp libtommath asciidoc docbook
+          brew install gmp libtommath
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
-        env:
-          XML_CATALOG_FILES: /usr/local/etc/xml/catalog
 
   windows:
     runs-on: windows-latest
@@ -58,10 +53,6 @@ jobs:
           cd "libtommath"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           nmake -f "makefile.msvc" install
-          cd "C:\"
-          choco install xsltproc
-          curl "https://docbook.org/xml/4.5/docbook-xml-4.5.zip" -o "docbook-xml-4.5.zip"
-          mkdir "docbook-xml-4.5" && tar -xf "docbook-xml-4.5.zip" -C "docbook-xml-4.5"
       - name: Coverage toolchains
         run: |
           set "INCLUDE=C:\devel\include;%INCLUDE%"
@@ -69,8 +60,6 @@ jobs:
           set "PATH=C:\devel\bin;%PATH%"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
-        env:
-          XML_CATALOG_FILES: C:\docbook-xml-4.5
 
   windows-mingw:
     runs-on: windows-latest
@@ -92,8 +81,6 @@ jobs:
             mingw-w64-x86_64-llvm
             mingw-w64-x86_64-gmp
             mingw-w64-x86_64-libtommath
-            mingw-w64-x86_64-asciidoc
-            mingw-w64-x86_64-docbook-xml
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
 
@@ -110,7 +97,7 @@ jobs:
         with:
           platform: x64
           install-dir: C:\cygwin64
-          packages: curl cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel asciidoc docbook-xml45
+          packages: curl cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
       - name: Coverage toolchains
         run: |
           set "PATH="

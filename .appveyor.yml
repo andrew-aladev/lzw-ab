@@ -6,10 +6,8 @@ environment:
       appveyor_build_worker_image: Ubuntu2004
     - job_name: macos
       appveyor_build_worker_image: macos
-      XML_CATALOG_FILES: /usr/local/etc/xml/catalog
     - job_name: windows
       appveyor_build_worker_image: Visual Studio 2019
-      XML_CATALOG_FILES: C:\docbook-xml-4.5
     - job_name: windows-mingw
       appveyor_build_worker_image: Visual Studio 2019
       CHERE_INVOKING: 1
@@ -26,10 +24,7 @@ for:
         - job_name: ubuntu
     init:
       - sh: sudo apt-get update
-      - sh: sudo apt-get install -y
-          gcc-9 llvm-10 clang-10
-          libgmp-dev libtommath-dev
-          asciidoc docbook-xml
+      - sh: sudo apt-get install -y gcc-9 llvm-10 clang-10 libgmp-dev libtommath-dev
       - sh: sudo update-alternatives
           --install /usr/bin/gcc gcc /usr/bin/gcc-9 100
           --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9
@@ -49,7 +44,8 @@ for:
       only:
         - job_name: macos
     init:
-      - sh: brew install gmp libtommath asciidoc docbook
+      - sh: brew update
+      - sh: brew install gmp libtommath
     test_script:
       - sh: scripts/coverage_toolchains.sh
 
@@ -58,15 +54,11 @@ for:
       only:
         - job_name: windows
     init:
-      - cmd: rmdir /Q /S "C:\projects\lzws" || true
       - cmd: git clone "https://github.com/libtom/libtommath.git" --depth 1
       - cmd: cd "libtommath"
       - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       - cmd: nmake -f "makefile.msvc" install
-      - cmd: cd "C:\"
-      - cmd: choco install xsltproc
-      - cmd: curl "https://docbook.org/xml/4.5/docbook-xml-4.5.zip" -o "docbook-xml-4.5.zip"
-      - cmd: mkdir "docbook-xml-4.5" && tar -xf "docbook-xml-4.5.zip" -C "docbook-xml-4.5"
+      - cmd: rmdir /Q /S "C:\projects\lzws" || true
     test_script:
       - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%"
       - cmd: set "LIB=C:\devel\lib;%LIB%"
@@ -90,8 +82,6 @@ for:
           mingw-w64-x86_64-llvm
           mingw-w64-x86_64-gmp
           mingw-w64-x86_64-libtommath
-          mingw-w64-x86_64-asciidoc
-          mingw-w64-x86_64-docbook-xml
           "
     test_script:
       - cmd: C:\msys64\usr\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"
@@ -106,7 +96,7 @@ for:
           --site "https://mirrors.kernel.org/sourceware/cygwin"
           --root "C:\cygwin64"
           --local-package-dir "C:\cygwin64\var\cache\setup"
-          --packages "curl,cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel,asciidoc,docbook-xml45"
+          --packages "curl,cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
     test_script:
       - cmd: set "PATH="
       - cmd: C:\cygwin64\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"
