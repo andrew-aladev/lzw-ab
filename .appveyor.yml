@@ -1,5 +1,4 @@
 build: off
-clone_depth: 10
 
 environment:
   matrix:
@@ -24,7 +23,6 @@ for:
       only:
         - job_name: ubuntu
     init:
-      - sh: sudo apt-get update
       - sh: sudo apt-get install -y gcc-9 llvm-10 clang-10 libgmp-dev libtommath-dev
       - sh: sudo update-alternatives
           --install /usr/bin/gcc gcc /usr/bin/gcc-9 100
@@ -45,7 +43,6 @@ for:
       only:
         - job_name: macos
     init:
-      - sh: brew update
       - sh: brew install gmp libtommath
     test_script:
       - sh: scripts/coverage_toolchains.sh
@@ -54,13 +51,11 @@ for:
     matrix:
       only:
         - job_name: windows
-    init:
-      - cmd: cd "C:\" && git clone "https://github.com/libtom/libtommath.git" --depth 1 && cd "libtommath"
-      - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-      - cmd: nmake -f "makefile.msvc" install
     test_script:
-      - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"
       - cmd: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+      - cmd: git clone "https://github.com/libtom/libtommath.git" --depth 1 && cd "libtommath"
+      - cmd: nmake -f "makefile.msvc" install && cd ..
+      - cmd: set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"
       - cmd: call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
 
   -
