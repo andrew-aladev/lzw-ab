@@ -5,6 +5,8 @@ if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   message (FATAL_ERROR "In-source builds are not allowed")
 endif ()
 
+set (CMAKE_PROJECT_DESCRIPTION "LZW streaming compressor/decompressor")
+set (CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/andrew-aladev/lzws")
 set (LZWS_VERSION "1.5.0")
 
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
