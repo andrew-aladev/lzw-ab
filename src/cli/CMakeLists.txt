@@ -15,7 +15,7 @@ elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "github-archive")
   set (
     argtable3_FETCH_OPTIONS
     URL "https://github.com/andrew-aladev/argtable3/archive/refs/tags/${argtable3_TAG}.tar.gz"
-    URL_HASH "SHA256=4f7d6cc2b4e9722fe3c815e0c010e59da581238caa31ad77facdd309ac812032"
+    URL_HASH "SHA256=b430dddefa5e3eb63507c0c06a7a4b5f64620456ca3017a733ea1396b5b81274"
   )
 elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "bitbucket")
   set (
@@ -39,7 +39,7 @@ elseif (LZWS_ARGTABLE3_FALLBACK STREQUAL "gitlab-archive")
   set (
     argtable3_FETCH_OPTIONS
     URL "https://gitlab.com/andrew-aladev/argtable3/-/archive/${argtable3_TAG}/argtable3-${argtable3_TAG}.tar.gz"
-    URL_HASH "SHA256=30976bcd61ef9dbdc6ac78e445b79c2ac8c4be75cf846991a0a4b23dbc1909c5"
+    URL_HASH "SHA256=b430dddefa5e3eb63507c0c06a7a4b5f64620456ca3017a733ea1396b5b81274"
   )
 else ()
   message (FATAL_ERROR "Invalid argtable3 fallback: ${LZWS_ARGTABLE3_FALLBACK}")
