@@ -50,10 +50,10 @@ Installation for Windows (Visual Studio) from source is not so trivial:
 6. Launch `x64 Native Tools Command Promp` as admin.
 
 ```cmd
-git clone "https://github.com/libtom/libtommath.git" --depth 1 && cd "libtommath" && nmake -f "makefile.msvc" install && cd ..
+git clone "https://github.com/libtom/libtommath.git" --depth 1 && cd "libtommath" && nmake -f "makefile.msvc" install && cd ".."
 set "XML_CATALOG_FILES=C:\ProgramData\chocolatey\lib\docbook-bundle\catalog.xml"
 set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"
-cd build && bash ..\scripts\release.sh
+cd build && bash "..\scripts\release.sh"
 ```
 
 ## Quick start
