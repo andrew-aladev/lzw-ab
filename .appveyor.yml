@@ -1,6 +1,10 @@
 build: off
 
 environment:
+  global:
+    APPVEYOR: True
+    CI: True
+
   matrix:
     - job_name: ubuntu
       appveyor_build_worker_image: Ubuntu2004
@@ -10,7 +14,6 @@ environment:
       appveyor_build_worker_image: Visual Studio 2019
     - job_name: windows-mingw
       appveyor_build_worker_image: Visual Studio 2019
-      CHERE_INVOKING: 1
       MSYSTEM: MINGW64
     - job_name: windows-cygwin
       appveyor_build_worker_image: Visual Studio 2019
