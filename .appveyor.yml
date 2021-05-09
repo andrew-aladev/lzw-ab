@@ -93,5 +93,4 @@ for:
           --local-package-dir "C:\cygwin64\var\cache\setup"
           --packages "curl,cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
     test_script:
-      - cmd: set "PATH="
       - cmd: C:\cygwin64\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"
