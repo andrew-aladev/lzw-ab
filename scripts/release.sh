@@ -10,10 +10,10 @@ cd "../build"
 
 # Packing binaries.
 
-some_release_passed=false
-
 DICTIONARIES=("linked-list" "sparse-array")
 BIGNUM_LIBRARIES=("gmp" "tommath")
+
+some_release_passed=false
 
 for dictionary in "${DICTIONARIES[@]}"; do
   for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do

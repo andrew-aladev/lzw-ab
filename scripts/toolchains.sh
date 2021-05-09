@@ -22,12 +22,12 @@ if ([ -n "$CI" ]); then
 fi
 
 # We need to make test builds for all possible toolchains and dictionaries.
-toolchains="../../cmake/toolchains"
-
-some_test_passed=false
 
 DICTIONARIES=("linked-list" "sparse-array")
 BIGNUM_LIBRARIES=("gmp" "tommath")
+
+toolchains="../../cmake/toolchains"
+some_test_passed=false
 
 while read -r toolchain; do
   for dictionary in "${DICTIONARIES[@]}"; do
