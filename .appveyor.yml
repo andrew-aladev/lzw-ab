@@ -17,7 +17,7 @@ environment:
       MSYSTEM: MINGW64
     - job_name: windows-cygwin
       appveyor_build_worker_image: Visual Studio 2019
-      CYGWIN_NOWINPATH: 1
+      CYGWIN_NOWINPATH: True
       SHELLOPTS: igncr
 
 for:

@@ -13,6 +13,8 @@ jobs:
         run: sudo apt-get install -y gcc llvm clang libgmp-dev libtommath-dev
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
+        env:
+          CI: True
 
   macos:
     runs-on: macos-latest
@@ -23,6 +25,8 @@ jobs:
         run: brew install gcc llvm gmp libtommath
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
+        env:
+          CI: True
 
   windows:
     runs-on: windows-latest
@@ -39,6 +43,8 @@ jobs:
           nmake -f "makefile.msvc" install && cd ..
           set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set "PATH=C:\devel\bin;%PATH%"
           call "C:\Program Files\Git\bin\bash.exe" -l "%cd%\scripts\coverage_toolchains.sh"
+        env:
+          CI: True
 
   windows-mingw:
     runs-on: windows-latest
@@ -63,6 +69,7 @@ jobs:
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
         env:
+          CI: True
           MSYSTEM: MINGW64
 
   windows-cygwin:
@@ -82,5 +89,6 @@ jobs:
       - name: Coverage toolchains
         run: C:\cygwin64\bin\bash.exe -l "%cd%\scripts\coverage_toolchains.sh"
         env:
-          CYGWIN_NOWINPATH: 1
+          CI: True
+          CYGWIN_NOWINPATH: True
           SHELLOPTS: igncr
