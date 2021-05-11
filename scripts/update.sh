@@ -6,6 +6,6 @@ cd "$DIR"
 
 git fetch --all || true
 git fetch --tags || true
-git remote | xargs -n1 -I {} git rebase "{}/$(git branch --show-current)" || true
+git remote | xargs -I {} git rebase "{}/$(git branch --show-current)" || true
 
 git submodule update --init --recursive --remote
