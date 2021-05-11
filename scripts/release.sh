@@ -58,7 +58,7 @@ cd ".."
 
 # Packing source.
 
-VERSION=$(grep "LZWS_VERSION" "CMakeLists.txt" | sed "s/.*LZWS_VERSION\s*['\"]\([0-9.]*\).*/\1/g")
+VERSION=$(grep "LZWS_VERSION" "CMakeLists.txt" | sed "s/.*LZWS_VERSION[[:space:]]*['\"]\([0-9.]*\).*/\1/g")
 NAME="lzws-${VERSION}"
 
 COMPRESSION_LEVEL="-9"
