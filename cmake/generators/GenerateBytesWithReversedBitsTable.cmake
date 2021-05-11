@@ -11,13 +11,13 @@ function (cmake_run_bytes_with_reversed_bits_table)
   include (GetBuildFlags)
   cmake_get_build_flags ()
 
-  include (CheckC17)
-  cmake_check_c17 (REQUIRED)
+  include (CheckC11AndAbove)
+  cmake_check_c11_and_above (REQUIRED)
 
   try_compile (
     COMPILE_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
     CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C_FLAGS_RELEASE} ${CMAKE_C17_C_FLAGS}"
+      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C_FLAGS_RELEASE} ${CMAKE_C11_AND_ABOVE_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_GENERATOR_USE_CURRENT_TOOLCHAIN=${CMAKE_GENERATOR_USE_CURRENT_TOOLCHAIN}"
     OUTPUT_VARIABLE COMPILE_OUTPUT

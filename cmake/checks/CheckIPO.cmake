@@ -8,8 +8,8 @@ function (cmake_test_ipo)
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
 
-  include (CheckC17)
-  cmake_check_c17 (REQUIRED)
+  include (CheckC11AndAbove)
+  cmake_check_c11_and_above (REQUIRED)
 
   include (GetExportMode)
   cmake_get_export_mode (REQUIRED)
@@ -20,7 +20,7 @@ function (cmake_test_ipo)
   try_compile (
     TEST_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
     CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
+      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C11_AND_ABOVE_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_EXPORT_MODE_UPPERCASE=${CMAKE_EXPORT_MODE_UPPERCASE}"
       "-DCMAKE_SHARED_LIBRARY_LD_FLAGS=${CMAKE_EXPORT_SHARED_LIBRARY_LD_FLAGS}"

@@ -1,9 +1,9 @@
 set (CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-function (cmake_test_c17 FLAG)
-  set (NAME "cmake_test_c17")
-  set (SOURCE_DIR "${CURRENT_LIST_DIR}/C17")
-  set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_c17")
+function (cmake_test_c11_and_above FLAG)
+  set (NAME "cmake_test_c11_and_above")
+  set (SOURCE_DIR "${CURRENT_LIST_DIR}/C11AndAbove")
+  set (BINARY_DIR "${PROJECT_BINARY_DIR}/test_c11_and_above")
 
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
@@ -28,11 +28,11 @@ function (cmake_test_c17 FLAG)
   set (TEST_RESULT ${TEST_RESULT} PARENT_SCOPE)
 endfunction ()
 
-function (cmake_check_c17 CHECK_MODE)
-  set (MESSAGE_PREFIX "Status of C17 support")
+function (cmake_check_c11_and_above CHECK_MODE)
+  set (MESSAGE_PREFIX "Status of C11 and above support")
 
-  if (DEFINED CMAKE_HAVE_C17)
-    if (NOT CMAKE_HAVE_C17 AND CHECK_MODE STREQUAL "REQUIRED")
+  if (DEFINED CMAKE_HAVE_C11_AND_ABOVE)
+    if (NOT CMAKE_HAVE_C11_AND_ABOVE AND CHECK_MODE STREQUAL "REQUIRED")
       message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
     endif ()
 
@@ -40,17 +40,17 @@ function (cmake_check_c17 CHECK_MODE)
   endif ()
 
   if (MSVC)
-    set (FLAGS "/std:c18" "/std:c17" "")
+    set (FLAGS "/std:c18" "/std:c17" "/std:c11" "")
   else ()
-    set (FLAGS "-std=gnu18" "-std=c18" "-std=gnu17" "-std=c17" "")
+    set (FLAGS "-std=gnu18" "-std=c18" "-std=gnu17" "-std=c17" "-std=c11" "")
   endif ()
 
   foreach (FLAG ${FLAGS})
-    cmake_test_c17 (${FLAG})
+    cmake_test_c11_and_above (${FLAG})
 
     if (TEST_RESULT)
-      set (CMAKE_HAVE_C17 true)
-      set (CMAKE_C17_C_FLAGS ${FLAG})
+      set (CMAKE_HAVE_C11_AND_ABOVE true)
+      set (CMAKE_C11_AND_ABOVE_C_FLAGS ${FLAG})
 
       if (FLAG STREQUAL "")
         set (FLAG "vanilla")
@@ -62,23 +62,23 @@ function (cmake_check_c17 CHECK_MODE)
   endforeach ()
 
   if (NOT TEST_RESULT)
-    set (CMAKE_HAVE_C17 false)
-    set (CMAKE_C17_C_FLAGS "")
+    set (CMAKE_HAVE_C11_AND_ABOVE false)
+    set (CMAKE_C11_AND_ABOVE_C_FLAGS "")
     message (STATUS "${MESSAGE_PREFIX} - no")
   endif ()
 
   set (
-    CMAKE_HAVE_C17 ${CMAKE_HAVE_C17}
-    CACHE BOOL "Status of C17"
+    CMAKE_HAVE_C11_AND_ABOVE ${CMAKE_HAVE_C11_AND_ABOVE}
+    CACHE BOOL "Status of C11 and above"
   )
   set (
-    CMAKE_C17_C_FLAGS ${CMAKE_C17_C_FLAGS}
-    CACHE STRING "C17 C flags"
+    CMAKE_C11_AND_ABOVE_C_FLAGS ${CMAKE_C11_AND_ABOVE_C_FLAGS}
+    CACHE STRING "C11 and above C flags"
   )
 
-  mark_as_advanced (CMAKE_HAVE_C17 CMAKE_C17_C_FLAGS)
+  mark_as_advanced (CMAKE_HAVE_C11_AND_ABOVE CMAKE_C11_AND_ABOVE_C_FLAGS)
 
-  if (NOT CMAKE_HAVE_C17 AND CHECK_MODE STREQUAL "REQUIRED")
+  if (NOT CMAKE_HAVE_C11_AND_ABOVE AND CHECK_MODE STREQUAL "REQUIRED")
     message (FATAL_ERROR "${MESSAGE_PREFIX} - is required")
   endif ()
 endfunction ()

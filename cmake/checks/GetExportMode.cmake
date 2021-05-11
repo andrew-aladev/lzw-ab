@@ -13,8 +13,8 @@ function (
   include (GetVerboseFlags)
   cmake_get_verbose_flags ()
 
-  include (CheckC17)
-  cmake_check_c17 (REQUIRED)
+  include (CheckC11AndAbove)
+  cmake_check_c11_and_above (REQUIRED)
 
   include (CheckRunnable)
   cmake_check_runnable ()
@@ -22,7 +22,7 @@ function (
   try_compile (
     TEST_RESULT ${BINARY_DIR} ${SOURCE_DIR} ${NAME}
     CMAKE_FLAGS
-      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C17_C_FLAGS}"
+      "-DCMAKE_C_FLAGS=${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_C11_AND_ABOVE_C_FLAGS}"
       "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}"
       "-DCMAKE_EXPORT_MODE_UPPERCASE=${EXPORT_MODE_UPPERCASE}"
       "-DCMAKE_SHARED_LIBRARY_LD_FLAGS=${EXPORT_SHARED_LIBRARY_LD_FLAGS}"

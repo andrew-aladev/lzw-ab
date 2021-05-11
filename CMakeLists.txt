@@ -95,8 +95,8 @@ if (LZWS_COVERAGE)
   cmake_get_coverage_flags ()
 endif ()
 
-include (CheckC17)
-cmake_check_c17 (REQUIRED)
+include (CheckC11AndAbove)
+cmake_check_c11_and_above (REQUIRED)
 
 include (GetExportMode)
 cmake_get_export_mode (REQUIRED)
@@ -110,7 +110,7 @@ cmake_check_bignum_library ("${LZWS_BIGNUM_LIBRARY}")
 # Bignum library selection may be updated.
 set (LZWS_BIGNUM_LIBRARY ${CMAKE_BIGNUM_LIBRARY})
 
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C17_C_FLAGS}")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_VERBOSE_C_FLAGS} ${CMAKE_PIPE_C_FLAGS} ${CMAKE_C11_AND_ABOVE_C_FLAGS}")
 
 if (LZWS_COVERAGE)
   set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_COVERAGE_C_FLAGS}")
