@@ -26,7 +26,7 @@ for:
       only:
         - job_name: ubuntu
     init:
-      - sh: sudo apt-get install -y libgmp-dev libtommath-dev
+      - sh: sudo apt-get install -y gcc llvm clang libgmp-dev libtommath-dev
     test_script:
       - sh: scripts/coverage_toolchains.sh
 
@@ -35,7 +35,7 @@ for:
       only:
         - job_name: macos
     init:
-      - sh: brew install gmp libtommath
+      - sh: brew install gcc llvm gmp libtommath
     test_script:
       - sh: scripts/coverage_toolchains.sh
 
