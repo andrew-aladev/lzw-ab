@@ -1,5 +1,3 @@
-attached-main-root/*
-attached-toolchain-root/*
 build/*
 cmake/checks/export/config.h
 src/config.h
