@@ -44,13 +44,13 @@ while read -r toolchain; do
         COVERAGE_TOOLCHAIN=false
       fi
 
-      find . -depth \( \
+      find "." -depth \( \
         -name "CMake*" \
         -o -name "*.cmake" \
       \) -exec rm -rf {} +
 
       if [ "$COVERAGE_TOOLCHAIN" = true ]; then
-        find . -depth \( \
+        find "." -depth \( \
           -name "*.gcov" \
           -o -name "*.gcda" \
           -o -name "*.gcno" \
@@ -60,7 +60,7 @@ while read -r toolchain; do
       coverage=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "ON"; else echo "OFF"; fi)
       build_type=$(if [ "$COVERAGE_TOOLCHAIN" = true ]; then echo "Debug"; else echo "Release"; fi)
 
-      # Toolchain may not work on target platform.
+      # Toolchain may not work.
       cmake "../.." \
         -DCMAKE_TOOLCHAIN_FILE="$toolchain" \
         -DCMAKE_GENERATOR_USE_CURRENT_TOOLCHAIN=ON \

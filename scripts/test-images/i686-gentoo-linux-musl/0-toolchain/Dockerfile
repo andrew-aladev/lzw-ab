@@ -1,12 +1,11 @@
-ARG FROM_IMAGE=test_i686-gentoo-linux-musl_toolchain
+ARG FROM_IMAGE
 FROM $FROM_IMAGE
 
-ARG TARGET=i686-gentoo-linux-musl
+ARG TARGET
 ENV TARGET=$TARGET
 
 COPY prefix-root "/usr/${TARGET}"
-COPY attached-toolchain-root /
-RUN build.sh -v dev-vcs/git dev-util/cmake && \
-  target-build.sh -v dev-libs/gmp dev-libs/libtommath
-
-RUN target-cleanup.sh
+RUN cp -R /mnt/toolchain-root/* /
+RUN target-build.sh -v dev-libs/gmp dev-libs/libtommath && \
+  build.sh -v dev-vcs/git dev-util/cmake && \
+  target-cleanup.sh && cleanup.sh

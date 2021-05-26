@@ -3,9 +3,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: puchuu/test-lzws_i686-gentoo-linux-musl:latest
-    branches:
-      only:
-        - master
+      - image: puchuu/test-lzws_x86_64-unknown-linux-gnu:latest
     steps:
       - run: /home/coverage_toolchains.sh
+    filters:
+      branches:
+        only: master

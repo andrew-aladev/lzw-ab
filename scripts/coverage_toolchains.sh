@@ -34,7 +34,7 @@ while read -r toolchain; do
     for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
       echo "toolchain: ${toolchain}, dictionary: ${dictionary}, bignum library: ${bignum_library}"
 
-      find . -depth \( \
+      find "." -depth \( \
         -name "CMake*" \
         -o -name "*.cmake" \
         -o -name "*.gcov" \
@@ -42,7 +42,7 @@ while read -r toolchain; do
         -o -name "*.gcno" \
       \) -exec rm -rf {} +
 
-      # Toolchain may not work on target platform.
+      # Toolchain may not work.
       cmake "../.." \
         -DCMAKE_TOOLCHAIN_FILE="$toolchain" \
         -DCMAKE_GENERATOR_USE_CURRENT_TOOLCHAIN=ON \

@@ -8,18 +8,19 @@ DIR="/mnt/data"
 
 if [ -d "$DIR" ]; then
   # Testing cross compiled build.
-  cd "$DIR/build"
+  DICTIONARIES=("linked-list" "sparse-array")
+  BIGNUM_LIBRARIES=("gmp" "tommath")
 
-  for dictionary in "linked-list" "sparse-array"; do
-    echo "dictionary: ${dictionary}"
+  for dictionary in "${DICTIONARIES[@]}"; do
+    for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
+      echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
+      cd "$DIR/build/${dictionary}_${bignum_library}"
 
-    cd "$dictionary"
-    cmake --build "." --target "check"
-
-    cd ".."
+      cmake --build "." --target "check"
+    done
   done
 
-  cd ".."
+  cd "$DIR"
 else
   mkdir -p "$DIR"
   cd "$DIR"

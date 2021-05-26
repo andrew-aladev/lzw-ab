@@ -1,6 +1,7 @@
-ARG FROM_IMAGE=test_x86_64-unknown-linux-gnu
+ARG FROM_IMAGE
 FROM $FROM_IMAGE
 
 COPY root /
-COPY attached-main-root /
-RUN build.sh -v dev-vcs/git dev-util/cmake dev-libs/gmp dev-libs/libtommath
+RUN cp -R /mnt/main-root/* /
+RUN build.sh -v dev-vcs/git dev-util/cmake dev-libs/gmp dev-libs/libtommath && \
+  cleanup.sh

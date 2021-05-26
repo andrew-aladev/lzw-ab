@@ -19,7 +19,7 @@ for dictionary in "${DICTIONARIES[@]}"; do
   for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
     echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
 
-    find . -depth \( \
+    find "." -depth \( \
       -name "CMake*" \
       -o -name "*.cmake" \
     \) -exec rm -rf {} +
@@ -27,7 +27,7 @@ for dictionary in "${DICTIONARIES[@]}"; do
     # Releases with GMP provided without static linked binaries (GMP LGPL license limitation).
     static=$(if [ "$bignum_library" = "gmp" ]; then echo "OFF"; else echo "ON"; fi)
 
-    # It may not work on target platform.
+    # It may not work.
     cmake ".." \
       -DLZWS_COMPRESSOR_DICTIONARY="$dictionary" \
       -DLZWS_BIGNUM_LIBRARY="$bignum_library" \
