@@ -30,16 +30,21 @@ function (cmake_check_runnable)
     return ()
   endif ()
 
-  cmake_test_runnable ()
-
   set (MESSAGE_PREFIX "Status of run exe support")
 
-  if (TEST_RESULT)
-    set (CMAKE_CAN_RUN_EXE true)
-    message (STATUS "${MESSAGE_PREFIX} - working")
-  else ()
+  if (CMAKE_CROSSCOMPILING)
     set (CMAKE_CAN_RUN_EXE false)
-    message (STATUS "${MESSAGE_PREFIX} - no")
+    message (STATUS "${MESSAGE_PREFIX} - no (cross compiling)")
+  else ()
+    cmake_test_runnable ()
+
+    if (TEST_RESULT)
+      set (CMAKE_CAN_RUN_EXE true)
+      message (STATUS "${MESSAGE_PREFIX} - working")
+    else ()
+      set (CMAKE_CAN_RUN_EXE false)
+      message (STATUS "${MESSAGE_PREFIX} - no")
+    endif ()
   endif ()
 
   set (
