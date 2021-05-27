@@ -16,7 +16,7 @@ if [ -d "$DIR" ]; then
       echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
       cd "$DIR/build/${dictionary}_${bignum_library}"
 
-      cmake --build "." --target "check"
+      ctest
     done
   done
 
