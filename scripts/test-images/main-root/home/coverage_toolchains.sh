@@ -7,14 +7,15 @@ source "/etc/profile"
 DIR="/mnt/data"
 
 if [ -d "$DIR" ]; then
-  # Testing cross compiled build.
+  echo "trying to test cross compiled build"
+
   DICTIONARIES=("linked-list" "sparse-array")
   BIGNUM_LIBRARIES=("gmp" "tommath")
 
   for dictionary in "${DICTIONARIES[@]}"; do
     for bignum_library in "${BIGNUM_LIBRARIES[@]}"; do
       echo "dictionary: ${dictionary}, bignum library: ${bignum_library}"
-      cd "$DIR/build/${dictionary}_${bignum_library}"
+      cd "$DIR/build/${dictionary}_${bignum_library}" || continue
 
       ctest
     done
