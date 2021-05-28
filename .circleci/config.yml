@@ -7,7 +7,7 @@ jobs:
     working_directory: /mnt/data
     steps:
       - checkout
-      - run: /home/ci_test.sh
+      - run: /home/coverage_toolchains.sh
 
 workflows:
   build-deploy:
