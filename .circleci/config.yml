@@ -1,11 +1,18 @@
-version: 2
+version: 2.1
 
 jobs:
   build:
     docker:
       - image: puchuu/test-lzws_x86_64-unknown-linux-gnu:latest
+    working_directory: /mnt/data
     steps:
-      - run: /home/coverage_toolchains.sh
-    filters:
-      branches:
-        only: master
+      - checkout
+      - run: /home/ci_test.sh
+
+workflows:
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master

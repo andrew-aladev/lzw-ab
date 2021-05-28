@@ -59,13 +59,13 @@ for:
           C:\msys64\usr\bin\bash -cl "
           pacman --sync --noconfirm --needed
           make
-          mingw-w64-x86_64-curl
-          mingw-w64-x86_64-cmake
-          mingw-w64-x86_64-gcc
           mingw-w64-x86_64-clang
-          mingw-w64-x86_64-llvm
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-curl
+          mingw-w64-x86_64-gcc
           mingw-w64-x86_64-gmp
           mingw-w64-x86_64-libtommath
+          mingw-w64-x86_64-llvm
           "
     test_script:
       - cmd: C:\msys64\usr\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"
@@ -80,6 +80,6 @@ for:
           --site "https://mirrors.kernel.org/sourceware/cygwin"
           --root "C:\cygwin64"
           --local-package-dir "C:\cygwin64\var\cache\setup"
-          --packages "curl,cmake,make,gcc-g++,clang,llvm,libgmp-devel,libtommath-devel"
+          --packages "clang,cmake,curl,gcc-g++,libgmp-devel,libtommath-devel,llvm,make"
     test_script:
       - cmd: C:\cygwin64\bin\bash -l "%cd%\scripts\coverage_toolchains.sh"

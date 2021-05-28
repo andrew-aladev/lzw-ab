@@ -59,13 +59,13 @@ jobs:
         with:
           install: >-
             make
-            mingw-w64-x86_64-curl
-            mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-gcc
             mingw-w64-x86_64-clang
-            mingw-w64-x86_64-llvm
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-curl
+            mingw-w64-x86_64-gcc
             mingw-w64-x86_64-gmp
             mingw-w64-x86_64-libtommath
+            mingw-w64-x86_64-llvm
       - name: Coverage toolchains
         run: scripts/coverage_toolchains.sh
         env:
@@ -85,7 +85,7 @@ jobs:
         with:
           platform: x64
           install-dir: C:\cygwin64
-          packages: curl cmake make gcc-g++ clang llvm libgmp-devel libtommath-devel
+          packages: clang cmake curl gcc-g++ libgmp-devel libtommath-devel llvm make
       - name: Coverage toolchains
         run: C:\cygwin64\bin\bash.exe -l "%cd%\scripts\coverage_toolchains.sh"
         env:
