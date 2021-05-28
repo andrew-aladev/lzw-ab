@@ -23,3 +23,7 @@ Than open [`env.sh`](env.sh) and update variables.
 ```
 
 Build is rootless, just use your regular `my_user`.
+
+## Related bugs
+
+- [app-emulation/buildah: Multi-platform images: copy from platform](https://github.com/containers/buildah/issues/3252)
