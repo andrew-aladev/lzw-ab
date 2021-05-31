@@ -70,9 +70,9 @@ while read -r toolchain; do
         -DLZWS_STATIC=ON \
         -DLZWS_CLI=OFF \
         -DLZWS_TESTS=ON \
-        -DLZWS_COVERAGE=$coverage \
         -DLZWS_EXAMPLES=ON \
         -DLZWS_MAN=OFF \
+        -DLZWS_COVERAGE=$coverage \
         -DCMAKE_BUILD_TYPE="$build_type" \
         || continue
 

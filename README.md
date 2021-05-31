@@ -73,12 +73,12 @@ echo -n "TOBEORNOTTOBEORTOBEORNOT" | ./src/cli/lzws | ./src/cli/lzws -d
 | `LZWS_STATIC`                | `ON`, `OFF`                      | `OFF`            | build static binaries     |
 | `LZWS_CLI`                   | `ON`, `OFF`                      | `ON`             | build cli                 |
 | `LZWS_TESTS`                 | `ON`, `OFF`                      | `ON`             | build tests               |
-| `LZWS_COVERAGE`              | `ON`, `OFF`                      | `OFF`            | enable coverage           |
 | `LZWS_EXAMPLES`              | `ON`, `OFF`                      | `OFF`            | build examples            |
 | `LZWS_MAN`                   | `ON`, `OFF`                      | `OFF`            | build man                 |
 | `LZWS_ARGTABLE3_FALLBACK`    | `github`, `github-archive`       | `github-archive` | argtable3 fallback        |
 |                              | `bitbucket`, `bitbucket-archive` |                  |                           |
 |                              | `gitlab`, `gitlab-archive`       |                  |                           |
+| `LZWS_COVERAGE`              | `ON`, `OFF`                      | `OFF`            | enable coverage           |
 
 ## Examples and docs
 

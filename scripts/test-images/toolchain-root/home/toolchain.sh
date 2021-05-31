@@ -44,9 +44,9 @@ for dictionary in "${DICTIONARIES[@]}"; do
       -DLZWS_STATIC=ON \
       -DLZWS_CLI=OFF \
       -DLZWS_TESTS=ON \
-      -DLZWS_COVERAGE=OFF \
       -DLZWS_EXAMPLES=ON \
       -DLZWS_MAN=OFF \
+      -DLZWS_COVERAGE=OFF \
       -DCMAKE_BUILD_TYPE="Release"
 
     cmake --build "." --target "clean"

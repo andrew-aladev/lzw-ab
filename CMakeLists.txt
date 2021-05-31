@@ -62,9 +62,9 @@ option (LZWS_SHARED   "build shared binaries" ON)
 option (LZWS_STATIC   "build static binaries" OFF)
 option (LZWS_CLI      "build cli"             ON)
 option (LZWS_TESTS    "build tests"           ON)
-option (LZWS_COVERAGE "enable coverage"       OFF)
 option (LZWS_EXAMPLES "build examples"        OFF)
 option (LZWS_MAN      "build man"             OFF)
+option (LZWS_COVERAGE "enable coverage"       OFF)
 
 set (LZWS_ARGTABLE3_FALLBACK "github-archive" CACHE STRING "argtable3 fallback")
 
