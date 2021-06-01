@@ -1,6 +1,6 @@
-# Cmake uses Visual Studio generator for MinGW by default.
-# It will be better to select another default generator.
-if (NOT "$ENV{MSYSTEM}" STREQUAL "")
+# Cmake uses Visual Studio generator for MinGW by default (even without Visual Studio).
+# It will be better to select another default generator for MinGW.
+if (NOT "$ENV{MSYSTEM}" STREQUAL "" AND "$ENV{VisualStudioVersion}" STREQUAL "")
   find_program (CMAKE_NINJA_BINARY NAMES "ninja")
   if (CMAKE_NINJA_BINARY)
     set (
