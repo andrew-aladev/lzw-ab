@@ -7,7 +7,7 @@ endif ()
 
 set (CMAKE_PROJECT_DESCRIPTION "LZW streaming compressor/decompressor")
 set (CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/andrew-aladev/lzws")
-set (LZWS_VERSION "1.5.2")
+set (LZWS_VERSION "1.5.3")
 
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
   set (
