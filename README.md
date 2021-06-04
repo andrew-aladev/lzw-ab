@@ -57,6 +57,12 @@ set "INCLUDE=C:\devel\include;%INCLUDE%" && set "LIB=C:\devel\lib;%LIB%" && set 
 cd build && bash "..\scripts\release.sh"
 ```
 
+Please use the following code for OSX.
+
+```bash
+export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
+```
+
 ## Quick start
 
 ```sh
